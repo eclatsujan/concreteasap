@@ -3,11 +3,12 @@ import { UserState, user } from './user'
 import {ContractorState,contractor} from './contractor'
 import {RepState,rep} from './rep'
 import {OrderState,order} from './order'
+import {bid} from './bid'
 /**
  * Root states.
  */
 export const States = {
-  user,app,contractor,rep,order
+  user,app,contractor,rep,bid
 }
 
 /**
@@ -19,6 +20,7 @@ export const reducers = {
   contractor:contractor.reducer,
   rep:rep.reducer,
   order:order.reducer,
+  bid:bid.reducer
 }
 
 /**
@@ -30,6 +32,7 @@ export const actions = {
   contractor: contractor.actions,
   rep:rep.actions,
   order:order.actions,
+  bid:bid.actions
 }
 
 export { user }

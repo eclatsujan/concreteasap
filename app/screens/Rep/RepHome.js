@@ -33,11 +33,11 @@ export default class HomeScreen extends React.Component {
                     <Button style={styles.mainButton} onPress={()=>this.props.navigation.navigate("Current Accepted Order")}>
                         <Text style={styles.mainButtonText}>My Bids</Text>
                     </Button>
+                    <Button style={styles.mainButton} onPress={()=>this.props.navigation.navigate("Open Orders")}>
+                        <Text style={styles.mainButtonText}>Open Orders</Text>
+                    </Button>
                     <Button style={styles.mainButton} onPress={()=>this.props.navigation.navigate("View Accepted Order")}>
                         <Text style={styles.mainButtonText}>Accepted Bids</Text>
-                    </Button>
-                    <Button style={styles.mainButton} onPress={()=>this.props.navigation.navigate("View Order Requests")}>
-                        <Text style={styles.mainButtonText}>Open Orders</Text>
                     </Button>
                     <Button style={styles.mainButton} onPress={()=>this.props.navigation.navigate("Rep Notifications")}>
                         <Text style={styles.mainButtonText}>Notifications</Text>

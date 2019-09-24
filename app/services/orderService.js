@@ -1,9 +1,10 @@
-import config from '../config';
-import * as SecureStore from 'expo-secure-store';
+import {CONTRACTOR_PREFIX_URI, REP_PREFIX_URI} from '../config';
+
 import {getToken,handleResponse} from '../helpers/token';
 export const orderService = {
     submitForm,
-    getAllOrder
+    getUserOrders,
+    getAllOrders,
 };
 
 
@@ -15,15 +16,25 @@ async function submitForm(orderData){ //submiting the orderform
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token },
         body: JSON.stringify(orderData)
     };    
-    return fetch('https://concreteasap.herokuapp.com/api/contractor/order/concrete', requestOptions).then(handleResponse);
+    return fetch(CONTRACTOR_PREFIX_URI+'order/concrete', requestOptions).then(handleResponse);
 }
 
-async function getAllOrder(){
+async function getUserOrders(){
 	let token=await getToken();  
 	const requestOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
         // body: JSON.stringify(orderData)
     };
-    return fetch('https://concreteasap.herokuapp.com/api/contractor/order/concrete', requestOptions).then(handleResponse);
+    return fetch(CONTRACTOR_PREFIX_URI+'order/concrete', requestOptions).then(handleResponse);
+}
+
+async function getAllOrders(){
+    let token=await getToken();
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
+        // body: JSON.stringify(orderData)
+    };
+    return fetch(REP_PREFIX_URI+'orders', requestOptions).then(handleResponse);
 }

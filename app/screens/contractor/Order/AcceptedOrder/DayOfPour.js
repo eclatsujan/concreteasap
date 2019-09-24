@@ -35,7 +35,7 @@ export default class DayOfPour extends React.Component {
         </Header>
         <Content contentContainerStyle={styles.content}>
         <ScrollView>
-        <Text style={{marginTop:20, textAlign:"center", fontSize:20, fontWeight:'bold',}}>Active Order</Text>
+        <Text style={{marginTop:20, textAlign:"center", fontSize:20, fontWeight:'bold',}}>Day Of Pour</Text>
           <Button style={{width:"95%",
                   marginBottom:20,
                   marginTop:40,

@@ -3,6 +3,7 @@ import {UPDATEUSER} from '../user/constants'
 import {userService} from '../../../services/userService'
 
 import * as SecureStore from 'expo-secure-store';
+import navigationHelper from "../../../helpers/navigationHelper";
 
 // export const createOrder = (order) => {
 //   return dispatch => {
@@ -30,8 +31,10 @@ export const register = (user) => {
                     loggedIn: true,
                     userId: user.email,
                     secureToken:res.access_token,
+                    roles:res.roles
                 }
             });
+            navigationHelper.navigate('AuthLoading');
         }).catch((e)=>{
             console.log(e);
             // dispatch(appActions.loading(false));

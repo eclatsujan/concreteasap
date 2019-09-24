@@ -3,10 +3,14 @@ import { TextInput, StyleSheet, Label, TouchableOpacity } from 'react-native';
 import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../styles.js';
+import {actions} from "../../../store/modules";
+
+import {connect} from "react-redux";
+import { actions, States } from '../../store';
 
 
 
-export default class ActiveOrder extends React.Component {
+class ActiveOrder extends React.Component {
   constructor(props) {
     super(props);    
   }
@@ -95,3 +99,10 @@ export default class ActiveOrder extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const {user,app}=state;
+  return {user,app};
+}
+
+export default connect(mapStateToProps,null)(ActiveOrder);

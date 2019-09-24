@@ -13,9 +13,9 @@ export default class SpecialRequests extends ValidationComponent  {
   constructor(props) {
     super(props);    
     this.state={
-        colours:"Red, Green",
-        specialInstructions:"special Instructions",
-        deliveryInstructions:" delivery Instructions",
+        colours:"",
+        specialInstructions:"",
+        deliveryInstructions:"",
     };
     this.submit = this.submit.bind(this);
   }

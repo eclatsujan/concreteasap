@@ -3,10 +3,15 @@ import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'reac
 import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../styles.js';
+import {actions} from "../../../store";
+import {connect} from "react-redux";
+
+import { DangerZone } from 'expo';
+const { Stripe } = DangerZone;
 
 
 
-export default class OrderDetails extends React.Component {
+class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
 
@@ -18,6 +23,7 @@ export default class OrderDetails extends React.Component {
         };
 
         this.setPerPrice=this.setPerPrice.bind(this);
+        this.submitBid=this.submitBid.bind(this);
 
     }
 
@@ -37,7 +43,11 @@ export default class OrderDetails extends React.Component {
     }
 
     submitBid(){
-
+        let data={};
+        data.price= this.state.pricePer;
+        data.order_id= this.state.order.id;
+        // data.totalcost=this.state.totalcost;
+        this.props.bid(data);
     }
 
 
@@ -155,9 +165,7 @@ export default class OrderDetails extends React.Component {
                             </Col>
                             <Col>
                                 <View>
-                                    <TouchableOpacity onPress={this.submitBid}>
-                                        <Text style = {styles.primaryButton}>Bid</Text>
-                                    </TouchableOpacity>
+
                                 </View>
                             </Col>
                         </Grid>
@@ -167,3 +175,11 @@ export default class OrderDetails extends React.Component {
         );
     }
 }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        bid: (bid_order) => {
+            return dispatch(actions.bid.placeBid(bid_order));
+        }
+    }
+}
+export default connect(null,mapDispatchToProps)(OrderDetails);

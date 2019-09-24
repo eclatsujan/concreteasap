@@ -1,4 +1,4 @@
-import config from '../config';
+import {REP_PREFIX_URI} from '../config';
 import * as SecureStore from 'expo-secure-store';
 import {getToken,handleResponse} from '../helpers/token';
 export const bidService = {
@@ -12,6 +12,6 @@ async function placeBid(bidData){ //submiting the orderform
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token },
         body: JSON.stringify(bidData)
     };
-    return fetch('https://concreteasap.herokuapp.com/api/rep/bid', requestOptions).then(handleResponse);
+    return fetch(REP_PREFIX_URI+'bid', requestOptions).then(handleResponse);
 }
 

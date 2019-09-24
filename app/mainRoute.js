@@ -64,6 +64,8 @@ import repNotification from './screens/Rep/Notifications/Notifications';
 
 import SideBar from "./components/SideBar";
 
+import BidMessageHome from "./screens/Rep/Order/BidMessageHome";
+
 const AuthStack = createStackNavigator({
         SignIn: LoginScreen,
         Register:Register,
@@ -89,6 +91,7 @@ const repAcceptedOrder=createStackNavigator({
 const repViewOrder=createStackNavigator({
     CurrentAcceptedOrder:RepViewOrderRequests,
     "Order Details":OrderDetails,
+    "Bid Message":BidMessageHome,
 },{
     headerMode: 'none',
     navigationOptions: {
@@ -99,7 +102,7 @@ const RepDrawer = createDrawerNavigator({
     //Rep Drawer navigation section
     "Home":RepHome,
     "Current Accepted Order":repAcceptedOrder,
-    "View Order Requests":repViewOrder,
+    "Open Orders":repViewOrder,
     "View Accepted Order":RepViewAcceptedOrder,
     "Rep Notifications":repNotification,
     "Logout":LogoutScreen,

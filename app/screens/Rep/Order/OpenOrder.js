@@ -36,13 +36,6 @@ class OpenOrder extends React.Component {
 
                     </ScrollView>
                 </Content>
-                <Footer>
-                    <FooterTab>
-                        <Button full>
-                            <Text>Footer</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
             </Container>
         );
     }

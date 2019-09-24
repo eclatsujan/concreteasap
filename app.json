@@ -9,6 +9,7 @@
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/concrete-logo.png",
+    "expo_debug": true,
     "loading": {
       "icon": "./assets/concrete-logo.png",
       "hideExponentText": false

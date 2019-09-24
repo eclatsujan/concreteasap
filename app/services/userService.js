@@ -1,4 +1,4 @@
-import config from '../config';
+import {AUTH_PREFIX_URI} from '../config';
 import * as SecureStore from 'expo-secure-store';
 import {getToken,handleResponse} from '../helpers/token';
 export const userService = {
@@ -22,7 +22,7 @@ function login(email, password) {
         body: JSON.stringify({email:email,password: password})
     };
 
-    return fetch('https://concreteasap.herokuapp.com/api/auth/login',requestOptions).then(handleResponse);
+    return fetch(AUTH_PREFIX_URI+'login',requestOptions).then(handleResponse);
 }
 
 function logout(){
@@ -35,7 +35,7 @@ function register(data) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     };
-    return fetch('https://concreteasap.herokuapp.com/api/auth/register', requestOptions).then(handleResponse);
+    return fetch(AUTH_PREFIX_URI+'register', requestOptions).then(handleResponse);
 }
 
 async function getUser(token) {
@@ -45,7 +45,7 @@ async function getUser(token) {
         // body: JSON.stringify(token)
     };
     
-    return await fetch('https://concreteasap.herokuapp.com/api/auth/me', requestOptions).then(handleResponse);
+    return await fetch(AUTH_PREFIX_URI+'me', requestOptions).then(handleResponse);
 }
 
 

@@ -27,14 +27,14 @@ export default class PlaceOrder extends React.Component {
 	        
 	    this.state={
 	    	inputs:{
-	    		suburb:"1234567890",  
+	    		suburb:"",
 	    		type:"standard-mix",
 	    		mpa:"20",	
 	    		agg:"10",
 	    		slu:"80",
 	    		acc:"1% Bronze",
 	    		placement_types:"Chute",
-	    		quantity:"45",
+	    		quantity:"",
 	    		chosenDate: new Date(this.addDays(5)),
 	    		time1:"12:22",
 	    		time2:"00:00",
@@ -183,8 +183,6 @@ export default class PlaceOrder extends React.Component {
   }
 
   //time picker close
-
-
   _specialRequests(){
   	// this.getFormValidation();
   	// console.log("PlaceOrder state values",this.state.inputs);
@@ -300,7 +298,11 @@ export default class PlaceOrder extends React.Component {
 	             	
 		              	<FormItem floatingLabel>   
 		              		<Label style={{fontSize:18}}>Suburb/Post Code</Label>		
-	                		<Input value={this.state.inputs.suburb} style={{fontSize:20}} onChangeText={(text) => this.setState({suburb:text})} />
+	                		<Input value={this.state.inputs.suburb} style={{fontSize:20}} onChangeText={(text) => {
+	                			let inputs={...this.state.inputs}
+	                			inputs.suburb=text;
+	                			this.setState({inputs:inputs});
+							}} />
 		              	</FormItem>
 		              	<Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>Type</Text>
 		              	<Picker mode="dropdown"  iosHeader="Types" iosIcon={<Icon name="arrow-down" />}
@@ -350,7 +352,11 @@ export default class PlaceOrder extends React.Component {
 				        <View style={{fontSize:18, marginBottom:15}}>
 					        <FormItem floatingLabel>
 				              <Label>Quantity</Label>
-				              <Input value={this.state.inputs.quantity} style={{fontSize:20}} onChangeText={(text) => this.setState({quantity:text})} />
+				              <Input value={this.state.inputs.quantity} style={{fontSize:20}}
+									 onChangeText={(text) => { let inputs={...this.state.inputs}
+									 inputs.quantity=text;
+									 this.setState({inputs:inputs});  }}
+									 keyboardType="numeric"/>
 				            </FormItem>
 			            </View>
 			            <Grid>

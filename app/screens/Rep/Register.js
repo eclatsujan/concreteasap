@@ -39,19 +39,19 @@ class RegisterRep extends React.Component {
 	constructor(props){
 		super(props);
 		this.state={
-			"company":"xyz",
-			"browse":"12554",
-			"title":"Mr.",
-			"first_name":"dfdf23",
-			"last_name":"dfd5856",
-			'email':"dedxe@gmail.com",
-			'phone':"565852",
-			"city":"sydney",
-			"state":"nsw",
-			'password':"S1234566",
-			"confirmPassword":"S1234566",
+			"company":"",
+			"browse":"",
+			"title":"",
+			"first_name":"",
+			"last_name":"",
+			'email':"",
+			'phone':"",
+			"city":"",
+			"state":"",
+			'password':"",
+			"confirmPassword":"",
 			'roles':"rep",
-			'abn':"000",
+			'abn':"",
 		};
 	}
 
@@ -93,6 +93,10 @@ class RegisterRep extends React.Component {
 		                <Label>Company</Label>
 		                <Input value={this.state.company} onChangeText={(text) => this.setState({ company: text })} />
 		              </FormItem>
+						<FormItem floatingLabel>
+							<Label>ABN</Label>
+							<Input value={this.state.abn} onChangeText={(text) => this.setState({ abn: text })} />
+						</FormItem>
 		               <FormItem floatingLabel>
 		                <Label>Browse</Label>
 		                <Input value={this.state.browse} onChangeText={(text) => this.setState({ browse: text })} />
@@ -123,7 +127,7 @@ class RegisterRep extends React.Component {
 		              </FormItem>
 		              <FormItem floatingLabel>
 		                <Label>State</Label>
-		                <Input value={this.state.state} onChangeText={(text) => this.setState({ city: state })} />
+		                <Input value={this.state.state} onChangeText={(text) => this.setState({ state: text })} />
 		              </FormItem>
 		              <FormItem floatingLabel last>
 		                <Label>Password</Label>
@@ -131,7 +135,7 @@ class RegisterRep extends React.Component {
 		              </FormItem>
 		              <FormItem floatingLabel last>
 		                <Label>Confirm Password</Label>
-		                <Input value={this.state.password} secureTextEntry={true} onChangeText={(text) => this.setState({ password: text })} />
+		                <Input value={this.state.confirmPassword} secureTextEntry={true} onChangeText={(text) => this.setState({ confirmPassword: text })} />
 		              </FormItem>
 		              	<View style={styles.registerButton}>
 			              	<TouchableOpacity onPress={()=>this.formSubmit()}>

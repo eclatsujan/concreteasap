@@ -19,9 +19,9 @@ class ViewOrderRequests extends React.Component {
         this.props.getAllOrder();
     }
 
-    _alertIndex(id) {
-        // console.log("bids:", id);
-        this.props.navigation.navigate("ViewBids",{itemId:id});
+    _alertIndex(order) {
+        // console.log("bids id will be :", bids.id);
+        this.props.navigation.navigate("ViewBids",{bids:order.bids});
     }
 
     displayTableHeader(){
@@ -29,9 +29,9 @@ class ViewOrderRequests extends React.Component {
         return (
             <Row>
                 <Grid style={{marginTop:20, borderBottomWidth: 2,borderBottomColor: 'grey',}}>
-                    {this.state.tableHead.map((rowData, index) => (
+                    {this.state.tableHead.map((header_text, index) => (
                         <Col key={index} style={{marginLeft:10,}}>
-                            <Text>{rowData}</Text>
+                            <Text>{header_text}</Text>
                         </Col>
                     ))}
                 </Grid>
@@ -41,19 +41,19 @@ class ViewOrderRequests extends React.Component {
 
     displayTableData(){
         // console.log(this.props.order);
-        return this.props.order.orders.map((rowData, index) => (
+        return this.props.order.orders.map((order, index) => (
             <Row key={index}>
                 <Grid style={{marginTop:10}}>
                     <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2',marginLeft:10}}>
-                        <Text>{rowData.id}</Text>
+                        <Text>{order.id}</Text>
                     </Col>
                     <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2',}}>
-                        <Text>{rowData.status}</Text>
+                        <Text>{order.status}</Text>
                     </Col>
                     <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2', paddingBottom:10}}>
                         <Button
-                            disabled={rowData.status=="close"? true: false}
-                            onPress={() => this._alertIndex(rowData.id)}>
+                            disabled={order.status=="close"? true: false}
+                            onPress={() => this._alertIndex(order)}>
                             <Text>View</Text>
                         </Button>
                     </Col>
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getAllOrder: (collection) => {
             // console.log(actions);
-            return dispatch(actions.order.getAllOrder())
+            return dispatch(actions.order.getUserOrders())
         },
     }
 }

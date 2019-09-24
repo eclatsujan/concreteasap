@@ -36,16 +36,16 @@ class RegisterContractor extends React.Component {
 	constructor(props){
 		super(props);
 		this.state={
-			"company":"xyz",
-			"abn":"12554",
-			"first_name":"dfdf23",
-			"last_name":"dfd5856",
-			'email':"dedxe@gmail.com",
-			'phone':"565852",
-			"city":"sydney",
-			"state":"nsw",
-			'password':"S1234566",
-			"confirmPassword":"S1234566",
+			"company":"",
+			"abn":"",
+			"first_name":"",
+			"last_name":"",
+			'email':"",
+			'phone':"",
+			"city":"",
+			"state":"",
+			'password':"",
+			"confirmPassword":"",
 			'roles':"contractor"
 		};
 	}

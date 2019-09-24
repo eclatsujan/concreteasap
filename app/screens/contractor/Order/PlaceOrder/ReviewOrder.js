@@ -4,9 +4,12 @@ import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../../styles.js';
 
+import { connect } from 'react-redux';
+import { actions, States } from '../../../../store';
 
 
-export default class ReviewOrder extends React.Component {
+
+class ReviewOrder extends React.Component {
   constructor(props) {
     super(props);    
   }
@@ -16,9 +19,33 @@ export default class ReviewOrder extends React.Component {
           this.props.navigation.navigate("ReviewInstructions",{formData:formData,special:special})
      }
      else{
-
+       this.submitForm(formData);
      }
     
+  }
+
+  submitForm(formData){
+        let collection={}
+        collection.suburb=formData.suburb,
+        collection.type=formData.type,
+        collection.mpa=formData.mpa,
+        collection.agg=formData.agg,
+        collection.slump=formData.slu,
+        collection.acc=formData.acc,
+        collection.placement_type=formData.placement_types,
+        collection.quantity=formData.quantity,
+        collection.delivery_date=formData.chosenDate,
+        collection.time_preference1=formData.time1,
+        collection.time_preference2=formData.time2,
+        collection.time_preference3=formData.time3,
+        collection.time_deliveries=formData.time_difference_deliveries,
+        collection.urgency=formData.urgency,
+        collection.message_required=formData.message_required,
+        collection.preference=formData.site_call,
+            collection.colours="null",
+            collection.specialInstructions="null",
+            collection.deliveryInstructions="null",
+        this.props.submit(collection);
   }
 
   render(){
@@ -27,7 +54,7 @@ export default class ReviewOrder extends React.Component {
     const { params } = this.props.navigation.state;
     const formData = params ? params.formData : null;
     const special = params ? params.special : null;
-    // console.log("Checking data",formData);
+    console.log("Checking data",formData);
     // console.log("Review Order",special);
 
     return (
@@ -71,14 +98,14 @@ export default class ReviewOrder extends React.Component {
               <Text style={{fontSize:20, fontWeight:'bold', color: 'red'}}>Message Required:</Text>
             </Col>
             <Col style={{marginTop:15}}>
-              <Text >{formData.suburb.value}</Text>
+              <Text >{formData.suburb}</Text>
               <Text >{formData.type}</Text>
               <Text>{formData.mpa}</Text>
               <Text>{formData.agg}</Text>
               <Text>{formData.slu}</Text>
               <Text>{formData.acc}</Text>
               <Text>{formData.placement_types}</Text>
-              <Text>{formData.quantity.value}</Text>
+              <Text>{formData.quantity}</Text>
               <Text>{formData.time1}</Text>
               <Text>{formData.time2}</Text>
               <Text>{formData.time3}</Text>
@@ -98,3 +125,20 @@ export default class ReviewOrder extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submit: (collection) => {
+      console.log(actions);
+      return dispatch(actions.order.createOrder(collection))
+    },
+  }
+}
+
+const mapStateToProps = (state) => {
+  const {order}=state;
+  return {order};
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(ReviewOrder);

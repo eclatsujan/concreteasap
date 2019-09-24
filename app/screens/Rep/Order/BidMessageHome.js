@@ -2,11 +2,11 @@ import * as React from 'react';
 import { TextInput, StyleSheet, Label, ScrollView } from 'react-native';
 import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
-import {styles} from '../../styles.js';
+import {styles} from '../styles.js';
 
 
 
-export default class HomeScreen extends React.Component {
+export default class BidMessageHome extends React.Component {
   constructor(props) {
     super(props);    
   }
@@ -36,22 +36,12 @@ export default class HomeScreen extends React.Component {
         </Header>
         <Content contentContainerStyle={styles.content}>
         <ScrollView>
-        <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold', color: 'red',marginTop:50,}}>{message}</Text>
-          <Button style={styles.mainButton} onPress={()=>this.props.navigation.navigate("Pending Order")}>
-            <Text style={styles.mainButtonText}>View Order Requests</Text>
-          </Button>
+        <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold', color: 'red',marginTop:50}}>{message}</Text>
           <Button style={styles.mainButton} onPress={()=>this.props.navigation.navigate("Home")}>
             <Text style={styles.mainButtonText}>Back To Home</Text>
           </Button>
           </ScrollView>                     
         </Content>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
       </Container>
     );
   }
