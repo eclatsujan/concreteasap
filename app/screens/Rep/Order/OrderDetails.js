@@ -1,67 +1,102 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
+import { NativeModules,TextInput, StyleSheet, Label, TouchableOpacity, ScrollView, Modal, TouchableHighlight } from 'react-native';
 import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../styles.js';
-import {actions} from "../../../store";
-import {connect} from "react-redux";
+import {getToken, handleResponse} from "../../../helpers/token";
+import {REP_PREFIX_URI} from "../../../config";
+//Latest
+import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
+import {paymentService} from '../../../services/paymentService'
 
-import { DangerZone } from 'expo';
-const { Stripe } = DangerZone;
 
-
-
-class OrderDetails extends React.Component {
+export default class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
-
         this.state={
-            order : props.navigation.state.params.orderDetail, //data from navigation state
+            orderDetail : props.navigation.state.params.orderDetail, //data from navigation state
+            // bid:{},
             pricePer:'',
             meter: '',
             totalcost:'',
+            modalVisible: false,
+            SaveDetails:false,
         };
-
         this.setPerPrice=this.setPerPrice.bind(this);
         this.submitBid=this.submitBid.bind(this);
 
     }
 
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+    }
+
     componentWillMount(){
-        this.setState({meter:this.state.order.order_concrete.quantity.toString()});
-        // console.log();
+        console.log(this.state.orderDetail);
+        // getting the data of meter from navigation and updating the state of the meter
+        const meter = this.state.orderDetail ?this.state.orderDetail.order_concrete.quantity : null;
+        let m=meter.toString();
+        this.setState({meter:m});
+
+        Stripe.setOptionsAsync({
+            publishableKey: 'pk_test_wF2PcumUqSC8irnWWTAa4w9u00CIYe7HNL', // Your key
+            // androidPayMode: 'test', // [optional] used to set wallet environment (AndroidPay)
+            // merchantId: 'your_merchant_id', // [optional] used for payments with ApplePay
+        });
     }
 
     setPerPrice(price){
         //console.log("setperprice",this.state.meter);
         this.setState({pricePer:price});
-        let pricePer=parseInt(price);
-        let meter=parseInt(this.state.meter);
-        let total= (pricePer*meter)+(pricePer*meter*10)/100;
-        let Final=total.toString();
+        var pricePer=parseInt(price);
+        var meter=parseInt(this.state.meter);
+        var total= (pricePer*meter)+(pricePer*meter*10)/100;
+        var Final=total.toString();
         this.setState({totalcost : Final});
     }
 
     submitBid(){
-        let data={};
-        data.price= this.state.pricePer;
-        data.order_id= this.state.order.id;
-        // data.totalcost=this.state.totalcost;
-        this.props.bid(data);
+       this.stripePayment().then((token)=>{
+           console.log("SubmitBid checking",token);
+
+       });
+
+    }
+
+    async stripePayment(){
+        const token = await Stripe.paymentRequestWithCardFormAsync();
+        // console.log(token);
+        console.log(this.state.orderDetail.id);
+        // throw "give up";
+        let res=await paymentService.payBidPrice(token,this.state.orderDetail.id,this.state.pricePer,this.state.SaveDetails);
+        // console.log("checking the res value",res);
+        // console.log("Message ",res.payment_token.outcome.seller_message);
+
+        if(res.payment_token.outcome.seller_message!==''){
+            alert("Bid Has Been Succesfully Placed");
+        }
+        else{
+            alert("There was problem will placing the bid \n" +
+                "Please try again !")
+        }
     }
 
 
     render(){
+    // console.log("Save details value: ",this.state.SaveDetails);
         return (
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
+                        >
                             <Icon name='menu' />
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Concrete ASAP</Title>
+                        <Title>Concrete ASAP</Title>
                     </Body>
                     <Right>
                         <Button transparent>
@@ -71,15 +106,15 @@ class OrderDetails extends React.Component {
                 </Header>
                 <Content contentContainerStyle={styles.content}>
                     <ScrollView>
-                        <Text style={styles.mainTitle}>Order Details</Text>
+                        <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Order Details ID #{this.state.orderDetail.order_concrete.id}</Text>
                         <Grid>
-                            <Col style={styles.defaultMarginLT}>
+                            <Col style={{marginLeft:15, marginTop:15}}>
                                 <Text>Suburb / Post Code</Text>
                                 <Text>Type</Text>
                                 <Text>MPA</Text>
                                 <Text>AGG</Text>
                                 <Text>Slump</Text>
-                                <Text>Addatives</Text>
+                                <Text>Additives</Text>
                                 <Text>Placement Type</Text>
                                 <Text>Quantity</Text>
                                 <Text>Time</Text>
@@ -88,85 +123,154 @@ class OrderDetails extends React.Component {
                                 <Text>On Site / Call</Text>
                             </Col>
                             <Col style={{marginTop:15}}>
-                                <Text>{this.state.order.order_concrete.suburb}</Text>
-                                <Text>{this.state.order.order_concrete.type}</Text>
-                                <Text>{this.state.order.order_concrete.mpa}</Text>
-                                <Text>{this.state.order.order_concrete.agg}</Text>
-                                <Text>{this.state.order.order_concrete.slump}</Text>
-                                <Text>{this.state.order.order_concrete.acc}</Text>
-                                <Text>{this.state.order.order_concrete.placement_type}</Text>
-                                <Text>{this.state.order.order_concrete.quantity}</Text>
-                                <Text>{this.state.order.order_concrete.time_preference1}</Text>
-                                <Text>{this.state.order.order_concrete.delivery_date}</Text>
-                                <Text>{this.state.order.order_concrete.urgency}</Text>
-                                <Text>{this.state.order.order_concrete.preference}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.suburb}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.type}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.mpa}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.agg}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.slump}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.acc}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.placement_type}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.quantity}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.time_preference1}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.delivery_date}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.urgency}</Text>
+                                <Text>{this.state.orderDetail.order_concrete.preference}</Text>
                             </Col>
                         </Grid>
                         <Grid>
-                            <Col style={styles.defaultMarginLT}>
-                                <Text style={styles.marginL20}>Colors:</Text>
+                            <Col style={{marginLeft:15, marginTop:15}}>
+                                <Text style={{marginTop:20}}>Colors:</Text>
                             </Col>
-                            <Col style={styles.marginL15}>
-                                <Text style={styles.marginL20}>{this.state.order.order_concrete.colours}</Text>
+                            <Col style={{marginTop:15}}>
+                                <Text style={{marginTop:20}}>{this.state.orderDetail.order_concrete.colours}</Text>
                             </Col>
                         </Grid>
                         <Grid>
-                            <Col style={styles.defaultMarginLT}>
+                            <Col style={{marginLeft:15, marginTop:15}}>
                                 <Text style={{marginTop:20}}>Special Instructions:</Text>
                             </Col>
-                            <Col style={styles.marginL15}>
-                                <Text style={styles.marginL20}>{this.state.order.order_concrete.special_instructions}</Text>
+                            <Col style={{marginTop:15}}>
+                                <Text style={{marginTop:20}}>{this.state.orderDetail.order_concrete.special_instructions}</Text>
                             </Col>
                         </Grid>
                         <Grid>
-                            <Col style={styles.defaultMarginLT}>
-                                <Text style={styles.marginL20}>Delivery Instructions:</Text>
+                            <Col style={{marginLeft:15, marginTop:15}}>
+                                <Text style={{marginTop:20}}>Delivery Instructions:</Text>
                             </Col>
-                            <Col style={styles.marginL15}>
-                                <Text style={styles.marginL20}>{this.state.order.order_concrete.delivery_instructions}</Text>
+                            <Col style={{marginTop:15}}>
+                                <Text style={{marginTop:20}}>{this.state.orderDetail.order_concrete.delivery_instructions}</Text>
                             </Col>
                         </Grid>
                         <Grid>
-                            <Col style={styles.defaultMarginLT}>
-                                <Text style={styles.marginL20}>Price per m2:</Text>
+                            <Col style={{marginLeft:15, marginTop:15}}>
+                                <Text style={{marginTop:20}}>Price per m2:</Text>
                             </Col>
-                            <Col style={styles.marginL15}>
+                            <Col style={{marginTop:15}}>
                                 <TextInput
-                                    style={styles.displayCustomText}
+                                    style={{ width:"95%", height: 40, borderColor: 'gray', borderWidth: 1 }}
                                     onChangeText={this.setPerPrice}
                                     value={this.state.pricePer} />
                             </Col>
                         </Grid>
                         <Grid>
-                            <Col style={styles.defaultMarginLT}>
+                            <Col style={{marginLeft:15, marginTop:15}}>
                                 <Text style={{marginTop:20}}>Required m2:</Text>
                             </Col>
                             <Col style={{marginTop:15}}>
                                 <TextInput
-                                    style={styles.displayCustomText}
+                                    style={{ width:"95%", height: 40, borderColor: 'gray', borderWidth: 1 }}
                                     value={this.state.meter}
                                     editable={false} />
                             </Col>
                         </Grid>
                         <Grid>
-                            <Col style={styles.defaultMarginLT}>
+                            <Col style={{marginLeft:15, marginTop:15}}>
                                 <Text style={{marginTop:20}}>Total (Plus 10% Admin Fee):</Text>
                             </Col>
                             <Col style={{marginTop:15}}>
                                 <TextInput
-                                    style={styles.displayCustomText}
+                                    style={{ width:"95%", height: 40, borderColor: 'gray', borderWidth: 1 }}
                                     value={this.state.totalcost}
                                     editable={false}/>
                             </Col>
                         </Grid>
                         <Grid style={{marginBottom:30, marginTop:30}}>
-                            <Col style={styles.defaultMarginLT}>
+                            <Col style={{marginLeft:15, marginTop:30}}>
                                 <Text>Status : Pending</Text>
                             </Col>
                             <Col>
-                                <View>
-
-                                </View>
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={this.state.modalVisible}
+                                    onRequestClose={() => {
+                                        Alert.alert('Modal has been closed.');
+                                    }}>
+                                    <View style={{
+                                        flex: 1,
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        'backgroundColor':'rgba(000,000,000,0.6)'}}>
+                                        <View style={{
+                                            width: 250,
+                                            height: 250,
+                                            backgroundColor:"white",
+                                            alignItems: 'center',
+                                            borderWidth: 2,}}>
+                                            <Text style={{textAlign:"center", marginTop:40}}>Do you wanna save the card details?</Text>
+                                            <Text style = {{textAlign: 'center',
+                                                fontSize: 20,
+                                                backgroundColor: '#DDDDDD',
+                                                padding: 10,
+                                                width: 180,
+                                                marginTop: 10,
+                                                borderRadius: 25,
+                                                borderWidth: 1,}} onPress={() => {
+                                                this.setModalVisible(!this.state.modalVisible);
+                                                this.setState({SaveDetails:true});
+                                                this.submitBid();
+                                            }}>Yes</Text>
+                                            <Text style = {{textAlign: 'center',
+                                                fontSize: 20,
+                                                backgroundColor: '#DDDDDD',
+                                                padding: 10,
+                                                width: 180,
+                                                marginTop: 10,
+                                                borderRadius: 25,
+                                                borderWidth: 1,}} onPress={() => {
+                                                this.setModalVisible(!this.state.modalVisible);
+                                                this.setState({SaveDetails:false});
+                                                this.submitBid();
+                                            }}>No</Text>
+                                        </View>
+                                    </View>
+                                </Modal>
+                                <TouchableHighlight
+                                    onPress={() => {
+                                        this.setModalVisible(true);
+                                    }}>
+                                    <Text style = {{textAlign: 'center',
+                                        fontSize: 20,
+                                        backgroundColor: '#DDDDDD',
+                                        padding: 10,
+                                        width: 180,
+                                        marginTop: 10,
+                                        borderRadius: 25,
+                                        borderWidth: 1,}}>Place a Bid</Text>
+                                </TouchableHighlight>
+                                {/*<View>*/}
+                                {/*    <TouchableOpacity onPress={this.submitBid}>*/}
+                                {/*        <Text style = {{textAlign: 'center',*/}
+                                {/*            fontSize: 20,*/}
+                                {/*            backgroundColor: '#DDDDDD',*/}
+                                {/*            padding: 10,*/}
+                                {/*            width: 180,*/}
+                                {/*            marginTop: 10,*/}
+                                {/*            borderRadius: 25,*/}
+                                {/*            borderWidth: 1,}}>Place a Bid</Text>*/}
+                                {/*    </TouchableOpacity>*/}
+                                {/*</View>*/}
                             </Col>
                         </Grid>
                     </ScrollView>
@@ -175,11 +279,3 @@ class OrderDetails extends React.Component {
         );
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-        bid: (bid_order) => {
-            return dispatch(actions.bid.placeBid(bid_order));
-        }
-    }
-}
-export default connect(null,mapDispatchToProps)(OrderDetails);

@@ -10,7 +10,7 @@ export function handleResponse(response){// this function handles the responses 
     // console.log(response.text());
 	return response.text().then(text => {
 
-        // console.log(response);
+        console.log(response);
         // console.log();
         if(text!==""){
             console.log(text);

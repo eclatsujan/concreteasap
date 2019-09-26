@@ -90,6 +90,7 @@ class RepViewOrderRequests extends React.Component {
                         <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>View Orders Requests</Text>
                         {this.displayTableHeader()}
                         {this.displayTableData()}
+
                         <View style={styles.registerButton}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
                                 <Text style = {styles.buttonText}>Back To Home</Text>
@@ -97,13 +98,6 @@ class RepViewOrderRequests extends React.Component {
                         </View>
                     </ScrollView>
                 </Content>
-                <Footer>
-                    <FooterTab>
-                        <Button full>
-                            <Text>Footer</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
             </Container>
         );
     }
