@@ -21,10 +21,10 @@ export default class OrderDetails extends React.Component {
             totalcost:'',
             modalVisible: false,
             SaveDetails:false,
+            token:""
         };
         this.setPerPrice=this.setPerPrice.bind(this);
         this.submitBid=this.submitBid.bind(this);
-
     }
 
     setModalVisible(visible) {
@@ -32,16 +32,14 @@ export default class OrderDetails extends React.Component {
     }
 
     componentWillMount(){
-        console.log(this.state.orderDetail);
+        // console.log(this.state.orderDetail);
         // getting the data of meter from navigation and updating the state of the meter
         const meter = this.state.orderDetail ?this.state.orderDetail.order_concrete.quantity : null;
         let m=meter.toString();
         this.setState({meter:m});
-
+        console.log(Stripe);
         Stripe.setOptionsAsync({
             publishableKey: 'pk_test_wF2PcumUqSC8irnWWTAa4w9u00CIYe7HNL', // Your key
-            // androidPayMode: 'test', // [optional] used to set wallet environment (AndroidPay)
-            // merchantId: 'your_merchant_id', // [optional] used for payments with ApplePay
         });
     }
 
@@ -55,30 +53,29 @@ export default class OrderDetails extends React.Component {
         this.setState({totalcost : Final});
     }
 
-    submitBid(){
-       this.stripePayment().then((token)=>{
-           console.log("SubmitBid checking",token);
-
-       });
-
+    showDetailsModel(val){
+        this.setModalVisible(!this.state.modalVisible);
+        this.setState({SaveDetails:val});       
+        this.payBid().then((res)=>{
+            console.log(res);
+        });
     }
 
-    async stripePayment(){
-        const token = await Stripe.paymentRequestWithCardFormAsync();
-        // console.log(token);
-        console.log(this.state.orderDetail.id);
-        // throw "give up";
-        let res=await paymentService.payBidPrice(token,this.state.orderDetail.id,this.state.pricePer,this.state.SaveDetails);
-        // console.log("checking the res value",res);
-        // console.log("Message ",res.payment_token.outcome.seller_message);
+    submitBid(){
+       this.stripePayment().then((token)=>{
+            this.setState({token:token});
+            this.setModalVisible(true);           
+       });
+    }
 
-        if(res.payment_token.outcome.seller_message!==''){
-            alert("Bid Has Been Succesfully Placed");
-        }
-        else{
-            alert("There was problem will placing the bid \n" +
-                "Please try again !")
-        }
+
+    async stripePayment(){
+       return await Stripe.paymentRequestWithCardFormAsync();         
+    }
+
+    async payBid(){
+        console.log(this.state.token);
+        return await paymentService.payBidPrice(this.state.token,this.state.orderDetail.id,this.state.pricePer,this.state.SaveDetails);
     }
 
 
@@ -219,58 +216,20 @@ export default class OrderDetails extends React.Component {
                                             alignItems: 'center',
                                             borderWidth: 2,}}>
                                             <Text style={{textAlign:"center", marginTop:40}}>Do you wanna save the card details?</Text>
-                                            <Text style = {{textAlign: 'center',
-                                                fontSize: 20,
-                                                backgroundColor: '#DDDDDD',
-                                                padding: 10,
-                                                width: 180,
-                                                marginTop: 10,
-                                                borderRadius: 25,
-                                                borderWidth: 1,}} onPress={() => {
-                                                this.setModalVisible(!this.state.modalVisible);
-                                                this.setState({SaveDetails:true});
-                                                this.submitBid();
-                                            }}>Yes</Text>
-                                            <Text style = {{textAlign: 'center',
-                                                fontSize: 20,
-                                                backgroundColor: '#DDDDDD',
-                                                padding: 10,
-                                                width: 180,
-                                                marginTop: 10,
-                                                borderRadius: 25,
-                                                borderWidth: 1,}} onPress={() => {
-                                                this.setModalVisible(!this.state.modalVisible);
-                                                this.setState({SaveDetails:false});
-                                                this.submitBid();
-                                            }}>No</Text>
+
+                                            <Button onPress={() => {this.showDetailsModel(true); }}>
+                                                <Text>Yes</Text>
+                                            </Button>
+                                            <Button onPress={() => {this.showDetailsModel(false); }}>
+                                                <Text>No</Text>
+                                            </Button>
                                         </View>
                                     </View>
                                 </Modal>
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.setModalVisible(true);
-                                    }}>
-                                    <Text style = {{textAlign: 'center',
-                                        fontSize: 20,
-                                        backgroundColor: '#DDDDDD',
-                                        padding: 10,
-                                        width: 180,
-                                        marginTop: 10,
-                                        borderRadius: 25,
-                                        borderWidth: 1,}}>Place a Bid</Text>
-                                </TouchableHighlight>
-                                {/*<View>*/}
-                                {/*    <TouchableOpacity onPress={this.submitBid}>*/}
-                                {/*        <Text style = {{textAlign: 'center',*/}
-                                {/*            fontSize: 20,*/}
-                                {/*            backgroundColor: '#DDDDDD',*/}
-                                {/*            padding: 10,*/}
-                                {/*            width: 180,*/}
-                                {/*            marginTop: 10,*/}
-                                {/*            borderRadius: 25,*/}
-                                {/*            borderWidth: 1,}}>Place a Bid</Text>*/}
-                                {/*    </TouchableOpacity>*/}
-                                {/*</View>*/}
+
+                                <Button onPress={() => {this.submitBid()}}>
+                                    <Text>Place a Bid</Text>
+                                </Button>
                             </Col>
                         </Grid>
                     </ScrollView>

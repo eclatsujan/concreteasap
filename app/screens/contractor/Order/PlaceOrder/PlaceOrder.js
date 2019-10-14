@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, ScrollView, TouchableOpacity,Platform,StatusBar } from 'react-native';
 import { 
 	Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,
 	Form,Item as FormItem,Input,Toast,Label,Picker,Grid,Col, DatePicker,
@@ -18,7 +18,7 @@ import { validationService } from "../../Validation/Service";
 import * as moment from 'moment';
 
 import {styles} from '../../styles.js';
-
+import {appStyles} from "../../../assets/app_styles";
 
 var size = 30;
 export default class PlaceOrder extends React.Component {
@@ -273,7 +273,7 @@ export default class PlaceOrder extends React.Component {
   		// console.log("Placeorder status ",this.state.inputs);
 
 	  	return (
-	  		<Container>
+	  		<Container style={[appStyles.bgTransparent,{paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}]}>
 		        <Header>
 		          <Left>
 		            <Button

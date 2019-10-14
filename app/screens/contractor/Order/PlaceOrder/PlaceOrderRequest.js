@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, ScrollView } from 'react-native';
+import { TextInput, StyleSheet, Label, ScrollView,Platform,StatusBar } from 'react-native';
 import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../../styles.js';
-
+import {appStyles} from "../../../assets/app_styles";
 
 
 export default class PlaceOrderRequest extends React.Component {
@@ -14,7 +14,7 @@ export default class PlaceOrderRequest extends React.Component {
   render(){
 
     return (
-       <Container>
+       <Container style={[appStyles.bgTransparent,{paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight}]}>
         <Header>
           <Left>
             <Button

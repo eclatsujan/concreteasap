@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StatusBar,ScrollView,Animated } from "react-native";
+import { Image, StatusBar,ScrollView,Animated,Platform  } from "react-native";
 import {
   Button,
   Text,
@@ -10,9 +10,11 @@ import {
   Icon
 } from "native-base";
 
-import SafeAreaView from 'react-native-safe-area-view';
+import Expo from 'expo'
 import { DrawerNavigatorItems } from 'react-navigation-drawer';
 import { NavigationActions, StackActions } from 'react-navigation';
+import { SafeAreaView } from 'react-navigation';
+
 
 export default class SideBar extends React.Component {
 
@@ -35,8 +37,9 @@ export default class SideBar extends React.Component {
   }
 
   render() {
+    console.log(StatusBar.currentHeight);
     return (
-       <ScrollView>
+       <ScrollView style={{paddingTop:StatusBar.currentHeight}}>
           <SafeAreaView           
             forceInset={{ top: 'always', horizontal: 'never' }}
           >

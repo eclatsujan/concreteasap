@@ -7,40 +7,19 @@ import {
 } from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 
-import Constants from 'expo-constants';
+import {acceptedOrders,calculator,pendingOrder,placeOrderStack} from './routes/contractor';
 
 // You can import from local files
 // import AssetExample from './AssetExample';
 import LoginScreen from './screens/auth/Login';
-import LogoutScreen from './screens/auth/Logout';
-import AuthLoadingScreen from './screens/auth/AuthLoading';
+import LogoutScreen from './screens/auth/LogoutScreen';
+import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
 import Register from './screens/auth/Register';
 import UserProfile from './screens/contractor/Profile/UserProfile';
 import EditUserProfile from './screens/contractor/Profile/EditUserProfile';
-//Calculator files
-import FirstPage from './screens/contractor/calculator/FirstPage';
-import SecondPage from './screens/contractor/calculator/SecondPage';
-import ThirdPage from './screens/contractor/calculator/ThirdPage';
-import FourthPage from './screens/contractor/calculator/FourthPage';
-//contractor files
-import RegisterContractor from './screens/contractor/Register';
-import HomeScreen from './screens/contractor/Home';
-import PlaceOrder from './screens/contractor/Order/PlaceOrder';
-import ReviewOrder from './screens/contractor/Order/ReviewOrder';
-import ReviewInstructions from './screens/contractor/Order/ReviewInstructions';
-import SpecialRequests from './screens/contractor/Order/SpecialRequests';
-import Notifications from './screens/contractor/Notification/Notifications';
-import ViewOrderRequests from './screens/contractor/Order/ViewOrderRequests';
-import ViewBids from './screens/contractor/Bids/ViewBids';
-import PlaceOrderRequest from './screens/contractor/Order/PlaceOrderRequest';
-import OrderBidStatus from './screens/contractor/Bids/OrderBidStatus';
-import AcceptedOrders from './screens/contractor/Order/AcceptedOrders';
-import DayOfPour from './screens/contractor/Order/DayOfPour';
-import ViewFullOrderDetails from './screens/contractor/Order/ViewFullOrderDetails';
-import ModifyOrder from './screens/contractor/Order/ModifyOrder';
-import ModifySpecialRequest from './screens/contractor/Order/ModifySpecialRequest';
+
 //Rep files
-import RepHome from './screens/Rep/RepHome';
+import RepHome from './screens/Rep/RepHomeScreen';
 import repRegister from './screens/Rep/Register';
 import RepViewOrderRequests from './screens/Rep/Order/ViewOrderRequests';
 import OrderDetails from './screens/Rep/Order/OrderDetails';

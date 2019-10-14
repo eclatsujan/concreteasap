@@ -6,7 +6,7 @@ import {styles} from '../styles.js';
 
 
 
-export default class Notifications extends React.Component {
+export default class repNotifications extends React.Component {
   constructor(props) {
     super(props);
     this.state={
