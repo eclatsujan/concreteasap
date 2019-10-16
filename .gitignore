@@ -3,3 +3,8 @@ node_modules/
 .expo/
 .idea/
 android/
+.ios/
+.ios-v1/
+.ios-v2/
+.android-v1/
+.android
