@@ -28,7 +28,7 @@ export const repAcceptedOrder=createStackNavigator({
     }});
 
 export const repViewOrder=createStackNavigator({
-    CurrentAcceptedOrder:RepViewOrders,
+    "View Orders":RepViewOrders,
     "Order Details":OrderDetails,
     "Bid Message":BidMessageHome,
 },{

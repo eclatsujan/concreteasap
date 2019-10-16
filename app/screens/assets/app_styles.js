@@ -8,6 +8,20 @@ export const appStyles = StyleSheet.create({
         width,
         height
     },
+    appHeader:{
+      height:125
+    },
+    headerHeight:{
+  		height:100
+  	},
+    logoHeader:{
+      paddingTop:10,
+      paddingBottom:10
+    },
+    customMargin:{
+      marginTop:30,
+      marginBottom:30
+    },
     baseFont:{
         fontFamily:"Hancock"
     },
@@ -63,11 +77,17 @@ export const appStyles = StyleSheet.create({
         justifyContent:"center"
     },
     subHeader:{
+        position:"relative",
         paddingTop:25,
         paddingBottom:25,
         alignItems:"center",
         paddingLeft:25,
-        paddingRight:25
+        paddingRight:25,
+        backgroundColor: 'transparent',
+    },
+    customPadding:{
+      paddingTop:5,
+      paddingBottom:5
     },
     iconCol:{
         width:"15%",
@@ -117,7 +137,7 @@ export const appStyles = StyleSheet.create({
         fontSize:50,
     },
     loginForm:{
-        marginTop:30,
+        marginTop:5,
         paddingLeft:20,
         paddingRight:20
     },
@@ -125,20 +145,30 @@ export const appStyles = StyleSheet.create({
         backgroundColor:"#fff",
         marginTop:7,
         marginBottom:7,
-        borderRadius:7,
+        borderRadius:4,
         paddingLeft:5,
         paddingRight:5
     },
+    loginInputBox:{
+      fontSize:14,
+    },
     button:{
-        marginTop:7,
-        marginBottom:7,
+        marginTop:15,
+        marginBottom:15,
         borderRadius: 7,
         backgroundColor:"#14E22A",
         paddingTop:5,
         paddingBottom:5
     },
+    btnPadding:{
+      marginTop:15,
+      marginBottom:15
+    },
     btnTxt:{
         color:"#000",
+        fontSize:20,
+        fontFamily:"Hancock"
+        // fontWeight:"bold"
     },
     btnInverseColor:{
         color:"#fff"

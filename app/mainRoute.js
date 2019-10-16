@@ -35,11 +35,14 @@ const ContractorDrawer = createDrawerNavigator({
     contentComponent: props => <SideBar {...props} />
 });
 
+
+console.log(repViewOrder);
+
 const RepDrawer = createDrawerNavigator({
     //Rep Drawer navigation section
     "Home":RepHomeScreen,
-    "Current Accepted Order":repAcceptedOrder,
     "Open Orders":repViewOrder,
+    "Current Accepted Order":repAcceptedOrder,
     "View Accepted Order":RepViewAcceptedOrders,
     "Rep Notifications":repNotifications,
     "Logout":LogoutScreen,

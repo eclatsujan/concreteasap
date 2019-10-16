@@ -57,22 +57,24 @@ export default class OrderDetails extends React.Component {
 
     showDetailsModel(val){
         this.setModalVisible(!this.state.modalVisible);
-        this.setState({SaveDetails:val});       
+        this.setState({SaveDetails:val});
         this.payBid().then((res)=>{
-            console.log(res);
+            // console.log(res);
+            this.props.navigation.setParams({ success_msg: 'Lucy' })
+            this.props.navigation.goBack();
         });
     }
 
     submitBid(){
        this.stripePayment().then((token)=>{
             this.setState({token:token});
-            this.setModalVisible(true);           
+            this.setModalVisible(true);
        });
     }
 
 
     async stripePayment(){
-       return await Stripe.paymentRequestWithCardFormAsync();         
+       return await Stripe.paymentRequestWithCardFormAsync();
     }
 
     async payBid(){

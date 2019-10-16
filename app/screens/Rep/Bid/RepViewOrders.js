@@ -19,6 +19,9 @@ class RepViewOrders extends React.Component {
 
     componentWillMount(){
         this.props.getAllOrder();
+        if(typeof this.props.navigation.state.params!=="undefined"){
+          console.log(this.props.navigation.state.params);
+        }
     }
 
     _alertIndex(rowData) {

@@ -60,7 +60,7 @@ export const login = (email, password) => {
 }
 
 export const updateUserNotificationsToken=(notification)=>{
-    
+
 }
 
 export const updateUserState = (userState) =>{

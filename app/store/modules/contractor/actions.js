@@ -5,23 +5,11 @@ import {userService} from '../../../services/userService'
 import * as SecureStore from 'expo-secure-store';
 import navigationHelper from "../../../helpers/navigationHelper";
 
-// export const createOrder = (order) => {
-//   return dispatch => {
-//     userService.submitForm(order).then((res)=>{
-//       console.log(res);
-//       dispatch({
-//           type: UPDATEUSER,
-//           payload: {
-//             loggedIn: true,
-//             // message: res,
-//           }
-//       });
-//     });  
-//   }
-// }
+import * as appActions from '../app/actions'
 
 export const register = (user) => {
     return dispatch => {
+        dispatch(appActions.loading());
         userService.register(user).then((res)=>{
             // console.log(res);
             SecureStore.setItemAsync("user_token",res.access_token);
@@ -37,10 +25,7 @@ export const register = (user) => {
             navigationHelper.navigate('AuthLoading');
         }).catch((e)=>{
             console.log(e);
-            // dispatch(appActions.loading(false));
         });
+        // dispatch(appActions.loading(false));
     }
 }
-
-
-

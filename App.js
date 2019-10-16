@@ -14,12 +14,16 @@ import { Provider } from 'react-redux';
 
 import { createStore } from './app/store'
 
+//Custom components
+import AppLoading from './app/components/AppLoading';
+import AppBackground from './app/components/AppBackground';
+
 import NavigationService from './app/helpers/navigationHelper';
 
 // import {PUSHER_BEAMS_INSTANCE_ID} from "react-native-dotenv";
 import OneSignal from 'react-native-onesignal';
 
-const store = createStore()
+const store = createStore();
 
 export default class SetupScreen extends Component {
   constructor() {
@@ -27,22 +31,13 @@ export default class SetupScreen extends Component {
     this.state = {
       isReady: false
     };
-    OneSignal.init("8316b62b-6ae3-4a80-8c3d-35a7d7be86fc");    
   }
 
   componentWillMount() {
     this.loadFonts();
-    OneSignal.addEventListener('received', this.onReceived);
-    OneSignal.addEventListener('opened', this.onOpened);
   }
 
   componentWillUnmount() {
-    OneSignal.removeEventListener('received', this.onReceived);
-    OneSignal.removeEventListener('opened', this.onOpened);
-  }
-
-  onReceived(notification) {
-    console.log("Notification received: ", notification);
   }
 
   onOpened(openResult) {
@@ -61,7 +56,7 @@ export default class SetupScreen extends Component {
       Entypo: require("native-base/Fonts/Entypo.ttf"),
       Feather: require("native-base/Fonts/Feather.ttf"),
       FontAwesome: require("native-base/Fonts/FontAwesome.ttf"),
-      FontAwesome5:require("native-base/Fonts/FontAwesome.ttf"),
+      FontAwesome5_Brands:require("native-base/Fonts/FontAwesome5_Brands.ttf"),
       FontAwesome5_Solid:require("native-base/Fonts/FontAwesome5_Solid.ttf"),
       FontAwesome5_Regular:require("native-base/Fonts/FontAwesome5_Regular.ttf"),
       Octicons: require("native-base/Fonts/Octicons.ttf"),
@@ -70,10 +65,11 @@ export default class SetupScreen extends Component {
   }
   render() {
     if (!this.state.isReady) {
-      return <Expo.AppLoading />;
+      return (
+          <AppLoading/>
+      );
     }
     let appTheme=getTheme(variables);
-
     return (
         <StyleProvider style={appTheme}>
           <Root>

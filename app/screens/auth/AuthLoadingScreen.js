@@ -2,6 +2,9 @@ import React from 'react';
 import {ActivityIndicator, Dimensions, ImageBackground, StatusBar, View} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
+import OneSignal from 'react-native-onesignal';
+
+
 import { connect } from 'react-redux';
 import { actions, States } from '../../store';
 
@@ -9,7 +12,9 @@ import {appStyles} from '../assets/app_styles'
 
 import {userService} from '../../services/userService';
 
-import OneSignal from 'react-native-onesignal';
+import AppLoading from '../../components/AppLoading';
+import AppBackground from '../../components/AppBackground';
+
 
 class AuthLoadingScreen extends React.Component {
 
@@ -18,16 +23,18 @@ class AuthLoadingScreen extends React.Component {
         this.state={
             device_id:""
         };
-        OneSignal.init("8316b62b-6ae3-4a80-8c3d-35a7d7be86fc");          
+        console.log("ok");
+        // OneSignal.init("8316b62b-6ae3-4a80-8c3d-35a7d7be86fc");
     }
 
     componentWillMount(){
-        this.getDeviceIds().then((device)=>{
-            this.setState({device_id:device.userId});
-            this._bootstrapAsync();
-        });
-        
-    }    
+        this._bootstrapAsync();
+        // this.getDeviceIds().then((device)=>{
+        //     this.setState({device_id:device.userId});
+
+        // });
+
+    }
 
     async getDeviceIds(){
         return await new Promise(resolve=>{
@@ -36,12 +43,13 @@ class AuthLoadingScreen extends React.Component {
     }
 
     // Fetch the token from storage then navigate to our appropriate place
-    _bootstrapAsync = async () => {        
+    _bootstrapAsync = async () => {
         let user_token=await SecureStore.getItemAsync("user_token");
         let user_role=await SecureStore.getItemAsync("user_role");
         let user= await userService.getUser(user_token);
+        console.log(user_token);
         if(user_token!==null){
-            try{                
+            try{
                 if(user.device_id===""){
                     userService.saveUserDeviceId(this.state.device_id).catch((err)=>{
                         console.log(err);
@@ -61,24 +69,21 @@ class AuthLoadingScreen extends React.Component {
             catch(e){
                 alert(e);
             }
-            
+
         }
         else{
             this.props.navigation.navigate('Auth');
         }
 
-    }      
+    }
 
     // Render any loading content that you like here
     render() {
         let { height, width } = Dimensions.get('window');
         return (
-            <ImageBackground source={require("../../../assets/concrete-background.png")} style={{width,height}}>
-                <View>
-                    <ActivityIndicator />
-                    <StatusBar barStyle="default" />
-                </View>
-            </ImageBackground>
+            <AppBackground>
+              <AppLoading/>
+            </AppBackground>
         );
     }
 }

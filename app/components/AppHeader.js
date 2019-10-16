@@ -13,7 +13,7 @@ export default class AppHeader extends React.Component {
 
     render(){
         return (
-            <Header transparent>
+            <Header transparent style={[appStyles.appHeader]}>
                 <Left style={appStyles.flex1}>
                     <Button transparent onPress={() => navigationHelper.openDrawer()}>
                         <Icon name='menu' />

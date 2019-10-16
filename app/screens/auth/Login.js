@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Icon,Container,Button,Text,Form,Item as FormItem,Input,Content,Spinner,Toast,Grid,Row,Col} from "native-base";
-import {ActivityIndicator,View,ImageBackground,Dimensions,Image} from "react-native";
+import {ActivityIndicator,View,ImageBackground,Dimensions,Image,StatusBar} from "react-native";
 
 import { connect } from 'react-redux';
 
@@ -9,6 +9,11 @@ import { actions, States } from '../../store';
 import {styles} from './styles';
 
 import {appStyles} from '../assets/app_styles'
+
+import AppBackground from '../../components/AppBackground';
+
+import AppLoading from '../../components/AppLoading';
+
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -40,16 +45,14 @@ class LoginScreen extends React.Component {
         let { height, width } = Dimensions.get('window');
         if(this.props.app.loading){
             return (
-                <ImageBackground source={require("../../../assets/concrete-background.png")} style={{width,height}}>
-                    <View style={styles.container}>
-                        <ActivityIndicator size="large" color="#00ff00"/>
-                    </View>
-                </ImageBackground>
+              <AppBackground>
+                <AppLoading/>
+              </AppBackground>
             );
         }
         else{
             return (
-                <ImageBackground source={require("../../../assets/concrete-background.png")} style={{width,height}}>
+                <AppBackground>
                     <Container style={appStyles.container}>
                         <Content style={appStyles.content}>
                             <Grid style={{alignItems: 'center'}}>
@@ -67,9 +70,9 @@ class LoginScreen extends React.Component {
                                             </FormItem>
                                             <FormItem style={appStyles.loginInput} regular>
                                                 <Input style={[appStyles.baseFont]} placeholder='••••••••' value={this.state.password} secureTextEntry={true} onChangeText={(text) => this.setState({ password: text })} />
-                                                <Icon active type="FontAwesome5" name='key' />
+                                                <Icon active type="FontAwesome" name='key' />
                                             </FormItem>
-                                            <Button full style={appStyles.button} onPress={()=> this.login()}>
+                                            <Button full style={[appStyles.button,appStyles.btnPadding]} onPress={()=> this.login()}>
                                                 <Text style={[appStyles.btnTxt,appStyles.baseFont]}>Continue</Text>
                                             </Button>
                                             <Button full transparent onPress={()=> this.props.navigation.navigate('Register')}>
@@ -81,7 +84,7 @@ class LoginScreen extends React.Component {
                             </Grid>
                         </Content>
                     </Container>
-                </ImageBackground>
+                </AppBackground>
             );
         }
     }

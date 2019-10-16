@@ -20,12 +20,25 @@ import {
 	Icon, Grid, Row, Col,
 
 } from "native-base";
-import {ActivityIndicator, View, TouchableOpacity, ImageBackground, Image, Dimensions} from "react-native";
-import * as SecureStore from 'expo-secure-store';
-import { connect } from 'react-redux';
-import { styles } from './styles';
+import {ActivityIndicator, View, TouchableOpacity, ImageBackground, Image, Dimensions,StatusBar} from "react-native";
 
+
+//Expo Packages
+import * as SecureStore from 'expo-secure-store';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+
+//Custom Components/
+import SubHeader from '../../components/SubHeader';
+import LoginHeader from '../../components/LoginHeader';
+
+//React State
+import { connect } from 'react-redux';
 import { actions, States } from '../../store';
+
+//Styles
+import { styles } from './styles';
 import {appStyles} from "../assets/app_styles";
 
 class RegisterRep extends React.Component {
@@ -57,8 +70,32 @@ class RegisterRep extends React.Component {
 		this.uploadLogo=this.uploadLogo.bind(this);
 	}
 
-	uploadLogo(){
-		console.log("ok");
+	componentDidMount() {
+		 this.getPermissionAsync();
+	 }
+
+
+	getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  }
+
+	async uploadLogo(){
+		// console.log("ok");
+		let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+		if(!result.cancelled){
+			if(result.type!=="image"){
+				alert("Please Select the valid type of file");
+			}
+		}
 	}
 
 	formSubmit(){
@@ -84,18 +121,11 @@ class RegisterRep extends React.Component {
 		return (
 			<ImageBackground source={require("../../../assets/concrete-background.png")} style={{width,height}}>
 				<Container style={appStyles.bgTransparent}>
-					<Header style={[appStyles.headerHeight]} transparent>
-						<Grid>
-							<Row>
-								<Col style={appStyles.contentCenter}>
-									<Image source={require("../assets/Logo18.png")} style={appStyles.logoHeader} />
-								</Col>
-							</Row>
-						</Grid>
-					</Header>
 					<Content style={appStyles.content}>
-						<Grid style={appStyles.paddingDefault}>
+						<LoginHeader/>
+						<SubHeader>
 							<Row style={[appStyles.bgPrimary,appStyles.subHeader]}>
+								<View style={appStyles.subHeaderBg}></View>
 								<Col style={appStyles.iconCol}>
 									<Icon type="FontAwesome" name="user" style={appStyles.headerIcon} />
 								</Col>
@@ -103,7 +133,7 @@ class RegisterRep extends React.Component {
 									<Text style={[appStyles.baseFont,appStyles.subHeaderTxt]}>Register AS Rep</Text>
 								</Col>
 							</Row>
-						</Grid>
+						</SubHeader>
 						<Form style={appStyles.loginForm}>
 							<FormItem style={appStyles.loginInput} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Company" value={this.state.company} onChangeText={(text) => this.setState({ company: text })} />
@@ -112,7 +142,7 @@ class RegisterRep extends React.Component {
 								<Input style={[appStyles.baseFont]} placeholder="ABN" value={this.state.abn} onChangeText={(text) => this.setState({ abn: text })} />
 							</FormItem>
 							<Button style={[appStyles.baseFont,appStyles.bgWhite,appStyles.borderRadiusDefault,appStyles.marginDefault]} onPress={this.uploadLogo}>
-								<Text style={[appStyles.colorGray44]}>Logo</Text>
+								<Text style={[appStyles.baseFont,appStyles.colorGray44]}>Logo</Text>
 								<Icon active style={[appStyles.colorGray44]}  type="FontAwesome5" name='upload' />
 							</Button>
 							<FormItem style={appStyles.loginInput} regular>

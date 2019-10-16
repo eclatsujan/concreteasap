@@ -11,7 +11,7 @@ import { actions, States } from '../../../../store';
 
 class ReviewOrder extends React.Component {
   constructor(props) {
-    super(props);    
+    super(props);
   }
 
   nextActions(formData,special){
@@ -21,7 +21,7 @@ class ReviewOrder extends React.Component {
      else{
        this.submitForm(formData);
      }
-    
+
   }
 
   submitForm(formData){
@@ -109,7 +109,7 @@ class ReviewOrder extends React.Component {
               <Text>{formData.time1}</Text>
               <Text>{formData.time2}</Text>
               <Text>{formData.time3}</Text>
-              <Text >{formData.chosenDate}</Text>
+              <Text >{}</Text>
               <Text >{formData.urgency}</Text>
               <Text >{formData.site_call}</Text>
               <Text  style={{fontSize:20, fontWeight:'bold', color: 'red'}}>{formData.message_required=="false"?"No":"Yes"}</Text>

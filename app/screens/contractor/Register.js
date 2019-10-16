@@ -17,13 +17,29 @@ import {
 	Spinner,
 	Toast, Icon, Left, Grid, Row, Col
 } from "native-base";
-import {ActivityIndicator, View, TouchableOpacity, ImageBackground, Dimensions, Image} from "react-native";
+import {ActivityIndicator, View,TouchableWithoutFeedback,Keyboard, TouchableOpacity, ImageBackground, Dimensions, Image,StatusBar,KeyboardAvoidingView,Platform,SafeAreaView} from "react-native";
+
+//React Pacakges
+import Svg from 'react-native-svg';
 import * as SecureStore from 'expo-secure-store';
+
+//App Component
+import AppBackground from '../../components/AppBackground';
+import AppLoading from '../../components/AppLoading';
+
+//Custom COmponent
+import SubHeader from '../../components/SubHeader';
+import LoginHeader from '../../components/LoginHeader';
+
+//React Helper
+
+//React Redux Stores
 import { connect } from 'react-redux';
+import { actions, States } from '../../store';
+
+//Stylesheets
 import { styles } from './styles';
 import {appStyles} from '../assets/app_styles';
-
-import { actions, States } from '../../store';
 
 class RegisterContractor extends React.Component {
 	static navigationOptions = {
@@ -63,28 +79,24 @@ class RegisterContractor extends React.Component {
 		data.city=this.state.city,
 		data.password=this.state.password,
 		data.confirmPassword=this.state.confirmPassword,
-		data.roles=this.state.roles,
-		// console.log(data);
-		// consol
+		data.roles=this.state.roles;
+
 		this.props.register(data);
+
+	}
+
+	handleErrorState(){
+
 	}
 
 	render(){
-		let { height, width } = Dimensions.get('window');
+		checkAppLoading();
 		return (
-			<ImageBackground source={require("../../../assets/concrete-background.png")} style={{width,height}}>
-				<Container style={appStyles.bgTransparent}>
-					<Header style={[appStyles.headerHeight]} transparent>
-						<Grid>
-							<Row>
-								<Col style={appStyles.contentCenter}>
-									<Image source={require("../assets/Logo18.png")} style={appStyles.logoHeader} />
-								</Col>
-							</Row>
-						</Grid>
-					</Header>
-					<Content style={appStyles.content}>
-						<Grid style={appStyles.paddingDefault}>
+			<AppBackground>
+				<Container onPress={Keyboard.dismiss}>
+					<Content enableAndroid>
+						<LoginHeader/>
+						<SubHeader>
 							<Row style={[appStyles.bgPrimary,appStyles.subHeader]}>
 								<Col style={appStyles.iconCol}>
 									<Icon type="FontAwesome" name="user" style={appStyles.headerIcon} />
@@ -93,37 +105,37 @@ class RegisterContractor extends React.Component {
 									<Text style={[appStyles.baseFont,appStyles.subHeaderTxt]}>Register AS Contractor</Text>
 								</Col>
 							</Row>
-						</Grid>
+						</SubHeader>
 						<Form style={appStyles.loginForm}>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="Company" value={this.state.company} onChangeText={company => this.setState({company})} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="COMPANY" value={this.state.company} onChangeText={company => this.setState({company})} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="ABN"  value={this.state.abn} onChangeText={abn => this.setState({abn})} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="ABN"  value={this.state.abn} onChangeText={abn => this.setState({abn})} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="First Name"  value={this.state.first_name} onChangeText={first_name => this.setState({ first_name })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="FIRST NAME"  value={this.state.first_name} onChangeText={first_name => this.setState({ first_name })} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="Last Name" value={this.state.last_name} onChangeText={last_name => this.setState({ last_name })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="LAST NAME" value={this.state.last_name} onChangeText={last_name => this.setState({ last_name })} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="Email" value={this.state.email} onChangeText={email => this.setState({ email })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="EMAIL" value={this.state.email} onChangeText={email => this.setState({ email })} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="Phone" value={this.state.phone} onChangeText={phone => this.setState({ phone })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="PHONE" value={this.state.phone} onChangeText={phone => this.setState({ phone })} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="City" value={this.state.city} onChangeText={city => this.setState({ city })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="CITY" value={this.state.city} onChangeText={city => this.setState({ city })} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]}  placeholder="State" value={this.state.state} onChangeText={state => this.setState({ state })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]}  placeholder="STATE" value={this.state.state} onChangeText={state => this.setState({ state })} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="Password" value={this.state.password} secureTextEntry={true} onChangeText={password => this.setState({ password })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="PASSWORD" value={this.state.password} secureTextEntry={true} onChangeText={password => this.setState({ password })} />
 							</FormItem>
 							<FormItem style={appStyles.loginInput} regular>
-								<Input style={[appStyles.baseFont]} placeholder="Confirm Password" value={this.state.confirmPassword} secureTextEntry={true} onChangeText={confirmPassword => this.setState({ confirmPassword })} />
+								<Input style={[appStyles.baseFont,appStyles.loginInputBox]} placeholder="CONFIRM PASSWORD" value={this.state.confirmPassword} secureTextEntry={true} onChangeText={confirmPassword => this.setState({ confirmPassword })} />
 							</FormItem>
 							<View style={styles.registerButton}>
 								<Button full style={appStyles.button}  onPress={()=>this.formSubmit()}>
@@ -133,7 +145,7 @@ class RegisterContractor extends React.Component {
 						</Form>
 					</Content>
 				</Container>
-			</ImageBackground>
+			</AppBackground>
 		);
 	}
 }
@@ -141,10 +153,15 @@ class RegisterContractor extends React.Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		register: (data) => {
-			// console.log(actions);
 			return dispatch(actions.contractor.register(data));
-		},
+		}
 	}
 }
 
-export default connect(null,mapDispatchToProps)(RegisterContractor);
+const mapStateToProps = (state) => {
+    const {app}=state;
+    return {app};
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(RegisterContractor);

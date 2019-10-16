@@ -20,27 +20,28 @@ export default class SideBar extends React.Component {
 
   constructor(props){
     super(props);
-     
+
     this.resetTopNavigation = this.resetTopNavigation.bind(this);
   }
- 
+
   resetTopNavigation(route,focused){
+    console.log(route.route);
     if(typeof route.route.routes !=='undefined'){
       this.props.navigation.navigate({
-          routeName: route.route.routes[0].routeName 
+          routeName: route.route.routes[0].routeName
       });
     }
     else{
       this.props.navigation.navigate(route.route.routeName);
     }
-    
+
   }
 
   render() {
     console.log(StatusBar.currentHeight);
     return (
        <ScrollView style={{paddingTop:StatusBar.currentHeight}}>
-          <SafeAreaView           
+          <SafeAreaView
             forceInset={{ top: 'always', horizontal: 'never' }}
           >
             <DrawerNavigatorItems {...{...this.props,onItemPress:this.resetTopNavigation}} />

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, TextInput, StyleSheet, ScrollView, TouchableOpacity,Platform,StatusBar } from 'react-native';
-import { 
+import {
 	Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,
 	Form,Item as FormItem,Input,Toast,Label,Picker,Grid,Col, DatePicker,
 
@@ -24,18 +24,18 @@ var size = 30;
 export default class PlaceOrder extends React.Component {
   	constructor(props) {
 	    super(props);
-	        
+
 	    this.state={
 	    	inputs:{
 	    		suburb:"",
 	    		type:"standard-mix",
-	    		mpa:"20",	
+	    		mpa:"20",
 	    		agg:"10",
 	    		slu:"80",
 	    		acc:"1% Bronze",
 	    		placement_types:"Chute",
 	    		quantity:"",
-	    		chosenDate: new Date(this.addDays(5)),
+	    		chosenDate: {},
 	    		time1:"12:22",
 	    		time2:"00:00",
 	    		time3:"00:00",
@@ -137,7 +137,7 @@ export default class PlaceOrder extends React.Component {
   	//date picker
 	setDate(newDate) {
 		var t = new Date(newDate);
-		// t.setDate(); 
+		// t.setDate();
 		//console.log("SetData function",newDate+1);
 		// console.log(newDate);
   		let inputs = {...this.state.inputs};
@@ -151,7 +151,7 @@ export default class PlaceOrder extends React.Component {
 	addDays(n){ // adding the few more days in the current days
 	    var t = new Date();
 	    //console.log(t);
-	    t.setDate(t.getDate() + n); 
+	    t.setDate(t.getDate() + n);
 	    var month = "0"+(t.getMonth()+1);
 	    var date = "0"+t.getDate();
 	    month = month.slice(-2);
@@ -168,10 +168,10 @@ export default class PlaceOrder extends React.Component {
   onCancel() {
     this.TimePicker.close();
   }
- 
+
   onConfirm(hour, minute) {
   	// console.log();
-  	let obj_name=this.currentTimeSelector; // 
+  	let obj_name=this.currentTimeSelector; //
   	// console.log(obj_name);
   	let duplicate_state={...this.state}; //create the duplicate of the state
 
@@ -194,7 +194,7 @@ export default class PlaceOrder extends React.Component {
 	  	else{
 	  			this.props.navigation.navigate("ReviewOrder",{formData:this.state.inputs});
 	  	}
-  	
+
   }
 
   renderError(id) { //display error message
@@ -295,9 +295,9 @@ export default class PlaceOrder extends React.Component {
 		        <Content>
 	             	<ScrollView>
 	             	<Form>
-	             	
-		              	<FormItem floatingLabel>   
-		              		<Label style={{fontSize:18}}>Suburb/Post Code</Label>		
+
+		              	<FormItem floatingLabel>
+		              		<Label style={{fontSize:18}}>Suburb/Post Code</Label>
 	                		<Input value={this.state.inputs.suburb} style={{fontSize:20}} onChangeText={(text) => {
 	                			let inputs={...this.state.inputs}
 	                			inputs.suburb=text;
@@ -307,45 +307,45 @@ export default class PlaceOrder extends React.Component {
 		              	<Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>Type</Text>
 		              	<Picker mode="dropdown"  iosHeader="Types" iosIcon={<Icon name="arrow-down" />}
 		              		selectedValue={this.state.inputs.type} onValueChange={this.onValueChange.bind(this)}
-		              		itemTextStyle={{fontSize: 20}} activeItemTextStyle={{fontSize: 20, fontWeight: 'bold'}}>	
-			            	{this.renderList(this.state.form_data.types)}			              
+		              		itemTextStyle={{fontSize: 20}} activeItemTextStyle={{fontSize: 20, fontWeight: 'bold'}}>
+			            	{this.renderList(this.state.form_data.types)}
 			            </Picker>
 			            <Grid>
 				          <Col>
 				          <Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>MPA</Text>
 				          	<Picker mode="dropdown" iosHeader="MPA" iosIcon={<Icon name="arrow-down" />}
-			              		selectedValue={this.state.inputs.mpa} onValueChange={this.setMapValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            	{this.renderList(this.state.form_data.mpa)}			              
+			              		selectedValue={this.state.inputs.mpa} onValueChange={this.setMapValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            	{this.renderList(this.state.form_data.mpa)}
 				            </Picker>
 				          </Col>
 				          <Col>
 				          <Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>AGG</Text>
 				          	 <Picker mode="dropdown" iosHeader="AGG" iosIcon={<Icon name="arrow-down" />}
-			              		selectedValue={this.state.inputs.agg} onValueChange={this.setAggValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            	{this.renderList(this.state.form_data.agg)}			              
-				            </Picker>		
+			              		selectedValue={this.state.inputs.agg} onValueChange={this.setAggValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            	{this.renderList(this.state.form_data.agg)}
+				            </Picker>
 				          </Col>
 				          <Col>
 				          <Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>SLU</Text>
 			          	 		<Picker mode="dropdown" iosHeader="SLU" iosIcon={<Icon name="arrow-down" />}
-			              			selectedValue={this.state.inputs.slu} onValueChange={this.setSluValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            			{this.renderList(this.state.form_data.slu)}			              
-				            	</Picker>		
-				          </Col>				          
-				        </Grid>   
+			              			selectedValue={this.state.inputs.slu} onValueChange={this.setSluValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            			{this.renderList(this.state.form_data.slu)}
+				            	</Picker>
+				          </Col>
+				        </Grid>
 				        <Grid>
 				        	<Col>
 				        	<Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>ACC</Text>
 				        		<Picker mode="dropdown" iosHeader="Acc" iosIcon={<Icon name="arrow-down" />}
-			              			selectedValue={this.state.inputs.acc} onValueChange={this.setAccValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            			{this.renderList(this.state.form_data.acc)}			              
+			              			selectedValue={this.state.inputs.acc} onValueChange={this.setAccValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            			{this.renderList(this.state.form_data.acc)}
 				            	</Picker>
 				        	</Col>
 				        	<Col>
 				        	<Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>Placement Type</Text>
 				        		<Picker mode="dropdown" iosHeader="Placement Type" iosIcon={<Icon name="arrow-down" />}
-			              			selectedValue={this.state.inputs.placement_types} onValueChange={this.setPlacementTypesValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            			{this.renderList(this.state.form_data.placement_types)}			              
+			              			selectedValue={this.state.inputs.placement_types} onValueChange={this.setPlacementTypesValue.bind(this)} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            			{this.renderList(this.state.form_data.placement_types)}
 				            	</Picker>
 				        	</Col>
 				        </Grid>
@@ -394,23 +394,23 @@ export default class PlaceOrder extends React.Component {
 
 				            <FormItem floatingLabel>
 				                <Label style={{fontSize:18}}>Time Preference 1</Label>
-				                <Input 
-				                 value={this.state.inputs.time1} 
+				                <Input
+				                 value={this.state.inputs.time1}
 				                 onFocus={() => {this.TimePicker.open();this.currentTimeSelector="time1";}}
 				                 onChangeText={this.state.inputs.time1} />
 			                </FormItem>
-			                <Text>{this.renderError("time1")}</Text> 
+			                <Text>{this.renderError("time1")}</Text>
 			                <FormItem floatingLabel>
 				                <Label style={{fontSize:18}}>Time Preference 2</Label>
-				                <Input 
-				                 value={this.state.inputs.time2} 
+				                <Input
+				                 value={this.state.inputs.time2}
 				                 onFocus={() => {this.TimePicker.open();this.currentTimeSelector="time2";}}
 				                 onChangeText={this.state.inputs.time2} />
 			                </FormItem>
 			                <FormItem floatingLabel>
 				                <Label style={{fontSize:18}}>Time Preference 3</Label>
-				                <Input 
-				                 value={this.state.inputs.time3} 
+				                <Input
+				                 value={this.state.inputs.time3}
 				                 onFocus={() => {this.TimePicker.open();this.currentTimeSelector="time3";}}
 				                 onChangeText={this.state.inputs.time3} />
 			                </FormItem>
@@ -421,26 +421,26 @@ export default class PlaceOrder extends React.Component {
 					          onCancel={() => this.onCancel()}
 					          onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
 					        />
-			                
+
 					        <Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>Time Between Deliveries</Text>
 					        <Picker mode="dropdown" iosHeader="time_difference_deliveries" iosIcon={<Icon name="arrow-down" />}
-			              		selectedValue={this.state.inputs.time_difference_deliveries} onValueChange={(text)=>{this.setTimeDifferenceDeliveriesValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            	{this.renderList(this.state.form_data.time_difference_deliveries)}			              
+			              		selectedValue={this.state.inputs.time_difference_deliveries} onValueChange={(text)=>{this.setTimeDifferenceDeliveriesValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            	{this.renderList(this.state.form_data.time_difference_deliveries)}
 				            </Picker>
 				            <Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>Urgency</Text>
 					        <Picker mode="dropdown" iosHeader="urgency" iosIcon={<Icon name="arrow-down" />}
-			              		selectedValue={this.state.inputs.urgency} onValueChange={(text) =>{this.setUrgencyValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            	{this.renderList(this.state.form_data.urgency)}			              
+			              		selectedValue={this.state.inputs.urgency} onValueChange={(text) =>{this.setUrgencyValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            	{this.renderList(this.state.form_data.urgency)}
 				            </Picker>
 				            <Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>Message Required Y/N</Text>
 					        <Picker mode="dropdown" iosHeader="message_required" iosIcon={<Icon name="arrow-down" />}
-			              		selectedValue={this.state.inputs.message_required} onValueChange={(text)=>{this.setMessageRequiredValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            	{this.renderList(this.state.form_data.message_required)}			              
+			              		selectedValue={this.state.inputs.message_required} onValueChange={(text)=>{this.setMessageRequiredValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            	{this.renderList(this.state.form_data.message_required)}
 				            </Picker>
 				            <Text style={{fontSize:16, margin: 8, fontWeight:'bold',}}>On Site / On Call</Text>
 					        <Picker mode="dropdown" iosHeader="site_call" iosIcon={<Icon name="arrow-down" />}
-			              		selectedValue={this.state.inputs.site_call} onValueChange={(text)=>{this.setSiteCallValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>	
-				            	{this.renderList(this.state.form_data.site_call)}			              
+			              		selectedValue={this.state.inputs.site_call} onValueChange={(text)=>{this.setSiteCallValue(text)}} itemTextStyle={{ fontSize:25, color: '#d00' }}>
+				            	{this.renderList(this.state.form_data.site_call)}
 				            </Picker>
 				            <View style={styles.registerButton}>
 				              	<TouchableOpacity onPress={()=>this._specialRequests()}>
