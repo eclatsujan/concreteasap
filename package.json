@@ -7,7 +7,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
     "braintree-web": "^3.53.0",
-    "expo": "^33.0.0",
+    "expo": "^34.0.0",
     "expo-asset": "latest",
     "expo-font": "^5.0.1",
     "expo-payments-stripe": "^5.0.1",
@@ -33,6 +33,7 @@
     "react-navigation-stack": "^1.8.0",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
+    "redux-form": "^8.2.6",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "rn-expo-paypal-integration": "^1.2.0",

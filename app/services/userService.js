@@ -6,7 +6,9 @@ export const userService = {
     logout,
     register,
     getUser,
-    saveUserDeviceId
+    saveUserDeviceId,
+    resetPassword,
+    changePasswordWithToken
 };
 
 
@@ -22,7 +24,7 @@ function login(email, password) {
 }
 
 function logout(){
-    
+
 }
 
 function register(data) {
@@ -40,12 +42,12 @@ async function getUser(token) {
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token },
         // body: JSON.stringify(token)
     };
-    
+
     return await fetch(AUTH_PREFIX_URI+'me', requestOptions).then(handleResponse);
 }
 
 async function saveUserDeviceId(deviceId){
-    let token=await getToken();  
+    let token=await getToken();
     // console.log(COMMON_USER_URI+'save_device');
     const requestOptions = {
         method: 'POST',
@@ -57,4 +59,22 @@ async function saveUserDeviceId(deviceId){
 
 }
 
+async function resetPassword(email){
+  const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({"email":email})
+  };
 
+  return await fetch(AUTH_PREFIX_URI+'get_reset_token', requestOptions).then(handleResponse);
+}
+
+
+async function changePasswordWithToken(token,email,password,password_confirmation){
+  const requestOptions={
+    method:'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body:JSON.stringify({email,token,password,password_confirmation})
+  }
+  return await fetch(AUTH_PREFIX_URI+'reset_password', requestOptions).then(handleResponse);
+}

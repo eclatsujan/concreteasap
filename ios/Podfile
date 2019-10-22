@@ -19,9 +19,6 @@ target 'concrete-asap' do
     ],
   )
   
-  pod 'EXPaymentsStripe',
-    :path => "../node_modules/expo-payments-stripe/ios",
-    :inhibit_warnings => true
   pod 'React',
     :path => "../node_modules/react-native",
     :inhibit_warnings => true,
@@ -52,6 +49,10 @@ target 'concrete-asap' do
   pod 'glog',
     :podspec => "../node_modules/react-native/third-party-podspecs/glog.podspec",
     :inhibit_warnings => true
+  pod 'EXPaymentsStripe',
+    :path => "../node_modules/expo-payments-stripe/ios",
+    :inhibit_warnings => true
+  
 
 
   post_install do |installer|

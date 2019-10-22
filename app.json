@@ -14,7 +14,7 @@
       "hideExponentText": false
     },
     "splash": {
-      "image": "./assets/concrete-background.jpg",
+      "image": "./assets/concrete-background.png",
       "resizeMode": "cover"
     },
     "androidStatusBarColor": "#334393",

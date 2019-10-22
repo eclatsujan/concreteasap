@@ -16,9 +16,9 @@ export function handleResponse(response){// this function handles the responses 
         // console.log(text);
         if(text!==""&&contentType && contentType.indexOf("application/json") !== -1){
 
-            // console.log(text);
+            console.log(text);
             const data = text && JSON.parse(text);
-            console.log(data);
+            // console.log(data);
             if (!response.ok) {
                 const error = (data && data.message) || response.statusText;
                 // console.log(data.message);
@@ -27,7 +27,6 @@ export function handleResponse(response){// this function handles the responses 
             return data;
         }
         else{
-
             throw {"error_message":"Not a Json data"}
         }
         // console.log(data);

@@ -4,11 +4,13 @@ import {ContractorState,contractor} from './contractor'
 import {RepState,rep} from './rep'
 import {OrderState,order} from './order'
 import {bid} from './bid'
+import {error} from './error'
+
 /**
  * Root states.
  */
 export const States = {
-  user,app,contractor,rep,bid
+  user,app,contractor,rep,bid,error
 }
 
 /**
@@ -20,7 +22,8 @@ export const reducers = {
   contractor:contractor.reducer,
   rep:rep.reducer,
   order:order.reducer,
-  bid:bid.reducer
+  bid:bid.reducer,
+  error:error.reducer
 }
 
 /**
@@ -32,7 +35,8 @@ export const actions = {
   contractor: contractor.actions,
   rep:rep.actions,
   order:order.actions,
-  bid:bid.actions
+  bid:bid.actions,
+  error:error.actions
 }
 
 export { user }

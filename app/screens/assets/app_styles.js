@@ -1,15 +1,22 @@
 import { StyleSheet } from 'react-native';
 import {StatusBar} from 'react-native';
 import {Dimensions} from 'react-native';
-let { height, width } = Dimensions.get('window');
 import Constants from 'expo-constants';
+
+
+let { height, width } = Dimensions.get('window');
+
+export const IMAGE_HEIGHT = width / 2;
+export const IMAGE_HEIGHT_SMALL = width /7;
+
 export const appStyles = StyleSheet.create({
+
     imageBg:{
         width,
         height
     },
     appHeader:{
-      height:125
+      // height:125
     },
     headerHeight:{
   		height:100
@@ -34,6 +41,9 @@ export const appStyles = StyleSheet.create({
     bgWhite:{
         backgroundColor:"#fff"
     },
+    colorPrimary:{
+      color:"#14E22A"
+    },
     colorGray44:{
       color:"#707070"
     },
@@ -45,6 +55,9 @@ export const appStyles = StyleSheet.create({
     },
     flex3:{
       flex:3
+    },
+    borderTransparent:{
+      borderColor:'transparent'
     },
     btnGray:{
         backgroundColor:"#2E2E2E",
@@ -59,12 +72,12 @@ export const appStyles = StyleSheet.create({
         marginBottom:7,
     },
     marginAppDefault:{
-      marginLeft:20,
-      marginRight:20
+      // marginLeft:20,
+      // marginRight:20
     },
     paddingAppDefault:{
-      paddingLeft:10,
-      paddingRight:10
+      // paddingLeft:10,
+      // paddingRight:10
     },
     borderRadiusDefault:{
         borderRadius:7
@@ -102,8 +115,8 @@ export const appStyles = StyleSheet.create({
         textTransform:"uppercase"
     },
     paddingDefault:{
-        paddingLeft:20,
-        paddingRight:20
+        // paddingLeft:20,
+        // paddingRight:20
     },
     content:{
         flex:1,
@@ -138,8 +151,8 @@ export const appStyles = StyleSheet.create({
     },
     loginForm:{
         marginTop:5,
-        paddingLeft:20,
-        paddingRight:20
+        // paddingLeft:20,
+        // paddingRight:20
     },
     loginInput:{
         backgroundColor:"#fff",

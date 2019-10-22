@@ -19,7 +19,7 @@ export const register = (user) => {
             loggedIn: true,
             userId: user.email,
             secureToken:res.access_token,
-              roles:res.roles
+            roles:res.roles
           }
       });
 
@@ -29,7 +29,5 @@ export const register = (user) => {
        console.log(e);
        // dispatch(appActions.loading(false));
     });
-  }  
+  }
 }
-
-

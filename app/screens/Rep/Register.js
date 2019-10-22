@@ -1,26 +1,17 @@
 import * as React from 'react';
-import {
-	Container,
-	Header,
-	Button,
-	Text,
-	Body,
-	Form,
-	Item as FormItem,
-	Input,
+import {ActivityIndicator, View, TouchableOpacity, ImageBackground, Image, Dimensions,StatusBar} from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import {Container,Header,Button,Text,Body,Form,	Item as FormItem,Input,
 	Label,
 	Title,
 	Content,
-	Right,
-	Footer,
-	FooterTab,
 	Spinner,
 	Toast,
 	Left,
 	Icon, Grid, Row, Col,
 
 } from "native-base";
-import {ActivityIndicator, View, TouchableOpacity, ImageBackground, Image, Dimensions,StatusBar} from "react-native";
 
 
 //Expo Packages
@@ -32,6 +23,12 @@ import * as Permissions from 'expo-permissions';
 //Custom Components/
 import SubHeader from '../../components/SubHeader';
 import LoginHeader from '../../components/LoginHeader';
+
+//App Component
+import AppBackground from '../../components/AppBackground';
+
+//React Helper
+import {helper} from '../../helpers'
 
 //React State
 import { connect } from 'react-redux';
@@ -117,10 +114,8 @@ class RegisterRep extends React.Component {
 	}
 
 	render(){
-		let { height, width } = Dimensions.get('window');
 		return (
-			<ImageBackground source={require("../../../assets/concrete-background.png")} style={{width,height}}>
-				<Container style={appStyles.bgTransparent}>
+			<AppBackground loading={this.props.app.loading}>
 					<Content style={appStyles.content}>
 						<LoginHeader/>
 						<SubHeader>
@@ -135,43 +130,54 @@ class RegisterRep extends React.Component {
 							</Row>
 						</SubHeader>
 						<Form style={appStyles.loginForm}>
-							<FormItem style={appStyles.loginInput} regular>
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.company)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Company" value={this.state.company} onChangeText={(text) => this.setState({ company: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.company)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.abn)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="ABN" value={this.state.abn} onChangeText={(text) => this.setState({ abn: text })} />
 							</FormItem>
+							{helper.error.showErrorMessage(this.props.error.errors.abn)}
 							<Button style={[appStyles.baseFont,appStyles.bgWhite,appStyles.borderRadiusDefault,appStyles.marginDefault]} onPress={this.uploadLogo}>
 								<Text style={[appStyles.baseFont,appStyles.colorGray44]}>Logo</Text>
 								<Icon active style={[appStyles.colorGray44]}  type="FontAwesome5" name='upload' />
 							</Button>
-							<FormItem style={appStyles.loginInput} regular>
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.title)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Title" value={this.state.title} onChangeText={(text) => this.setState({ title: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.title)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.first_name)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="First Name" value={this.state.first_name} onChangeText={(text) => this.setState({ first_name: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.first_name)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.last_name)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Last Name" value={this.state.last_name} onChangeText={(text) => this.setState({ last_name: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.last_name)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.email)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Email" value={this.state.email} onChangeText={(text) => this.setState({ email: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.email)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.phone_number)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Phone" value={this.state.phone} onChangeText={(text) => this.setState({ phone: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.phone_number)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.city)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="City" value={this.state.city} onChangeText={(text) => this.setState({ city: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.city)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.state)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="State" value={this.state.state} onChangeText={(text) => this.setState({ state: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.state)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.password)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Password" value={this.state.password} secureTextEntry={true} onChangeText={(text) => this.setState({ password: text })} />
 							</FormItem>
-							<FormItem style={appStyles.loginInput} regular>
+							{helper.error.showErrorMessage(this.props.error.errors.password)}
+							<FormItem style={[appStyles.loginInput,helper.error.getErrorStyle(this.props.error.errors.confirm_password)]} regular>
 								<Input style={[appStyles.baseFont]} placeholder="Confirm Password" value={this.state.confirmPassword} secureTextEntry={true} onChangeText={(text) => this.setState({ confirmPassword: text })} />
 							</FormItem>
+							{helper.error.showErrorMessage(this.props.error.errors.confirm_password)}
 							<View style={styles.registerButton}>
 								<Button full style={appStyles.button} onPress={()=>this.formSubmit()}>
 									<Text style={[appStyles.btnTxt,appStyles.baseFont]}>Register</Text>
@@ -179,8 +185,7 @@ class RegisterRep extends React.Component {
 							</View>
 						</Form>
 					</Content>
-				</Container>
-			</ImageBackground>
+			</AppBackground>
 		);
 	}
 }
@@ -188,10 +193,15 @@ class RegisterRep extends React.Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		register: (data) => {
-			// console.log("Register page",data);
-			return dispatch(actions.rep.register(data));
+			return dispatch(actions.user.register(data));
 		},
 	};
 }
 
-export default connect(null,mapDispatchToProps)(RegisterRep);
+const mapStateToProps = (state) => {
+    const {app,error}=state;
+    return {app,error};
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(RegisterRep);

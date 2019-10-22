@@ -6,6 +6,7 @@ import * as SecureStore from 'expo-secure-store';
 import navigationHelper from "../../../helpers/navigationHelper";
 
 import * as appActions from '../app/actions'
+import * as errorActions from '../error/actions'
 
 export const register = (user) => {
     return dispatch => {
@@ -24,8 +25,9 @@ export const register = (user) => {
             });
             navigationHelper.navigate('AuthLoading');
         }).catch((e)=>{
-            console.log(e);
+            dispatch(errorActions.setError("There is an issue occured","contractor_registration",e));
+            dispatch(appActions.loading(false));
         });
-        // dispatch(appActions.loading(false));
+
     }
 }

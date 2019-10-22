@@ -17,10 +17,9 @@ class LogoutScreen extends React.Component {
   }
 
   async _logout() {
-    console.log("ok");
+    await this.props.doLogout();
     await SecureStore.deleteItemAsync("user_token");
     await SecureStore.deleteItemAsync("user_role");
-    this.props.doLogout();
     this.props.navigation.navigate('AuthLoading');
   }
 

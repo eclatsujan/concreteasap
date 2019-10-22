@@ -81,9 +81,7 @@ class AuthLoadingScreen extends React.Component {
     render() {
         let { height, width } = Dimensions.get('window');
         return (
-            <AppBackground>
-              <AppLoading/>
-            </AppBackground>
+            <AppBackground loading="true" />
         );
     }
 }
