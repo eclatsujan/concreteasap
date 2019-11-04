@@ -53,18 +53,12 @@ class RegisterContractor extends React.Component {
 			"confirmPassword":"",
 			'roles':"contractor"
 		};
-		this.handleBackButton=this.handleBackButton.bind(this);
+		// this.handleBackButton=this.handleBackButton.bind(this);
 	}
 
-	componentWillMount(){
-		BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-	}
-
-	handleBackButton(){
+	componentWillUnmount() {
 		this.props.flushError();
-		this.props.navigation.goBack();
-    return true;
-	}
+  }
 
 	formSubmit(){
 		let data={}

@@ -4,7 +4,7 @@
     "description": "No description",
     "slug": "snack-BJO6CEBzB",
     "privacy": "unlisted",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "35.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
@@ -42,8 +42,8 @@
     ],
     "isDetached": true,
     "detach": {
-      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.11.4-sdk33.0.0-6a4f0f3e-1f1b-4c33-9155-d0237f6d7c34.tar.gz",
-      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.11.2-sdk33.0.0-76da9dd8-735b-43b3-9682-b386811f4e5f.tar.gz"
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.13.0-sdk35.0.0-b816b7af-88da-4ca9-87a5-7438f0c21b6e.tar.gz",
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.13.0-sdk35.0.0-a30ebc9b-3db4-42f4-b677-e468076baf18.tar.gz"
     },
     "scheme": "expf6a88ee5db3e4697a1070cf2f1afeebd",
     "android": {

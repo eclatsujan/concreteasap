@@ -1,120 +1,117 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
-import { Grid,Col,Row,View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
-import {styles} from '../../styles.js';
+import {TouchableOpacity, ScrollView} from 'react-native';
+import {Col, Row, View, Button, Text, Content, Icon, Footer, FooterTab} from 'native-base';
 
+//Redux
+import {connect} from "react-redux";
+import {withNavigation} from "react-navigation";
 
+//Custom Component
+import AppBackground from '../../../../components/AppBackground';
+import AppHeader from '../../../../components/AppHeader'
+import SubHeader from '../../../../components/SubHeader'
 
-export default class AcceptedOrders extends React.Component {
-  constructor(props) {
-    super(props);    
-    this.state = {
-      
-      tableHead: ['Order', 'Status', 'Actions'],
-      tableData: [
-        {
-          "id":200,
-          "status":"paid"
-        },
-        {
-          "id":202,
-          "status":"paid"
-        },
-        {
-          "id":203,
-          "status":"paid"
-        },
-        {
-          "id":204,
-          "status":"paid"
-        }
-      ],
+//styles
+import {appStyles} from "../../../assets/app_styles";
+import {actions} from "../../../../store/modules";
+
+class AcceptedOrders extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tableHead: ['Order', 'Status', ''],
+            tableData: [],
+        };
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            // this.setState({loading: true});
+            this.props.getAcceptedOrder();
+        });
     }
-  }
 
-  _alertIndex(id) {
-    console.log("bids:", id);
-    this.props.navigation.navigate("DayOfPour");
-  }
+    componentWillUnmount() {
+        // Remove the event listener
+        this.focusListener.remove();
+    }
 
-  displayTableHeader(){
-    return (
-        <Row>
-            <Grid style={{marginTop:20, borderBottomWidth: 2,borderBottomColor: 'grey',}}>
-                {this.state.tableHead.map((rowData, index) => (        
-                    <Col key={index} style={{marginLeft:10,}}>
+    _alertIndex(id) {
+        this.props.navigation.navigate("DayOfPour",{
+            order_id:id
+        });
+    }
+
+    displayTableHeader() {
+        return (
+            <Row style={[appStyles.borderBottom, appStyles.pb_15]}>
+                {this.state.tableHead.map((rowData, index) => (
+                    <Col key={index} style={{marginLeft: 10,}}>
                         <Text>{rowData}</Text>
-                    </Col>           
-                ))}       
-            </Grid>
-        </Row>
-    );
+                    </Col>
+                ))}
+            </Row>
+        );
+    }
 
-
-    
-  }
-
-  displayTableData(){
-    return this.state.tableData.map((rowData, index) => (
-        <Row key={index}>
-            <Grid style={{marginTop:10}}>
-                <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2',marginLeft:10}}>
-                    <Text>{rowData.id}</Text>
+    displayTableData() {
+        let order=this.props["order"].toJS();
+        return order.accepted_orders.map((rowData, index) => (
+            <Row key={index} style={[appStyles.borderBottom, appStyles.py_10]}>
+                <Col><Text>{rowData.id}</Text></Col>
+                <Col><Text>{rowData.status}</Text></Col>
+                <Col>
+                    <TouchableOpacity onPress={() => this._alertIndex(rowData.id)}>
+                        <View style={appStyles.flexRow}>
+                            <View style={appStyles.w_25}>
+                                <Icon type="FontAwesome5" name="eye" style={appStyles.ft_20}/>
+                            </View>
+                            <View style={appStyles.w_75}><Text>View Bids</Text></View>
+                        </View>
+                    </TouchableOpacity>
                 </Col>
-                <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2',}}>
-                    <Text>{rowData.status}</Text>
-                </Col>
-                <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2', paddingBottom:10}}>
-                    <Button 
-                    disabled={rowData.status=="close"? true: false}
-                    onPress={() => this._alertIndex(rowData.id)}>
-                    <Text>View</Text>
-                    </Button>
-                </Col>
-            </Grid>
-        </Row>
-    ));
-  }
+            </Row>
+        ));
+    }
 
-  render(){
-
-    return (
-       <Container>
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
-            >
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Concrete ASAP</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='person' />
-            </Button>
-          </Right>
-        </Header>
-        <Content contentContainerStyle={styles.content}>
-        <ScrollView>
-          <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Accepted Orders</Text>   
-            {this.displayTableHeader()}
-            {this.displayTableData()}
-          <View style={styles.registerButton}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
-                          <Text style = {styles.buttonText}>Back To Home</Text>
-                        </TouchableOpacity>
-          </View>
-          </ScrollView>
-        </Content>
-      </Container>
-    );
-  }
+    render() {
+        return (
+            <AppBackground alignTop noKeyBoard>
+                <ScrollView>
+                    <AppHeader/>
+                    <SubHeader title="Accepted Orders" iconName="user"/>
+                    <Content>
+                        <View style={[appStyles.bgWhite, appStyles.p_5]}>
+                            {this.displayTableHeader()}
+                            {this.displayTableData()}
+                        </View>
+                    </Content>
+                </ScrollView>
+                <Footer>
+                    <FooterTab>
+                        <Button style={[appStyles.button, appStyles.buttonPrimary]}
+                                onPress={() => this.props.navigation.navigate("Home")}>
+                            <Text style={appStyles.buttonBlack}>Back to Home</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
+            </AppBackground>
+        );
+    }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getAcceptedOrder: () => {
+            return dispatch(actions.order.getAcceptedOrder())
+        },
+    }
+};
 
+const mapStateToProps = (state) => {
+    return {
+        order:state.get("order"),
+        app:state.get("app")
+    };
+};
 
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(AcceptedOrders));
+
+// export default ;

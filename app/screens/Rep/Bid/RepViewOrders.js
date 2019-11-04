@@ -1,39 +1,54 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
-import { Grid,Col,Row,View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
-
-import {styles} from '../styles.js';
+import {TouchableOpacity, ScrollView} from 'react-native';
+import {Grid, Col, Row, View, Button, Text, Content, Footer, FooterTab} from 'native-base';
+import {withNavigation} from 'react-navigation';
 
 import {connect} from "react-redux";
-import { actions, States } from '../../../store';
+import {actions, States} from '../../../store';
+
+//Custom Components
+import AppBackground from "../../../components/AppBackground";
+import AppHeader from "../../../components/AppHeader";
+import SubHeader from "../../../components/SubHeader";
+
+import {styles} from '../styles.js';
+import {appStyles} from '../../assets/app_styles.js';
 
 
 class RepViewOrders extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tableHead: ['Order', 'Suburb', 'Cubic m', 'Actions']
-        }
+            tableHead: ['Order', 'Suburb', 'Cubic m', '']
+        };
+
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.props.getAllOrder();
+        });
     }
 
-    componentWillMount(){
+    componentWillUnmount() {
+        // Remove the event listener
+        this.focusListener.remove();
+    }
+
+    componentDidMount() {
         this.props.getAllOrder();
-        if(typeof this.props.navigation.state.params!=="undefined"){
-          console.log(this.props.navigation.state.params);
+        if (typeof this.props.navigation.state.params !== "undefined") {
+            console.log(this.props.navigation.state.params);
         }
     }
 
     _alertIndex(rowData) {
-        this.props.navigation.navigate("Order Details",{orderDetail:rowData});
+        this.props.navigation.navigate("Order Details", {orderDetail: rowData});
     }
 
-    displayTableHeader(){
+    displayTableHeader() {
         return (
             <Row>
-                <Grid style={{marginTop:20, borderBottomWidth: 2,borderBottomColor: 'grey',}}>
+                <Grid style={{marginTop: 20, borderBottomWidth: 2, borderBottomColor: 'grey',}}>
                     {this.state.tableHead.map((rowData, index) => (
-                        <Col key={index} style={{marginLeft:10,}}>
+                        <Col key={index} style={{marginLeft: 10,}}>
                             <Text>{rowData}</Text>
                         </Col>
                     ))}
@@ -42,66 +57,53 @@ class RepViewOrders extends React.Component {
         );
     }
 
-    displayTableData(){
-        return this.props.order.orders.map((rowData, index) => (
+    displayTableData() {
+        let order=this.props.order.toJS();
+        return order.orders.map((rowData, index) => (
             <Row key={index}>
-                <Grid style={{marginTop:10}}>
-                    <Col style={styles.tableBorder}>
+                <Grid style={[styles.tableBorder, {marginTop: 10}]}>
+                    <Col>
                         <Text>{rowData.id}</Text>
                     </Col>
-                    <Col style={styles.tableBorder}>
-                        <Text>{rowData.order_concrete!=null?rowData.order_concrete.suburb:""}</Text>
+                    <Col>
+                        <Text>{rowData["order_concrete"] != null ? rowData["order_concrete"].suburb : ""}</Text>
                     </Col>
-                    <Col style={styles.tableBorder}>
-                        <Text>{rowData.order_concrete!=null?rowData.order_concrete.quantity:""}</Text>
+                    <Col>
+                        <Text>{rowData["order_concrete"] != null ? rowData["order_concrete"].quantity : ""}</Text>
                     </Col>
-                    <Col style={styles.tableBorder}>
-                        <Button
-                            style={{width:"95%"}}
-                            onPress={() => this._alertIndex(rowData)}>
-                            <Text style={{textAlign:'center'}}>View Details</Text>
-                        </Button>
+                    <Col>
+                        <View>
+                            <TouchableOpacity onPress={() => this._alertIndex(rowData)}>
+                                <Text style={{textAlign: 'center'}}>View Details</Text>
+                            </TouchableOpacity>
+                        </View>
                     </Col>
                 </Grid>
             </Row>
         ));
     }
 
-    render(){
+    render() {
+        let app=this.props.app.toJS();
         return (
-            <Container>
-                <Header>
-                    <Left>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
-                        >
-                            <Icon name='menu' />
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title>Concrete ASAP</Title>
-                    </Body>
-                    <Right>
-                        <Button transparent>
-                            <Icon name='person' />
-                        </Button>
-                    </Right>
-                </Header>
-                <Content contentContainerStyle={styles.content}>
-                    <ScrollView>
-                        <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>View Orders Requests</Text>
+            <AppBackground alignTop loading={app.loading}>
+                <ScrollView>
+                    <AppHeader/>
+                    <SubHeader iconName="clipboard" title="View Orders Requests"/>
+                    <Content contentContainerStyle={[styles.content, appStyles.bgWhite, appStyles.mb_10]}>
                         {this.displayTableHeader()}
                         {this.displayTableData()}
-
-                        <View style={styles.registerButton}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
-                                <Text style = {styles.buttonText}>Back To Home</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
-                </Content>
-            </Container>
+                    </Content>
+                </ScrollView>
+                <Footer>
+                    <FooterTab>
+                        <Button style={[appStyles.button, appStyles.buttonPrimary]}
+                                onPress={() => this.props.navigation.navigate("Home")}>
+                            <Text style={appStyles.buttonBlack}>Back to Home</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
+            </AppBackground>
         );
     }
 }
@@ -112,12 +114,15 @@ const mapDispatchToProps = (dispatch) => {
             return dispatch(actions.order.getAllOrder())
         }
     }
-}
+};
 
 const mapStateToProps = (state) => {
-    const {order}=state;
-    return {order};
-}
+    // const {order, app} = state;
+    return {
+        order:state.get("order"),
+        app:state.get("app")
+    };
+};
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(RepViewOrders);
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(RepViewOrders));

@@ -1,12 +1,14 @@
-const initialState = {
-  isRegister: false,
-  userId: '',
-  secureToken: ''
-};
+import * as Immutable from 'immutable';
 
-export default (state=initialState, action) => {
+export const defaultState =  Immutable.Map({
+  // isRegister: false,
+  // userId: '',
+  // secureToken: ''
+});
+
+export const reducer= (state, action) => {
 	switch(action.type){
 		default:
 		return state
 	}	
-}
+};

@@ -1,9 +1,9 @@
 import React from "react";
-import {Button, Icon, Left, Body, Title, Right, Header, View} from "native-base";
-import navigationHelper from "../helpers/navigationHelper";
 import {Image} from "react-native";
+import {Button, Icon, Left, Body, Right, Header} from "native-base";
+import navigationHelper from "../helpers/navigationHelper";
+
 import {appStyles} from "../screens/assets/app_styles";
-import { StatusBar } from 'react-native'
 
 export default class AppHeader extends React.Component {
 
@@ -11,22 +11,28 @@ export default class AppHeader extends React.Component {
         super(props);
     }
 
+    customMenu(){
+      return this.props.backMenu?<Button
+        transparent
+       onPress={()=>navigationHelper.goBack()}           >
+        <Icon name="arrow-back" style={appStyles.colorPrimary} />
+      </Button>:<Button transparent onPress={() => navigationHelper.openDrawer()}>
+          <Icon name='menu' style={appStyles.colorPrimary} />
+      </Button>;
+    }
+
     render(){
         return (
-            <Header transparent style={[appStyles.appHeader]}>
-                <Left style={appStyles.flex1}>
-                    <Button transparent onPress={() => navigationHelper.openDrawer()}>
-                        <Icon name='menu' />
-                    </Button>
+            <Header style={[appStyles.bgTransparent,appStyles.headerHeight,appStyles.horizontalCenter]} noShadow>
+                <Left style={{flex: 1}}>
+                  {this.customMenu()}
                 </Left>
-                <Body style={[appStyles.justifyItemsCenter,appStyles.flex3]}>
-                    <View>
-                        <Image source={require("../../assets/Logo18.png")} style={appStyles.logoHeader} />
-                    </View>
+                <Body style={{flex:1}}>
+                    <Image source={require("../../assets/Logo18.png")} style={appStyles.appHeader} />
                 </Body>
-                <Right style={appStyles.flex1}>
+                <Right style={{flex: 1}}>
                     <Button transparent>
-                        <Icon name='person' />
+                        <Icon name='person' style={appStyles.colorPrimary}  />
                     </Button>
                 </Right>
             </Header>

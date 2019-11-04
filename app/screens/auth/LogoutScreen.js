@@ -4,6 +4,8 @@ import * as SecureStore from 'expo-secure-store';
 
 import { connect } from 'react-redux';
 
+import {userService} from '../../services/userService';
+
 import { actions, States } from '../../store';
 
 class LogoutScreen extends React.Component {
@@ -18,6 +20,7 @@ class LogoutScreen extends React.Component {
 
   async _logout() {
     await this.props.doLogout();
+    await userService.removeUserDeviceId();
     await SecureStore.deleteItemAsync("user_token");
     await SecureStore.deleteItemAsync("user_role");
     this.props.navigation.navigate('AuthLoading');

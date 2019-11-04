@@ -1,14 +1,10 @@
-import { PLACE_ORDER } from './constants'
+import * as Immutable from 'immutable';
 
-const initialState = {
-  isRegister: false,
-  userId: '',
-  secureToken: '',
-  formMessage:'Form Submited',
-  errorFormMessage:'Failed To Submit Form',
-}
+export const defaultState = Immutable.Map({
 
-export default (state=initialState, action) => {
+});
+
+export const reducer=(state, action) => {
 	switch(action.type){
 		// case PLACE_ORDER: 
 		// return Object.assign({}, state, action.payload)

@@ -15,8 +15,8 @@ import LoginScreen from './screens/auth/Login';
 import LogoutScreen from './screens/auth/LogoutScreen';
 import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
 import Register from './screens/auth/Register';
-import UserProfile from './screens/contractor/Profile/UserProfile';
-import EditUserProfile from './screens/contractor/Profile/EditUserProfile';
+import UserProfile from './screens/User/Profile/UserProfile';
+import EditUserProfile from './screens/User/Profile/EditUserProfile';
 
 //Rep files
 import RepHome from './screens/Rep/RepHomeScreen';

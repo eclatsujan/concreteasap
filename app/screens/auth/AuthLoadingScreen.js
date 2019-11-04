@@ -23,17 +23,11 @@ class AuthLoadingScreen extends React.Component {
         this.state={
             device_id:""
         };
-        console.log("ok");
-        // OneSignal.init("8316b62b-6ae3-4a80-8c3d-35a7d7be86fc");
+        OneSignal.init("8316b62b-6ae3-4a80-8c3d-35a7d7be86fc");
     }
 
     componentWillMount(){
         this._bootstrapAsync();
-        // this.getDeviceIds().then((device)=>{
-        //     this.setState({device_id:device.userId});
-
-        // });
-
     }
 
     async getDeviceIds(){
@@ -47,13 +41,15 @@ class AuthLoadingScreen extends React.Component {
         let user_token=await SecureStore.getItemAsync("user_token");
         let user_role=await SecureStore.getItemAsync("user_role");
         let user= await userService.getUser(user_token);
-        console.log(user_token);
         if(user_token!==null){
             try{
                 if(user.device_id===""){
-                    userService.saveUserDeviceId(this.state.device_id).catch((err)=>{
-                        console.log(err);
-                    });
+                    let device=await this.getDeviceIds();
+                    if(device){
+                      userService.saveUserDeviceId(device.userId).catch((err)=>{
+                          // console.log(err);
+                      });
+                    }
                 }
 
                 if(user_role==="contractor"){
@@ -95,8 +91,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-    const {user,app}=state;
-    return {user,app};
+    return {
+        user:state.get("user"),
+        app:state.get("app")
+    };
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(AuthLoadingScreen);

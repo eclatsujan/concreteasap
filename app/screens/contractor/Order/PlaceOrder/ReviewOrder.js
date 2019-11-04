@@ -1,144 +1,135 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, TouchableOpacity } from 'react-native';
-import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
+import {ScrollView} from 'react-native';
+import {View, Button, Text, Content, Col, Row} from 'native-base';
+
+import {connect} from 'react-redux';
+import {actions, States} from '../../../../store';
+
+// Custom Component
+import AppBackground from '../../../../components/AppBackground'
+import AppHeader from '../../../../components/AppHeader'
+import SubHeader from '../../../../components/SubHeader'
+
+//StyleSheet
+import {appStyles} from "../../../assets/app_styles";
 import {styles} from '../../styles.js';
 
-import { connect } from 'react-redux';
-import { actions, States } from '../../../../store';
-
-
-
 class ReviewOrder extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  nextActions(formData,special){
-     if(formData.message_required!=="false"){
-          this.props.navigation.navigate("ReviewInstructions",{formData:formData,special:special})
-     }
-     else{
-       this.submitForm(formData);
-     }
+    constructor(props) {
+        super(props);
+        this.titleName={
+            suburb:"Suburb/Post Code",
+            mpa:"MPA",
+            agg:"AGG",
+            slu:"SLUMP",
+            acc:"Additional Accelerator",
+            placement_type:"Placement Type",
+            time1:"Time Preference 1",
+            time2:"Time Preference 2",
+            time3:"Time Preference 3"
+        };
+    }
 
-  }
+    nextActions(order, special) {
+        let full_order = {};
+        full_order["suburb"] = order.suburb;
+        full_order["type"] = order.type;
+        full_order["mpa"] = order.mpa;
+        full_order["agg"] = order.agg;
+        full_order["slump"] = order.slu;
+        full_order["acc"] = order.acc;
+        full_order["placement_type"] = order.placement_type;
+        full_order["quantity"] = order.quantity;
+        full_order["delivery_date"] = order.delivery_date;
+        full_order["delivery_date1"] = order.delivery_date1;
+        full_order["delivery_date2"] = order.delivery_date2;
+        full_order["time_preference1"] = order.time1;
+        full_order["time_preference2"] = order.time2;
+        full_order["time_preference3"] = order.time3;
+        full_order["time_deliveries"] = order.time_difference_deliveries;
+        full_order["urgency"] = order.urgency;
+        full_order["message_required"] = order.message_required;
+        full_order["preference"] = order.site_call;
+        full_order["colours"]= order.colours;
+        full_order["specialInstructions"] = order.message_required==="Yes"?special.specialInstructions:"";
+        full_order["deliveryInstructions"] = order.message_required==="Yes"?special.deliveryInstructions:"";
 
-  submitForm(formData){
-        let collection={}
-        collection.suburb=formData.suburb,
-        collection.type=formData.type,
-        collection.mpa=formData.mpa,
-        collection.agg=formData.agg,
-        collection.slump=formData.slu,
-        collection.acc=formData.acc,
-        collection.placement_type=formData.placement_types,
-        collection.quantity=formData.quantity,
-        collection.delivery_date=formData.chosenDate,
-        collection.time_preference1=formData.time1,
-        collection.time_preference2=formData.time2,
-        collection.time_preference3=formData.time3,
-        collection.time_deliveries=formData.time_difference_deliveries,
-        collection.urgency=formData.urgency,
-        collection.message_required=formData.message_required,
-        collection.preference=formData.site_call,
-            collection.colours="null",
-            collection.specialInstructions="null",
-            collection.deliveryInstructions="null",
-        this.props.submit(collection);
-  }
+        if (order.message_required !== "No") {
+            this.props.navigation.navigate("ReviewInstructions", {full_order})
+        } else {
+            this.submitForm(full_order);
+        }
 
-  render(){
+    }
 
-    /* 2. Read the params from the navigation state */
-    const { params } = this.props.navigation.state;
-    const formData = params ? params.formData : null;
-    const special = params ? params.special : null;
-    console.log("Checking data",formData);
-    // console.log("Review Order",special);
+    submitForm(order) {
+        this.props.submit(order);
+    }
 
-    return (
-       <Container>
-        <Header>
-          <Left>
-            <Button
-              transparent
-             onPress={()=>this.props.navigation.navigate("PlaceOrder")}
-            >
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Concrete ASAP</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='person' />
-            </Button>
-          </Right>
-        </Header>
-        <Content contentContainerStyle={styles.content}>
-          <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Review Order</Text>
-          <Grid>
-            <Col style={{marginLeft:15, marginTop:15}}>
-              <Text>Suburb / Post Code</Text>
-              <Text>Type</Text>
-              <Text>MPA</Text>
-              <Text>AGG</Text>
-              <Text>Slump</Text>
-              <Text>Addatives</Text>
-              <Text>Placement Type</Text>
-              <Text>Quantity</Text>
-              <Text>Preferred Time 1</Text>
-              <Text>Preferred Time 2</Text>
-              <Text>Preferred Time 3</Text>
-              <Text>Date</Text>
-              <Text>Urgency</Text>
-              <Text>On Site / Call</Text>
-              <Text style={{fontSize:20, fontWeight:'bold', color: 'red'}}>Message Required:</Text>
-            </Col>
-            <Col style={{marginTop:15}}>
-              <Text >{formData.suburb}</Text>
-              <Text >{formData.type}</Text>
-              <Text>{formData.mpa}</Text>
-              <Text>{formData.agg}</Text>
-              <Text>{formData.slu}</Text>
-              <Text>{formData.acc}</Text>
-              <Text>{formData.placement_types}</Text>
-              <Text>{formData.quantity}</Text>
-              <Text>{formData.time1}</Text>
-              <Text>{formData.time2}</Text>
-              <Text>{formData.time3}</Text>
-              <Text >{}</Text>
-              <Text >{formData.urgency}</Text>
-              <Text >{formData.site_call}</Text>
-              <Text  style={{fontSize:20, fontWeight:'bold', color: 'red'}}>{formData.message_required=="false"?"No":"Yes"}</Text>
-            </Col>
-          </Grid>
-            <View style={styles.registerButton}>
-              <TouchableOpacity onPress={()=>this.nextActions(formData,special)}>
-                    <Text style = {styles.buttonText}>{formData.message_required=="false"?"Finalize":"Next"}</Text>
-              </TouchableOpacity>
-            </View>
-        </Content>
-      </Container>
-    );
-  }
+    displayOrderList(order) {
+        return Object.keys(order).map((key) => {
+            return (
+                <Row key={key} style={[appStyles.pt_5, appStyles.pb_15, appStyles.borderBottom]}>
+                    <Col style={appStyles.w_65}>
+                        <Text style={appStyles.capitalCase}>{this.getKeyName(key)}</Text>
+                    </Col>
+                    <Col style={appStyles.w_35}>
+                        <Text>{order[key]}</Text>
+                    </Col>
+                </Row>
+            );
+        });
+    }
+
+    getKeyName(key){
+        return this.titleName.hasOwnProperty(key)?this.titleName[key]:key.replace(/_/g, ' ');
+    }
+
+    render() {
+        /* 2. Read the params from the navigation state */
+        const {params} = this.props.navigation.state;
+        const order = params ? params.order : null;
+        const special = params ? params.special : null;
+        let app=this.props.app.toJS();
+
+        return (
+            <AppBackground loading={app.loading}>
+                <ScrollView>
+                    <AppHeader backMenu/>
+                    <Content contentContainerStyle={[styles.content]}>
+                        <SubHeader iconName="search" title="Review Order"/>
+                        <View style={[appStyles.bgWhite, appStyles.p_15]}>
+                            {this.displayOrderList(order)}
+                        </View>
+                        <Button style={[appStyles.button, appStyles.bgPrimary,appStyles.horizontalCenter]}
+                                onPress={() => this.nextActions(order, special)}>
+                            <Text
+                                style={appStyles.colorBlack}>{order.message_required === "No" ? "NEXT" : "NEXT"}</Text>
+                        </Button>
+                    </Content>
+                </ScrollView>
+            </AppBackground>
+        );
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    submit: (collection) => {
-      console.log(actions);
-      return dispatch(actions.order.createOrder(collection))
-    },
-  }
-}
+    return {
+        submit: (collection) => {
+            return dispatch(actions.order.createOrder(collection))
+        },
+    }
+};
 
 const mapStateToProps = (state) => {
-  const {order}=state;
-  return {order};
-}
+    // const {order, error, app} = state;
+    return {
+        order:state.get("order"),
+        error:state.get("error"),
+        app:state.get("app")
+    };
+};
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(ReviewOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewOrder);

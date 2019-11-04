@@ -13,6 +13,9 @@ import RepViewAcceptedOrders from '../screens/Rep/Accepted Bids/RepViewAcceptedO
 import CurrentAcceptedOrder from '../screens/Rep/Current Bids/CurrentAcceptedOrder';
 import OrderStatus from '../screens/Rep/Current Bids/OrderStatus';
 
+//Pending Order Request
+import PendingOrderRequest from '../screens/Rep/Pending Order/PendingOrderRequest';
+import OrderPendingDetails from '../screens/Rep/Pending Order/OrderPendingDetails'
 //Rep Notifications
 import repNotification from '../screens/Rep/Notifications/Notifications';
 
@@ -32,7 +35,16 @@ export const repViewOrder=createStackNavigator({
     "Order Details":OrderDetails,
     "Bid Message":BidMessageHome,
 },{
-    headerMode: 'none',
-    navigationOptions: {
-        headerVisible: false,
-    }});
+  headerMode: 'none',
+  navigationOptions: {
+      headerVisible: false,
+  }});
+
+export const repPendingOrder=createStackNavigator({
+    "Pending Order":PendingOrderRequest,
+    "Order Pending Details":OrderPendingDetails,
+},{
+  headerMode: 'none',
+  navigationOptions: {
+      headerVisible: false,
+  }});

@@ -2,9 +2,11 @@ import * as React from 'react';
 import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
 import { Grid,Col,Row,View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
-import {styles} from '../styles.js';
 import {actions} from "../../store";
 import {connect} from "react-redux";
+
+
+import {styles} from '../styles.js';
 
 class OpenOrder extends React.Component {
     constructor(props) {
@@ -12,7 +14,6 @@ class OpenOrder extends React.Component {
     }
 
     render(){
-        console.log(this.props);
         return (
             <Container>
                 <Header>

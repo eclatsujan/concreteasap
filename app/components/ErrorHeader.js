@@ -1,24 +1,29 @@
 import React from "react";
-import {Image} from "react-native";
-import {Row,Col,Text} from "native-base";
+import {Image,View} from "react-native";
+import {Row,Col,Text,Icon,Left,Body} from "native-base";
 import {appStyles} from "../screens/assets/app_styles";
 
 export default class ErrorHeader extends React.Component {
 
     constructor(props){
         super(props);
-
     }
 
-
-
     render(){
-      return (
-        <Row>
-          <Col style={[appStyles.contentCenter,{marginTop:20}]}>
-            <Text>{this.props.error.error_msg}</Text>
-          </Col>
-        </Row>
-      );
+      if(this.props.error.error_msg===""||!this.props.error.error_msg){
+        return (<Text></Text>);
+      }
+      else{
+        return (
+          <Row style={[appStyles.bgError,appStyles.pad_5,appStyles.mt_1,appStyles.w_100,appStyles.contentCenter]}>
+            <View style={[appStyles.pr_5]}>
+              <Icon name='close-circle' style={[appStyles.colorWhite]} />
+            </View>
+            <View>
+              <Text style={[appStyles.colorWhite]}>{this.props.error.error_msg}</Text>
+            </View>
+          </Row>
+        );
+      }
     }
 }

@@ -12,7 +12,7 @@ export default class LoginHeader extends React.Component {
     render(){
       return (
         <Row>
-          <Col style={[appStyles.contentCenter,{marginTop:20}]}>
+          <Col style={[appStyles.contentCenter]}>
             <Image source={require("../../assets/Logo18.png")} style={appStyles.logoHeader} />
           </Col>
         </Row>

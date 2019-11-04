@@ -1,14 +1,16 @@
 import { PLACE_ORDER } from './constants'
 
-const initialState = {
-    bids: [],
-};
+import * as Immutable from 'immutable';
 
-export default (state=initialState, action) => {
+export const defaultState = Immutable.Record({
+        bids: []
+});
+
+export const reducer= (state=bidState, action) => {
     switch(action.type){
         // case PLACE_ORDER:
         // return Object.assign({}, state, action.payload)
         default:
             return state
     }
-}
+};

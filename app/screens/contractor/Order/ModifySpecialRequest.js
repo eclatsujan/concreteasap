@@ -32,7 +32,7 @@ export default class ModifySpecialRequests extends React.Component {
    submit(formData) {
     console.log("checking the submit button");
      this.getFormValidation();
-     if(this.state.inputs.colours.value == "No" || this.state.inputs.specialInstructions.value != "" ){
+     if(this.state.inputs.colours.value === "No" || this.state.inputs.specialInstructions.value !== "" ){
      this.props.navigation.navigate("ReviewOrder",{special:this.state.inputs,formData:formData});
    }
   }

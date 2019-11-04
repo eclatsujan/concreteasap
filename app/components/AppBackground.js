@@ -1,17 +1,18 @@
 import React from "react";
 
-import {View,ImageBackground,Dimensions,SafeAreaView,Platform} from "react-native";
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {ImageBackground,Dimensions,SafeAreaView,Platform,StatusBar } from "react-native";
 
 import {Container} from "native-base";
 
-//helpers
-import * as appHelper from '../helpers/app';
-import * as errorHelper from '../helpers/error';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //Custom Component
 import AppLoading from './AppLoading';
+
+//helpers
+import * as errorHelper from '../helpers/error';
+
+import {appStyles} from "../screens/assets/app_styles";
 
 export default class AppBackground extends React.Component {
 
@@ -26,11 +27,27 @@ export default class AppBackground extends React.Component {
     }
 
     renderView(){
-      return (
-        <KeyboardAwareScrollView enableOnAndroid={true}
-            keyboardShouldPersistTaps='handled' style={{marginLeft:20,marginRight:20}}>
-          {this.props.children}
-      </KeyboardAwareScrollView>);
+      let alignContent=this.props.alignContent?this.props.alignContent:"flex-start";
+      let keyBoardStyles=Platform.OS!=="ios"?[appStyles.flexRow,{alignItems:alignContent}]:[];
+      let containerStyle=this.props.alignContent==="center"?[appStyles.appMargin,appStyles.flexRow,appStyles.verticalCenter]:[appStyles.appMargin];
+      if(this.props["enableKeyBoard"]){
+        return (
+            <KeyboardAwareScrollView contentContainerStyle={containerStyle} enableOnAndroid={true}
+                                      keyboardShouldPersistTaps='handled'>
+                {this.props.children}
+            </KeyboardAwareScrollView>);
+      }
+      else{
+        return (
+        <Container style={containerStyle}>
+            {this.props.children}
+        </Container>);
+      }
+
+    }
+
+    checkKeyboard(){
+
     }
 
     checkLoading(){
@@ -52,12 +69,21 @@ export default class AppBackground extends React.Component {
       }
     }
 
+    getStyle(){
+      let style={justifyContent : 'center'};
+      if(this.props.alignTop){
+        style={justifyContent : 'flex-start'};
+      }
+
+      return style;
+    }
+
     render(){
       let { height, width } = Dimensions.get('window');
       this.showErrorToast();
       return (
-        <ImageBackground source={require("../../assets/concrete-background.png")} style={{width,height,justifyContent : 'center'}}>
-              {this.checkLoading()}
+        <ImageBackground source={require("../../assets/concrete-background.png")} style={[{width,height},this.getStyle(),{paddingBottom:StatusBar.currentHeight+20}]}>
+            {this.checkLoading()}
         </ImageBackground>
       );
     }

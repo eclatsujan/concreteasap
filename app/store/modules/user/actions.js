@@ -12,7 +12,7 @@ export const loadUserState = (token) =>{
     return dispatch => {
         return userService.getUser(token).then((res)=>{
             dispatch({
-                type:types.UPDATEUSER,
+                type:types.UPDATE_USER,
                 payload:{
                     userId:res.email,
                     roles:res.roles,
@@ -33,17 +33,16 @@ export const login = (email, password) => {
     return async dispatch => {
         dispatch(appActions.loading());
         userService.login(email,password).then((res)=>{
-          console.log(res);
             let roles=res.roles.length!==0?res.roles[0]["name"]:"";
             if(roles!==""){
-                SecureStore.setItemAsync("user_token",res.access_token);
+                SecureStore.setItemAsync("user_token",res["access_token"]);
                 SecureStore.setItemAsync("user_role",roles);
                 dispatch({
                     type: types.LOGIN,
                     payload: {
                         loggedIn: true,
                         userId: email,
-                        secureToken:res.access_token,
+                        secureToken:res["access_token"],
                         roles:res.roles
                     }
                 });
@@ -53,22 +52,21 @@ export const login = (email, password) => {
                 throw "Please contact our Server to verify this user";
                 //Handle Server issue or no user roles
             }
-        }).catch((e)=>{
+        },(err)=>{
+            dispatch(errorActions.setError(err.message));
             dispatch(appActions.loading(false));
-            dispatch(errorActions.setError(e));
         });
 
     }
-}
+};
 
-export const register = (user) => {
+export const register = (user,photo) => {
   return (dispatch) => {
     dispatch(appActions.loading());
-  	userService.register(user).then((res)=>{
+  	userService.register(user,photo).then((res)=>{
       let roles=res.roles.length!==0?res.roles[0]["name"]:"";
 
       if(roles!==""){
-        console.log(res);
           SecureStore.setItemAsync("user_token",res.access_token);
           SecureStore.setItemAsync("user_role",roles);
           dispatch({
@@ -81,16 +79,16 @@ export const register = (user) => {
               }
           });
           navigationHelper.navigate('AuthLoading');
+          dispatch(appActions.loading(false));
       }
       else{
           throw "Please contact our Server to verify this user";
           //Handle Server issue or no user roles
       }
-    }).catch((e)=>{
-      dispatch(appActions.loading(false));
-      dispatch(errorActions.setError("There is an issue occured",e));
-      // dispatch(errorActions.setError(e,"Register Rep Screen"));
-       // console.log(e);
+    }).catch((err)=>{
+      dispatch(errorActions.setError(err.message,err.errors));
+
+        dispatch(appActions.loading(false));
     });
   }
 }
@@ -114,7 +112,7 @@ export const update = (user)=>{
       navigationHelper.navigate('AuthLoading');
 
     }).catch((e)=>{
-       console.log(e);
+       // console.log(e);
     });
   }
 }
@@ -142,6 +140,7 @@ export const changePasswordWithToken=(token,email,password,password_confirmation
       dispatch(appActions.loading(false));
     }).catch((err)=>{
       dispatch(appActions.loading(false));
+      // console.log(err.message);
       dispatch(errorActions.setError(err.message,err.errors));
     });
   }

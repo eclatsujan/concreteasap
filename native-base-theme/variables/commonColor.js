@@ -57,7 +57,7 @@ export default {
   badgePadding: platform === PLATFORM.IOS ? 3 : 0,
 
   // Button
-  buttonFontFamily: platform === PLATFORM.IOS ? 'System' : 'Roboto_medium',
+  buttonFontFamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
   buttonDisabledBg: '#b5b5b5',
   buttonPadding: 6,
   get buttonPrimaryBg() {
@@ -150,8 +150,8 @@ export default {
 
   // Font
   DefaultFontSize: 16,
-  fontFamily: platform === PLATFORM.IOS ? 'System' : 'Roboto',
-  fontSizeBase: 15,
+  fontFamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
+  fontSizeBase: 13,
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
   },
@@ -203,8 +203,8 @@ export default {
   iconHeaderSize: platform === PLATFORM.IOS ? 33 : 24,
 
   // InputGroup
-  inputFontSize: 17,
-  inputBorderColor: '#D9D5DC',
+  inputFontSize: PixelRatio.get()<2?15:17,
+  inputBorderColor: '#14E22A',
   inputSuccessBorderColor: '#2b8339',
   inputErrorBorderColor: '#ed2f2f',
   inputHeightBase: 50,
@@ -224,7 +224,7 @@ export default {
 
   // List
   listBg: 'transparent',
-  listBorderColor: '#c9c9c9',
+  listBorderColor: '#14E22A',
   listDividerBg: '#f4f4f4',
   listBtnUnderlayColor: '#DDD',
   listItemPadding: platform === PLATFORM.IOS ? 10 : 12,
@@ -265,7 +265,7 @@ export default {
 
   // Tabs
   tabBgColor: '#F8F8F8',
-  tabFontSize: 15,
+  tabFontSize: PixelRatio.get()<2?12:15,
 
   // Text
   textColor: '#000',
@@ -276,7 +276,7 @@ export default {
   },
 
   // Title
-  titleFontfamily: platform === PLATFORM.IOS ? 'System' : 'Roboto_medium',
+  titleFontfamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
   titleFontSize: platform === PLATFORM.IOS ? 17 : 19,
   subTitleFontSize: platform === PLATFORM.IOS ? 11 : 14,
   subtitleColor: platform === PLATFORM.IOS ? '#000' : '#fff',

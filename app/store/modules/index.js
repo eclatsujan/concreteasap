@@ -1,8 +1,8 @@
-import { AppState, app } from './app'
-import { UserState, user } from './user'
-import {ContractorState,contractor} from './contractor'
-import {RepState,rep} from './rep'
-import {OrderState,order} from './order'
+import { app } from './app'
+import { user } from './user'
+import {contractor} from './contractor'
+import {rep} from './rep'
+import {order} from './order'
 import {bid} from './bid'
 import {error} from './error'
 
@@ -10,8 +10,14 @@ import {error} from './error'
  * Root states.
  */
 export const States = {
-  user,app,contractor,rep,bid,error
-}
+  app:app.defaultState,
+  user:user.defaultState,
+  contractor:contractor.defaultState,
+  rep:rep.defaultState,
+  bid:bid.defaultState,
+  error:error.defaultState,
+  order:order.defaultState
+};
 
 /**
  * Root reducers.
@@ -24,7 +30,7 @@ export const reducers = {
   order:order.reducer,
   bid:bid.reducer,
   error:error.reducer
-}
+};
 
 /**
  * Root actions.
@@ -37,6 +43,6 @@ export const actions = {
   order:order.actions,
   bid:bid.actions,
   error:error.actions
-}
+};
 
 export { user }

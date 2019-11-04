@@ -1,116 +1,139 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
-import { Grid,Col,Row,View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
+import {ScrollView} from 'react-native';
+import {Col, Row, Button, Text, Content, Footer, FooterTab} from 'native-base';
+
+//Third Party
+import {connect} from "react-redux";
+import {withNavigation} from "react-navigation";
+
+// Custom Component
+import AppBackground from '../../../components/AppBackground'
+import AppHeader from '../../../components/AppHeader'
+import SubHeader from '../../../components/SubHeader'
+
+//styles
 import {styles} from '../styles.js';
+import {appStyles} from "../../assets/app_styles";
+import {actions} from "../../../store/modules";
+import {ActivityIndicator} from "react-native-paper";
 
-
-
-
-export default class ViewBids extends React.Component {
+class ViewBids extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             params: props.navigation.state.params,
-            tableHead: ['Bids','$', 'Company', 'Actions'],
+            tableHead: ['Bids', '$', 'Company', ''],
             tableData: [],
-        }
+        };
     }
 
     componentWillMount() {
-        console.log("Checking the view Bids id",this.state.params);
         let bids = this.state.params.bids;
-        this.setState({tableData:bids});
-        // this.props.getSingleOrder(orderId);
+        this.setState({tableData: bids});
     }
 
-    displayTableHeader(){
+    displayTableHeader() {
         return (
-            <Row>
-                <Grid style={{marginTop:20, borderBottomWidth: 2,borderBottomColor: 'grey',}}>
-                    {this.state.tableHead.map((rowData, index) => (
-                        <Col key={index} style={{marginLeft:10,}}>
-                            <Text>{rowData}</Text>
-                        </Col>
-                    ))}
-                </Grid>
+            <Row style={appStyles.borderBottom}>
+                {this.state.tableHead.map((rowData, index) => (
+                    <Col key={index} style={index === this.state.tableHead.length - 1 ? appStyles.w_35 : null}>
+                        <Text style={appStyles.upperCase}>{rowData}</Text>
+                    </Col>
+                ))}
             </Row>
         );
-
-
-
     }
 
-    displayTableData(){
+    acceptBid(bid_id) {
+        this.props.acceptBid(bid_id);
+    }
+
+    rejectBid(bid_id){
+        this.props.rejectBid(bid_id);
+    }
+
+    displayTableData() {
         return this.state.tableData.map((rowData, index) => (
-            <Row key={index}>
-                <Grid style={{marginTop:10}}>
-                    <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2',marginLeft:10}}>
-                        <Text>{rowData.id}</Text>
-                    </Col>
-                    <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2',}}>
-                        <Text>{rowData.price}</Text>
-                    </Col>
-                    <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2',}}>
-                        <Text>{rowData.user_id}</Text>
-                    </Col>
-                    <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2', paddingBottom:10}}>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("OrderBidStatus")} >
-                            <Text style = {{backgroundColor: "#3383de", borderRadius: 10,width: 80,height: 20, textAlign:"center"}}>Accept</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{marginTop:10}}>
-                            <Text style = {{backgroundColor: "#FE434C", justifyContent: "center", borderRadius: 10,width: 80,height: 20, textAlign:"center"}}>Reject</Text>
-                        </TouchableOpacity>
-                    </Col>
-                </Grid>
+            <Row key={index} style={[appStyles.borderBottom, appStyles.py_10, appStyles.verticalCenter]}>
+                <Col>
+                    <Text>{rowData.id}</Text>
+                </Col>
+                <Col>
+                    <Text>{rowData.price}</Text>
+                </Col>
+                <Col>
+                    <Text>{rowData["user_id"]}</Text>
+                </Col>
+                <Col style={appStyles.w_35}>
+                    <Row>
+                        <Col>
+                            <Button
+                                style={[appStyles.bgBlack, appStyles.borderRadiusDefault, appStyles.horizontalCenter, appStyles.w_90]}
+                                onPress={() => {
+                                    this.acceptBid(rowData["id"])
+                                }}>
+                                <Text style={appStyles.ft_small}>Accept</Text>
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button danger
+                                    style={[appStyles.borderRadiusDefault, appStyles.horizontalCenter, appStyles.w_90]}
+                                    onPress={() => {
+                                        this.rejectBid(rowData["id"])
+                                    }}>
+                                <Text style={appStyles.ft_small}>Reject</Text>
+                            </Button>
+                        </Col>
+                    </Row>
+                </Col>
             </Row>
         ));
     }
 
-    render(){
-
-// /* 2. Read the params from the navigation state */
-//     const { params } = this.props.navigation.state;
-//     const bidsId = params ? params.bidsId : null;
-//     // const otherParam = params ? params.otherParam : null;
-//
-//     console.log(JSON.stringify(bidsId)); //getting the selected item
-
+    render() {
+        let app=this.props.app.toJS();
         return (
-            <Container>
-                <Header>
-                    <Left>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
-                        >
-                            <Icon name='menu' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Concrete ASAP</Title>
-                    </Body>
-                    <Right>
-                        <Button transparent>
-                            <Icon name='person' />
-                        </Button>
-                    </Right>
-                </Header>
-                <Content contentContainerStyle={styles.content}>
-                    <ScrollView>
-                        <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>View Bids</Text>
+            <AppBackground>
+                <ScrollView>
+                    <AppHeader/>
+                    <SubHeader iconName="user" title="View Bids"/>
+                    <Content contentContainerStyle={[appStyles.bgWhite, appStyles.p_5]}>
                         {this.displayTableHeader()}
-                        {this.displayTableData()}
-                        <View style={styles.registerButton}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
-                                <Text style = {styles.buttonText}>Back To Home</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
-                </Content>
-            </Container>
+                        {!app.loading?this.displayTableData():<ActivityIndicator size="large" />}
+                    </Content>
+                </ScrollView>
+                <Footer style={{marginBottom: 30}}>
+                    <FooterTab>
+                        <Button style={[appStyles.button, appStyles.buttonPrimary]}
+                                onPress={() => this.props.navigation.navigate("Home")}>
+                            <Text style={appStyles.buttonBlack}>Back to Home</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
+            </AppBackground>
         );
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        acceptBid: (bid_id) => {
+            // console.log(actions);
+            return dispatch(actions.order.acceptBid(bid_id))
+        },
+        rejectBid: (bid_id) => {
+            return dispatch(actions.order.rejectBid(bid_id));
+        }
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+        app: state.get("app"),
+        order: state.get("order")
+    };
+};
+
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(ViewBids));

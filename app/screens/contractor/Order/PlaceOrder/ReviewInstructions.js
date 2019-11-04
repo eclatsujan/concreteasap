@@ -1,120 +1,79 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
-import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
+import {ScrollView} from 'react-native';
+import {Content, Button, Text, Textarea, Form} from 'native-base';
 
-import { connect } from 'react-redux';
-import { actions, States } from '../../../../store';
+import {connect} from 'react-redux';
+import {actions, States} from '../../../../store';
 
-import {styles} from '../../styles.js';
+// Custom Component
+import AppBackground from '../../../../components/AppBackground'
+import AppHeader from '../../../../components/AppHeader'
+import SubHeader from '../../../../components/SubHeader'
+
+//StyleSheet
+import {appStyles} from "../../../assets/app_styles";
 
 
 class ReviewInstructions extends React.Component {
-  constructor(props) {
-    super(props);    
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  submitForm(formData,special){
-    let collection={}
-    collection.suburb=formData.suburb,
-    collection.type=formData.type,
-    collection.mpa=formData.mpa,
-    collection.agg=formData.agg,
-    collection.slump=formData.slu,
-    collection.acc=formData.acc,
-    collection.placement_type=formData.placement_types,
-    collection.quantity=formData.quantity,
-    collection.delivery_date=formData.chosenDate,
-    collection.time_preference1=formData.time1,
-    collection.time_preference2=formData.time2,
-    collection.time_preference3=formData.time3,
-    collection.time_deliveries=formData.time_difference_deliveries,
-    collection.urgency=formData.urgency,
-    collection.message_required=formData.message_required,
-    collection.preference=formData.site_call,
-    collection.colours=special.colours,
-    collection.specialInstructions=special.specialInstructions,
-    collection.deliveryInstructions=special.deliveryInstructions,
-    this.props.submit(collection);
-    
-  }
+    submitForm(full_order) {
+        this.props.submit(full_order);
+    }
 
-  // componentWillReceiveProps(nextProps){
-  //   if(nextProps.order.isOrderComplete){
-  //    this.props.navigation.navigate("ViewOrderHome",{message:"Order Successfully"});
-  //   }
-  // }
+    render() {
+        const {params} = this.props.navigation.state;
+        const full_order = params ? params.full_order : null;
+        let app = this.props.app.toJS();
+        return (
+            <AppBackground loading={app.loading}>
+                <AppHeader backMenu/>
+                <Content>
+                    <ScrollView style={appStyles.pb_45}>
+                        <SubHeader iconName="search" title="Review Instructions"/>
 
+                        <Form>
+                            <Text>Special Instructions</Text>
+                            <Textarea style={appStyles.bgWhite} rowSpan={5} bordered
+                                      placeholder={full_order.specialInstructions} disabled>
+                                {full_order["specialInstructions"]}
+                            </Textarea>
+                            <Text>Delivery Instructions</Text>
+                            <Textarea style={appStyles.bgWhite} rowSpan={5}
+                                      bordered placeholder={full_order.deliveryInstructions} disabled>
+                                {full_order["deliveryInstructions"]}
+                            </Textarea>
 
-
-  render(){
-
-/* 2. Read the params from the navigation state */
-    const { params } = this.props.navigation.state;
-    const formData = params ? params.formData : null;
-    const special = params ? params.special : null;
-    // console.log("Checking data",formData);
-    // console.log("Checking Checking",special);
-
-    return (
-       <Container>
-        <Header>
-          <Left>
-            <Button
-              transparent
-             onPress={()=>this.props.navigation.navigate("ReviewOrder")}
-            >
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Concrete ASAP</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='person' />
-            </Button>
-          </Right>
-        </Header>
-        <Content contentContainerStyle={styles.content}>
-        <ScrollView>
-          <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Review Instructions</Text>
-          <Form>
-          <Text style={{marginTop:20, marginLeft:10}}>Colours</Text>
-          <Textarea style={{margin:10}} rowSpan={5} bordered placeholder={special.colours} disabled/>
-          <Text style={{marginLeft:10}}>Special Instructions</Text>
-          <Textarea style={{margin:10}} rowSpan={5} bordered placeholder={special.specialInstructions} disabled/>
-          <Text style={{marginLeft:10}}>Delivery Instructions</Text>
-          <Textarea style={{margin:10}} rowSpan={5} bordered placeholder={special.deliveryInstructions} disabled/>
-          <View style={styles.registerButton}>
-                        <TouchableOpacity onPress={(e)=>{this.submitForm(formData, special)}}>
-                          <Text style = {styles.buttonText}>Finalise</Text>
-                        </TouchableOpacity>
-            </View>
-          </Form>
-              
-
-              
-            </ScrollView>
-        </Content>
-      </Container>
-    );
-  }
+                            <Button style={appStyles.bgWhite}
+                                    style={[appStyles.button, appStyles.bgPrimary, appStyles.horizontalCenter]}
+                                    onPress={() => this.submitForm(full_order)}>
+                                <Text style={appStyles.colorBlack}>NEXT</Text>
+                            </Button>
+                        </Form>
+                    </ScrollView>
+                </Content>
+            </AppBackground>
+        );
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    submit: (collection) => {
-      console.log(actions);
-      return dispatch(actions.order.createOrder(collection))
-    },
-  }
-}
+    return {
+        submit: (collection) => {
+            return dispatch(actions.order.createOrder(collection))
+        },
+    }
+};
 
 const mapStateToProps = (state) => {
-  const {order}=state;
-  return {order};
-}
+    // const {order, app} = state;
+    return {
+        order: state.get("order"),
+        app: state.get("app")
+    };
+};
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(ReviewInstructions);
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewInstructions);

@@ -2,18 +2,18 @@ import * as types from './constants'
 
 /**
  * Set loading status on/off
- * @param {boolean} yes Loading status
+ * @param error_msg
+ * @param errors
  */
 export const setError = (error_msg,errors={}) => {
-	// console.log(yes);
-  return {
+	return {
     type: types.SET_ERROR,
     payload: {error_msg,errors}
   }
-}
+};
 
 export const removeErrors=()=>{
   return {
     type:types.REMOVE_ERROR
   }
-}
+};

@@ -5,9 +5,8 @@ import * as types from './constants'
  * @param {boolean} yes Loading status
  */
 export const loading = (yes= true) => {
-	// console.log(yes);
   return {
     type: types.SET_LOADING,
     payload: yes
   }
-}
+};

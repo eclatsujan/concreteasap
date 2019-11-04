@@ -1,5 +1,6 @@
-import reducer from './reducer'
+import {reducer,defaultState} from './reducer'
 import * as actions from './actions'
 
-export const app = { reducer, actions }
-export { AppState } from './reducer'
+export const app = { reducer, actions,defaultState };
+
+

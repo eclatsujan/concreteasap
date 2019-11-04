@@ -1,31 +1,34 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-    content:{
-        justifyContent:"center",
-        flex:1
+    content: {
+        // alignItems: 'center',
+        // flex: 1,
+        // flexDirection:"row"
+        // justifyContent: 'center'
     },
-    mainButton:{
-        width:"95%",
-        marginTop:20,
-        marginBottom:10,
-        alignSelf:"center",
-        paddingTop:10,
-        paddingBottom:10,
+    orderBorder: {borderBottomWidth: 2, borderBottomColor: '#f2f2f2'},
+    mainButton: {
+        width: "95%",
+        marginTop: 20,
+        marginBottom: 10,
+        alignSelf: "center",
+        paddingTop: 10,
+        paddingBottom: 10,
     },
-    mainButtonText: {
+    buttonHomeTxt: {
         fontSize: 20,
-        color:"#000"
+        // color:"#1"
     },
-    pickerForm:{
+    pickerForm: {
         fontSize: 20
     },
-    modalSelector:{
-        fontSize:20,
-        height:30
+    modalSelector: {
+        fontSize: 20,
+        height: 30
     },
-    registerButton:{
-        marginTop:10,
+    registerButton: {
+        marginTop: 10,
         width: "99%",
         alignItems: 'center',
         marginBottom: 20,
@@ -40,9 +43,9 @@ export const styles = StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
     },
-    datePicker:{
+    datePicker: {
         marginTop: 10,
-        marginLeft: 5,
+        // marginLeft: 5,
         width: "100%",
     },
 

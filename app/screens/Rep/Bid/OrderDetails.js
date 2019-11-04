@@ -1,227 +1,171 @@
 import * as React from 'react';
-import { NativeModules,TextInput, StyleSheet, Label, TouchableOpacity, ScrollView, Modal, TouchableHighlight } from 'react-native';
-import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
-import {styles} from '../styles.js';
-import {getToken, handleResponse} from "../../../helpers/token";
-import {REP_PREFIX_URI} from "../../../config";
+import {TextInput, ScrollView} from 'react-native';
+import {View, Button, Text, Content, Row, Col, Item as FormItem} from 'native-base';
+
 //Latest
-import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
+import {PaymentsStripe as Stripe} from 'expo-payments-stripe';
 import {paymentService} from '../../../services/paymentService'
+
+//Custom Components
+import AppBackground from "../../../components/AppBackground";
 import AppHeader from "../../../components/AppHeader";
+import SubHeader from "../../../components/SubHeader";
+import CardPayment from '../../../components/CardPayment'
+
+import {appStyles} from '../../assets/app_styles.js';
+import {order} from "../../../store/modules/order";
 
 
 export default class OrderDetails extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            orderDetail : props.navigation.state.params.orderDetail, //data from navigation state
-            // bid:{},
-            pricePer:'',
-            meter: '',
-            totalcost:'',
-            modalVisible: false,
-            SaveDetails:false,
-            token:""
-        };
-        this.setPerPrice=this.setPerPrice.bind(this);
-        this.submitBid=this.submitBid.bind(this);
 
+        this.state = {
+            orderDetail: props.navigation.state.params.orderDetail, //data from navigation state
+            // bid:{},
+            pricePer: '',
+            meter: '',
+            totalcost: '',
+            modalVisible: false,
+            SaveDetails: false,
+            token: "",
+            keyTitle: {}
+        };
+        this.setPerPrice = this.setPerPrice.bind(this);
+        this.submitBid = this.submitBid.bind(this);
+        this.showDetailsModel = this.showDetailsModel.bind(this);
     }
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
 
-    componentWillMount(){
-        // console.log(this.state.orderDetail);
+    componentWillMount() {
         // getting the data of meter from navigation and updating the state of the meter
-        const meter = this.state.orderDetail ?this.state.orderDetail.order_concrete.quantity : null;
-        let m=meter.toString();
-        this.setState({meter:m});
-        console.log(Stripe);
+        const meter = this.state.orderDetail ? this.state.orderDetail.order_concrete.quantity : null;
+        let m = meter.toString();
+        this.setState({meter: m});
         Stripe.setOptionsAsync({
             publishableKey: 'pk_test_wF2PcumUqSC8irnWWTAa4w9u00CIYe7HNL', // Your key
         });
     }
 
-    setPerPrice(price){
-        //console.log("setperprice",this.state.meter);
-        this.setState({pricePer:price});
-        var pricePer=parseInt(price);
-        var meter=parseInt(this.state.meter);
-        var total= (pricePer*meter)+(pricePer*meter*10)/100;
-        var Final=total.toString();
-        this.setState({totalcost : Final});
+    setPerPrice(price) {
+        this.setState({pricePer: price});
+        let pricePer = parseInt(price);
+        let meter = parseInt(this.state.meter);
+        let total = (pricePer * meter) + (pricePer * meter * 10) / 100;
+        let Final = total.toString();
+        this.setState({"totalcost": Final});
     }
 
-    showDetailsModel(val){
+    showDetailsModel(val) {
         this.setModalVisible(!this.state.modalVisible);
-        this.setState({SaveDetails:val});
-        this.payBid().then((res)=>{
-            // console.log(res);
-            this.props.navigation.setParams({ success_msg: 'Lucy' })
+        this.setState({SaveDetails: val});
+        this.payBid().then((res) => {
+            console.log(res);
+            this.props.navigation.setParams({success_msg: 'Lucy'})
             this.props.navigation.goBack();
         });
     }
 
-    submitBid(){
-       this.stripePayment().then((token)=>{
-            this.setState({token:token});
+    submitBid() {
+        this.stripePayment().then((token) => {
+            this.setState({token: token});
             this.setModalVisible(true);
-       });
+        });
     }
 
 
-    async stripePayment(){
-       return await Stripe.paymentRequestWithCardFormAsync();
+    async stripePayment() {
+        return await Stripe.paymentRequestWithCardFormAsync();
     }
 
-    async payBid(){
+    async payBid() {
         console.log(this.state.token);
-        return await paymentService.payBidPrice(this.state.token,this.state.orderDetail.id,this.state.pricePer,this.state.SaveDetails);
+        return await paymentService.payBidPrice(this.state.token, this.state.orderDetail.id, this.state.pricePer, this.state.SaveDetails);
+    }
+
+    getKeyTitle(key) {
+        return this.state.keyTitle.hasOwnProperty(key) ? this.state.keyTitle[key] : key.replace(/_/g, " ");
+    }
+
+    renderOrderDetail(title, value) {
+        return (
+            <Row style={[appStyles.borderBottom, appStyles.pt_15, appStyles.pb_5]}>
+                <Col style={appStyles.w_65}>
+                    <Text style={appStyles.upperCase}>{title}</Text>
+                </Col>
+                <Col style={appStyles.w_35}>
+                    <Text>{value}</Text>
+                </Col>
+            </Row>
+        );
+    }
+
+    renderNonEditableInput(label, value) {
+        return <Row style={[appStyles.mt_10, appStyles.verticalCenter]}>
+            <Col>
+                <Text style={appStyles.upperCase}>{label}</Text>
+            </Col>
+            <Col>
+                <TextInput
+                    style={[appStyles.loginInput, appStyles.p_10, appStyles.border2,appStyles.borderBlack]}
+                    value={value}
+                    editable={false}/>
+            </Col>
+        </Row>
     }
 
 
-    render(){
-    // console.log("Save details value: ",this.state.SaveDetails);
+    render() {
+        let title = "Order Details ID #" + this.state.orderDetail["order_concrete"].id;
+        let order_concrete = this.state.orderDetail["order_concrete"];
+        console.log(order_concrete);
         return (
-            <Container>
-                <AppHeader/>
-                <Content>
-                    <ScrollView>
-                        <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Order Details ID #{this.state.orderDetail.order_concrete.id}</Text>
-                        <Grid>
-                            <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text>Suburb / Post Code</Text>
-                                <Text>Type</Text>
-                                <Text>MPA</Text>
-                                <Text>AGG</Text>
-                                <Text>Slump</Text>
-                                <Text>Additives</Text>
-                                <Text>Placement Type</Text>
-                                <Text>Quantity</Text>
-                                <Text>Time</Text>
-                                <Text>Date</Text>
-                                <Text>Urgency</Text>
-                                <Text>On Site / Call</Text>
-                            </Col>
-                            <Col style={{marginTop:15}}>
-                                <Text>{this.state.orderDetail.order_concrete.suburb}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.type}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.mpa}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.agg}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.slump}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.acc}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.placement_type}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.quantity}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.time_preference1}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.delivery_date}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.urgency}</Text>
-                                <Text>{this.state.orderDetail.order_concrete.preference}</Text>
-                            </Col>
-                        </Grid>
-                        <Grid>
-                            <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text style={{marginTop:20}}>Colors:</Text>
-                            </Col>
-                            <Col style={{marginTop:15}}>
-                                <Text style={{marginTop:20}}>{this.state.orderDetail.order_concrete.colours}</Text>
-                            </Col>
-                        </Grid>
-                        <Grid>
-                            <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text style={{marginTop:20}}>Special Instructions:</Text>
-                            </Col>
-                            <Col style={{marginTop:15}}>
-                                <Text style={{marginTop:20}}>{this.state.orderDetail.order_concrete.special_instructions}</Text>
-                            </Col>
-                        </Grid>
-                        <Grid>
-                            <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text style={{marginTop:20}}>Delivery Instructions:</Text>
-                            </Col>
-                            <Col style={{marginTop:15}}>
-                                <Text style={{marginTop:20}}>{this.state.orderDetail.order_concrete.delivery_instructions}</Text>
-                            </Col>
-                        </Grid>
-                        <Grid>
-                            <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text style={{marginTop:20}}>Price per m2:</Text>
-                            </Col>
-                            <Col style={{marginTop:15}}>
-                                <TextInput
-                                    style={{ width:"95%", height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                    onChangeText={this.setPerPrice}
-                                    value={this.state.pricePer} />
-                            </Col>
-                        </Grid>
-                        <Grid>
-                            <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text style={{marginTop:20}}>Required m2:</Text>
-                            </Col>
-                            <Col style={{marginTop:15}}>
-                                <TextInput
-                                    style={{ width:"95%", height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                    value={this.state.meter}
-                                    editable={false} />
-                            </Col>
-                        </Grid>
-                        <Grid>
-                            <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text style={{marginTop:20}}>Total (Plus 10% Admin Fee):</Text>
-                            </Col>
-                            <Col style={{marginTop:15}}>
-                                <TextInput
-                                    style={{ width:"95%", height: 40, borderColor: 'gray', borderWidth: 1 }}
-                                    value={this.state.totalcost}
-                                    editable={false}/>
-                            </Col>
-                        </Grid>
-                        <Grid style={{marginBottom:30, marginTop:30}}>
-                            <Col style={{marginLeft:15, marginTop:30}}>
-                                <Text>Status : Pending</Text>
-                            </Col>
-                            <Col>
-                                <Modal
-                                    animationType="slide"
-                                    transparent={true}
-                                    visible={this.state.modalVisible}
-                                    onRequestClose={() => {
-                                        Alert.alert('Modal has been closed.');
-                                    }}>
-                                    <View style={{
-                                        flex: 1,
-                                        flexDirection: 'column',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        'backgroundColor':'rgba(000,000,000,0.6)'}}>
-                                        <View style={{
-                                            width: 250,
-                                            height: 250,
-                                            backgroundColor:"white",
-                                            alignItems: 'center',
-                                            borderWidth: 2,}}>
-                                            <Text style={{textAlign:"center", marginTop:40}}>Do you wanna save the card details?</Text>
+            <AppBackground enableKeyBoard>
+                <ScrollView>
+                    <AppHeader/>
+                    <SubHeader iconName="clipboard" title={title}/>
+                    <Content style={[appStyles.p_5]}>
+                        <View style={[appStyles.bgWhite, appStyles.mb_10, appStyles.p_5]}>
+                            {this.renderOrderDetail("Suburb / Post Code", order_concrete["suburb"])}
+                            {this.renderOrderDetail("Type", order_concrete["type"])}
+                            {this.renderOrderDetail("MPA", order_concrete["mpa"])}
+                            {this.renderOrderDetail("Slump", order_concrete["slump"])}
+                            {this.renderOrderDetail("Additives", order_concrete["acc"])}
+                            {this.renderOrderDetail("Placement Type", order_concrete["placement_type"])}
+                            {this.renderOrderDetail("Delivery Date", order_concrete["delivery_date"])}
+                            {this.renderOrderDetail("Time Preferences 1", order_concrete["time_preference1"])}
+                            {this.renderOrderDetail("Time Preferences 2", order_concrete["time_preference2"])}
+                            {this.renderOrderDetail("Time Preferences 3", order_concrete["time_preference3"])}
+                            {this.renderOrderDetail("Time Between Deliveries", order_concrete["time_deliveries"])}
+                            {this.renderOrderDetail("Urgency", order_concrete["urgency"])}
+                            {this.renderOrderDetail("Message Request", order_concrete["message_required"] ? "Yes" : "No")}
+                            <Row style={[appStyles.mt_10, appStyles.verticalCenter]}>
+                                <Col>
+                                    <Text style={[appStyles.upperCase]}>Price per m2</Text>
+                                </Col>
+                                <Col>
+                                    <FormItem style={[appStyles.loginInput, appStyles.p_10, appStyles.border2]} regular>
+                                        <TextInput placeholder="ENTER BID AMOUNT" style={appStyles.baseFont}
+                                                   value={this.state.pricePer} onChangeText={this.setPerPrice}/>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            {this.renderNonEditableInput("Required m2", this.state.meter)}
+                            {this.renderNonEditableInput("Total\n(Plus 10% Admin Fee)", this.state.totalcost)}
+                        </View>
 
-                                            <Button onPress={() => {this.showDetailsModel(true); }}>
-                                                <Text>Yes</Text>
-                                            </Button>
-                                            <Button onPress={() => {this.showDetailsModel(false); }}>
-                                                <Text>No</Text>
-                                            </Button>
-                                        </View>
-                                    </View>
-                                </Modal>
-
-                                <Button onPress={() => {this.submitBid()}}>
-                                    <Text>Place a Bid</Text>
-                                </Button>
-                            </Col>
-                        </Grid>
-                    </ScrollView>
-                </Content>
-            </Container>
+                        <Button style={appStyles.horizontalCenter} onPress={() => {
+                            this.submitBid()
+                        }}>
+                            <Text style={appStyles.colorBlack}>Bid</Text>
+                        </Button>
+                        <CardPayment modalVisibility={this.state.modalVisible} handleModel={this.showDetailsModel}/>
+                    </Content>
+                </ScrollView>
+            </AppBackground>
         );
     }
 }

@@ -1,86 +1,65 @@
 import * as React from 'react';
 import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
-import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col } from 'native-base';
+import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col,Row } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../styles.js';
 
+import AppHeader from "../../../components/AppHeader";
+import AppBackground from "../../../components/AppBackground";
+import SubHeader from "../../../components/SubHeader";
 
+import {appStyles} from "../../assets/app_styles";
 
 export default class OrderStatus extends React.Component {
   constructor(props) {
-    super(props);    
+    super(props);
   }
 
   render(){
 
     return (
-       <Container>
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Concrete ASAP</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='person' />
-            </Button>
-          </Right>
-        </Header>
-        <Content contentContainerStyle={styles.content}>
-        <ScrollView>
-          <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Order Status</Text>
-          <Grid>
-            <Col style={{marginLeft:15, marginTop:15}}>
-              <Text>TOTAL PRICE</Text>
-              <Text>Price per m2</Text>
-              <Text>Required m2</Text>
+       <AppBackground>
+        <AppHeader />
+        <SubHeader>
+          <Row style={[appStyles.bgPrimary,appStyles.subHeader]}>
+            <View style={appStyles.subHeaderBg}></View>
+            <Col style={appStyles.iconCol}>
+              <Icon type="FontAwesome5" name="running" style={appStyles.headerIcon} />
             </Col>
-            <Col style={{marginTop:15}}>
-              <Text>$2000</Text>
-              <Text>$200</Text>
-              <Text>10</Text>
+            <Col style={appStyles.subHeaderTxtCol}>
+              <Text style={[appStyles.baseFont,appStyles.subHeaderTxt]}>Order Status</Text>
             </Col>
-          </Grid>
-
-          <View style={{marginTop:30,
-                        width: "99%",
-                        alignItems: 'center',
-                        marginBottom: 20,}}>
-                        <TouchableOpacity >
-                          <Text style = {styles.buttonText}>Account Payment</Text>
-                        </TouchableOpacity>
-            </View>
-            <View style={styles.registerButton}>
-                        <TouchableOpacity >
-                          <Text style = {styles.buttonText}>Invoice Paid (COD)</Text>
-                        </TouchableOpacity>
-            </View>
-            <View style={styles.registerButton}>
-                        <TouchableOpacity >
-                          <Text style = {styles.buttonText}>Contact Contractor</Text>
-                        </TouchableOpacity>
-            </View>
-            <View style={styles.registerButton}>
-                        <TouchableOpacity >
-                          <Text style = {{textAlign: 'center',
-                                          fontSize: 20,
-                                          backgroundColor: 'red',
-                                          padding: 10,
-                                          width: 300,
-                                          marginTop: 10,
-                                          borderRadius: 25,
-                                          borderWidth: 1,}}>Cancel Order</Text>
-                        </TouchableOpacity>
-            </View>
-            </ScrollView>
+          </Row>
+        </SubHeader>
+        <Content>
+          <ScrollView>
+            <Row style={[appStyles.bgWhite]}>
+              <Col style={{marginLeft:15, marginTop:15}}>
+                <Text>TOTAL PRICE</Text>
+                <Text>Price per m2</Text>
+                <Text>Required m2</Text>
+              </Col>
+              <Col style={{marginTop:15}}>
+                <Text>$2000</Text>
+                <Text>$200</Text>
+                <Text>10</Text>
+              </Col>
+            </Row>
+            <Button style={[appStyles.button,appStyles.buttonPrimary]}>
+              <Text>Account Payment</Text>
+            </Button>
+            <Button style={[appStyles.button,appStyles.buttonPrimary]}>
+              <Text>Invoice Paid (COD)</Text>
+            </Button>
+            <Button style={[appStyles.button,appStyles.buttonPrimary]}>
+              <Text>Contact Contractor</Text>
+            </Button>
+            <Button danger style={[appStyles.button]}>
+              <Text>Cancel Order</Text>
+            </Button>
+          </ScrollView>
         </Content>
-      </Container>
+      </AppBackground>
     );
   }
 }

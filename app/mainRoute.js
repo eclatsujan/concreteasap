@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TextInput, StatusBar,  } from 'react-native';
 import {createSwitchNavigator,createAppContainer} from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 
@@ -9,11 +8,10 @@ import Notifications from "./screens/contractor/Notification/Notifications";
 import HomeScreen from "./screens/contractor/Home";
 
 //Rep Navigation
-import {repAcceptedOrder,repViewOrder} from "./routes/rep";
+import {repAcceptedOrder,repViewOrder,repPendingOrder} from "./routes/rep";
 import RepHomeScreen from './screens/Rep/RepHomeScreen';
 import RepViewAcceptedOrders from './screens/Rep/Accepted Bids/RepViewAcceptedOrders';
 import repNotifications from './screens/Rep/Notifications/Notifications'
-
 //General Navigation
 import AuthLoadingScreen from "./screens/auth/AuthLoadingScreen";
 import {AuthStack} from "./routes/general";
@@ -42,8 +40,9 @@ const RepDrawer = createDrawerNavigator({
     //Rep Drawer navigation section
     "Home":RepHomeScreen,
     "Open Orders":repViewOrder,
-    "Current Accepted Order":repAcceptedOrder,
-    "View Accepted Order":RepViewAcceptedOrders,
+    "Pending Rep Orders":repPendingOrder,
+    "Current Orders":repAcceptedOrder,
+    "Past Orders":RepViewAcceptedOrders,
     "Rep Notifications":repNotifications,
     "Logout":LogoutScreen,
     // RepOrder:RepOrderStatus

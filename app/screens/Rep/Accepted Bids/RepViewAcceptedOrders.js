@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {TextInput, StyleSheet, Label, TouchableOpacity, ScrollView, ImageBackground, Dimensions} from 'react-native';
-import { Grid,Col,Row,View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
-import {styles} from '../styles.js';
-
+import {ScrollView} from 'react-native';
+import { Grid,Col,Row,View, Button, Text,Content,Footer,FooterTab } from 'native-base';
 import {connect} from "react-redux";
-import { actions, States } from '../../../store';
+
+import { actions } from '../../../store';
 import {appStyles} from "../../assets/app_styles";
 import AppHeader from "../../../components/AppHeader";
+import AppBackground from "../../../components/AppBackground";
 
 class RepViewAcceptedOrders extends React.Component {
     constructor(props) {
@@ -49,7 +48,6 @@ class RepViewAcceptedOrders extends React.Component {
     }
 
     displayTableData(){
-        console.log(this.props.order);
         return this.state.tableData.map((rowData, index) => (
             <Grid key={index}>
                 <Row style={[appStyles.paddingYDefault]}>
@@ -72,36 +70,33 @@ class RepViewAcceptedOrders extends React.Component {
     }
 
     render(){
-        let { height, width } = Dimensions.get('window');
         return (
-            <ImageBackground source={require("../../../../assets/concrete-background.png")} style={{width:"100%",height:"100%"}}>
-                <Container style={[appStyles.bgTransparent]}>
-                    <AppHeader/>
-                    <Content contentContainerStyle={styles.content}>
-                        <ScrollView>
-                            <View>
-                                <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold'}}>Past Accepted Orders</Text>
-                            </View>
-                            <View style={[appStyles.bgWhite,appStyles.marginAppDefault,appStyles.paddingAppDefault]}>
-                                <Grid>
-                                    <Col style={appStyles.flex1}>
-                                        <Text>ORDER NO.</Text>
-                                    </Col>
-                                    <Col style={appStyles.flex3}>
-                                        <Text>STATUS</Text>
-                                    </Col>
-                                </Grid>
-                                {this.displayTableData()}
-                            </View>
-                        </ScrollView>
-                        <View style={styles.registerButton}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
-                                <Text style = {styles.buttonText}>Back To Home</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </Content>
-                </Container>
-            </ImageBackground>
+            <AppBackground>
+              <AppHeader/>
+
+              <Content>
+                  <ScrollView style={[appStyles.bgWhite]}>
+                      <View style={[appStyles.bgWhite,appStyles.marginAppDefault,appStyles.paddingAppDefault]}>
+                          <Row>
+                              <Col>
+                                  <Text>ORDER NO.</Text>
+                              </Col>
+                              <Col style={appStyles.flex3}>
+                                  <Text>STATUS</Text>
+                              </Col>
+                          </Row>
+                          {this.displayTableData()}
+                      </View>
+                  </ScrollView>
+              </Content>
+              <Footer style={{marginBottom:30}}>
+                  <FooterTab>
+                    <Button style={appStyles.button,appStyles.buttonPrimary} onPress={()=>this.props.navigation.navigate("Home")}>
+                        <Text style = {appStyles.buttonBlack}>Back to Home</Text>
+                    </Button>
+                  </FooterTab>
+              </Footer>
+            </AppBackground>
         );
     }
 }
@@ -115,10 +110,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-    const {order}=state;
-    return {order};
+    // const {order}=state;
+    return {
+        order:state.get("order")
+    };
 };
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(RepViewAcceptedOrders);
-

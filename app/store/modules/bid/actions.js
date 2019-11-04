@@ -13,10 +13,10 @@ export const place_order = (bidData) => {
 }
 
 export const placeBid = (data) => {
-    console.log("rep place bid",data);
     return (dispatch,getState) => {
         bidService.placeBid(data).then((res)=>{
             navigationHelper.navigate('Bid Message',{message:res.message});
         });
     }
 }
+

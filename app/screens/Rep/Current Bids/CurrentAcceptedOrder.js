@@ -3,9 +3,13 @@ import {TextInput, StyleSheet, Label, TouchableOpacity, ScrollView, ImageBackgro
 import { Grid,Col,Row,View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../styles.js';
+
+
 import AppHeader from "../../../components/AppHeader";
+import AppBackground from "../../../components/AppBackground";
+import SubHeader from "../../../components/SubHeader";
 
-
+import {appStyles} from "../../assets/app_styles";
 
 export default class CurrentAcceptedOrder extends React.Component {
     constructor(props) {
@@ -51,9 +55,6 @@ export default class CurrentAcceptedOrder extends React.Component {
                 </Grid>
             </Row>
         );
-
-
-
     }
 
     displayTableData(){
@@ -67,11 +68,9 @@ export default class CurrentAcceptedOrder extends React.Component {
                         <Text>{rowData.Status}</Text>
                     </Col>
                     <Col style={{borderBottomWidth: 2,borderBottomColor: '#f2f2f2', paddingBottom:10}}>
-                        <Button
-                            style={{width:"95%"}}
-                            onPress={() => this._alertIndex(rowData.id)}>
-                            <Text style={{textAlign:'center'}}>View Details</Text>
-                        </Button>
+                        <TouchableOpacity onPress={() => this._alertIndex(rowData.id)}>
+                            <Text style={appStyles.colorBlack}>View Details</Text>
+                        </TouchableOpacity>
                     </Col>
                 </Grid>
             </Row>
@@ -81,24 +80,33 @@ export default class CurrentAcceptedOrder extends React.Component {
     render(){
         let { height, width } = Dimensions.get('window');
         return (
-            <ImageBackground source={require("../../../../assets/concrete-background.png")} style={{width,height}}>
-                <Container>
-                    <AppHeader/>
-                    <Content>
-                        <ScrollView>
-                            <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Current Accepted Orders</Text>
-                            {this.displayTableHeader()}
-                            {this.displayTableData()}
-                            <View style={styles.registerButton}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate("RepHome")}>
-                                    <Text style = {styles.buttonText}>Back To Home</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </ScrollView>
-                    </Content>
-                </Container>
-            </ImageBackground>
+            <AppBackground>
+                <AppHeader/>
+                <SubHeader>
+                  <Row style={[appStyles.bgPrimary,appStyles.subHeader]}>
+                    <View style={appStyles.subHeaderBg}></View>
+                    <Col style={appStyles.iconCol}>
+                      <Icon type="FontAwesome5" name="running" style={appStyles.headerIcon} />
+                    </Col>
+                    <Col style={appStyles.subHeaderTxtCol}>
+                      <Text style={[appStyles.baseFont,appStyles.subHeaderTxt]}>Current Accepted Order</Text>
+                    </Col>
+                  </Row>
+                </SubHeader>
+                <Content>
+                    <ScrollView style={[appStyles.bgWhite]}>
+                        {this.displayTableHeader()}
+                        {this.displayTableData()}
+                    </ScrollView>
+                </Content>
+                <Footer style={{marginBottom:30}}>
+                    <FooterTab>
+                      <Button style={appStyles.button,appStyles.buttonPrimary} onPress={()=>this.props.navigation.navigate("Home")}>
+                          <Text style = {appStyles.buttonBlack}>Back to Home</Text>
+                      </Button>
+                    </FooterTab>
+                </Footer>
+            </AppBackground>
         );
     }
 }
-

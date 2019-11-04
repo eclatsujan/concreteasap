@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import {AUTH_PREFIX_URI,USER_PREFIX_URI} from '../config';
 import * as SecureStore from 'expo-secure-store';
 import {getToken,handleResponse} from '../helpers/token';
@@ -8,6 +9,7 @@ export const userService = {
     getUser,
     saveUserDeviceId,
     resetPassword,
+    removeUserDeviceId,
     changePasswordWithToken
 };
 
@@ -27,7 +29,21 @@ function logout(){
 
 }
 
-function register(data) {
+function register(data,photo) {
+
+    const form_data=new FormData();
+    // if(photo){
+    //   form_data.append("photo", {
+    //     name: !photo.fileName?"prof-image":photo.fileName,
+    //     type: photo.type,
+    //     uri:
+    //       Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+    //   });
+    //   Object.keys(data).forEach(key => {
+    //     form_data.append(key, data[key]);
+    //   });
+    // }
+    // console.log(form_data);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,6 +73,17 @@ async function saveUserDeviceId(deviceId){
 
     return await fetch(USER_PREFIX_URI+'save_device', requestOptions).then(handleResponse);
 
+}
+
+async function removeUserDeviceId(){
+  let token=await getToken();
+  // console.log(COMMON_USER_URI+'save_device');
+  const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token }
+  };
+
+  return await fetch(USER_PREFIX_URI+'remove_device', requestOptions).then(handleResponse);
 }
 
 async function resetPassword(email){

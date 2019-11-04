@@ -1,16 +1,17 @@
-import { SET_LOADING } from './constants'
+import {SET_LOADING} from './constants'
+import * as Immutable from "immutable";
 
-const initialState = {
-  loading: false,
-  errormessage:"Please check username and password",
-}
+export const defaultState = Immutable.Map({
+    loading: false
+});
 
-
-export default (state=initialState, action) => {
-  switch (action.type) {
-    case SET_LOADING:
-      return Object.assign({}, state,{loading:action.payload})    
-    default:
-  		return state
-  }
+export const reducer= (state, action) => {
+    switch (action.type) {
+        case SET_LOADING:
+            let newState=state.set("loading", action.payload);
+            console.log(action.payload);
+            return newState;
+        default:
+            return state;
+    }
 }

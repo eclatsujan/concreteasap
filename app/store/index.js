@@ -1,26 +1,48 @@
 import {
   createStore as _createStore,
   applyMiddleware,
-  combineReducers
+    compose
 } from 'redux'
+
+import {
+  combineReducers
+} from 'redux-immutable';
+
+import * as Immutable from 'immutable';
 
 import thunk from 'redux-thunk';
 
-import { reducers, actions } from './modules'
+import { reducer as formReducer } from 'redux-form/immutable';
 
-/**
- * Root states types.
- */
-export { States } from './modules'
+import { reducers, actions,States } from './modules'
+
+// import compose from 'redux/lib/compose';
+
+const initialStates=new Immutable.Map({
+  app:States.app,
+  user:States.user,
+  contractor:States.contractor,
+  rep:States.rep,
+  bid:States.bid,
+  error:States.error,
+  order:States.order
+});
+
+const obj={
+  form:formReducer
+};
+
+
+let merged = {...reducers,...obj};
+
 
 // Apply thunk middleware
-const middleware = applyMiddleware(thunk)
+const middleware = applyMiddleware(thunk);
 
 /**
  * Create app store.
  */
-const createStore = (data={}) => {
-  return _createStore(combineReducers(reducers), data,middleware)
-}
+// const initialState = Immutable.Map();
+const createStore = _createStore(combineReducers(merged),initialStates,middleware);
 
 export { createStore, actions }

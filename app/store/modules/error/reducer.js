@@ -1,19 +1,20 @@
-import { SET_ERROR } from './constants'
-import { REMOVE_ERROR } from './constants'
+import {SET_ERROR} from './constants'
+import {REMOVE_ERROR} from './constants'
 
-const initialState = {
-  error_msg:"",
-  errors:{}
-}
+import * as Immutable from 'immutable';
 
+export const defaultState = Immutable.Map({
+    error_msg: "",
+    errors: {}
+});
 
-export default (state=initialState, action) => {
-  switch (action.type) {
-    case SET_ERROR:
-      return Object.assign({}, state,{error_msg:action.payload.error_msg,errors:action.payload.errors})
-    case REMOVE_ERROR:
-      return Object.assign({},state,initialState);
-    default:
-  		return state
-  }
+export const reducer=(state, action) => {
+    switch (action.type) {
+        case SET_ERROR:
+            return state.set("error_msg", action.payload.error_msg).set("errors", action.payload.errors);
+        case REMOVE_ERROR:
+            return defaultState;
+        default:
+            return state
+    }
 }

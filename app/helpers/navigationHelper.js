@@ -19,6 +19,17 @@ function navigate(routeName, params) {
     );
 }
 
+// function getParam(paramName){
+//     console.log(_navigator);
+//    return _navigator.dispatch(NavigationActions.);
+// }
+
+function goBack(){
+    return _navigator.dispatch(
+        NavigationActions.back()
+    );
+}
+
 function openDrawer(){
     _navigator.dispatch(
         DrawerActions.openDrawer()
@@ -30,5 +41,7 @@ function openDrawer(){
 export default {
     navigate,
     setTopLevelNavigator,
-    openDrawer
+    openDrawer,
+    // getParam,
+    goBack
 };

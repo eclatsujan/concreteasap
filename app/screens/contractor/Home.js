@@ -1,58 +1,46 @@
 //Core
 import * as React from 'react';
 
+import {ScrollView} from 'react-native';
 //Native Base
-import {View,Button,Text,Header,Content,Right,Body,Left,Icon,Title,Grid, Row,
-  Col} from 'native-base';
-
-//Drawer Actions
-import { DrawerActions } from 'react-navigation-drawer';
-
-import {styles} from './styles.js';
-import {appStyles} from "../assets/app_styles";
-import { SafeAreaView } from 'react-navigation';
+import {Content} from 'native-base';
 
 //App Component
 import AppBackground from '../../components/AppBackground';
-import AppLoading from '../../components/AppLoading';
 import AppHeader from '../../components/AppHeader'
+import HomeButton from '../../components/HomeButton'
 
+import {styles} from './styles.js';
+import {appStyles} from "../assets/app_styles";
 
 export default class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  render(){
-    return (
-      <AppBackground>
-        <AppHeader/>
-        <Content contentContainerStyle={appStyles.content}>
-          <View style={appStyles.paddingDefault}>
-            <Button style={appStyles.button} onPress={()=>this.props.navigation.navigate("PlaceOrderRequest")}>
-              <Text style={styles.mainButtonText}>Place Order Request</Text>
-            </Button>
-            <Button style={appStyles.button} onPress={()=>this.props.navigation.navigate("ViewOrderRequests")}>
-              <Text style={styles.mainButtonText}>Pending Orders</Text>
-            </Button>
-            <Button style={appStyles.button} onPress={()=>this.props.navigation.navigate("Accepted Orders")}>
-              <Text style={styles.mainButtonText}>Accepted Orders</Text>
-            </Button>
-            <Button style={appStyles.button} onPress={()=>this.props.navigation.navigate("Notifications")}>
-              <Text style={styles.mainButtonText}>Notifications</Text>
-            </Button>
-            <Button style={appStyles.button}>
-              <Text style={styles.mainButtonText}>Invoices</Text>
-            </Button>
-            <Button style={appStyles.button} onPress={()=>this.props.navigation.navigate("Calculator")}>
-              <Text style={styles.mainButtonText}>Calculators</Text>
-            </Button>
-            <Button style={appStyles.button}>
-              <Text style={styles.mainButtonText}>FAQ</Text>
-            </Button>
-          </View>
-        </Content>
-      </AppBackground>
-    );
-  }
+    render() {
+        return (
+            <AppBackground alignTop>
+                <ScrollView style={[appStyles.pb_45]}>
+                    <AppHeader/>
+                    <Content contentContainerStyle={[appStyles.horizontalCenter]}>
+
+                        <HomeButton onPress={() => this.props.navigation.navigate("PlaceOrderLanding")}
+                                    text="Place New Order" iconName="clipboard"/>
+                        <HomeButton onPress={() => this.props.navigation.navigate("View Order Bids")}
+                                    text="Pending Orders" iconName="hourglass"/>
+                        <HomeButton onPress={() => this.props.navigation.navigate("Accepted Orders")}
+                                    text="Accepted Orders" iconName="running"/>
+                        <HomeButton onPress={() => this.props.navigation.navigate("Notifications")}
+                                    text="Notifications" iconName="bell"/>
+                        <HomeButton onPress={() => this.props.navigation.navigate("Calculator")}
+                                    text="Calculators" iconName="calculator"/>
+                        <HomeButton onPress={() => this.props.navigation.navigate("FAQ")}
+                                    text="faq" iconName="question"/>
+
+                    </Content>
+                </ScrollView>
+            </AppBackground>
+        );
+    }
 }

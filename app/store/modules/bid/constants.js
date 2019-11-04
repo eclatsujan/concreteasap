@@ -1,1 +1,1 @@
-export const PLACE_BID = 'REP/PLACE_BID'
+export const PLACE_BID = 'REP/PLACE_BID';

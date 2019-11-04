@@ -1,5 +1,4 @@
-import reducer from './reducer'
+import {reducer,defaultState} from './reducer'
 import * as actions from './actions'
 
-export const contractor = { reducer, actions }
-export { ContractorState } from './reducer'
+export const contractor = { reducer, actions,defaultState };

@@ -1,24 +1,28 @@
 import { LOGIN, LOGOUT, UPDATEUSER } from './constants'
 
-const initialState = {
+import * as Immutable from 'immutable';
+
+export const defaultState = Immutable.Map({
   loggedIn: false,
   userId: '',
   secureToken: '',
   roles:[]
-}
+});
 
-
-export default (state=initialState, action) => {
+export const reducer= (state, action) => {
   switch (action.type) {
     case LOGIN:
-      return Object.assign({}, state, action.payload)
+      return state.set("loggedIn",action.payload.loggedIn)
+          .set("userId",action.payload.userId)
+          .set("secureToken",action.payload.secureToken)
+          .set("roles",action.payload.roles);
     case LOGOUT:
-      return Object.assign({}, state, initialState)
+      return defaultState;
     case UPDATEUSER:
-      let newState=Object.assign({}, state, action.payload);
-      console.log(newState);
-      return newState;
+      // let newState=Object.assign({}, state, action.payload);
+      // console.log(newState);
+      return state;
     default:
   		return state
   }
-}
+};
