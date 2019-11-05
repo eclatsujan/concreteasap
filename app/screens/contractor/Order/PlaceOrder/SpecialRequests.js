@@ -7,9 +7,9 @@ import {Field, reduxForm} from "redux-form/immutable";
 
 // Custom Component
 import AppBackground from '../../../../components/AppBackground'
-import AppHeader from '../../../../components/AppHeader'
-import SubHeader from '../../../../components/SubHeader'
-import csTextArea from "../../../../components/form/csTextArea";
+import AppHeader from '../../../../components/Headers/AppHeader'
+import SubHeader from '../../../../components/Headers/SubHeader'
+import csTextArea from "../../../../components/Forms/csTextArea";
 
 //Helpers
 import {formValidation} from "../../../../helpers/validation";

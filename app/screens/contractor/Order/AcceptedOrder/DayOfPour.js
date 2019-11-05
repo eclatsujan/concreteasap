@@ -5,8 +5,8 @@ import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 
 import AppBackground from '../../../../components/AppBackground';
-import AppHeader from '../../../../components/AppHeader'
-import SubHeader from '../../../../components/SubHeader'
+import AppHeader from '../../../../components/Headers/AppHeader'
+import SubHeader from '../../../../components/Headers/SubHeader'
 
 
 //styles

@@ -1,14 +1,12 @@
 import * as React from 'react';
-// import {TextInput, StyleSheet, Label} from 'react-native';
-import { View,Container,Header,Content,Icon,Title } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
-import {styles} from './styles.js';
-import {appStyles} from "../assets/app_styles";
+import {ScrollView} from 'react-native';
+import {Content} from "native-base";
 
-import AppHeader from "../../components/AppHeader";
+import AppHeader from "../../components/Headers/AppHeader";
 import AppBackground from "../../components/AppBackground";
-import HomeButton from "../../components/HomeButton";
+import HomeButton from "../../components/Button/HomeButton";
 
+import {appStyles} from "../../../assets/styles/app_styles";
 
 export default class RepHomeScreen extends React.Component {
 
@@ -16,21 +14,30 @@ export default class RepHomeScreen extends React.Component {
         super(props);
     }
 
-    render(){
+    render() {
         return (
             <AppBackground>
                 <AppHeader/>
-                <Content style={[appStyles.bgTransparent]}>
-                  <HomeButton onPress={()=>this.props.navigation.navigate("Open Orders")}
-                      text="View Order" iconName="clipboard" />
-                  <HomeButton onPress={()=>this.props.navigation.navigate("Pending Rep Orders")}
-                          text="Pending Order" iconName="hourglass" />
-                  <HomeButton onPress={()=>this.props.navigation.navigate("Current Orders")}
-                      text="Current Orders" iconName="running" />
-                  <HomeButton onPress={()=>this.props.navigation.navigate("Past Orders")}
-                      text="Past Orders" iconName="folder" />
-                  <HomeButton onPress={()=>this.props.navigation.navigate("Rep Notifications")}
-                          text="Notifications" iconName="bell" />
+                <Content contentContainerStyle={[appStyles.flex1, appStyles.horizontalCenter]}>
+                    <ScrollView contentContainerStyle={[appStyles.flexGrow,appStyles.horizontalCenter]}>
+                        <HomeButton onPress={() => this.props.navigation.navigate("Pending Rep Orders")}
+                                    text="My Bids" iconType="ConcreteASAP" iconName="order"/>
+
+                        <HomeButton onPress={() => this.props.navigation.navigate("View Bids")}
+                                    text="Order Quote Request Board" iconType="ConcreteASAP" iconName="pending"/>
+
+                        <HomeButton onPress={() => this.props.navigation.navigate("Current Orders")}
+                                    text="Accepted Bids" iconType="ConcreteASAP" iconName="accepted"/>
+
+                        <HomeButton onPress={() => this.props.navigation.navigate("Past Orders")}
+                                    text="Open Orders" iconType="ConcreteASAP" iconName="new"/>
+
+                        <HomeButton onPress={() => this.props.navigation.navigate("Rep Notifications")}
+                                    text="Notifications" iconName="bell"/>
+
+                        <HomeButton onPress={() => this.props.navigation.navigate("FAQ")}
+                                    text="FAQ" iconType="ConcreteASAP" iconName="question"/>
+                    </ScrollView>
                 </Content>
             </AppBackground>
         );

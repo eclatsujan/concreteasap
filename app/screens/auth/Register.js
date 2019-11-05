@@ -14,9 +14,9 @@ import {actions} from '../../store';
 
 //Custom Components/
 import AppBackground from '../../components/AppBackground';
-import SubHeader from '../../components/SubHeader';
-import LoginHeader from '../../components/LoginHeader';
-import ErrorHeader from '../../components/ErrorHeader';
+import SubHeader from '../../components/Headers/SubHeader';
+import LoginHeader from '../../components/Headers/LoginHeader';
+import ErrorHeader from '../../components/Headers/ErrorHeader';
 
 //React Helper
 import {helper} from '../../helpers'

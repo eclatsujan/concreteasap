@@ -2,8 +2,8 @@ import * as React from 'react';
 import {ScrollView} from 'react-native';
 import {Content,View,Row,Col,Text} from 'native-base';
 import AppBackground from "../../../../components/AppBackground";
-import AppHeader from "../../../../components/AppHeader";
-import SubHeader from "../../../../components/SubHeader";
+import AppHeader from "../../../../components/Headers/AppHeader";
+import SubHeader from "../../../../components/Headers/SubHeader";
 import {appStyles} from "../../../assets/app_styles";
 
 

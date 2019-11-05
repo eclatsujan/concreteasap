@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { NativeModules,TextInput, StyleSheet, Label, TouchableOpacity, ScrollView, Modal, TouchableHighlight } from 'react-native';
-import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Grid,Col } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
-import {styles} from '../styles.js';
-import {getToken, handleResponse} from "../../../helpers/token";
-import {REP_PREFIX_URI} from "../../../config";
+import { TextInput, ScrollView, Modal } from 'react-native';
+import { View,Container, Button, Text,Content,Grid,Col } from 'native-base';
+
 //Latest
 import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
 import {paymentService} from '../../../services/paymentService'
+import SubHeader from "../../../components/Headers/SubHeader";
+import AppHeader from "../../../components/Headers/AppHeader";
 
+import {styles} from '../styles.js';
 
 export default class OrderDetails extends React.Component {
     constructor(props) {
@@ -18,7 +18,7 @@ export default class OrderDetails extends React.Component {
             // bid:{},
             pricePer:'',
             meter: '',
-            totalcost:'',
+            total_cost:'',
             modalVisible: false,
             SaveDetails:false,
             token:""
@@ -31,26 +31,22 @@ export default class OrderDetails extends React.Component {
         this.setState({modalVisible: visible});
     }
 
-    componentWillMount(){
-        // console.log(this.state.orderDetail);
-        // getting the data of meter from navigation and updating the state of the meter
-        const meter = this.state.orderDetail ?this.state.orderDetail.order_concrete.quantity : null;
+    componentDidMount(){
+        const meter = this.state.orderDetail ?this.state.orderDetail["order_concrete"].quantity : null;
         let m=meter.toString();
         this.setState({meter:m});
-        console.log(Stripe);
-        Stripe.setOptionsAsync({
+        Stripe["setOptionsAsync"]({
             publishableKey: 'pk_test_wF2PcumUqSC8irnWWTAa4w9u00CIYe7HNL', // Your key
         });
     }
 
     setPerPrice(price){
-        //console.log("setperprice",this.state.meter);
         this.setState({pricePer:price});
-        var pricePer=parseInt(price);
-        var meter=parseInt(this.state.meter);
-        var total= (pricePer*meter)+(pricePer*meter*10)/100;
-        var Final=total.toString();
-        this.setState({totalcost : Final});
+        let pricePer=parseInt(price);
+        let meter=parseInt(this.state.meter);
+        let total= (pricePer*meter)+(pricePer*meter*10)/100;
+        let Final=total.toString();
+        this.setState({total_cost : Final});
     }
 
     showDetailsModel(val){
@@ -70,40 +66,21 @@ export default class OrderDetails extends React.Component {
 
 
     async stripePayment(){
-       return await Stripe.paymentRequestWithCardFormAsync();         
+       return await Stripe["paymentRequestWithCardFormAsync"]();
     }
 
     async payBid(){
-        console.log(this.state.token);
         return await paymentService.payBidPrice(this.state.token,this.state.orderDetail.id,this.state.pricePer,this.state.SaveDetails);
     }
 
 
     render(){
-    // console.log("Save details value: ",this.state.SaveDetails);
         return (
             <Container>
-                <Header>
-                    <Left>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
-                        >
-                            <Icon name='menu' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Concrete ASAP</Title>
-                    </Body>
-                    <Right>
-                        <Button transparent>
-                            <Icon name='person' />
-                        </Button>
-                    </Right>
-                </Header>
+                <AppHeader/>
+                <SubHeader title="Order Details" iconName="user" />
                 <Content contentContainerStyle={styles.content}>
                     <ScrollView>
-                        <Text style={{textAlign:"center", fontSize:20, fontWeight:'bold',}}>Order Details ID #{this.state.orderDetail.order_concrete.id}</Text>
                         <Grid>
                             <Col style={{marginLeft:15, marginTop:15}}>
                                 <Text>Suburb / Post Code</Text>

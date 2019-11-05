@@ -6,12 +6,11 @@ export const defaultState = Immutable.Map({
 });
 
 export const reducer= (state, action) => {
-    switch (action.type) {
+    switch(action.type) {
         case SET_LOADING:
             let newState=state.set("loading", action.payload);
-            console.log(action.payload);
             return newState;
         default:
             return state;
     }
-}
+};

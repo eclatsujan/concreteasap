@@ -11,8 +11,8 @@ import {actions, States} from '../../store';
 
 //Custom Component
 import AppBackground from '../../components/AppBackground';
-import LoginHeader from '../../components/LoginHeader';
-import ErrorHeader from '../../components/ErrorHeader';
+import LoginHeader from '../../components/Headers/LoginHeader';
+import ErrorHeader from '../../components/Headers/ErrorHeader';
 
 //React Helper
 import {helper} from '../../helpers'

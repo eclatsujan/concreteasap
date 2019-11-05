@@ -1,20 +1,13 @@
 import React from "react";
-import {
-    Button,
-    Text,
-    Container,
-    List,
-    ListItem,
-    Content,
-    Icon, Col, Grid
-} from "native-base";
+import {Text, Col, Grid} from "native-base";
 
+import {appStyles} from "../../assets/styles/app_styles";
 
 export default class orderDetails extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            headers:[
+        this.state = {
+            headers: [
                 "Suburb / Post Code",
                 "MPA",
                 "AGG",
@@ -30,19 +23,19 @@ export default class orderDetails extends React.Component {
         }
     }
 
-    renderHeader(){
-        return this.state.header.map((header)=>{
+    renderHeader() {
+        return this.state.header.map((header) => {
             return (<Text>{header}</Text>)
         });
     }
 
-    render(){
+    render() {
         return (
             <Grid>
-                <Col style={{marginLeft:15, marginTop:15}}>
+                <Col style={{marginLeft: 15, marginTop: 15}}>
                     {this.renderHeader()}
                 </Col>
-                <Col style={{marginTop:15}}>
+                <Col style={{marginTop: 15}}>
                     <Text>Suburb / Post Code</Text>
                     <Text>Type</Text>
                     <Text>MPA</Text>

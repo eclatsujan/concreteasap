@@ -16,6 +16,9 @@ import AppLoading from './app/components/AppLoading';
 
 import NavigationService from './app/helpers/navigationHelper';
 
+import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
+import icoMoonConfig from './assets/fonts/selection.json';
+
 export default class SetupScreen extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +39,7 @@ export default class SetupScreen extends Component {
     async loadFonts() {
         return Font.loadAsync({
             "Hancock": require("./assets/fonts/HancockParkLaser.otf"),
+            "ConcreteASAP":require('./assets/fonts/concrete-asap.ttf'),
             "Ionicons": require('native-base/Fonts/Ionicons.ttf'),
             "Entypo": require("native-base/Fonts/Entypo.ttf"),
             "FontAwesome": require("native-base/Fonts/FontAwesome.ttf"),

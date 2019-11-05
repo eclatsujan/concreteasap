@@ -14,13 +14,16 @@ export function renderList(data) {
   return view;
 }
 
-// export function showErrorMessage(errorMessage){
-//   if(typeof errorMessage==undefined||!errorMessage){
-//     return ;
-//   }
-//   return (<View style={{background:"red"}}>
-//     {errorMessage.map((error,index)=>{
-//       return <Text key={index}>{error}</Text>
-//     })}
-//   </View>);
-// }
+export function getNested(theObject, path, separator){
+  try {
+    separator = separator || '.';
+    return path.replace('[', separator).replace(']', '').split(separator).reduce(
+        function (obj, property) {
+          return obj[property];
+        }, theObject
+    );
+
+  } catch (err) {
+    return undefined;
+  }
+}

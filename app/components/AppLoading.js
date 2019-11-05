@@ -1,6 +1,6 @@
 import React from "react";
 import {View,ActivityIndicator} from "react-native";
-import {appStyles} from "../screens/assets/app_styles";
+import {appStyles} from "../../assets/styles/app_styles";
 
 export default class AppLoading extends React.Component {
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Item as FormItem, Textarea} from 'native-base';
-import {appStyles} from "../../screens/assets/app_styles";
-import {getErrorStyle, showErrorIcon, showErrorMessage} from "../../helpers/error";
+import {Textarea} from 'native-base';
+import  {showErrorMessage} from "../../helpers/error";
+
+import {appStyles} from "../../../assets/styles/app_styles";
 
 /**
  * to be wrapped with redux-form Field component

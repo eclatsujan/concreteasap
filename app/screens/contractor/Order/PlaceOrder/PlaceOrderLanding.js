@@ -4,9 +4,9 @@ import {appStyles} from "../../../assets/app_styles";
 
 //App Component
 import AppBackground from '../../../../components/AppBackground';
-import AppHeader from '../../../../components/AppHeader'
-import HomeButton from '../../../../components/HomeButton'
-import SubHeader from '../../../../components/SubHeader';
+import AppHeader from '../../../../components/Headers/AppHeader'
+import HomeButton from '../../../../components/Button/HomeButton'
+import SubHeader from '../../../../components/Headers/SubHeader';
 
 
 export default class PlaceOrderLanding extends React.Component {

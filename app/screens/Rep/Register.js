@@ -9,9 +9,9 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
 //Custom Components/
-import SubHeader from '../../components/SubHeader';
-import LoginHeader from '../../components/LoginHeader';
-import ErrorHeader from '../../components/ErrorHeader';
+import SubHeader from '../../components/Headers/SubHeader';
+import LoginHeader from '../../components/Headers/LoginHeader';
+import ErrorHeader from '../../components/Headers/ErrorHeader';
 
 //App Component
 import AppBackground from '../../components/AppBackground';

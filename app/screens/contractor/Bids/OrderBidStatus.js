@@ -1,11 +1,6 @@
 import * as React from 'react';
-import {TextInput, StyleSheet, Label, TouchableOpacity, ScrollView} from 'react-native';
-import {
-    View,
-    Container,
-    Button,
-    Text,
-    Header,
+import {TouchableOpacity, ScrollView} from 'react-native';
+import {View,Container,Button,Text,Header,
     Content,
     Right,
     Body,

@@ -7,8 +7,8 @@ import {Content} from 'native-base';
 
 //App Component
 import AppBackground from '../../components/AppBackground';
-import AppHeader from '../../components/AppHeader'
-import HomeButton from '../../components/HomeButton'
+import AppHeader from '../../components/Headers/AppHeader'
+import HomeButton from '../../components/Button/HomeButton'
 
 import {styles} from './styles.js';
 import {appStyles} from "../assets/app_styles";
@@ -26,7 +26,7 @@ export default class HomeScreen extends React.Component {
                     <Content contentContainerStyle={[appStyles.horizontalCenter]}>
 
                         <HomeButton onPress={() => this.props.navigation.navigate("PlaceOrderLanding")}
-                                    text="Place New Order" iconName="clipboard"/>
+                                    iconType="ConcreteIcon" text="Place New Order" iconName="place-new"/>
                         <HomeButton onPress={() => this.props.navigation.navigate("View Order Bids")}
                                     text="Pending Orders" iconName="hourglass"/>
                         <HomeButton onPress={() => this.props.navigation.navigate("Accepted Orders")}

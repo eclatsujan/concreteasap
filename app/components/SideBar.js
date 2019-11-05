@@ -20,7 +20,6 @@ export default class SideBar extends React.Component {
         } else {
             this.props.navigation.navigate(route.route.routeName);
         }
-
     }
 
     render() {

@@ -9,14 +9,14 @@ import {connect} from "react-redux";
 
 // Custom Component
 import AppBackground from '../../../../components/AppBackground'
-import AppHeader from '../../../../components/AppHeader'
-import SubHeader from '../../../../components/SubHeader'
+import AppHeader from '../../../../components/Headers/AppHeader'
+import SubHeader from '../../../../components/Headers/SubHeader'
 
 import {orderForm} from "../../../../form/placeOrder";
-import csPicker from "../../../../components/form/csPicker";
+import csPicker from "../../../../components/Forms/csPicker";
 import {formValidation} from "../../../../helpers/validation";
-import csDatePicker from "../../../../components/form/csDatePicker";
-import csTimePicker from "../../../../components/form/csTimePicker";
+import csDatePicker from "../../../../components/Forms/csDatePicker";
+import csTimePicker from "../../../../components/Forms/csTimePicker";
 import {renderList} from "../../../../helpers/app";
 
 

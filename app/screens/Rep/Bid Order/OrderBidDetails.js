@@ -8,28 +8,77 @@ import {paymentService} from '../../../services/paymentService'
 
 //Custom Components
 import AppBackground from "../../../components/AppBackground";
-import AppHeader from "../../../components/AppHeader";
-import SubHeader from "../../../components/SubHeader";
+import AppHeader from "../../../components/Headers/AppHeader";
+import SubHeader from "../../../components/Headers/SubHeader";
 import CardPayment from '../../../components/CardPayment'
 
-import {appStyles} from '../../assets/app_styles.js';
-import {order} from "../../../store/modules/order";
+import {appStyles} from '../../../../assets/styles/app_styles.js';
+import TableRow from "../../../components/Tables/TableRow";
 
-
-export default class OrderDetails extends React.Component {
+export default class OrderBidDetails extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            orderDetail: props.navigation.state.params.orderDetail, //data from navigation state
+            orderDetail: {}, //data from navigation state
             // bid:{},
             pricePer: '',
             meter: '',
-            totalcost: '',
+            total_cost: '',
             modalVisible: false,
             SaveDetails: false,
             token: "",
-            keyTitle: {}
+            keyTitle: {},
+            rowColumns: [
+                {
+                    title: "Suburb/Post-Code",
+                    key: "suburb"
+                },
+                {
+                    title: "Type",
+                    key: "type"
+                },
+                {
+                    title: "MPA",
+                    key: "mpa"
+                },
+                {
+                    title: "Slump",
+                    key: "slump"
+                },
+                {
+                    title: "Additives",
+                    key: "acc"
+                },
+                {
+                    title: "Placement Type",
+                    key: "placement_type"
+                },
+                {
+                    title: "delivery_date",
+                    key: "delivery_date"
+                },
+                {
+                    title: "Time Preferences 1",
+                    key: "time_preferences1"
+                },
+                {
+                    title: "Time Preferences 2",
+                    key: "time_preferences2"
+                },
+                {
+                    title: "Time Preferences 3",
+                    key: "time_preferences3"
+                },
+                {
+                    title: "Time Deliveries",
+                    key: "urgency"
+                },
+                {
+                    title: "Message Required",
+                    key: "message_required"
+                }
+            ]
         };
         this.setPerPrice = this.setPerPrice.bind(this);
         this.submitBid = this.submitBid.bind(this);
@@ -40,23 +89,25 @@ export default class OrderDetails extends React.Component {
         this.setState({modalVisible: visible});
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        let orderDetail = this.props.navigation.state.params.orderDetail;
+        this.setState({"orderDetail": orderDetail});
         // getting the data of meter from navigation and updating the state of the meter
-        const meter = this.state.orderDetail ? this.state.orderDetail.order_concrete.quantity : null;
+        const meter = orderDetail ? orderDetail["order_concrete"]["quantity"] : 0;
         let m = meter.toString();
         this.setState({meter: m});
-        Stripe.setOptionsAsync({
+        Stripe["setOptionsAsync"]({
             publishableKey: 'pk_test_wF2PcumUqSC8irnWWTAa4w9u00CIYe7HNL', // Your key
         });
     }
 
     setPerPrice(price) {
         this.setState({pricePer: price});
-        let pricePer = parseInt(price);
+        let pricePer = isNaN(parseInt(price)) ? 0 : price;
         let meter = parseInt(this.state.meter);
         let total = (pricePer * meter) + (pricePer * meter * 10) / 100;
         let Final = total.toString();
-        this.setState({"totalcost": Final});
+        this.setState({"total_cost": Final});
     }
 
     showDetailsModel(val) {
@@ -78,29 +129,12 @@ export default class OrderDetails extends React.Component {
 
 
     async stripePayment() {
-        return await Stripe.paymentRequestWithCardFormAsync();
+        return await Stripe["paymentRequestWithCardFormAsync"]();
     }
 
     async payBid() {
         console.log(this.state.token);
-        return await paymentService.payBidPrice(this.state.token, this.state.orderDetail.id, this.state.pricePer, this.state.SaveDetails);
-    }
-
-    getKeyTitle(key) {
-        return this.state.keyTitle.hasOwnProperty(key) ? this.state.keyTitle[key] : key.replace(/_/g, " ");
-    }
-
-    renderOrderDetail(title, value) {
-        return (
-            <Row style={[appStyles.borderBottom, appStyles.pt_15, appStyles.pb_5]}>
-                <Col style={appStyles.w_65}>
-                    <Text style={appStyles.upperCase}>{title}</Text>
-                </Col>
-                <Col style={appStyles.w_35}>
-                    <Text>{value}</Text>
-                </Col>
-            </Row>
-        );
+        return await paymentService.payBidPrice(this.state.token, this.state.orderDetail["id"], this.state.pricePer, this.state.SaveDetails);
     }
 
     renderNonEditableInput(label, value) {
@@ -110,7 +144,7 @@ export default class OrderDetails extends React.Component {
             </Col>
             <Col>
                 <TextInput
-                    style={[appStyles.loginInput, appStyles.p_10, appStyles.border2,appStyles.borderBlack]}
+                    style={[appStyles.loginInput, appStyles.p_10, appStyles.border2, appStyles.borderBlack]}
                     value={value}
                     editable={false}/>
             </Col>
@@ -119,9 +153,11 @@ export default class OrderDetails extends React.Component {
 
 
     render() {
-        let title = "Order Details ID #" + this.state.orderDetail["order_concrete"].id;
-        let order_concrete = this.state.orderDetail["order_concrete"];
-        console.log(order_concrete);
+        let order = this.props.navigation.state.params.orderDetail;
+        let title = "Order Details ID #" + order["order_concrete"]["id"];
+        let order_concrete = order["order_concrete"];
+
+        let btnStatus = !(this.state.total_cost || this.state.total_cost === "0");
         return (
             <AppBackground enableKeyBoard>
                 <ScrollView>
@@ -129,35 +165,24 @@ export default class OrderDetails extends React.Component {
                     <SubHeader iconName="clipboard" title={title}/>
                     <Content style={[appStyles.p_5]}>
                         <View style={[appStyles.bgWhite, appStyles.mb_10, appStyles.p_5]}>
-                            {this.renderOrderDetail("Suburb / Post Code", order_concrete["suburb"])}
-                            {this.renderOrderDetail("Type", order_concrete["type"])}
-                            {this.renderOrderDetail("MPA", order_concrete["mpa"])}
-                            {this.renderOrderDetail("Slump", order_concrete["slump"])}
-                            {this.renderOrderDetail("Additives", order_concrete["acc"])}
-                            {this.renderOrderDetail("Placement Type", order_concrete["placement_type"])}
-                            {this.renderOrderDetail("Delivery Date", order_concrete["delivery_date"])}
-                            {this.renderOrderDetail("Time Preferences 1", order_concrete["time_preference1"])}
-                            {this.renderOrderDetail("Time Preferences 2", order_concrete["time_preference2"])}
-                            {this.renderOrderDetail("Time Preferences 3", order_concrete["time_preference3"])}
-                            {this.renderOrderDetail("Time Between Deliveries", order_concrete["time_deliveries"])}
-                            {this.renderOrderDetail("Urgency", order_concrete["urgency"])}
-                            {this.renderOrderDetail("Message Request", order_concrete["message_required"] ? "Yes" : "No")}
+                            <TableRow rowData={order_concrete} rowColumns={this.state.rowColumns}/>
                             <Row style={[appStyles.mt_10, appStyles.verticalCenter]}>
                                 <Col>
                                     <Text style={[appStyles.upperCase]}>Price per m2</Text>
                                 </Col>
                                 <Col>
                                     <FormItem style={[appStyles.loginInput, appStyles.p_10, appStyles.border2]} regular>
-                                        <TextInput placeholder="ENTER BID AMOUNT" style={appStyles.baseFont}
+                                        <TextInput keyboardType={'numeric'} placeholder="ENTER BID AMOUNT"
+                                                   style={appStyles.baseFont}
                                                    value={this.state.pricePer} onChangeText={this.setPerPrice}/>
                                     </FormItem>
                                 </Col>
                             </Row>
                             {this.renderNonEditableInput("Required m2", this.state.meter)}
-                            {this.renderNonEditableInput("Total\n(Plus 10% Admin Fee)", this.state.totalcost)}
+                            {this.renderNonEditableInput("Total\n(Plus 10% Admin Fee)", this.state.total_cost)}
                         </View>
 
-                        <Button style={appStyles.horizontalCenter} onPress={() => {
+                        <Button disabled={btnStatus} style={appStyles.horizontalCenter} onPress={() => {
                             this.submitBid()
                         }}>
                             <Text style={appStyles.colorBlack}>Bid</Text>

@@ -4,8 +4,8 @@ import {View, Content,Footer, FooterTab, Button, Text} from 'native-base';
 
 // Custom Component
 import AppBackground from '../../../../components/AppBackground'
-import AppHeader from '../../../../components/AppHeader'
-import SubHeader from '../../../../components/SubHeader'
+import AppHeader from '../../../../components/Headers/AppHeader'
+import SubHeader from '../../../../components/Headers/SubHeader'
 
 //styles
 import {styles} from '../../styles.js';

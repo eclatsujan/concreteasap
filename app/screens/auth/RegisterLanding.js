@@ -5,7 +5,7 @@ import {View,Container,Header,Button,Text,Body,Form,Title,Content,Left,Icon,Row,
 
 //Custom Component
 import AppBackground from '../../components/AppBackground';
-import LoginHeader from '../../components/LoginHeader';
+import LoginHeader from '../../components/Headers/LoginHeader';
 
 import {appStyles} from '../assets/app_styles';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, TouchableOpacity, ScrollView } from 'react-native';
-import { Grid,Col,Row,View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer,FooterTab,Title,Textarea, Form } from 'native-base';
+import { ScrollView } from 'react-native';
+import { Container, Button, Text,Header,Content,Right,Body,Left,Icon,Title } from 'native-base';
 import { DrawerActions } from 'react-navigation-drawer';
 import {actions} from "../../store";
 import {connect} from "react-redux";

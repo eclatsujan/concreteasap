@@ -1,9 +1,9 @@
 import React from "react";
 import {Image} from "react-native";
 import {Button, Icon, Left, Body, Right, Header} from "native-base";
-import navigationHelper from "../helpers/navigationHelper";
+import navigationHelper from "../../helpers/navigationHelper";
 
-import {appStyles} from "../screens/assets/app_styles";
+import {appStyles} from "../../../assets/styles/app_styles";
 
 export default class AppHeader extends React.Component {
 
@@ -28,7 +28,7 @@ export default class AppHeader extends React.Component {
                   {this.customMenu()}
                 </Left>
                 <Body style={{flex:1}}>
-                    <Image source={require("../../assets/Logo18.png")} style={appStyles.appHeader} />
+                    <Image source={require("../../../assets/Logo18.png")} style={appStyles.appHeader} />
                 </Body>
                 <Right style={{flex: 1}}>
                     <Button transparent>

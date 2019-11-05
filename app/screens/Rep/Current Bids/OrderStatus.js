@@ -4,9 +4,9 @@ import { View,Container, Button, Text,Header,Content,Right,Body,Left,Icon,Footer
 import { DrawerActions } from 'react-navigation-drawer';
 import {styles} from '../styles.js';
 
-import AppHeader from "../../../components/AppHeader";
+import AppHeader from "../../../components/Headers/AppHeader";
 import AppBackground from "../../../components/AppBackground";
-import SubHeader from "../../../components/SubHeader";
+import SubHeader from "../../../components/Headers/SubHeader";
 
 import {appStyles} from "../../assets/app_styles";
 

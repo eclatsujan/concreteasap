@@ -1,26 +1,8 @@
 import * as types from './constants'
-import {userService} from '../../../services/userService'
 import {orderService} from '../../../services/orderService'
 
 import * as appActions from '../app/actions';
 import navigationHelper from '../../../helpers/navigationHelper';
-
-export function rejectBid(bid_id) {
-    return (dispatch) => {
-        dispatch(appActions.loading(true));
-        orderService.rejectBid(bid_id).then((res) => {
-            dispatch({
-                type: types.REMOVE_BID,
-                payload:{
-                    bid_id:bid_id
-                }
-            });
-        }).catch((err) => {
-            dispatch(appActions.loading(false));
-        })
-    }
-}
-
 
 export const createOrder = (order) => {
     return (dispatch, getState) => {
@@ -41,50 +23,18 @@ export const createOrder = (order) => {
     }
 };
 
-export const getUserOrders = () => {
+export const getContractorPendingOrders = () => {
     return (dispatch, getState) => {
         dispatch(appActions.loading(true));
-        orderService.getUserOrders().then((res) => {
+        orderService.getContractorPendingOrders().then((res) => {
             dispatch({
-                type: types.ORDER_ALL,
+                type: types.PENDING_ORDERS,
                 payload: {
                     orders: res
                 }
             });
             dispatch(appActions.loading(false));
             // dispatch(appActions.loading(false));
-        });
-    }
-};
-
-export const getAllOrder = (order) => {
-    return (dispatch, getState) => {
-        orderService.getAllOrders().then((res) => {
-            dispatch(appActions.loading(true));
-            dispatch({
-                type: types.ORDER_ALL,
-                payload: {
-                    orders: res
-                }
-            });
-            dispatch(appActions.loading(false));
-        });
-    }
-};
-
-export const getPendingOrder = (order) => {
-    return (dispatch, getState) => {
-        dispatch(appActions.loading(true));
-        orderService.getPendingOrders().then((res) => {
-            dispatch({
-                type: types.PENDING_ORDERS,
-                payload: {
-                    pending_orders: res
-                }
-            });
-            dispatch(appActions.loading(false));
-        }).catch((err)=>{
-            appActions.loading(false);
         });
     }
 };
@@ -102,36 +52,100 @@ export const acceptBid = (bid_id) => {
     }
 };
 
-export const getAcceptedOrder = () => {
+export function rejectBid(bid_id) {
     return (dispatch) => {
         dispatch(appActions.loading(true));
-        orderService.getAcceptedOrders().then((res) => {
+        orderService.rejectBid(bid_id).then((res) => {
+            dispatch({
+                type: types.REMOVE_BID,
+                payload:{
+                    bid_id:bid_id
+                }
+            });
+        }).catch((err) => {
+            dispatch(appActions.loading(false));
+        })
+    }
+}
+
+export const getContractorAcceptedOrder = (order) => {
+    return (dispatch, getState) => {
+        orderService.getContractorAcceptedOrders().then((res) => {
+            dispatch(appActions.loading(true));
             dispatch({
                 type: types.ACCEPTED_ORDERS,
                 payload: {
-                    accepted_orders: res
-                }
-            });
-
-        }).catch((err) => {
-            appActions.loading(false);
-        });
-    }
-};
-
-export const getSingleOrder = (order_id) => {
-    return (dispatch) => {
-        dispatch(appActions.loading(true));
-        orderService.getAcceptedOrders().then((res) => {
-            dispatch({
-                type: types.SINGLE_ORDER,
-                payload: {
-                    order_id
+                    orders: res
                 }
             });
             dispatch(appActions.loading(false));
-        }).catch((err) => {
+        });
+    }
+};
+
+//Contractor Actions
+
+export const getBiddingOrders = () => {
+    return (dispatch)=>{
+        dispatch(appActions.loading(true));
+        orderService.getBiddingAllOrders().then((res)=>{
+            dispatch({
+               type:types.GET_BIDDING_ORDERS,
+               payload:{
+                   bidding_orders:res
+               }
+           });
+            dispatch(appActions.loading(false));
+        }).catch((err)=>{
             appActions.loading(false);
         });
     }
 };
+
+export const getRepPendingOrder = (order) => {
+    return (dispatch, getState) => {
+        dispatch(appActions.loading(true));
+        orderService.getRepPendingOrders().then((res) => {
+            dispatch({
+                type: types.PENDING_ORDERS,
+                payload: {
+                    pending_orders: res
+                }
+            });
+            dispatch(appActions.loading(false));
+        }).catch((err)=>{
+            appActions.loading(false);
+        });
+    }
+};
+
+export const getRepAcceptedOrders = () =>{
+    return (dispatch) => {
+        dispatch(appActions.loading(true));
+        orderService.getRepAcceptedOrders().then((res)=>{
+           dispatch({
+               type:types.ACCEPTED_ORDERS,
+               payload:{
+                   accepted_orders:res
+               }
+           })
+        });
+    }
+};
+
+// export const getSingleOrder = (order_id) => {
+//     return (dispatch) => {
+//         dispatch(appActions.loading(true));
+//         orderService.getAcceptedOrders().then((res) => {
+//             dispatch({
+//                 type: types.SINGLE_ORDER,
+//                 payload: {
+//                     order_id
+//                 }
+//             });
+//             dispatch(appActions.loading(false));
+//         }).catch((err) => {
+//             appActions.loading(false);
+//         });
+//     }
+// };

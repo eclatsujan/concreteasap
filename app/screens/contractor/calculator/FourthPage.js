@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, Button, Text, Content, Form, Item, Input} from 'native-base';
 
 import AppBackground from '../../../components/AppBackground';
-import AppHeader from '../../../components/AppHeader'
+import AppHeader from '../../../components/Headers/AppHeader'
 import CalculatorTab from '../../../components/CalculatorTab'
 
 

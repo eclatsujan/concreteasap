@@ -7,8 +7,8 @@ import {styles} from '../../styles.js';
 
 //App Component
 import AppBackground from '../../../../components/AppBackground';
-import AppHeader from '../../../../components/AppHeader'
-import HomeButton from '../../../../components/HomeButton'
+import AppHeader from '../../../../components/Headers/AppHeader'
+import HomeButton from '../../../../components/Button/HomeButton'
 
 
 export default class ViewAcceptedOrders extends React.Component {

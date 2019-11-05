@@ -1,6 +1,6 @@
 // NavigationService.js
 
-import { NavigationActions } from 'react-navigation';
+import {NavigationActions, StackActions} from 'react-navigation';
 
 import {DrawerActions} from "react-navigation-drawer";
 
@@ -12,10 +12,17 @@ function setTopLevelNavigator(navigatorRef) {
 
 function navigate(routeName, params) {
     _navigator.dispatch(
-        NavigationActions.navigate({
-            routeName,
-            params,
-        })
+        StackActions.reset({
+                index: 0,
+                key:null,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName,
+                        params,
+                    })
+                ]
+            },
+        )
     );
 }
 
@@ -24,13 +31,13 @@ function navigate(routeName, params) {
 //    return _navigator.dispatch(NavigationActions.);
 // }
 
-function goBack(){
+function goBack() {
     return _navigator.dispatch(
         NavigationActions.back()
     );
 }
 
-function openDrawer(){
+function openDrawer() {
     _navigator.dispatch(
         DrawerActions.openDrawer()
     );

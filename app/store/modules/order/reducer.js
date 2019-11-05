@@ -2,7 +2,7 @@ import * as constants from './constants'
 import * as Immutable from 'immutable';
 
 export const defaultState = Immutable.Map({
-    orders: [],
+    bidding_orders:[],
     pending_orders: [],
     accepted_orders: [],
     current_order:{}
@@ -10,8 +10,8 @@ export const defaultState = Immutable.Map({
 
 export const reducer= (state, action) => {
     switch (action.type) {
-        case constants.ORDER_ALL:
-            return state.set("orders", action.payload.orders);
+        case constants.GET_BIDDING_ORDERS:
+            return state.set("bidding_orders",action.payload.bidding_orders);
         case constants.PENDING_ORDERS:
             return state.set("pending_orders", action.payload.pending_orders);
         case constants.ADD_ORDER:

@@ -1,29 +1,11 @@
 import * as React from 'react';
-import {TextInput, StyleSheet, Label, ScrollView} from 'react-native';
-import {
-    View,
-    Container,
-    Button,
-    Text,
-    Header,
-    Content,
-    Right,
-    Body,
-    Left,
-    Icon,
-    Footer,
-    FooterTab,
-    Title,
-    Row
-} from 'native-base';
-import {DrawerActions} from 'react-navigation-drawer';
+import {ScrollView} from 'react-native';
+import {Button,Text,Content,Footer,FooterTab} from 'native-base';
 import {styles} from '../styles.js';
-
 
 // Custom Component
 import AppBackground from '../../../components/AppBackground'
-import AppHeader from '../../../components/AppHeader'
-import SubHeader from '../../../components/SubHeader';
+import AppHeader from '../../../components/Headers/AppHeader'
 import {appStyles} from "../../assets/app_styles";
 
 export default class BidMessageHome extends React.Component {

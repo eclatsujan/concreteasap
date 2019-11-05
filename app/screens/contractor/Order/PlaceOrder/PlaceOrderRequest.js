@@ -8,10 +8,10 @@ import {reduxForm, Field} from "redux-form/immutable";
 
 // Custom Component
 import AppBackground from '../../../../components/AppBackground'
-import AppHeader from '../../../../components/AppHeader'
-import SubHeader from '../../../../components/SubHeader';
-import csTextBox from '../../../../components/form/csTextBox';
-import csPicker from '../../../../components/form/csPicker';
+import AppHeader from '../../../../components/Headers/AppHeader'
+import SubHeader from '../../../../components/Headers/SubHeader';
+import csTextBox from '../../../../components/Forms/csTextBox';
+import csPicker from '../../../../components/Forms/csPicker';
 
 //form javascript objects
 import {orderForm} from "../../../../form/placeOrder";

@@ -7,8 +7,8 @@ import {actions} from '../../../store';
 
 // Custom Component
 import AppBackground from '../../../components/AppBackground'
-import AppHeader from '../../../components/AppHeader'
-import SubHeader from '../../../components/SubHeader'
+import AppHeader from '../../../components/Headers/AppHeader'
+import SubHeader from '../../../components/Headers/SubHeader'
 
 //styles
 import {styles} from '../styles.js';
@@ -117,8 +117,8 @@ class ViewOrderBids extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getAllOrder: () => {
-            return dispatch(actions.order.getUserOrders())
+        getContractorPendingOrders: () => {
+            return dispatch(actions.order.getContractorPendingOrders())
         },
     }
 };

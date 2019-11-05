@@ -7,8 +7,8 @@ import {connect} from 'react-redux';
 
 //Component
 import AppBackground from '../../components/AppBackground';
-import ErrorHeader from '../../components/ErrorHeader';
-import LoginHeader from '../../components/LoginHeader';
+import ErrorHeader from '../../components/Headers/ErrorHeader';
+import LoginHeader from '../../components/Headers/LoginHeader';
 
 //States
 import {actions, States} from '../../store';

@@ -7,8 +7,8 @@ import {styles} from '../styles.js';
 
 // Custom Component
 import AppBackground from '../../../components/AppBackground'
-import AppHeader from '../../../components/AppHeader'
-import SubHeader from '../../../components/SubHeader';
+import AppHeader from '../../../components/Headers/AppHeader'
+import SubHeader from '../../../components/Headers/SubHeader';
 
 import {appStyles} from "../../assets/app_styles";
 

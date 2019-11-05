@@ -5,7 +5,7 @@ let {height, width} = Dimensions.get('window');
 
 export const IMAGE_HEIGHT = width / 2;
 export const IMAGE_HEIGHT_SMALL = width / 7;
-console.log(PixelRatio.get())
+
 export const appStyles = StyleSheet.create({
 
     imageBg: {
@@ -75,6 +75,9 @@ export const appStyles = StyleSheet.create({
     flex3: {
         flex: 3
     },
+    selfCenter:{
+      alignSelf: "center"
+    },
     capitalCase: {
         textTransform: "capitalize"
     },
@@ -99,7 +102,10 @@ export const appStyles = StyleSheet.create({
     mt_10: {
         marginTop: 10
     },
-
+    my_5:{
+        marginTop:5,
+        marginBottom:5
+    },
     my_10:{
         marginTop:10,
         marginBottom:10
@@ -146,7 +152,7 @@ export const appStyles = StyleSheet.create({
         paddingBottom: 5
     },
     ft_small:{
-      fontSize:10
+      fontSize:PixelRatio.get()<2?10:13
     },
     ft_20:{
       fontSize:20
@@ -177,6 +183,9 @@ export const appStyles = StyleSheet.create({
     },
     pb_45: {
         paddingBottom: 45
+    },
+    pl_5: {
+        paddingLeft: 5
     },
     pr_5: {
         paddingRight: 5
@@ -254,6 +263,10 @@ export const appStyles = StyleSheet.create({
         borderBottomWidth:2,
         borderLeftWidth:2,
         borderRightWidth:2
+    },
+    borderX2:{
+      borderTopWidth:2,
+      borderBottomWidth:2
     },
     borderBottom: {
         borderBottomWidth: 2,

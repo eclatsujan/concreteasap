@@ -1,9 +1,10 @@
 import React from 'react';
-import { TextInput, View, Text } from 'react-native';
-import {Item as FormItem, Input, DatePicker} from 'native-base';
-import {appStyles} from "../../screens/assets/app_styles";
-import {getErrorStyle, showErrorIcon,showErrorMessage} from "../../helpers/error";
+import { View } from 'react-native';
+import {Item as FormItem, DatePicker} from 'native-base';
 import moment from "moment";
+
+import {appStyles} from "../../../assets/styles/app_styles";
+import {getErrorStyle, showErrorIcon,showErrorMessage} from "../../helpers/error";
 
 /**
  * to be wrapped with redux-form Field component

@@ -3,7 +3,7 @@ import {ScrollView} from 'react-native';
 import {View, Button, Text, Content, Right, Body, Icon, Footer, FooterTab, Card, Row, Col} from 'native-base';
 
 import AppBackground from '../../../components/AppBackground';
-import AppHeader from '../../../components/AppHeader'
+import AppHeader from '../../../components/Headers/AppHeader'
 
 //styles
 import {styles} from '../styles.js';

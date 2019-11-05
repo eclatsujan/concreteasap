@@ -5,8 +5,8 @@ import {Icon, Button, Text, Form, Item as FormItem, Input, Content, Row, Col} fr
 
 //Custom Component
 import AppBackground from '../../components/AppBackground';
-import LoginHeader from '../../components/LoginHeader';
-import ErrorHeader from '../../components/ErrorHeader';
+import LoginHeader from '../../components/Headers/LoginHeader';
+import ErrorHeader from '../../components/Headers/ErrorHeader';
 
 //Redux Core
 import {connect} from 'react-redux';
