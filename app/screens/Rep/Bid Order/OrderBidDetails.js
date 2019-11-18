@@ -60,15 +60,15 @@ export default class OrderBidDetails extends React.Component {
                 },
                 {
                     title: "Time Preferences 1",
-                    key: "time_preferences1"
+                    key: "time_preference1"
                 },
                 {
                     title: "Time Preferences 2",
-                    key: "time_preferences2"
+                    key: "time_preference2"
                 },
                 {
                     title: "Time Preferences 3",
-                    key: "time_preferences3"
+                    key: "time_preference3"
                 },
                 {
                     title: "Time Deliveries",
@@ -162,7 +162,7 @@ export default class OrderBidDetails extends React.Component {
             <AppBackground enableKeyBoard>
                 <ScrollView>
                     <AppHeader/>
-                    <SubHeader iconName="clipboard" title={title}/>
+                    <SubHeader iconType="ConcreteASAP" iconName="pending-order" title={title}/>
                     <Content style={[appStyles.p_5]}>
                         <View style={[appStyles.bgWhite, appStyles.mb_10, appStyles.p_5]}>
                             <TableRow rowData={order_concrete} rowColumns={this.state.rowColumns}/>

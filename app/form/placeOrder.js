@@ -35,11 +35,11 @@ export const orderForm = {
         },
         {
             label: "10",
-            key: 10
+            key: "10"
         },
         {
             label: "20",
-            key: 20
+            key: "20"
         },
         {
             label: "SL",
@@ -49,7 +49,7 @@ export const orderForm = {
     slu: [{
         label: "SLUMP",
         key: ""
-    }, {label: "80", key: 80}, {label: "90", key: 90}, {label: "100", key: 100}, {label: "150", key: 150}],
+    }, {label: "80", key: "80"}, {label: "90", key: "90"}, {label: "100", key: "100"}, {label: "150", key: "150"}],
     acc: [{
         label: "ACC",
         key: ""

@@ -1,99 +1,65 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, Label, ScrollView } from 'react-native';
-import { Grid,
-          Col,
-          View,
-          Container, 
-          Button, 
-          Text,
-          Header,
-          Content,
-          Right,
-          Body,
-          Left,
-          Icon,
-          Footer,
-          FooterTab,
-          Title,
-          Thumbnail,
-          Form, 
-          Input,
-          Item } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
+import {ScrollView} from 'react-native';
+import {View, Content} from 'native-base';
+
+import {reduxForm, Field} from "redux-form/lib/immutable";
+import {connect} from "react-redux";
+
 import {styles} from '../../contractor/styles.js';
 
+import AppBackground from "../../../components/AppBackground";
+import AppHeader from "../../../components/Headers/AppHeader";
+import SubHeader from "../../../components/Headers/SubHeader";
+import csTextBox from "../../../components/Forms/csTextBox";
+import {formValidation} from "../../../helpers/validation";
+import {actions} from "../../../store/modules";
+import UserProfileForm from './UserProfileForm'
 
-const profile = require('../../../../assets/profile.png');
 
-export default class EditUserProfile extends React.Component {
-  constructor(props){
-        super(props)
-        this.state={
-            
-        }
+class EditUserProfile extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+        this.submitAccount = this.submitAccount.bind(this);
     }
 
-    imageUpload(){
-      console.log("image uploading");
+    submitAccount(values) {
+        let user_detail = values.toJS();
+        this.props.editUserDetail(user_detail);
     }
 
-  render(){
-
-    return (
-       <Container>
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
-            >
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Concrete ASAP</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='person' />
-            </Button>
-          </Right>
-        </Header>
-        <Content contentContainerStyle={styles.content}>
-        <ScrollView>
-        <View style={{alignItems:'center',marginTop:20}}>
-          <Thumbnail large source={profile} style={{height:200,width:200}}/>
-          <Text onPress={this.imageUpload} style={{marginTop:10}}>Choose Photo...</Text>
-          <Form>
-            <Item rounded style={{width:"90%", marginTop:10}}>
-              <Input placeholder="First Name" />
-            </Item>
-            <Item rounded style={{width:"90%", marginTop:10}}>
-              <Input placeholder="Last Name" />
-            </Item>
-            <Item rounded style={{width:"90%", marginTop:10}}>
-              <Input placeholder="Contact No." />
-            </Item>
-            <Item rounded style={{width:"90%", marginTop:10}}>
-              <Input placeholder="Address" />
-            </Item>
-            <Grid style={{marginTop:10, marginBottom:20}}>
-              <Col>
-                <Button primary style={{width:"90%"}}>
-                  <Text>Home</Text>
-                </Button>
-              </Col>
-              <Col>
-                <Button primary style={{width:"90%"}}>
-                  <Text>Edit</Text>
-                </Button>
-              </Col>
-            </Grid>
-          </Form>
-          </View>
-          </ScrollView>                
-        </Content>
-      </Container>
-    );
-  }
+    render() {
+        let user = this.props.user.toJS();
+        user["detail"]["email"] = user["email"];
+        return (
+            <AppBackground>
+                <ScrollView>
+                    <AppHeader/>
+                    <SubHeader title="User Profile" iconType="ConcreteASAP" iconName="user"/>
+                    <Content contentContainerStyle={styles.content}>
+                        <View>
+                            <UserProfileForm initialValues={user["detail"]} accountSubmit={this.submitAccount}/>
+                        </View>
+                    </Content>
+                </ScrollView>
+            </AppBackground>
+        );
+    }
 }
+
+let editUserProfile = reduxForm({form: "editUserProfile"})(EditUserProfile);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        editUserDetail: (user_detail) => {
+            return dispatch(actions.user.editUserDetail(user_detail))
+        },
+    }
+};
+
+export default connect(state => {
+    return {
+        user: state.get("user")
+    }
+}, mapDispatchToProps)(editUserProfile);

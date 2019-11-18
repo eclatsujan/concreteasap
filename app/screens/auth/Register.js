@@ -122,6 +122,7 @@ class Register extends React.Component {
                     <SubHeader iconType="FontAwesome" iconName="user" title={this.state.page_title}/>
                     <ErrorHeader error={error}/>
                     <Form style={[appStyles.loginForm]}>
+                        <Text style={[appStyles.colorPrimary]}>Company</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["company"])]}
                             regular>
@@ -129,6 +130,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({company: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["company"])}
+                        <Text style={[appStyles.colorPrimary]}>ABN</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["abn"])]}
                             regular>
@@ -136,12 +138,14 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({abn: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["abn"])}
+                        <Text style={[appStyles.colorPrimary]}>Logo</Text>
                         <Button
                             style={[appStyles.baseFont, appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.marginDefault]}
                             onPress={this.uploadLogo}>
                             <Text style={[appStyles.baseFont, appStyles.colorGray44]}>{this.state.logoText}</Text>
                             <Icon active style={[appStyles.colorGray44]} type="FontAwesome5" name='upload'/>
                         </Button>
+                        <Text style={[appStyles.colorPrimary]}>Title</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["title"])]}
                             regular>
@@ -149,6 +153,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({title: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["title"])}
+                        <Text style={[appStyles.colorPrimary]}>First Name</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["first_name"])]}
                             regular>
@@ -156,6 +161,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({first_name: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["first_name"])}
+                        <Text style={[appStyles.colorPrimary]}>Last Name</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["last_name"])]}
                             regular>
@@ -163,6 +169,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({last_name: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["last_name"])}
+                        <Text style={[appStyles.colorPrimary]}>Email</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["email"])]}
                             regular>
@@ -170,6 +177,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({email: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["email"])}
+                        <Text style={[appStyles.colorPrimary]}>Phone</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["phone"])]}
                             regular>
@@ -177,6 +185,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({phone: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["phone"])}
+                        <Text style={[appStyles.colorPrimary]}>City</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["city"])]}
                             regular>
@@ -184,6 +193,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({city: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["city"])}
+                        <Text style={[appStyles.colorPrimary]}>State</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["state"])]}
                             regular>
@@ -191,6 +201,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({state: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["state"])}
+                        <Text style={[appStyles.colorPrimary]}>Password</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["password"])]}
                             regular>
@@ -198,6 +209,7 @@ class Register extends React.Component {
                                    secureTextEntry={true} onChangeText={(text) => this.setState({password: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["password"])}
+                        <Text style={[appStyles.colorPrimary]}>Confirm Password</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["confirm_password"])]}
                             regular>

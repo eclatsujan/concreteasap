@@ -1,7 +1,8 @@
 import * as Font from 'expo-font';
 import React, {Component} from "react";
 
-import {StyleProvider, Root} from "native-base";
+import {StyleProvider, Root, Toast} from "native-base";
+import mitt from 'mitt'
 
 import getTheme from "./native-base-theme/components";
 import variables from "./native-base-theme/variables/commonColor";
@@ -16,8 +17,10 @@ import AppLoading from './app/components/AppLoading';
 
 import NavigationService from './app/helpers/navigationHelper';
 
-import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
+import {createIconSetFromIcoMoon} from 'react-native-vector-icons';
 import icoMoonConfig from './assets/fonts/selection.json';
+
+const emitter = mitt();
 
 export default class SetupScreen extends Component {
     constructor(props) {
@@ -27,19 +30,20 @@ export default class SetupScreen extends Component {
         };
     }
 
-    componentWillMount() {
-        this.loadFonts().then(()=>{
+    componentDidMount() {
+        this.loadFonts().then(() => {
             this.setState({isReady: true});
         })
     }
 
     componentWillUnmount() {
+
     }
 
     async loadFonts() {
         return Font.loadAsync({
             "Hancock": require("./assets/fonts/HancockParkLaser.otf"),
-            "ConcreteASAP":require('./assets/fonts/concrete-asap.ttf'),
+            "ConcreteASAP": require('./assets/fonts/concrete-asap.ttf'),
             "Ionicons": require('native-base/Fonts/Ionicons.ttf'),
             "Entypo": require("native-base/Fonts/Entypo.ttf"),
             "FontAwesome": require("native-base/Fonts/FontAwesome.ttf"),

@@ -8,6 +8,7 @@ import CalculatorTab from '../../../components/CalculatorTab'
 //styles
 import {styles} from '../styles.js';
 import {appStyles} from "../../assets/app_styles";
+import SubHeader from "../../../components/Headers/SubHeader";
 
 
 export default class ThirdPage extends React.Component {
@@ -47,33 +48,33 @@ export default class ThirdPage extends React.Component {
         return (
             <AppBackground enableKeyBoard>
                 <AppHeader/>
-
                 <Content>
+                    <SubHeader iconType="ConcreteASAP" iconName="calculators" title="Calculator"/>
                     <CalculatorTab thirdButton/>
                     <Form>
-                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault]} regular>
+                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault,appStyles.my_5]} regular>
                             <Input placeholder="Height(m)" value={this.state.first} style={appStyles.baseFont}
                                    onChangeText={(first) => this.setState({first})}
                                    keyboardType='numeric'/>
                         </Item>
-                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault]} regular>
+                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault,appStyles.my_5]} regular>
                             <Input placeholder="Diameter(m)" value={this.state.second} style={appStyles.baseFont}
                                    onChangeText={(second) => this.setState({second})} keyboardType='numeric'/>
                         </Item>
-                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault]} regular>
+                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault,appStyles.my_5]} regular>
                             <Input placeholder="Qty" style={appStyles.baseFont} value={this.state.third}
                                    style={appStyles.baseFont}
                                    onChangeText={(third) => this.setState({third})} keyboardType='numeric'/>
                         </Item>
-                        <View style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.p_5]}>
+                        <View style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.p_5,appStyles.my_5]}>
                             <Text>Total:</Text>
                             <Text style={{fontSize: 20, fontWeight: 'bold'}}>{this.state.total}</Text>
                         </View>
-                        <View style={styles.container}>
+                        <View style={appStyles.my_5}>
                             <Button style={[appStyles.button]} primary
                                     onPress={this.onPressButton}><Text> Calculate </Text></Button>
                         </View>
-                        <View style={styles.container}>
+                        <View style={appStyles.my_5}>
                             <Button danger onPress={this.clear}><Text> Clear </Text></Button>
                         </View>
                     </Form>

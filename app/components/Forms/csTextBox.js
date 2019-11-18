@@ -22,8 +22,13 @@ export default function csTextBox(props) {
         <View>
             <FormItem style={[appStyles.loginInput, getErrorStyle(hasError)]} regular>
                 <Input
+                    placeholderTextColor={"#000000"}
+                    style={appStyles.baseFontSize}
                     {...inputProps}
-                    onChangeText={input.onChange}
+                    defaultValue={input.value}
+                    onChangeText={(text)=>{
+                        input.onChange(text);
+                    }}
                     onBlur={input.onBlur}
                     onFocus={input.onFocus}
                 />

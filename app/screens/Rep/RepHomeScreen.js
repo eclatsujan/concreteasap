@@ -21,16 +21,16 @@ export default class RepHomeScreen extends React.Component {
                 <Content contentContainerStyle={[appStyles.flex1, appStyles.horizontalCenter]}>
                     <ScrollView contentContainerStyle={[appStyles.flexGrow,appStyles.horizontalCenter]}>
                         <HomeButton onPress={() => this.props.navigation.navigate("Pending Rep Orders")}
-                                    text="My Bids" iconType="ConcreteASAP" iconName="order"/>
+                                    text="My Bids" iconType="ConcreteASAP" iconName="existing-order"/>
 
                         <HomeButton onPress={() => this.props.navigation.navigate("View Bids")}
-                                    text="Order Quote Request Board" iconType="ConcreteASAP" iconName="pending"/>
+                                    text="Order Quote Request Board" iconType="ConcreteASAP" iconName="pending-order"/>
 
                         <HomeButton onPress={() => this.props.navigation.navigate("Current Orders")}
-                                    text="Accepted Bids" iconType="ConcreteASAP" iconName="accepted"/>
+                                    text="Accepted Bids" iconType="ConcreteASAP" iconName="accepted-order"/>
 
                         <HomeButton onPress={() => this.props.navigation.navigate("Past Orders")}
-                                    text="Open Orders" iconType="ConcreteASAP" iconName="new"/>
+                                    text="Open Orders" iconType="ConcreteASAP" iconName="place-order"/>
 
                         <HomeButton onPress={() => this.props.navigation.navigate("Rep Notifications")}
                                     text="Notifications" iconName="bell"/>

@@ -1,6 +1,6 @@
 import React from "react";
 import {Row, Col, View, Text} from "native-base";
-import {getNested} from "../../helpers/app";
+import {getNested, isBoolean, boolToAffirmative} from "../../helpers/app";
 
 import {appStyles} from "../../../assets/styles/app_styles";
 
@@ -31,7 +31,9 @@ export default class TableRow extends React.Component {
                                 <Text>{column["title"]}</Text>
                             </Col>
                             <Col style={appStyles.w_35}>
-                                <Text>{columnValue}</Text>
+                                <Text style={appStyles.arialFont}>
+                                    {!isBoolean(columnValue) ? columnValue : boolToAffirmative(columnValue)}
+                                </Text>
                             </Col>
                         </Row>
                     )

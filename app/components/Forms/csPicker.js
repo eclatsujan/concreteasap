@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Item as FormItem, Picker} from 'native-base';
+import {Picker} from 'native-base';
 import {getErrorStyle, showErrorIcon, showErrorMessage} from "../../helpers/error";
 
 import {appStyles} from "../../../assets/styles/app_styles";
@@ -9,30 +9,38 @@ import {appStyles} from "../../../assets/styles/app_styles";
  * to be wrapped with redux-form Field component
  */
 export default function csPicker(props) {
-    const { input: { onChange, value, ...input }, meta: { touched, error, warning },pickerChildren, ...inputProps} = props;
+    const {input: {onChange, value, ...input}, meta: {touched, error, warning}, pickerChildren, ...inputProps} = props;
 
+    console.log(value);
+    let hasError = false;
 
-    let hasError=false;
-
-    if(touched && ((error)||(warning))){
-        hasError= true;
+    if (touched && ((error) || (warning))) {
+        hasError = true;
     }
 
     return (
         <View>
-            <FormItem style={[appStyles.loginInput,getErrorStyle(hasError)]} regular>
+            <View style={[appStyles.bgWhite, appStyles.my_7, appStyles.borderRadiusDefault]}>
                 <Picker
-                    textStyle={{fontSize: 12}}
-                    onValueChange={(value)=>{console.log(value);onChange(value);}}
+                    textStyle={[appStyles.fontSize,appStyles.defaultFont]}
+                    itemTextStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
+                    headerTitleStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
+                    headerBackButtonTextStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
+                    // headerStyle=
+                    onValueChange={(val) => {
+                        requestAnimationFrame(() => {
+                            onChange(val);
+                        })
+                    }}
+                    mode={"dropdown"}
                     selectedValue={value}
                     {...inputProps}
                     {...input}
                 >
                     {props.children}
                 </Picker>
-                {hasError?showErrorIcon(hasError):null}
-            </FormItem>
-            {hasError?showErrorMessage(error):null}
+            </View>
+            {hasError ? showErrorMessage(error) : null}
         </View>
     );
 }

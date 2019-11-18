@@ -5,6 +5,7 @@ import {rep} from './rep'
 import {order} from './order'
 import {bid} from './bid'
 import {error} from './error'
+import {notifications} from './notifications'
 
 /**
  * Root states.
@@ -16,7 +17,8 @@ export const States = {
   rep:rep.defaultState,
   bid:bid.defaultState,
   error:error.defaultState,
-  order:order.defaultState
+  order:order.defaultState,
+  notifications:notifications.defaultState
 };
 
 /**
@@ -29,7 +31,8 @@ export const reducers = {
   rep:rep.reducer,
   order:order.reducer,
   bid:bid.reducer,
-  error:error.reducer
+  error:error.reducer,
+  notifications:notifications.reducer
 };
 
 /**
@@ -42,7 +45,8 @@ export const actions = {
   rep:rep.actions,
   order:order.actions,
   bid:bid.actions,
-  error:error.actions
+  error:error.actions,
+  notifications:notifications.actions
 };
 
 export { user }

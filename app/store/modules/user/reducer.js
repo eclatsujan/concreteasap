@@ -1,28 +1,39 @@
-import { LOGIN, LOGOUT, UPDATEUSER } from './constants'
+import {LOGIN, LOGOUT, UPDATE_USER, LOAD_USER_PROFILE} from './constants'
 
 import * as Immutable from 'immutable';
 
 export const defaultState = Immutable.Map({
-  loggedIn: false,
-  userId: '',
-  secureToken: '',
-  roles:[]
+    loggedIn: false,
+    email:"",
+    userId: '',
+    secureToken: '',
+    roles: [],
+    detail: {}
 });
 
-export const reducer= (state, action) => {
-  switch (action.type) {
-    case LOGIN:
-      return state.set("loggedIn",action.payload.loggedIn)
-          .set("userId",action.payload.userId)
-          .set("secureToken",action.payload.secureToken)
-          .set("roles",action.payload.roles);
-    case LOGOUT:
-      return defaultState;
-    case UPDATEUSER:
-      // let newState=Object.assign({}, state, action.payload);
-      // console.log(newState);
-      return state;
-    default:
-  		return state
-  }
+export const reducer = (state, action) => {
+    let newState = [];
+    switch (action.type) {
+        case LOGIN:
+            return state.set("loggedIn", action.payload.loggedIn)
+                .set("userId", action.payload.userId)
+                .set("email", action.payload.email)
+                .set("secureToken", action.payload.secureToken)
+                .set("roles", action.payload.roles)
+                .set("detail", action.payload.detail);
+        case LOGOUT:
+            return defaultState;
+        case UPDATE_USER:
+            return state.set("loggedIn", action.payload.loggedIn)
+                .set("userId", action.payload.userId)
+                .set("email", action.payload.email)
+                .set("secureToken", action.payload.secureToken)
+                .set("roles", action.payload.roles)
+                .set("detail", action.payload.detail);
+        case LOAD_USER_PROFILE:
+            newState = state.set("detail", action.payload.detail);
+            return newState;
+        default:
+            return state
+    }
 };

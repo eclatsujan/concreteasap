@@ -1,10 +1,8 @@
 const required=(value)=>{
-    console.log(value);
     return value || typeof value === 'number' ? undefined : 'Please enter the value.';
 };
 
 const requiredSelect=(value)=>{
-    console.log(value);
     return value ? undefined : 'Please select the value';
 };
 

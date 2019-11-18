@@ -10,45 +10,43 @@ import FourthPage from '../screens/contractor/calculator/FourthPage';
 //Home Page
 import HomeScreen from '../screens/contractor/Home';
 //Notifications
-import Notifications from '../screens/contractor/Notification/Notifications';
+import Notifications from '../screens/User/Notification/Notifications';
 
 //Place order in contractor
-import PlaceOrderLanding from '../screens/contractor/Order/PlaceOrder/PlaceOrderLanding';
-import PlaceOrderRequest from '../screens/contractor/Order/PlaceOrder/PlaceOrderRequest';
-import PlaceOrderAdditionalRequest from '../screens/contractor/Order/PlaceOrder/PlaceOrderAdditionalRequest';
+import PlaceOrderLanding from '../screens/contractor/PlaceOrder/PlaceOrderLanding';
+import PlaceOrderRequest from '../screens/contractor/PlaceOrder/PlaceOrderRequest';
+import PlaceOrderAdditionalRequest from '../screens/contractor/PlaceOrder/PlaceOrderAdditionalRequest';
+
 //Special requests
-import SpecialRequests from '../screens/contractor/Order/PlaceOrder/SpecialRequests';
-import ReviewOrder from '../screens/contractor/Order/PlaceOrder/ReviewOrder';
-import ReviewInstructions from '../screens/contractor/Order/PlaceOrder/ReviewInstructions';
-import ViewOrderHome from '../screens/contractor/Order/PlaceOrder/ViewOrderHome';
+import SpecialRequests from '../screens/contractor/PlaceOrder/SpecialRequests';
+import ReviewOrder from '../screens/contractor/Review Order/ReviewOrder';
+import ReviewInstructions from '../screens/contractor/Review Order/ReviewInstructions';
+import ViewOrderHome from '../screens/contractor/PlaceOrder/ViewOrderHome';
 
 //View accepted orders
-import AcceptedOrders from '../screens/contractor/Order/AcceptedOrder/AcceptedOrders';
-import DayOfPour from '../screens/contractor/Order/AcceptedOrder/DayOfPour';
+import AcceptedOrders from '../screens/contractor/AcceptedOrder/AcceptedOrders';
+import DayOfPour from '../screens/contractor/AcceptedOrder/DayOfPour';
 
-//Pending Orders
-import ViewOrderBids from '../screens/contractor/Bids/ViewOrderBids';
-import ViewBids from '../screens/contractor/Bids/ViewBids';
+//All Orders
+import OrderBidStatus from '../screens/contractor/AllOrders/OrderBidStatus';
+import ViewOrderBids from '../screens/contractor/AllOrders/ViewOrderBids';
+import ViewBids from '../screens/contractor/AllOrders/ViewBids';
 
 //View Bids
-import OrderBidStatus from '../screens/contractor/Bids/OrderBidStatus';
-
-import ViewFullOrderDetails from '../screens/contractor/Order/AcceptedOrder/ViewFullOrderDetails';
-import ModifyOrder from '../screens/contractor/Order/AcceptedOrder/ModifyOrder';
-import ModifySpecialRequest from '../screens/contractor/Order/ModifySpecialRequest';
+import ViewFullOrderDetails from '../screens/contractor/AcceptedOrder/ViewFullOrderDetails';
+import ModifyOrderRequest from "../screens/contractor/Modify Order/ModifyOrderRequest";
+import ModifyAdditionalRequest from "../screens/contractor/Modify Order/ModifyAdditionalRequest";
 
 //User Profile
-import UserProfile from '../screens/User/Profile/UserProfile';
-import EditUserProfile from '../screens/User/Profile/EditUserProfile';
+import OrderReview from "../screens/contractor/Confirm Order/OrderReview";
 
 export const placeOrderStack = createStackNavigator({
-        PlaceOrderLanding:PlaceOrderLanding,
-        PlaceOrderRequest:PlaceOrderRequest,
-        "Place Order Additional Request":PlaceOrderAdditionalRequest,
-        SpecialRequests:SpecialRequests,
-        ReviewOrder:ReviewOrder,
-        ReviewInstructions:ReviewInstructions,
-        ViewOrderHome:ViewOrderHome,
+        PlaceOrderRequest: PlaceOrderRequest,
+        "Place Order Additional Request": PlaceOrderAdditionalRequest,
+        SpecialRequests: SpecialRequests,
+        ReviewOrder: ReviewOrder,
+        ReviewInstructions: ReviewInstructions,
+        ViewOrderHome: ViewOrderHome,
     },
     {
         headerMode: 'none',
@@ -57,11 +55,21 @@ export const placeOrderStack = createStackNavigator({
         }
     }
 );
+
+export const placeOrderDrawerStack = createStackNavigator({
+    PlaceOrderLanding: PlaceOrderLanding,
+    "Place Order Request": placeOrderStack
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
 
 export const pendingOrder = createStackNavigator({
-        "View Order Bids":ViewOrderBids,
-        ViewBids:ViewBids,
-        OrderBidStatus:OrderBidStatus,
+        "View Order Bids": ViewOrderBids,
+        ViewBids: ViewBids,
+        OrderBidStatus: OrderBidStatus,
     },
     {
         headerMode: 'none',
@@ -71,12 +79,25 @@ export const pendingOrder = createStackNavigator({
     }
 );
 
+export const modifyOrder=createStackNavigator({
+    ModifyOrder: ModifyOrderRequest,
+    ModifyAdditionalRequest: ModifyAdditionalRequest,
+    ModifySpecialRequests:SpecialRequests,
+    ModifyReviewOrder: ReviewOrder,
+    ModifyReviewInstructions: ReviewInstructions,
+},{
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
 export const acceptedOrders = createStackNavigator({
-        AcceptedOrders:AcceptedOrders,
-        DayOfPour:DayOfPour,
-        ViewFullOrderDetails:ViewFullOrderDetails,
-        ModifyOrder:ModifyOrder,
-        ModifySpecialRequest:ModifySpecialRequest,
+        AcceptedOrders: AcceptedOrders,
+        OrderReview: OrderReview,
+        DayOfPour: DayOfPour,
+        ViewFullOrderDetails: ViewFullOrderDetails,
+        modifyOrder:modifyOrder
     },
     {
         headerMode: 'none',
@@ -88,8 +109,8 @@ export const acceptedOrders = createStackNavigator({
 
 export const calculator = createSwitchNavigator({
     //calculator
-    first:FirstPage,
-    second:SecondPage,
-    third:ThirdPage,
-    fourth:FourthPage,
+    first: FirstPage,
+    second: SecondPage,
+    third: ThirdPage,
+    fourth: FourthPage,
 });

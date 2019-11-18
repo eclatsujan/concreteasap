@@ -5,7 +5,7 @@ import {Icon, Button, Text, Form, Item as FormItem, Input, Content, Row, Col} fr
 
 //Redux Core
 import {connect} from 'react-redux';
-
+import {withNavigation} from 'react-navigation';
 //States
 import {actions, States} from '../../store';
 
@@ -31,12 +31,18 @@ class ResetPasswordToken extends React.Component {
             token: "",
         };
         this.resetPassword = this.resetPassword.bind(this);
-        // this.props.flushError();
+
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            let email = this.props.navigation.getParam("email");
+            if (email) {
+                this.setState({"email": email});
+            }
+        });
     }
 
     componentDidMount() {
         let email = this.props.navigation.getParam("email");
-        if (email) {
+         if (email) {
             this.setState({"email": email});
         }
     }
@@ -110,8 +116,8 @@ class ResetPasswordToken extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        resetPassword: (token, email, password, password_confirmation) => {
-            return dispatch(actions.user.changePasswordWithToken(token, email, password, password_confirmation));
+        resetPassword: (email,token, password, password_confirmation) => {
+            return dispatch(actions.user.changePasswordWithToken(email, token, password, password_confirmation));
         },
         flushError: () => {
             return dispatch(actions.error.removeErrors());
@@ -126,4 +132,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordToken);
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(ResetPasswordToken));

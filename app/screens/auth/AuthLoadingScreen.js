@@ -1,5 +1,4 @@
 import React from 'react';
-import {ActivityIndicator, Dimensions, ImageBackground, StatusBar, View} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 import OneSignal from 'react-native-onesignal';
@@ -26,8 +25,8 @@ class AuthLoadingScreen extends React.Component {
         OneSignal.init("8316b62b-6ae3-4a80-8c3d-35a7d7be86fc");
     }
 
-    componentWillMount(){
-        this._bootstrapAsync();
+    componentDidMount(){
+        this._bootstrapAsync().then((res)=>{console.log(res)});
     }
 
     async getDeviceIds(){
@@ -41,6 +40,7 @@ class AuthLoadingScreen extends React.Component {
         let user_token=await SecureStore.getItemAsync("user_token");
         let user_role=await SecureStore.getItemAsync("user_role");
         let user= await userService.getUser(user_token);
+        this.props.updateUserState(user);
         if(user_token!==null){
             try{
                 if(user.device_id===""){
@@ -71,11 +71,10 @@ class AuthLoadingScreen extends React.Component {
             this.props.navigation.navigate('Auth');
         }
 
-    }
+    };
 
     // Render any loading content that you like here
     render() {
-        let { height, width } = Dimensions.get('window');
         return (
             <AppBackground loading="true" />
         );
@@ -84,8 +83,8 @@ class AuthLoadingScreen extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getUser: (token) => {
-            return dispatch(actions.user.loadUserState(token))
+        updateUserState: (user) => {
+            return dispatch(actions.user.updateUserState(user))
         }
     }
 };

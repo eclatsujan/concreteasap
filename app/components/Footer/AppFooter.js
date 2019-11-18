@@ -13,8 +13,8 @@ export default class AppFooter extends React.Component {
 
     render(){
         return (
-            <Footer style={appStyles.mb_30}>
-                <FooterTab>
+            <Footer style={appStyles.mb_30} style={appStyles.bgTransparent}>
+                <FooterTab style={appStyles.bgTransparent}>
                     <Button style={[appStyles.button, appStyles.buttonPrimary]}
                             onPress={() => navigationHelper.navigate("Home")}>
                         <Text style={appStyles.buttonBlack}>Back to Home</Text>

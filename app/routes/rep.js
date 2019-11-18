@@ -1,13 +1,9 @@
 import {createStackNavigator} from "react-navigation-stack";
 
-  //Bid
+//Bid
 import RepViewBids from '../screens/Rep/Bid Order/RepViewBids';
 import OrderBidDetails from '../screens/Rep/Bid Order/OrderBidDetails';
 
-// import ViewOrderRequests from '../screens/contractor/Bid/ViewOrderRequests';
-
-//Accept Order
-import RepViewAcceptedOrders from '../screens/Rep/Accepted Bids/RepViewAcceptedOrders';
 
 //Current Order Bids
 import CurrentAcceptedOrder from '../screens/Rep/Current Bids/CurrentAcceptedOrder';
@@ -17,7 +13,7 @@ import OrderStatus from '../screens/Rep/Current Bids/OrderStatus';
 import PendingOrderRequest from '../screens/Rep/My Bids/PendingOrderRequest';
 import OrderPendingDetails from '../screens/Rep/My Bids/OrderPendingDetails'
 //Rep Notifications
-import repNotification from '../screens/Rep/Notifications/Notifications';
+import Notifications from '../screens/User/Notification/Notifications';
 
 import BidMessageHome from "../screens/Rep/Order/BidMessageHome";
 

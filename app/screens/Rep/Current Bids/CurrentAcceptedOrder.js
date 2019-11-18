@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {TouchableOpacity, ScrollView} from 'react-native';
-import {Grid, Col, Row, Button, Text, Content, View, Footer, FooterTab} from 'native-base';
+import {ScrollView} from 'react-native';
+import {Content, View} from 'native-base';
 
 import {connect} from "react-redux";
 import {withNavigation} from "react-navigation";
@@ -20,30 +20,33 @@ class CurrentAcceptedOrder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rowHeaders: ['Order #', 'Status', 'Actions'],
-            rowColumns: ["id", "status"],
-        }
+            rowHeaders: ['Order #', 'Status'],
+            rowColumns: ["order.id", "order.status"],
+            loading:true
+        };
         this._alertIndex=this._alertIndex.bind(this);
+
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.props.getRepAcceptedOrders();
+        });
     }
 
-    _alertIndex(id) {
-        console.log("bids:", id);
-        this.props.navigation.navigate("OrderStatus", {id: id});
+    _alertIndex(bid) {
+        this.props.navigation.navigate("OrderStatus",{bid});
     }
 
     render() {
         let app = this.props.app.toJS();
         let order = this.props.order.toJS();
-        console.log(order.accepted_orders);
         return (
             <AppBackground>
                 <ScrollView>
                     <AppHeader/>
-                    <SubHeader title="Current Accepted Order"/>
+                    <SubHeader iconType="ConcreteASAP" iconName="accepted-order" title="Current Accepted Order"/>
                     <Content>
                         <View style={[appStyles.bgWhite]}>
                             <CustomTable isLoading={app.loading} rowHeaders={this.state.rowHeaders}
-                                         rowData={order.accepted_orders} rowColumns={this.state.rowColumns}
+                                         rowData={order["accepted_orders"]} rowColumns={this.state.rowColumns}
                                          buttonText="View Details" onPress={this._alertIndex}/>
                         </View>
                     </Content>

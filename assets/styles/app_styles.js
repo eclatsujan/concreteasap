@@ -15,28 +15,11 @@ export const isXXHDPI=PixelRatio.get()===3;
 //for iphone 8 to iphone X and android xxxHPI
 export const isXXXHDPI=PixelRatio.get()===3.5;
 
+
 export const appStyles = StyleSheet.create({
-    imageBg: {
-        width,
-        height
-    },
-    appHeader: {
-        width: 125,
-        height: 75,
-        resizeMode: 'contain',
-    },
-    headerHeight: {
-        height: 85
-    },
-    customMargin: {
-        marginTop: 30,
-        marginBottom: 30
-    },
-    mt_1: {
-        // marginTop:10
-    },
+    //Base Size
     baseFontSize:{
-        fontSize:(isMDPI||isHDPI)?13:15
+        fontSize:(isMDPI||isHDPI)?13:12
     },
     baseFont: {
         fontFamily: "Hancock"
@@ -44,6 +27,18 @@ export const appStyles = StyleSheet.create({
     defaultFont:{
         fontFamily:"Roboto"
     },
+    arialFont:{
+        fontFamily:"Arial"
+    },
+    defaultCircle:{
+        width:100,
+        height:100,
+        borderRadius:50
+    },
+    inputHeightBase:{
+        minHeight: 50
+    },
+    //Background
     bgTransparent: {
         backgroundColor: 'transparent',
     },
@@ -65,8 +60,12 @@ export const appStyles = StyleSheet.create({
     bgNotification: {
         backgroundColor: "#CFFFD3"
     },
+    //Text Colours
     colorPrimary: {
         color: "#14E22A"
+    },
+    colorSecondary:{
+      color:"#FFEE00"
     },
     colorWhite: {
         color: "#ffffff"
@@ -77,6 +76,13 @@ export const appStyles = StyleSheet.create({
     colorBlack: {
         color: "#000"
     },
+    colorDanger:{
+      color:"#FF0000"
+    },
+    colorComplete:{
+      color:"#2E7400"
+    },
+    //Flex
     flex1: {
         flex: 1
     },
@@ -86,8 +92,17 @@ export const appStyles = StyleSheet.create({
     selfCenter:{
         alignSelf: "center"
     },
+    selfRight:{
+        alignSelf: "flex-end"
+    },
     flexGrow:{
       flexGrow:1
+    },
+    row:{
+      flexDirection:"row"
+    },
+    rowReverse:{
+        flexDirection:"row-reverse"
     },
     justifyItemsCenter: {
         justifyContent: 'center',
@@ -105,28 +120,22 @@ export const appStyles = StyleSheet.create({
     verticalCenter: {
         alignItems: "center",
     },
+    flexAlignRight:{
+        alignItems:"flex-end"
+    },
     verticalSelfCenter:{
         alignSelf:"center"
     },
     horizontalCenter: {
         justifyContent: "center"
     },
+    horizontalRight:{
+      justifyContent:"flex-end"
+    },
     selfVerticalCenter:{
 
     },
-    capitalCase: {
-        textTransform: "capitalize"
-    },
-    upperCase:{
-        textTransform:"uppercase"
-    },
-    borderTransparent: {
-        borderColor: 'transparent'
-    },
-    btnGray: {
-        backgroundColor: "#2E2E2E",
-        marginBottom: 7
-    },
+    //Padding and Margins
     paddingYDefault: {
         paddingTop: 7,
         paddingBottom: 7
@@ -135,12 +144,22 @@ export const appStyles = StyleSheet.create({
         marginTop: 7,
         marginBottom: 7,
     },
+    ml_10:{
+      marginLeft:10
+    },
+    ml_20:{
+      marginLeft:20
+    },
     mt_10: {
         marginTop: 10
     },
     my_5:{
         marginTop:5,
         marginBottom:5
+    },
+    my_7:{
+      marginTop:7,
+      marginBottom:7
     },
     my_10:{
         marginTop:10,
@@ -156,49 +175,25 @@ export const appStyles = StyleSheet.create({
     mb_30: {
         marginBottom: 30
     },
-    marginAppDefault: {
-        // marginLeft:20,
-        // marginRight:20
+    margin_3: {
+        marginTop: 2,
+        marginBottom: 2
     },
-    paddingAppDefault: {
-        // paddingLeft:10,
-        // paddingRight:10
+    marginXDefault: {
+        marginTop: 10,
+        marginBottom: 10
     },
-    borderRadiusDefault: {
-        borderRadius: 7
+    mx7: {
+        marginTop: 7,
+        marginBottom: 7
     },
-    container: {
-        backgroundColor: 'transparent',
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: "center"
+    paddingXDefault: {
+        paddingTop: 15,
+        paddingBottom: 15
     },
-    subHeader: {
-        position: "relative",
-        paddingTop: 25,
-        paddingBottom: 25,
-        alignItems: "center",
-        // paddingLeft:25,
-        // paddingRight:25,
-        backgroundColor: 'transparent',
-    },
-    absoluteCenter:{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-    },
-    customPadding: {
-        paddingTop: 5,
-        paddingBottom: 5
-    },
-    ft_small:{
-        fontSize:PixelRatio.get()<2?10:13
-    },
-    ft_20:{
-        fontSize:20
+    paddingX7: {
+        paddingTop: 7,
+        paddingBottom: 7
     },
     p_5: {
         padding: 5
@@ -208,6 +203,9 @@ export const appStyles = StyleSheet.create({
     },
     p_15: {
         padding: 15
+    },
+    pl_20:{
+        paddingLeft:20
     },
     pt_5: {
         paddingTop: 5,
@@ -264,6 +262,9 @@ export const appStyles = StyleSheet.create({
     w_35: {
         width: "35%"
     },
+    w_45:{
+      width:"45%"
+    },
     w_50:{
         width:"50%"
     },
@@ -276,41 +277,30 @@ export const appStyles = StyleSheet.create({
     w_90:{
         width:"90%"
     },
-    Mh80xl:{
-      minHeight:PixelRatio.get()>2?80:"auto"
+    absoluteCenter:{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
-    margin_3: {
-        marginTop: 2,
-        marginBottom: 2
+    customPadding: {
+        paddingTop: 5,
+        paddingBottom: 5
     },
-    iconCol: {
-        width: "15%",
-        paddingLeft: 10
+    ft_small:{
+        fontSize:PixelRatio.get()<2?10:13
     },
-    subHeaderTxtCol: {
-        // width: "85%",
+    ft_20:{
+        fontSize:20
     },
-    subHeaderTxt: {
-
-        fontSize: PixelRatio.get()<2?13:17,
-        textTransform: "uppercase"
+    capitalCase: {
+        textTransform: "capitalize"
     },
-    marginXDefault: {
-        marginTop: 10,
-        marginBottom: 10
+    upperCase:{
+        textTransform:"uppercase"
     },
-    mx7: {
-        marginTop: 7,
-        marginBottom: 7
-    },
-    paddingXDefault: {
-        paddingTop: 15,
-        paddingBottom: 15
-    },
-    paddingX7: {
-        paddingTop: 7,
-        paddingBottom: 7
-    },
+    //Borders
     border2:{
         borderTopWidth:2,
         borderBottomWidth:2,
@@ -325,89 +315,25 @@ export const appStyles = StyleSheet.create({
         borderBottomWidth:2
     },
     borderBottom: {
-        borderBottomWidth: 2,
-        borderColor: "#000000"
+        borderBottomWidth: 2
     },
     borderBlack:{
         borderColor:"#000000"
     },
-    content: {
-        // flex:1,
+    borderGray44:{
+        borderColor:"#707070"
     },
-    contentCenter: {
-        // flex:1,
-        // alignSelf:"center",
-        alignItems: "center",
-    },
-    inputForm: {},
-    logo: {
-        width: 200,
-        height: 175,
-        resizeMode: 'contain'
-    },
-    logoHeader: {
-        width: 200,
-        height: 125,
-        resizeMode: 'contain',
-        marginBottom: 10
-    },
-    headerIcon: {
-        fontSize: 40,
-    },
-    loginForm: {
-        // marginTop:5,
-    },
-    loginInput: {
-        backgroundColor: "#fff",
-        marginTop: 7,
-        marginBottom: 7,
-        borderRadius: 4,
-        marginLeft: 0,
-        marginRight: 0,
-        borderColor: "#14E22A",
-        borderWidth: 2,
-        width: "100%"
-    },
-    loginInputBox: {
-        fontSize: 14,
+    borderTransparent: {
+        borderColor: 'transparent'
     },
 
-    btnPadding: {
-        marginTop: 15,
-        marginBottom: 15,
-        paddingTop: 20,
-        paddingBottom: 20
+    borderRadiusDefault: {
+        borderRadius: 4
     },
-    btnTxt: {
-        color: "#000",
-        fontSize: 15,
-        fontFamily: "Hancock"
-    },
-    btnInverseColor: {
-        color: "#fff"
-    },
-    btnLargeTxt: {
-        color: "#14E22A",
-        fontSize: 20,
-        fontFamily: "Hancock"
-    },
-    txtCenter: {
-        textAlign: "center",
-    },
-
-    appMargin: {
-        marginLeft: PixelRatio.get()<=2?10:20,
-        marginRight: PixelRatio.get()<=2?10:20
-    },
-    circle: {
-        width: 50,
-        height: 50,
-        borderRadius: 50 / 2,
-        borderColor: "#14E22A",
-        borderWidth: 2
-    },
-    orderBorder:{
-
+    //Button Styles
+    btnGray: {
+        backgroundColor: "#2E2E2E",
+        marginBottom: 7
     },
     button: {
         marginTop: 5,
@@ -433,5 +359,135 @@ export const appStyles = StyleSheet.create({
     buttonHomeIcon: {
         color: "#14E22A",
         fontSize:(isHDPI||isMDPI)?25:30
+    },
+    btnPadding: {
+        marginTop: 15,
+        marginBottom: 15,
+        paddingTop: 20,
+        paddingBottom: 20
+    },
+    btnTxt: {
+        color: "#000",
+        fontSize: 15,
+        fontFamily: "Hancock"
+    },
+    btnInverseColor: {
+        color: "#fff"
+    },
+    btnLargeTxt: {
+        color: "#14E22A",
+        fontSize: 20,
+        fontFamily: "Hancock"
+    },
+
+    //App Styles
+    imageBg: {
+        width,
+        height
+    },
+    container: {
+        backgroundColor: 'transparent',
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "center"
+    },
+    content: {
+
+    },
+    contentCenter: {
+        alignItems: "center",
+    },
+    appHeader: {
+        width: 125,
+        height: isXXHDPI?50:75,
+        resizeMode: 'contain',
+    },
+    headerHeight: {
+        height: isXXHDPI?100:85
+    },
+    customMargin: {
+        marginTop: 30,
+        marginBottom: 30
+    },
+    logo: {
+        width: 200,
+        height: 175,
+        resizeMode: 'contain'
+    },
+    logoHeader: {
+        width: 200,
+        height: 125,
+        resizeMode: 'contain',
+        marginBottom: 10
+    },
+    subHeaderTxtCol: {
+        // width: "85%",
+    },
+    subHeaderTxt: {
+        fontSize: PixelRatio.get()<2?13:17,
+        textTransform: "uppercase"
+    },
+    marginAppDefault: {
+        // marginLeft:20,
+        // marginRight:20
+    },
+    paddingAppDefault: {
+        // paddingLeft:10,
+        // paddingRight:10
+    },
+    inputForm: {},
+    subHeader: {
+        position: "relative",
+        paddingTop: 25,
+        paddingBottom: 25,
+        alignItems: "center",
+        // paddingLeft:25,
+        // paddingRight:25,
+        backgroundColor: 'transparent',
+    },
+    headerIcon: {
+        fontSize: 40,
+    },
+    loginForm: {
+        // marginTop:5,
+    },
+    loginInput: {
+        backgroundColor: "#fff",
+        marginTop: 7,
+        marginBottom: 7,
+        borderRadius: 4,
+        marginLeft: 0,
+        marginRight: 0,
+        borderColor: "#14E22A",
+        borderWidth: 1,
+        width: "100%"
+    },
+    loginInputBox: {
+        fontSize: 14,
+    },
+    txtCenter: {
+        textAlign: "center",
+    },
+    appMargin: {
+        marginLeft: PixelRatio.get()<=2?10:20,
+        marginRight: PixelRatio.get()<=2?10:20
+    },
+    circle: {
+        width: 50,
+        height: 50,
+        borderRadius: 50 / 2,
+        borderColor: "#14E22A",
+        borderWidth: 2
+    },
+    orderBorder:{
+
+    },
+    Mh80xl:{
+        minHeight:PixelRatio.get()>2?80:"auto"
+    },
+    iconCol: {
+        width: "15%",
+        paddingLeft: 10
     }
 });

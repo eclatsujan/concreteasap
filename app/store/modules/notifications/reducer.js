@@ -1,16 +1,20 @@
-import {SET_LOADING} from './constants'
+import {GET_NOTIFICATIONS,REMOVE_NOTIFICATIONS} from './constants'
 import * as Immutable from "immutable";
+// import {notifications} from "./index";
 
 export const defaultState = Immutable.Map({
-    loading: false
+    notifications:[]
 });
 
 export const reducer= (state, action) => {
+    let newState=[];
     switch (action.type) {
-        case SET_LOADING:
-            let newState=state.set("loading", action.payload);
-            console.log(action.payload);
+        case GET_NOTIFICATIONS:
+            newState=state.set("notifications",action.payload.notifications);
             return newState;
+        case REMOVE_NOTIFICATIONS:
+            newState=state.get("notifications").filter(notify=>notify.id!==action.payload.notification_id);
+            return state.set("notifications",newState);
         default:
             return state;
     }

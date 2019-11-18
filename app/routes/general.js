@@ -4,29 +4,38 @@ import RegisterLanding from "../screens/auth/RegisterLanding";
 import ForgetPassword from '../screens/auth/ForgetPassword';
 import ResetPasswordToken from '../screens/auth/ResetPasswordToken';
 import Register from '../screens/auth/Register';
-//contractor files
-import RegisterContractor from '../screens/contractor/Register';
-import repRegister from '../screens/Rep/Register';
+//User Profile Screen
+import UserProfile from "../screens/User/Profile/UserProfile";
+import EditUserProfile from "../screens/User/Profile/EditUserProfile";
 
 
+export const ResetPasswordStack = createStackNavigator({
+        "Forget Password": ForgetPassword,
+        "Reset Password Token": ResetPasswordToken,
+    },
+    {
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    });
 
-
-export const ResetPasswordStack=createStackNavigator({
-  "Forget Password":ForgetPassword,
-  "Reset Password Token":ResetPasswordToken,
-  },
-  {
+export const UserProfileStack=createStackNavigator({
+    "My Profile":UserProfile,
+    "Edit User Profile":EditUserProfile
+},{
     headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
     }
-  });
+});
+
 
 export const AuthStack = createStackNavigator({
         SignIn: LoginScreen,
-        "Register Landing":RegisterLanding,
-        "Reset Password":ResetPasswordStack,
-        Register:Register,
+        "Register Landing": RegisterLanding,
+        "Reset Password": ResetPasswordStack,
+        Register: Register,
         // RegContractor:RegisterContractor,
         // repRegister:repRegister,
     },
@@ -34,5 +43,6 @@ export const AuthStack = createStackNavigator({
         headerMode: 'none',
         navigationOptions: {
             headerVisible: false,
-        }}
+        }
+    }
 );

@@ -15,7 +15,7 @@ export default class CustomTable extends React.Component {
         return !headerData ? null : <Row>
             {headerData.map((column, index) => (
                 <Col key={index}>
-                    <Text style={appStyles.upperCase}>{column}</Text>
+                    <Text style={[appStyles.upperCase,appStyles.baseFontSize]}>{column}</Text>
                 </Col>
             ))}
         </Row>
@@ -45,7 +45,7 @@ export default class CustomTable extends React.Component {
                         let columnValue = getNested(row, column);
                         return (
                             <Col key={index}>
-                                <Text>{columnValue}</Text>
+                                <Text style={appStyles.baseFontSize}>{columnValue}</Text>
                             </Col>
                         )
                     })}

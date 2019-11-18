@@ -6,6 +6,13 @@ let {height, width} = Dimensions.get('window');
 export const IMAGE_HEIGHT = width / 2;
 export const IMAGE_HEIGHT_SMALL = width / 7;
 
+export const COLOR_PRIMARY="#14E22A";
+export const COLOR_SECONDARY="#2E2E2E";
+export const COLOR_BLACK="#000000";
+export const COLOR_GRAY44="#707070";
+export const COLOR_WHITE="#FFFFFF";
+export const COLOR_DANGER="#B00020";
+
 export const appStyles = StyleSheet.create({
 
     imageBg: {
@@ -40,16 +47,16 @@ export const appStyles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     bgPrimary: {
-        backgroundColor: "#14E22A"
+        backgroundColor: COLOR_PRIMARY
     },
     bgSecondary: {
-        backgroundColor: "#2E2E2E"
+        backgroundColor: COLOR_SECONDARY
     },
     bgWhite: {
-        backgroundColor: "#ffffff"
+        backgroundColor: COLOR_WHITE
     },
     bgBlack:{
-      backgroundColor:"#000000"
+      backgroundColor:COLOR_BLACK
     },
     bgError: {
         backgroundColor: "#B00020"
@@ -58,16 +65,16 @@ export const appStyles = StyleSheet.create({
         backgroundColor: "#CFFFD3"
     },
     colorPrimary: {
-        color: "#14E22A"
+        color: COLOR_PRIMARY
     },
     colorWhite: {
-        color: "#ffffff"
+        color: COLOR_WHITE
     },
     colorGray44: {
-        color: "#707070"
+        color: COLOR_GRAY44
     },
     colorBlack: {
-        color: "#000"
+        color: COLOR_BLACK
     },
     flex1: {
         flex: 1
@@ -84,11 +91,14 @@ export const appStyles = StyleSheet.create({
     upperCase:{
         textTransform:"uppercase"
     },
+    borderPrimary:{
+      borderColor:COLOR_PRIMARY
+    },
     borderTransparent: {
         borderColor: 'transparent'
     },
     btnGray: {
-        backgroundColor: "#2E2E2E",
+        backgroundColor: COLOR_SECONDARY,
         marginBottom: 7
     },
     paddingYDefault: {
@@ -130,26 +140,6 @@ export const appStyles = StyleSheet.create({
     },
     borderRadiusDefault: {
         borderRadius: 7
-    },
-    container: {
-        backgroundColor: 'transparent',
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: "center"
-    },
-    subHeader: {
-        position: "relative",
-        paddingTop: 25,
-        paddingBottom: 25,
-        alignItems: "center",
-        // paddingLeft:25,
-        // paddingRight:25,
-        backgroundColor: 'transparent',
-    },
-    customPadding: {
-        paddingTop: 5,
-        paddingBottom: 5
     },
     ft_small:{
       fontSize:PixelRatio.get()<2?10:13
@@ -226,6 +216,16 @@ export const appStyles = StyleSheet.create({
     w_90:{
       width:"90%"
     },
+    //relative
+    relative:{
+        position:"relative"
+    },
+    right_5:{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        width: "100%"
+    },
     margin_3: {
         marginTop: 2,
         marginBottom: 2
@@ -288,6 +288,26 @@ export const appStyles = StyleSheet.create({
         // alignItems: 'center',
         textAlign: "center"
     },
+    container: {
+        backgroundColor: 'transparent',
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "center"
+    },
+    subHeader: {
+        position: "relative",
+        paddingTop: 25,
+        paddingBottom: 25,
+        alignItems: "center",
+        // paddingLeft:25,
+        // paddingRight:25,
+        backgroundColor: 'transparent',
+    },
+    customPadding: {
+        paddingTop: 5,
+        paddingBottom: 5
+    },
     inputForm: {},
     logo: {
         width: 200,
@@ -307,13 +327,13 @@ export const appStyles = StyleSheet.create({
         // marginTop:5,
     },
     loginInput: {
-        backgroundColor: "#fff",
+        backgroundColor: COLOR_WHITE,
         marginTop: 7,
         marginBottom: 7,
         borderRadius: 4,
         marginLeft: 0,
         marginRight: 0,
-        borderColor: "#14E22A",
+        borderColor: COLOR_PRIMARY,
         borderWidth: 2,
         width: "100%"
     },
@@ -328,7 +348,7 @@ export const appStyles = StyleSheet.create({
         paddingBottom: 20
     },
     btnTxt: {
-        color: "#000",
+        color: COLOR_BLACK,
         fontSize: 15,
         fontFamily: "Hancock"
     },
@@ -336,7 +356,7 @@ export const appStyles = StyleSheet.create({
         color: "#fff"
     },
     btnLargeTxt: {
-        color: "#14E22A",
+        color: COLOR_PRIMARY,
         fontSize: 20,
         fontFamily: "Hancock"
     },
@@ -368,7 +388,7 @@ export const appStyles = StyleSheet.create({
         width: 75,
         height: 75,
         borderRadius: 75 / 2,
-        borderColor: "#14E22A",
+        borderColor: COLOR_PRIMARY,
         borderWidth: 2
     },
     orderBorder:{
@@ -380,23 +400,23 @@ export const appStyles = StyleSheet.create({
         borderRadius: 4,
     },
     buttonPrimary: {
-        backgroundColor: "#14E22A",
-        color: "#2E2E2E"
+        backgroundColor: COLOR_PRIMARY,
+        color: COLOR_SECONDARY
     },
     buttonSecondary: {
-        backgroundColor: "#2E2E2E",
+        backgroundColor: COLOR_SECONDARY,
         borderWidth: 2,
-        borderColor: "#14E22A"
+        borderColor: COLOR_PRIMARY
     },
     buttonBlack: {
-        color: "#000"
+        color: COLOR_BLACK
     },
     buttonHomeTxt: {
-        color: "#14E22A",
+        color: COLOR_PRIMARY,
         textTransform: "uppercase",
         fontSize: 13
     },
     buttonHomeIcon: {
-        color: "#14E22A",
+        color: COLOR_PRIMARY,
     }
 });

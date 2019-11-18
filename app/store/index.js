@@ -25,7 +25,8 @@ const initialStates=new Immutable.Map({
   rep:States.rep,
   bid:States.bid,
   error:States.error,
-  order:States.order
+  order:States.order,
+  notifications:States.notifications
 });
 
 const obj={

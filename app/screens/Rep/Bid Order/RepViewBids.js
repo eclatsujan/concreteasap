@@ -49,11 +49,12 @@ class RepViewBids extends React.Component {
     render() {
         let app = this.props.app.toJS();
         let order = this.props.order.toJS();
+        console.log(order);
         return (
             <AppBackground alignTop>
                 <ScrollView>
                     <AppHeader/>
-                    <SubHeader iconType="ConcreteASAP" iconName="pending" title="View Orders Requests"/>
+                    <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="View Orders Requests"/>
                     <Content>
                         <CustomTable isLoading={app.loading} bgStyle={[appStyles.bgWhite,appStyles.p_15]} rowHeaders={this.state.rowHeaders}
                                      rowData={order["bidding_orders"]} rowColumns={this.state.rowColumns}
