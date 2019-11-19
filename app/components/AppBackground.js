@@ -1,6 +1,6 @@
 import React from "react";
 
-import {ImageBackground, Dimensions, SafeAreaView, Platform, StatusBar,View} from "react-native";
+import {ImageBackground, Dimensions, SafeAreaView, Platform, StatusBar, View} from "react-native";
 
 import {Container} from "native-base";
 import mitt from 'mitt'
@@ -11,20 +11,16 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AppLoading from './AppLoading';
 
 //helpers
-import * as errorHelper from '../helpers/error';
-
 import {appStyles} from "../../assets/styles/app_styles";
-import {pad} from "redux-logger/src/helpers";
 
-const emitter =  mitt();
+
+const emitter = mitt();
 
 export default class AppBackground extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state={
-
-        };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -81,11 +77,11 @@ export default class AppBackground extends React.Component {
 
     render() {
         let {height, width} = Dimensions.get('window');
-        let paddingTop= (Platform.OS === 'ios') ?0:StatusBar.currentHeight-10;
+        let paddingBottom = (Platform["OS"] === 'ios') ? 0 : StatusBar.currentHeight+15;
         return (
             <View>
                 <ImageBackground source={require("../../assets/concrete-background.png")}
-                                 style={[{width, height,paddingTop:paddingTop}, this.getStyle()]}>
+                                 style={[{width, height, paddingBottom: paddingBottom}, this.getStyle()]}>
                     {this.checkLoading()}
                 </ImageBackground>
             </View>

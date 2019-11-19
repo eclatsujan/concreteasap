@@ -11,7 +11,6 @@ import {appStyles} from "../../../assets/styles/app_styles";
 export default function csPicker(props) {
     const {input: {onChange, value, ...input}, meta: {touched, error, warning}, pickerChildren, ...inputProps} = props;
 
-    console.log(value);
     let hasError = false;
 
     if (touched && ((error) || (warning))) {
@@ -26,6 +25,8 @@ export default function csPicker(props) {
                     itemTextStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
                     headerTitleStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
                     headerBackButtonTextStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
+                    placeholderStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
+                    itemStylePropType={[appStyles.baseFontSize,appStyles.defaultFont]}
                     // headerStyle=
                     onValueChange={(val) => {
                         requestAnimationFrame(() => {

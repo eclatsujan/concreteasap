@@ -19,7 +19,7 @@ export const isXXXHDPI=PixelRatio.get()===3.5;
 export const appStyles = StyleSheet.create({
     //Base Size
     baseFontSize:{
-        fontSize:(isMDPI||isHDPI)?13:12
+        fontSize:(isMDPI||isHDPI)?13:13
     },
     baseFont: {
         fontFamily: "Hancock"
@@ -122,6 +122,9 @@ export const appStyles = StyleSheet.create({
     },
     flexAlignRight:{
         alignItems:"flex-end"
+    },
+    flexAlignLeft:{
+        alignItems:"flex-start"
     },
     verticalSelfCenter:{
         alignSelf:"center"
@@ -234,6 +237,10 @@ export const appStyles = StyleSheet.create({
     pr_15:{
         paddingRight: 15
     },
+    px_10:{
+        paddingLeft:10,
+        paddingRight:10
+    },
     py_5:{
         paddingTop:5,
         paddingBottom:5
@@ -315,7 +322,7 @@ export const appStyles = StyleSheet.create({
         borderBottomWidth:2
     },
     borderBottom: {
-        borderBottomWidth: 2
+        borderBottomWidth: 1
     },
     borderBlack:{
         borderColor:"#000000"

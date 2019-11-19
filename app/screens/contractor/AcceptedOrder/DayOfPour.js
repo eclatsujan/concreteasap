@@ -8,11 +8,9 @@ import AppBackground from '../../../components/AppBackground';
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
 
-
 //styles
 import {appStyles} from "../../assets/app_styles";
 import {actions} from "../../../store/modules";
-import HomeButton from "../../../components/Button/HomeButton";
 
 
 class DayOfPour extends React.Component {

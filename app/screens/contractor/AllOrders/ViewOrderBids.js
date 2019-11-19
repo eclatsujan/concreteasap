@@ -103,7 +103,7 @@ class ViewOrderBids extends React.Component {
             <AppBackground>
                 <ScrollView style={[appStyles.mb_10]}>
                     <AppHeader/>
-                    <SubHeader  iconType="ConcreteASAP" iconName="pending-order" title=">View Order Requests"/>
+                    <SubHeader  iconType="ConcreteASAP" iconName="pending-order" title="View Order Requests"/>
                     <Content contentContainerStyle={styles.content}>
                         <View style={[appStyles.bgWhite, appStyles.p_5]}>
                             {this.displayTableHeader()}

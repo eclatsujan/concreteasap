@@ -59,10 +59,10 @@ export const getUserProfile = () => {
     }
 };
 
-export const editUserDetail = (user_detail) => {
+export const editUserDetail = (user_detail,photo) => {
     return dispatch => {
         dispatch(appActions.loading());
-        return userService.editUserDetail(user_detail).then((res) => {
+        return userService.editUserDetail(user_detail,photo).then((res) => {
             navigationHelper.navigate("My Profile", {});
             // dispatch(appActions.loading(false));
         }).catch((err) => {

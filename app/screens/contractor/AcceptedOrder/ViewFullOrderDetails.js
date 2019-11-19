@@ -55,19 +55,19 @@ export default class ViewFullOrderDetails extends React.Component {
                     key: "delivery_date2"
                 },
                 {
-                    title: "Time Preferences 1",
+                    title: "Time Preference 1",
                     key: "time_preference1"
                 },
                 {
-                    title: "Time Preferences 2",
+                    title: "Time Preference 2",
                     key: "time_preference2"
                 },
                 {
-                    title: "Time Preferences 3",
+                    title: "Time Preference 3",
                     key: "time_preference3"
                 },
                 {
-                    title: "Time Deliveries",
+                    title: "Time Urgency",
                     key: "urgency"
                 },
                 {
@@ -103,7 +103,6 @@ export default class ViewFullOrderDetails extends React.Component {
         /* 2. Read the params from the navigation state */
         const {params} = this.props.navigation.state;
         const order = params ? params.order : null;
-        console.log(order);
         return (
             <AppBackground>
                 <ScrollView>

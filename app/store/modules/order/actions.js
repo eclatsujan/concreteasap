@@ -157,7 +157,6 @@ export const contractorCompleteOrder = (order_review) => {
 
 export const contractorCancelOrder = (order_id) => {
     return (dispatch) => {
-        console.log(order_id);
         dispatch(appActions.loading(true));
         orderService.contractorCancelOrder(order_id).then((res) => {
             navigationHelper.navigate('AcceptedOrders');

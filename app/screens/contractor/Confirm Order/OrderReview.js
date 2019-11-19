@@ -68,13 +68,13 @@ class OrderReview extends React.Component {
                                 </Col>
                             </Row>
                             <Row style={[appStyles.borderBottom, appStyles.py_5]}>
-                                <Col>
+                                <Col style={[appStyles.flexAlignLeft,appStyles.horizontalCenter]}>
                                     <AirbnbRating
                                         showRating={false}
                                         type="star"
                                         ratingCount={5}
                                         defaultRating={0}
-                                        size={30}
+                                        size={22}
                                         onFinishRating={this.ratingCompleted}
                                     />
                                 </Col>

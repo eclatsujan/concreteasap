@@ -37,13 +37,18 @@ class ReviewOrder extends React.Component {
         this.nextActions = this.nextActions.bind(this);
     }
 
-    formatDate(date, defaultFormat = "YYYY-MM-DD") {
-        return moment(date, "DD/MM/YYYY").format(defaultFormat).toString();
+    formatDate(date,timeFormat="DD/MM/YYYY",defaultFormat = "YYYY-MM-DD") {
+        console.log(date);
+        return moment(date,timeFormat).format(defaultFormat).toString();
     }
 
     nextActions(order, special) {
         let full_order = {};
         let order_id = this.props.navigation.getParam("order_id");
+        let timeFormat="DD/MM/YYYY";
+        if(order_id){
+            timeFormat="YYYY-MM-DD";
+        }
         full_order["suburb"] = order.suburb;
         full_order["type"] = order.type;
         full_order["mpa"] = order.mpa;
@@ -52,9 +57,9 @@ class ReviewOrder extends React.Component {
         full_order["acc"] = order.acc;
         full_order["placement_type"] = order.placement_type;
         full_order["quantity"] = order.quantity;
-        full_order["delivery_date"] = this.formatDate(order.delivery_date);
-        full_order["delivery_date1"] = this.formatDate(order.delivery_date1);
-        full_order["delivery_date2"] = this.formatDate(order.delivery_date2);
+        full_order["delivery_date"] = this.formatDate(order.delivery_date,timeFormat);
+        full_order["delivery_date1"] = this.formatDate(order.delivery_date1,timeFormat);
+        full_order["delivery_date2"] = this.formatDate(order.delivery_date2,timeFormat);
         full_order["time_preference1"] = order.time1;
         full_order["time_preference2"] = order.time2;
         full_order["time_preference3"] = order.time3;
@@ -64,18 +69,25 @@ class ReviewOrder extends React.Component {
         full_order["preference"] = order.site_call;
         full_order["colours"] = order.colours;
         // console.log(special);
-        full_order["specialInstructions"] = order.message_required === "Yes" ? special["special_instructions"] : "";
-        full_order["deliveryInstructions"] = order.message_required === "Yes" ? special["delivery_instructions"] : "";
+        full_order["special_instructions"] = order.message_required === "Yes" ? special["special_instructions"] : "";
+        full_order["delivery_instructions"] = order.message_required === "Yes" ? special["delivery_instructions"] : "";
 
-        console.log(this.props.navigation);
 
-        // if (order.message_required !== "No") {
-        //     this.props.navigation.navigate("ReviewInstructions", {
-        //         full_order,order_id
-        //     })
-        // } else {
-        //     this.submitForm(full_order,order_id);
-        // }
+        if (order.message_required !== "No") {
+            if(order_id){
+                this.props.navigation.navigate("ModifyReviewInstructions", {
+                    full_order,order_id
+                });
+            }
+            else{
+                this.props.navigation.navigate("ReviewInstructions", {
+                    full_order
+                });
+            }
+
+        } else {
+            this.submitForm(full_order,order_id);
+        }
 
     }
 

@@ -49,7 +49,6 @@ class RepViewBids extends React.Component {
     render() {
         let app = this.props.app.toJS();
         let order = this.props.order.toJS();
-        console.log(order);
         return (
             <AppBackground alignTop>
                 <ScrollView>

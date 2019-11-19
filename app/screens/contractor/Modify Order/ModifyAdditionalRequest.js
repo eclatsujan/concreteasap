@@ -10,7 +10,7 @@ import {appStyles} from "../../assets/app_styles";
 import AppBackground from '../../../components/AppBackground'
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
-import SpecialOrderForm from "../../../components/contractor/SpecialOrderForm";
+import AdditionalOrderForm from "../../../components/contractor/AdditionalOrderForm";
 
 
 
@@ -28,6 +28,7 @@ class ModifyAdditionalRequest extends React.Component {
         let newValues = values.toJS();
         const full_order = {...order, ...newValues};
         if (full_order.message_required === "Yes") {
+            console.log(full_order);
             this.props.navigation.navigate("ModifySpecialRequests", {
                 order: full_order,
                 order_id
@@ -41,11 +42,12 @@ class ModifyAdditionalRequest extends React.Component {
     }
 
     render() {
+        let order = this.props.navigation.getParam("order");
         return (
             <AppBackground enableKeyBoard>
                 <AppHeader backMenu/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Place Order"/>
-                <SpecialOrderForm onSubmit={this.displayReview} />
+                <AdditionalOrderForm onSubmit={this.displayReview} initialValues={order} />
             </AppBackground>
         );
     }

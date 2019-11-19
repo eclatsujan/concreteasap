@@ -35,20 +35,21 @@ function logout() {
 
 function register(data, photo) {
 
-    const form_data=new FormData();
-
-    form_data.append("photo", {
-        name: !photo.fileName ? "prof-image" : photo.fileName,
-        type: "image/jpeg",
-        uri:
-            Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-    });
-
-    Object.keys(data).forEach(key => {
-        form_data.append(key, data[key]);
-    });
-
-    console.log(form_data);
+    let form_data=getFormData(data,photo);
+    // const form_data=new FormData();
+    //
+    // form_data.append("photo", {
+    //     name: !photo.fileName ? "prof-image" : photo.fileName,
+    //     type: "image/jpeg",
+    //     uri:
+    //         Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+    // });
+    //
+    // Object.keys(data).forEach(key => {
+    //     form_data.append(key, data[key]);
+    // });
+    //
+    // console.log(form_data);
 
     const requestOptions = {
         method: 'POST',
@@ -73,12 +74,13 @@ async function loadUserProfile() {
     return getUser(token);
 }
 
-async function editUserDetail(user_detail) {
+async function editUserDetail(user_detail,photo) {
     let token = await getToken();
+    let form_data=getFormData(user_detail,photo);
     const requestOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
-        body: JSON.stringify(user_detail)
+        headers: {'Authorization': 'Bearer ' + token},
+        body:form_data
     };
     return await fetch(COMMON_PREFIX_URI + 'user/update', requestOptions).then(handleResponse);
 }
@@ -146,4 +148,23 @@ async function markAsRead(notification_id) {
         body: JSON.stringify({notification_id})
     };
     return await fetch(USER_PREFIX_URI + 'mark_read', requestOptions).then(handleResponse);
+}
+
+
+function getFormData(data,photo){
+
+    const editProfileData=new FormData();
+
+    editProfileData.append("photo", {
+        name: !photo.fileName ? "prof-image" : photo.fileName,
+        type: "image/jpeg",
+        uri:
+            Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+    });
+
+    Object.keys(data).forEach(key => {
+        editProfileData.append(key, data[key]);
+    });
+
+    return editProfileData;
 }

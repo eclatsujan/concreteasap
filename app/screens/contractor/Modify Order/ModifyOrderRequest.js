@@ -15,6 +15,7 @@ import navigationHelper from "../../../helpers/navigationHelper";
 import PlaceOrderForm from "../../../components/contractor/PlaceOrderForm";
 
 class ModifyOrderRequest extends React.Component {
+
     constructor(props) {
         super(props);
         this.handleSubmit=this.handleSubmit.bind(this);
@@ -35,11 +36,9 @@ class ModifyOrderRequest extends React.Component {
         let order = {};
         let order_id = this.props.navigation.getParam("order_id");
         if(order_id){
+
             let orders = this.props.orders.toJS();
-            // console.log(orders["accepted_orders"]);
             let accepted_order = orders["accepted_orders"].find((order) => {
-                // console.log(order.id);
-                // console.log(this.props.order_id);
                 return order.id === order_id;
             });
             order = {
@@ -62,7 +61,9 @@ class ModifyOrderRequest extends React.Component {
                 "urgency": accepted_order["order_concrete"].urgency,
                 "message_required": accepted_order["order_concrete"].message_required ? "Yes" : "No",
                 "site_call": accepted_order["order_concrete"].preference,
-                "colours": accepted_order["order_concrete"].colours
+                "colours": accepted_order["order_concrete"].colours,
+                "special_instructions": accepted_order["order_concrete"]["special_instructions"],
+                "delivery_instructions": accepted_order["order_concrete"]["delivery_instructions"],
             };
         }
         return order;

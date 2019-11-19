@@ -14,7 +14,7 @@ export default class AppHeader extends React.Component {
     customMenu(){
       return this.props["backMenu"]?<Button
         transparent
-       onPress={()=>navigationHelper.goBack()}           >
+       onPress={()=>navigationHelper.goBack()}>
         <Icon name="arrow-back" style={appStyles.colorPrimary} />
       </Button>:<Button transparent onPress={() => navigationHelper.openDrawer()}>
           <Icon name='menu' style={appStyles.colorPrimary} />
@@ -23,14 +23,14 @@ export default class AppHeader extends React.Component {
 
     render(){
         return (
-            <Header style={[appStyles.bgTransparent,appStyles.headerHeight,appStyles.horizontalCenter,appStyles.pb_15]} noShadow>
-                <Left>
+            <Header style={[appStyles.bgTransparent,appStyles.headerHeight,appStyles.pb_15]} noShadow>
+                <Left style={appStyles.flex1}>
                   {this.customMenu()}
                 </Left>
-                <Body>
+                <Body style={[appStyles.flex1,appStyles.flexRow, appStyles.flexCenter]}>
                     <Image source={require("../../../assets/Logo18.png")} style={appStyles.appHeader} />
                 </Body>
-                <Right>
+                <Right style={[appStyles.flex1]}>
                     <Button transparent onPress={()=>navigationHelper.navigate("My Profile")}>
                         <Icon name='person' style={appStyles.colorPrimary}  />
                     </Button>

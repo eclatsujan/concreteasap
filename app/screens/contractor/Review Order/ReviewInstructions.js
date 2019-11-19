@@ -19,29 +19,21 @@ class ReviewInstructions extends React.Component {
         super(props);
     }
 
-    submitForm(full_order,order_id) {
-        console.log(order_id);
-        if(order_id){
-            console.log(full_order);
+    submitForm(full_order, order_id) {
+        if (order_id) {
+            full_order["order_id"]=order_id;
+            // console.log(full_order);
+            this.props.modifyOrder(full_order)
+        } else {
+            this.props.createOrder(full_order);
         }
-        else{
-
-        }
-        // if(order_id){
-        //     full_order["order_id"]=order_id;
-        //     this.props.modifyOrder(full_order);
-        // }
-        // else{
-        //     this.props.createOrder(full_order);
-        // }
-
     }
 
     render() {
         const {params} = this.props.navigation.state;
         const full_order = params ? params.full_order : null;
         let app = this.props.app.toJS();
-        let order_id=this.props.navigation.getParam("order_id");
+        let order_id = this.props.navigation.getParam("order_id");
         return (
             <AppBackground loading={app.loading}>
                 <ScrollView style={appStyles.pb_45}>
@@ -51,16 +43,16 @@ class ReviewInstructions extends React.Component {
                         <Form>
                             <View style={appStyles.my_5}>
                                 <Text style={[appStyles.baseFont, appStyles.colorPrimary]}>Special Instructions</Text>
-                                <Textarea disabled={true} value={full_order["specialInstructions"]}
+                                <Textarea disabled={true} value={full_order["special_instructions"]}
                                           style={[appStyles.bgWhite, appStyles.py_5, appStyles.my_5]}/>
                             </View>
                             <View style={appStyles.my_5}>
                                 <Text style={[appStyles.baseFont, appStyles.colorPrimary]}>Delivery Instructions</Text>
-                                <Textarea disabled={true} value={full_order["deliveryInstructions"]}
+                                <Textarea disabled={true} value={full_order["delivery_instructions"]}
                                           style={[appStyles.bgWhite, appStyles.py_5, appStyles.my_5]}/>
                             </View>
                             <Button style={[appStyles.button, appStyles.bgPrimary, appStyles.horizontalCenter]}
-                                    onPress={() => this.submitForm(full_order,order_id)}>
+                                    onPress={() => this.submitForm(full_order, order_id)}>
                                 <Text style={appStyles.colorBlack}>NEXT</Text>
                             </Button>
                         </Form>
@@ -76,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
         createOrder: (order) => {
             return dispatch(actions.order.createOrder(order))
         },
-        modifyOrder:(order) => {
+        modifyOrder: (order) => {
             return dispatch(actions.order.modifyOrder(order));
         }
     }

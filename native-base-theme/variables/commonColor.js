@@ -12,7 +12,7 @@ export const PLATFORM = {
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
-const platform = Platform.OS;
+const platform = Platform["OS"];
 const platformStyle = undefined;
 const isIphoneX =
   platform === PLATFORM.IOS &&
@@ -115,7 +115,7 @@ export default {
   cardDefaultBg: '#fff',
   cardBorderColor: '#ccc',
   cardBorderRadius: 2,
-  cardItemPadding: platform === PLATFORM.IOS ? 10 : 12,
+  cardItemPadding: platform === PLATFORM.IOS ? 10 : 13,
 
   // CheckBox
   CheckboxRadius: platform === PLATFORM.IOS ? 13 : 0,
@@ -149,7 +149,7 @@ export default {
   fabWidth: 56,
 
   // Font
-  DefaultFontSize: 13,
+  DefaultFontSize: 12,
   fontFamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
   fontSizeBase: 13,
   get fontSizeH1() {
@@ -203,7 +203,7 @@ export default {
   iconHeaderSize: platform === PLATFORM.IOS ? 33 : 24,
 
   // InputGroup
-  inputFontSize: PixelRatio.get()<2?15:17,
+  inputFontSize: PixelRatio.get()<2?13:13,
   inputBorderColor: '#14E22A',
   inputSuccessBorderColor: '#2b8339',
   inputErrorBorderColor: '#ed2f2f',
@@ -265,7 +265,7 @@ export default {
 
   // Tabs
   tabBgColor: '#F8F8F8',
-  tabFontSize: PixelRatio.get()<2?12:15,
+  tabFontSize: PixelRatio.get()<2?13:13,
 
   // Text
   textColor: '#000',
@@ -277,8 +277,8 @@ export default {
 
   // Title
   titleFontfamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
-  titleFontSize: platform === PLATFORM.IOS ? 17 : 19,
-  subTitleFontSize: platform === PLATFORM.IOS ? 11 : 14,
+  titleFontSize: platform === PLATFORM.IOS ? 13 : 13,
+  subTitleFontSize: platform === PLATFORM.IOS ? 13 : 13,
   subtitleColor: platform === PLATFORM.IOS ? '#000' : '#fff',
   titleFontColor: platform === PLATFORM.IOS ? '#000' : '#fff',
 

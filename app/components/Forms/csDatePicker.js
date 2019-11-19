@@ -38,6 +38,19 @@ export default class csDatePicker extends React.Component {
         return (full_date);
     }
 
+    formatValue(value){
+        return moment(value).format("DD/MM/YYYY").toString();
+    }
+
+    displayPlaceHolderText(value,placeholder){
+        return value?this.formatValue(value):placeholder;
+    }
+
+    setDefaultDate(value){
+        return value?new Date():new Date();
+    }
+
+
     render() {
         const {input, meta: {touched, error, warning}, ...inputProps} = this.props;
 
@@ -57,15 +70,15 @@ export default class csDatePicker extends React.Component {
                     <DatePicker
                         ref={(ref) => this.datePickerRef = ref}
                         {...inputProps}
-                        defaultDate={new Date()}
+                        defaultDate={this.setDefaultDate(input.value)}
                         minimumDate={moment().toDate()}
                         locale={"en"} modalTransparent={false}
                         animationType={"fade"} androidMode={"default"}
-                        placeHolderText={input.value ? input.value : this.props.placeholder}
+                        placeHolderText={this.displayPlaceHolderText(input.value,this.props.placeholder)}
                         textStyle={[appStyles.baseFontSize, appStyles.colorBlack, appStyles.defaultFont]}
-                        placeHolderTextStyle={[{color: "#000000"}, appStyles.defaultFont]}
+                        placeHolderTextStyle={[appStyles.colorBlack, appStyles.defaultFont]}
                         onDateChange={(value) => {
-                            input.onChange(moment(value).format("DD/MM/YYYY").toString())
+                            input.onChange(this.formatValue(value))
                         }}
                         onBlur={input.onBlur}
                         onFocus={input.onFocus}

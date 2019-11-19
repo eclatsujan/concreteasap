@@ -9,7 +9,6 @@ import navigationHelper from '../../../helpers/navigationHelper';
 import * as appActions from '../app/actions'
 
 export const register = (user) => {
-  console.log("rep register",user);
   return (dispatch) => {
   	userService.register(user).then((res)=>{
 

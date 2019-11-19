@@ -65,7 +65,6 @@ async function createOrder(orderData){ //submiting the orderform
 
 async function modifyOrder(orderData){
     let token=await getToken();
-    console.log(orderData);
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token },

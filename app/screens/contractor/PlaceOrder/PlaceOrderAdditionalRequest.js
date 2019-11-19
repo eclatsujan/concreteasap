@@ -13,7 +13,7 @@ import {appStyles} from "../../assets/app_styles";
 import AppBackground from '../../../components/AppBackground'
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
-import SpecialOrderForm from "../../../components/contractor/SpecialOrderForm";
+import AdditionalOrderForm from "../../../components/contractor/AdditionalOrderForm";
 
 
 class PlaceOrderAdditionalRequest extends React.Component {
@@ -48,7 +48,7 @@ class PlaceOrderAdditionalRequest extends React.Component {
             <AppBackground enableKeyBoard>
                 <AppHeader backMenu/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Place Order"/>
-                <SpecialOrderForm onSubmit={this.displayReview} />
+                <AdditionalOrderForm onSubmit={this.displayReview} />
             </AppBackground>
         );
     }
