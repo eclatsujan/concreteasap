@@ -25,7 +25,10 @@ export const appStyles = StyleSheet.create({
         fontSize: (isMDPI || isHDPI) ? 10 : 13
     },
     baseLargeFontSize: {
-        fontSize: 20
+        fontSize: 18
+    },
+    baseExtraLargeFontSize:{
+        fontSize:25
     },
     baseFont: {
         fontFamily: "Hancock"
@@ -216,6 +219,12 @@ export const appStyles = StyleSheet.create({
     },
     p_15: {
         padding: 15
+    },
+    p_20:{
+        padding:20
+    },
+    p_30:{
+        padding:30
     },
     pl_20: {
         paddingLeft: 20

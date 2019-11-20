@@ -15,6 +15,7 @@ import CardPayment from '../../../components/CardPayment'
 import {appStyles} from '../../../../assets/styles/app_styles.js';
 import TableRow from "../../../components/Tables/TableRow";
 import BidPayment from "../../../components/Rep/Payment/BidPayment";
+import PaymentSuccess from "../../../components/Rep/Payment/PaymentSuccess";
 
 export default class OrderBidDetails extends React.Component {
     constructor(props) {
@@ -29,6 +30,7 @@ export default class OrderBidDetails extends React.Component {
             bidPayment: false,
             modalVisible: false,
             SaveDetails: false,
+            paymentSuccessModal: false,
             token: "",
             keyTitle: {},
             rowColumns: [
@@ -87,7 +89,8 @@ export default class OrderBidDetails extends React.Component {
         this.showDetailsModel = this.showDetailsModel.bind(this);
         this.payNow = this.payNow.bind(this);
         this.openPriceModal = this.openPriceModal.bind(this);
-        this.closePriceModal=this.closePriceModal.bind(this);
+        this.closePriceModal = this.closePriceModal.bind(this);
+        this.paymentSuccess=this.paymentSuccess.bind(this);
     }
 
     setModalVisible(visible) {
@@ -119,8 +122,9 @@ export default class OrderBidDetails extends React.Component {
         this.setModalVisible(!this.state.modalVisible);
         this.setState({SaveDetails: val});
         this.payBid().then((res) => {
-            this.props.navigation.setParams({success_msg: 'Lucy'})
-            this.props.navigation.goBack();
+            // console.log(res);
+            this.setState({"paymentSuccessModal": true})
+            // this.props.navigation.setParams({success_msg: 'Lucy'})
         });
     }
 
@@ -150,6 +154,11 @@ export default class OrderBidDetails extends React.Component {
 
     async payBid() {
         return await paymentService.payBidPrice(this.state.token, this.state.orderDetail["id"], this.state.pricePer, this.state.SaveDetails);
+    }
+
+    paymentSuccess() {
+        this.setState({paymentSuccessModal:false});
+        this.props.navigation.goBack();
     }
 
     renderNonEditableInput(label, value) {
@@ -205,6 +214,8 @@ export default class OrderBidDetails extends React.Component {
                         <BidPayment modalVisibility={this.state.bidPayment} handleModel={this.payNow}
                                     cancelModel={this.closePriceModal}/>
                         <CardPayment modalVisibility={this.state.modalVisible} handleModel={this.showDetailsModel}/>
+                        <PaymentSuccess modalVisibility={this.state.paymentSuccessModal}
+                                        handleModel={this.paymentSuccess} />
                     </Content>
                 </ScrollView>
             </AppBackground>

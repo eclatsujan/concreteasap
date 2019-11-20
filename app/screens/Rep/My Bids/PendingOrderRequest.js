@@ -15,6 +15,7 @@ import AppBackground from "../../../components/AppBackground";
 import SubHeader from "../../../components/Headers/SubHeader";
 import CustomTable from "../../../components/Tables/CustomTable";
 import AppFooter from "../../../components/Footer/AppFooter";
+import EmptyTable from "../../../components/Tables/EmptyTable";
 
 
 class PendingOrderRequest extends React.Component {
@@ -22,8 +23,9 @@ class PendingOrderRequest extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rowHeaders: ['Order', 'Suburb', 'Cubic m', 'Status'],
-            rowColumns: ["id", "order.order_concrete.suburb", "order.order_concrete.quantity", "status"]
+            rowHeaders: ['Order', 'Suburb', 'Cubic m'],
+            rowColumns: ["id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
+            emptyMessage: "There are no bids right now."
         };
         this._showPendingOrder = this._showPendingOrder.bind(this);
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
@@ -53,10 +55,12 @@ class PendingOrderRequest extends React.Component {
                 <ScrollView>
                     <SubHeader iconType="ConcreteASAP" iconName="existing-order" title="My Bids"/>
                     <Content contentContainerStyle={[styles.content, appStyles.bgWhite, {marginBottom: 10}]}>
-                        <CustomTable isLoading={app.loading} bgStyle={[appStyles.bgWhite, appStyles.p_15]}
-                                     rowHeaders={this.state.rowHeaders}
-                                     rowData={bids["pending_orders"]} rowColumns={this.state.rowColumns}
-                                     buttonText="View Details" onPress={this._showPendingOrder}/>
+                        {bids["pending_orders"]["length"] !== 0 ?
+                            <CustomTable isLoading={app.loading} bgStyle={[appStyles.bgWhite, appStyles.p_15]}
+                                         rowHeaders={this.state.rowHeaders}
+                                         rowData={bids["pending_orders"]} rowColumns={this.state.rowColumns}
+                                         buttonText="View Details" onPress={this._showPendingOrder}/>
+                            : <EmptyTable message={this.state.emptyMessage}/>}
                     </Content>
                 </ScrollView>
                 <AppFooter/>
