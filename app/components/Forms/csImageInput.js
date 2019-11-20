@@ -44,6 +44,7 @@ export default class csImageInput extends React.Component {
         if (touched && (error || warning)) {
             hasError = true;
         }
+        console.log(hasError);
         return (
             <View style={[appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.my_5]}>
                 <TouchableOpacity

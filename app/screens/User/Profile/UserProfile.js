@@ -28,7 +28,7 @@ class UserProfile extends React.Component {
                 {key: "company", title: "Company"}, {key: "abn", title: "ABN"}, {key: "title", title: "Title"},
                 {key: "first_name", title: "First Name"}, {key: "last_name", title: "Last Name"},
                 {key: "phone_number", title: "Phone Number"}, {key: "email", title: "email"},
-                {key: "state", title: "State"}, {key: "city", title: "City"},
+                {key: "city", title: "City"},{key: "state", title: "State"}
             ],
             loading: false,
             showToastMsg: false

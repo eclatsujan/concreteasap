@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {View} from "react-native";
+import {TouchableOpacity} from "react-native";
 
-import {Button, Text, Form, Item as FormItem, Input, Content, Icon} from "native-base";
+import {Button, Text, Form, Item as FormItem, Input, Content, View} from "native-base";
 
 //Expo Packages
 import * as ImagePicker from 'expo-image-picker';
@@ -24,7 +24,6 @@ import {helper} from '../../helpers'
 //Styles
 import {styles} from './styles';
 import {appStyles} from "../assets/app_styles";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 class Register extends React.Component {
     static navigationOptions = {
@@ -88,10 +87,9 @@ class Register extends React.Component {
             if (result.type !== "image") {
                 alert("Please Select the valid type of file");
             }
+            this.setState({'photo': result});
+            this.setState({'logoText': "Logo been selected"});
         }
-        this.setState({'photo': result});
-        this.setState({'logoText': "Logo been selected"});
-        // this.photo=
     }
 
     formSubmit() {
@@ -139,12 +137,21 @@ class Register extends React.Component {
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["abn"])}
                         <Text style={[appStyles.colorPrimary]}>Logo</Text>
-                        <Button
-                            style={[appStyles.baseFont, appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.marginDefault]}
-                            onPress={this.uploadLogo}>
-                            <Text style={[appStyles.baseFont, appStyles.colorGray44]}>{this.state.logoText}</Text>
-                            <Icon active style={[appStyles.colorGray44]} type="FontAwesome5" name='upload'/>
-                        </Button>
+                        <View style={[appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.my_5]}>
+                            <TouchableOpacity
+                                style={[appStyles.baseFont, appStyles.py_5, appStyles.px_10]}
+                                onPress={this.uploadLogo}>
+                                <View style={[appStyles.flexRow]}>
+                                    <View style={[appStyles.w_65, appStyles.horizontalCenter]}>
+                                        <Text style={[appStyles.defaultFont]}>{this.state.logoText}</Text>
+                                    </View>
+                                    <View
+                                        style={[appStyles.w_35, appStyles.bgBlack, appStyles.py_10, appStyles.borderRadiusDefault]}>
+                                        <Text style={[appStyles.colorWhite, appStyles.txtCenter]}>Upload</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                         <Text style={[appStyles.colorPrimary]}>Title</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["title"])]}

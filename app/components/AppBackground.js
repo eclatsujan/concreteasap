@@ -77,11 +77,12 @@ export default class AppBackground extends React.Component {
 
     render() {
         let {height, width} = Dimensions.get('window');
-        let paddingBottom = (Platform["OS"] === 'ios') ? 0 : StatusBar.currentHeight+15;
+        height = height - StatusBar.currentHeight;
+        let paddingTop = (Platform["OS"] === 'ios') ? 0 : StatusBar.currentHeight - 10;
         return (
             <View>
                 <ImageBackground source={require("../../assets/concrete-background.png")}
-                                 style={[{width, height, paddingBottom: paddingBottom}, this.getStyle()]}>
+                                 style={[{width, height, paddingTop}, this.getStyle()]}>
                     {this.checkLoading()}
                 </ImageBackground>
             </View>

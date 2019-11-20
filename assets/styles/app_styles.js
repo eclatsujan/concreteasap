@@ -1,4 +1,4 @@
-import {StyleSheet,PixelRatio} from 'react-native';
+import {StyleSheet, PixelRatio} from 'react-native';
 import {Dimensions} from 'react-native';
 
 let {height, width} = Dimensions.get('window');
@@ -6,36 +6,42 @@ let {height, width} = Dimensions.get('window');
 export const IMAGE_HEIGHT = width / 2;
 export const IMAGE_HEIGHT_SMALL = width / 7;
 
-const isMDPI=PixelRatio.get()===1;
-const isHDPI=PixelRatio.get()===1.5;
+const isMDPI = PixelRatio.get() === 1;
+const isHDPI = PixelRatio.get() === 1.5;
 //for iphone 4 to 8 and android xHPI
- const isXHDPI=PixelRatio.get()===2;
+const isXHDPI = PixelRatio.get() === 2;
 //for iphone 8 to iphone X and android xxHPI
-export const isXXHDPI=PixelRatio.get()===3;
+export const isXXHDPI = PixelRatio.get() === 3;
 //for iphone 8 to iphone X and android xxxHPI
-export const isXXXHDPI=PixelRatio.get()===3.5;
+export const isXXXHDPI = PixelRatio.get() === 3.5;
 
 
 export const appStyles = StyleSheet.create({
     //Base Size
-    baseFontSize:{
-        fontSize:(isMDPI||isHDPI)?13:13
+    baseFontSize: {
+        fontSize: (isMDPI) ? 13 : 15
+    },
+    baseSmallFontSize: {
+        fontSize: (isMDPI || isHDPI) ? 10 : 13
+    },
+    baseLargeFontSize: {
+        fontSize: 20
     },
     baseFont: {
         fontFamily: "Hancock"
     },
-    defaultFont:{
-        fontFamily:"Roboto"
+    defaultFont: {
+        fontFamily: "Roboto"
     },
-    arialFont:{
-        fontFamily:"Arial"
+    arialFont: {
+        fontFamily: "Arial"
     },
-    defaultCircle:{
-        width:100,
-        height:100,
-        borderRadius:50
+    defaultCircle: {
+        width: 100,
+        height: 100,
+        borderRadius: 50
     },
-    inputHeightBase:{
+    inputHeightBase: {
         minHeight: 50
     },
     //Background
@@ -51,8 +57,8 @@ export const appStyles = StyleSheet.create({
     bgWhite: {
         backgroundColor: "#ffffff"
     },
-    bgBlack:{
-        backgroundColor:"#000000"
+    bgBlack: {
+        backgroundColor: "#000000"
     },
     bgError: {
         backgroundColor: "#B00020"
@@ -64,8 +70,8 @@ export const appStyles = StyleSheet.create({
     colorPrimary: {
         color: "#14E22A"
     },
-    colorSecondary:{
-      color:"#FFEE00"
+    colorSecondary: {
+        color: "#FFEE00"
     },
     colorWhite: {
         color: "#ffffff"
@@ -73,14 +79,17 @@ export const appStyles = StyleSheet.create({
     colorGray44: {
         color: "#707070"
     },
+    colorBlueLgt: {
+        color: "#30C5E1"
+    },
     colorBlack: {
         color: "#000"
     },
-    colorDanger:{
-      color:"#FF0000"
+    colorDanger: {
+        color: "#FF0000"
     },
-    colorComplete:{
-      color:"#2E7400"
+    colorComplete: {
+        color: "#2E7400"
     },
     //Flex
     flex1: {
@@ -89,29 +98,32 @@ export const appStyles = StyleSheet.create({
     flex3: {
         flex: 3
     },
-    selfCenter:{
+    selfCenter: {
         alignSelf: "center"
     },
-    selfRight:{
+    selfRight: {
         alignSelf: "flex-end"
     },
-    flexGrow:{
-      flexGrow:1
+    flexGrow: {
+        flexGrow: 1
     },
-    row:{
-      flexDirection:"row"
+    flexWrap: {
+        flexWrap: "wrap"
     },
-    rowReverse:{
-        flexDirection:"row-reverse"
+    rowReverse: {
+        flexDirection: "row-reverse"
     },
     justifyItemsCenter: {
         justifyContent: 'center',
-        // alignItems: 'center',
-        textAlign: "center"
+        alignItems: 'center',
+        // textAlign: "center"
     },
     flexRow: {
         flex: 1,
         flexDirection: "row"
+    },
+    flexColumn: {
+        flexDirection: "column"
     },
     flexCenter: {
         alignItems: "center",
@@ -120,24 +132,22 @@ export const appStyles = StyleSheet.create({
     verticalCenter: {
         alignItems: "center",
     },
-    flexAlignRight:{
-        alignItems:"flex-end"
+    flexAlignRight: {
+        alignItems: "flex-end"
     },
-    flexAlignLeft:{
-        alignItems:"flex-start"
+    flexAlignLeft: {
+        alignItems: "flex-start"
     },
-    verticalSelfCenter:{
-        alignSelf:"center"
+    verticalSelfCenter: {
+        alignSelf: "center"
     },
     horizontalCenter: {
         justifyContent: "center"
     },
-    horizontalRight:{
-      justifyContent:"flex-end"
+    horizontalRight: {
+        justifyContent: "flex-end"
     },
-    selfVerticalCenter:{
-
-    },
+    selfVerticalCenter: {},
     //Padding and Margins
     paddingYDefault: {
         paddingTop: 7,
@@ -147,26 +157,26 @@ export const appStyles = StyleSheet.create({
         marginTop: 7,
         marginBottom: 7,
     },
-    ml_10:{
-      marginLeft:10
+    ml_10: {
+        marginLeft: 10
     },
-    ml_20:{
-      marginLeft:20
+    ml_20: {
+        marginLeft: 20
     },
     mt_10: {
         marginTop: 10
     },
-    my_5:{
-        marginTop:5,
-        marginBottom:5
+    my_5: {
+        marginTop: 5,
+        marginBottom: 5
     },
-    my_7:{
-      marginTop:7,
-      marginBottom:7
+    my_7: {
+        marginTop: 7,
+        marginBottom: 7
     },
-    my_10:{
-        marginTop:10,
-        marginBottom:10
+    my_10: {
+        marginTop: 10,
+        marginBottom: 10
     },
     my_30: {
         marginBottom: 30,
@@ -201,23 +211,23 @@ export const appStyles = StyleSheet.create({
     p_5: {
         padding: 5
     },
-    p_10:{
-        padding:10
+    p_10: {
+        padding: 10
     },
     p_15: {
         padding: 15
     },
-    pl_20:{
-        paddingLeft:20
+    pl_20: {
+        paddingLeft: 20
     },
     pt_5: {
         paddingTop: 5,
     },
-    pt_15:{
-        paddingTop:15
+    pt_15: {
+        paddingTop: 15
     },
-    pb_5:{
-        paddingBottom:5
+    pb_5: {
+        paddingBottom: 5
     },
     pb_15: {
         paddingBottom: 15
@@ -234,101 +244,100 @@ export const appStyles = StyleSheet.create({
     pr_5: {
         paddingRight: 5
     },
-    pr_15:{
+    pr_15: {
         paddingRight: 15
     },
-    px_10:{
-        paddingLeft:10,
-        paddingRight:10
+    px_10: {
+        paddingLeft: 10,
+        paddingRight: 10
     },
-    py_5:{
-        paddingTop:5,
-        paddingBottom:5
+    py_5: {
+        paddingTop: 5,
+        paddingBottom: 5
     },
-    py_10:{
-        paddingTop:10,
-        paddingBottom:10
+    py_10: {
+        paddingTop: 10,
+        paddingBottom: 10
     },
     py_15: {
         paddingTop: 15,
         paddingBottom: 15
     },
-    py_20:{
-        paddingTop:20,
-        paddingBottom:20
+    py_20: {
+        paddingTop: 20,
+        paddingBottom: 20
     },
     w_100: {
         width: "100%"
     },
-    w_10:{
-        width:"10%"
+    w_10: {
+        width: "10%"
     },
-    w_25:{
-        width:"20%"
+    w_25: {
+        width: "20%"
     },
     w_35: {
         width: "35%"
     },
-    w_45:{
-      width:"45%"
+    w_45: {
+        width: "45%"
     },
-    w_50:{
-        width:"50%"
+    w_50: {
+        width: "50%"
     },
     w_65: {
         width: "65%"
     },
-    w_75:{
-        width:"75%",
+    w_75: {
+        width: "75%",
     },
-    w_90:{
-        width:"90%"
+    w_90: {
+        width: "90%"
     },
-    absoluteCenter:{
+    absoluteCenter: {
         position: "absolute",
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     customPadding: {
         paddingTop: 5,
         paddingBottom: 5
     },
-    ft_small:{
-        fontSize:PixelRatio.get()<2?10:13
+    ft_small: {
+        fontSize: PixelRatio.get() < 2 ? 10 : 13
     },
-    ft_20:{
-        fontSize:20
+    ft_20: {
+        fontSize: 20
     },
     capitalCase: {
         textTransform: "capitalize"
     },
-    upperCase:{
-        textTransform:"uppercase"
+    upperCase: {
+        textTransform: "uppercase"
     },
     //Borders
-    border2:{
-        borderTopWidth:2,
-        borderBottomWidth:2,
-        borderLeftWidth:2,
-        borderRightWidth:2
+    border2: {
+        borderWidth: 2
     },
-    borderX2:{
-        borderTopWidth:2,
-        borderBottomWidth:2
+    borderX2: {
+        borderTopWidth: 2,
+        borderBottomWidth: 2
     },
-    borderBottom2:{
-        borderBottomWidth:2
+    borderBottom2: {
+        borderBottomWidth: 2
     },
     borderBottom: {
         borderBottomWidth: 1
     },
-    borderBlack:{
-        borderColor:"#000000"
+    borderBlack: {
+        borderColor: "#000000"
     },
-    borderGray44:{
-        borderColor:"#707070"
+    borderGray44: {
+        borderColor: "#707070"
     },
     borderTransparent: {
         borderColor: 'transparent'
@@ -360,12 +369,11 @@ export const appStyles = StyleSheet.create({
         color: "#000"
     },
     buttonHomeTxt: {
-        color: "#14E22A",
+        // color: "#14E22A",
         textTransform: "uppercase",
     },
     buttonHomeIcon: {
-        color: "#14E22A",
-        fontSize:(isHDPI||isMDPI)?25:30
+        fontSize: (isHDPI || isMDPI) ? 25 : 30
     },
     btnPadding: {
         marginTop: 15,
@@ -399,19 +407,22 @@ export const appStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: "center"
     },
-    content: {
-
-    },
+    content: {},
     contentCenter: {
         alignItems: "center",
     },
     appHeader: {
         width: 125,
-        height: isXXHDPI?50:75,
+        height: isXXHDPI ? 50 : 60,
         resizeMode: 'contain',
     },
     headerHeight: {
-        height: isXXHDPI?100:85
+        height: isXXHDPI ? 100 : 80
+    },
+    subHeaderBg: {
+        height: 80,
+        position: "relative",
+        marginBottom: 25
     },
     customMargin: {
         marginTop: 30,
@@ -432,7 +443,7 @@ export const appStyles = StyleSheet.create({
         // width: "85%",
     },
     subHeaderTxt: {
-        fontSize: PixelRatio.get()<2?13:17,
+        fontSize: PixelRatio.get() < 2 ? 13 : 17,
         textTransform: "uppercase"
     },
     marginAppDefault: {
@@ -449,8 +460,6 @@ export const appStyles = StyleSheet.create({
         paddingTop: 25,
         paddingBottom: 25,
         alignItems: "center",
-        // paddingLeft:25,
-        // paddingRight:25,
         backgroundColor: 'transparent',
     },
     headerIcon: {
@@ -477,21 +486,25 @@ export const appStyles = StyleSheet.create({
         textAlign: "center",
     },
     appMargin: {
-        marginLeft: PixelRatio.get()<=2?10:20,
-        marginRight: PixelRatio.get()<=2?10:20
+        marginLeft: PixelRatio.get() <= 2 ? 10 : 20,
+        marginRight: PixelRatio.get() <= 2 ? 10 : 20
     },
     circle: {
         width: 50,
         height: 50,
         borderRadius: 50 / 2,
-        borderColor: "#14E22A",
+        // borderColor: "#14E22A",
         borderWidth: 2
     },
-    orderBorder:{
-
+    modalBg: {
+        backgroundColor: 'rgba(000,000,000,0.7)'
     },
-    Mh80xl:{
-        minHeight:PixelRatio.get()>2?80:"auto"
+    modalView: {
+        width: "75%"
+    },
+    orderBorder: {},
+    Mh80xl: {
+        minHeight: PixelRatio.get() > 2 ? 80 : "auto"
     },
     iconCol: {
         width: "15%",

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {TouchableOpacity} from 'react-native'
 import {View, Button, Row, Col, Text, Picker} from 'native-base'
-import {Field, reduxForm, Form} from "redux-form/lib/immutable";
+import {Field, reduxForm} from "redux-form/lib/immutable";
 import {appStyles} from "../../../../assets/styles/app_styles";
 import csTextBox from "../../../components/Forms/csTextBox";
 import {formValidation} from "../../../helpers/validation";
@@ -47,7 +46,7 @@ class UserProfileForm extends React.Component {
     }
 
     render() {
-        const {handleSubmit, pristine, reset, submitting} = this.props;
+        const {handleSubmit} = this.props;
         return (
             <View>
                 <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Company</Text>
@@ -59,8 +58,7 @@ class UserProfileForm extends React.Component {
                        validate={[formValidation.required]}/>
 
                 <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Logo</Text>
-                <Field name="profile_image" placeholder={"profile_image"} component={csImageInput} type={"dropdown"}
-                       validate={[formValidation.required]} />
+                <Field name="profile_image" placeholder={"profile_image"} component={csImageInput} type={"dropdown"} />
 
                 <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Title</Text>
                 <Field name="title" placeholder="Title" component={csPicker} type="input"
@@ -74,16 +72,20 @@ class UserProfileForm extends React.Component {
                 <Field name="first_name" placeholder="First Name" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Email</Text>
-                <Field name="last_name" placeholder="Email" component={csTextBox} type="input"
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Last Name</Text>
+                <Field name="last_name" placeholder="Last Name" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Last Name</Text>
-                <Field name="email" placeholder="Last Name" component={csTextBox} type="input"
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Email</Text>
+                <Field name="email" placeholder="Email" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
                 <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Phone</Text>
                 <Field name="phone_number" placeholder="Phone" component={csTextBox} type="input"
+                       validate={[formValidation.required]}/>
+
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>City</Text>
+                <Field name="city" placeholder="City" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
                 <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>State</Text>
@@ -98,10 +100,6 @@ class UserProfileForm extends React.Component {
                     <Picker.Item style={[appStyles.baseFont]} label={"WA"} value={"WA"}/>
                 </Field>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>City</Text>
-                <Field name="city" placeholder="City" component={csTextBox} type="input"
-                       validate={[formValidation.required]}/>
-
                 <Row>
                     <Col>
                         <View style={appStyles.w_90}>
@@ -114,7 +112,7 @@ class UserProfileForm extends React.Component {
                     <Col>
                         <View style={[appStyles.w_90, appStyles.flex1, appStyles.selfRight]}>
                             <Button style={[appStyles.flexRow, appStyles.flexCenter]}
-                                    onPress={handleSubmit(this.props["accountSubmit"])} disabled={submitting}>
+                                    onPress={handleSubmit(this.props.onSubmit)} >
                                 <Text style={[appStyles.colorBlack, appStyles.txtCenter]}>Save Changes</Text>
                             </Button>
                         </View>
@@ -126,6 +124,7 @@ class UserProfileForm extends React.Component {
 
 }
 
-let userProfileForm = reduxForm({form: "userProfileForm", enableReinitialize: true})(UserProfileForm);
+let userProfileForm = reduxForm({form: "userProfile"})(UserProfileForm);
+
 
 export default userProfileForm;

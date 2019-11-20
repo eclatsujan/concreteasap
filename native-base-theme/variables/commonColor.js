@@ -149,9 +149,9 @@ export default {
   fabWidth: 56,
 
   // Font
-  DefaultFontSize: 12,
+  DefaultFontSize: 15,
   fontFamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
-  fontSizeBase: 13,
+  fontSizeBase: 15,
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
   },
@@ -277,7 +277,7 @@ export default {
 
   // Title
   titleFontfamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
-  titleFontSize: platform === PLATFORM.IOS ? 13 : 13,
+  titleFontSize: platform === PLATFORM.IOS ? 15 : 15,
   subTitleFontSize: platform === PLATFORM.IOS ? 13 : 13,
   subtitleColor: platform === PLATFORM.IOS ? '#000' : '#fff',
   titleFontColor: platform === PLATFORM.IOS ? '#000' : '#fff',

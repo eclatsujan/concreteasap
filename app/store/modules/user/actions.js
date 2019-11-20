@@ -67,6 +67,7 @@ export const editUserDetail = (user_detail,photo) => {
             // dispatch(appActions.loading(false));
         }).catch((err) => {
             console.log(err);
+
             dispatch(appActions.loading(false));
         });
     }

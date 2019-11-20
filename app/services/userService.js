@@ -1,7 +1,8 @@
 import {Platform} from 'react-native';
 import {AUTH_PREFIX_URI, COMMON_PREFIX_URI, USER_PREFIX_URI} from '../config';
 import * as SecureStore from 'expo-secure-store';
-import {getToken, handleResponse} from '../helpers/token';
+import {getToken} from '../helpers/token';
+import {handleResponse} from '../helpers/httpHandler'
 
 export const userService = {
     login,
@@ -36,21 +37,7 @@ function logout() {
 function register(data, photo) {
 
     let form_data=getFormData(data,photo);
-    // const form_data=new FormData();
-    //
-    // form_data.append("photo", {
-    //     name: !photo.fileName ? "prof-image" : photo.fileName,
-    //     type: "image/jpeg",
-    //     uri:
-    //         Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-    // });
-    //
-    // Object.keys(data).forEach(key => {
-    //     form_data.append(key, data[key]);
-    // });
-    //
-    // console.log(form_data);
-
+    console.log(form_data);
     const requestOptions = {
         method: 'POST',
         // headers: {'Content-Type': 'application/json'},
@@ -77,6 +64,7 @@ async function loadUserProfile() {
 async function editUserDetail(user_detail,photo) {
     let token = await getToken();
     let form_data=getFormData(user_detail,photo);
+    console.log(form_data);
     const requestOptions = {
         method: 'POST',
         headers: {'Authorization': 'Bearer ' + token},
@@ -154,13 +142,15 @@ async function markAsRead(notification_id) {
 function getFormData(data,photo){
 
     const editProfileData=new FormData();
-
-    editProfileData.append("photo", {
-        name: !photo.fileName ? "prof-image" : photo.fileName,
-        type: "image/jpeg",
-        uri:
-            Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-    });
+    console.log(typeof photo==="object");
+    if(typeof photo==="object"){
+        editProfileData.append("photo", {
+            name: !photo.fileName ? "prof-image" : photo.fileName,
+            type: "image/jpeg",
+            uri:
+                Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+        });
+    }
 
     Object.keys(data).forEach(key => {
         editProfileData.append(key, data[key]);

@@ -14,6 +14,7 @@ import CardPayment from '../../../components/CardPayment'
 
 import {appStyles} from '../../../../assets/styles/app_styles.js';
 import TableRow from "../../../components/Tables/TableRow";
+import BidPayment from "../../../components/Rep/Payment/BidPayment";
 
 export default class OrderBidDetails extends React.Component {
     constructor(props) {
@@ -25,6 +26,7 @@ export default class OrderBidDetails extends React.Component {
             pricePer: '',
             meter: '',
             total_cost: '',
+            bidPayment: false,
             modalVisible: false,
             SaveDetails: false,
             token: "",
@@ -83,6 +85,9 @@ export default class OrderBidDetails extends React.Component {
         this.setPerPrice = this.setPerPrice.bind(this);
         this.submitBid = this.submitBid.bind(this);
         this.showDetailsModel = this.showDetailsModel.bind(this);
+        this.payNow = this.payNow.bind(this);
+        this.openPriceModal = this.openPriceModal.bind(this);
+        this.closePriceModal=this.closePriceModal.bind(this);
     }
 
     setModalVisible(visible) {
@@ -114,7 +119,6 @@ export default class OrderBidDetails extends React.Component {
         this.setModalVisible(!this.state.modalVisible);
         this.setState({SaveDetails: val});
         this.payBid().then((res) => {
-            console.log(res);
             this.props.navigation.setParams({success_msg: 'Lucy'})
             this.props.navigation.goBack();
         });
@@ -127,13 +131,24 @@ export default class OrderBidDetails extends React.Component {
         });
     }
 
+    payNow() {
+        this.setState({bidPayment: false});
+        this.submitBid();
+    }
+
+    openPriceModal() {
+        this.setState({bidPayment: true});
+    }
+
+    closePriceModal() {
+        this.setState({bidPayment: false});
+    }
 
     async stripePayment() {
         return await Stripe["paymentRequestWithCardFormAsync"]();
     }
 
     async payBid() {
-        console.log(this.state.token);
         return await paymentService.payBidPrice(this.state.token, this.state.orderDetail["id"], this.state.pricePer, this.state.SaveDetails);
     }
 
@@ -183,10 +198,12 @@ export default class OrderBidDetails extends React.Component {
                         </View>
 
                         <Button disabled={btnStatus} style={appStyles.horizontalCenter} onPress={() => {
-                            this.submitBid()
+                            this.openPriceModal()
                         }}>
                             <Text style={appStyles.colorBlack}>Bid</Text>
                         </Button>
+                        <BidPayment modalVisibility={this.state.bidPayment} handleModel={this.payNow}
+                                    cancelModel={this.closePriceModal}/>
                         <CardPayment modalVisibility={this.state.modalVisible} handleModel={this.showDetailsModel}/>
                     </Content>
                 </ScrollView>

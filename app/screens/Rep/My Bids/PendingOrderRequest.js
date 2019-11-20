@@ -47,19 +47,21 @@ class PendingOrderRequest extends React.Component {
     render() {
         let app = this.props.app.toJS();
         let bids = this.props.order.toJS();
-        return <AppBackground alignTop>
-            <ScrollView>
+        return (
+            <AppBackground alignTop>
                 <AppHeader/>
-                <SubHeader iconType="ConcreteASAP" iconName="existing-order" title="My Bids"/>
-                <Content contentContainerStyle={[styles.content, appStyles.bgWhite, {marginBottom: 10}]}>
-                    <CustomTable isLoading={app.loading} bgStyle={[appStyles.bgWhite, appStyles.p_15]}
-                                 rowHeaders={this.state.rowHeaders}
-                                 rowData={bids["pending_orders"]} rowColumns={this.state.rowColumns}
-                                 buttonText="View Details" onPress={this._showPendingOrder}/>
-                </Content>
-            </ScrollView>
-            <AppFooter/>
-        </AppBackground>
+                <ScrollView>
+                    <SubHeader iconType="ConcreteASAP" iconName="existing-order" title="My Bids"/>
+                    <Content contentContainerStyle={[styles.content, appStyles.bgWhite, {marginBottom: 10}]}>
+                        <CustomTable isLoading={app.loading} bgStyle={[appStyles.bgWhite, appStyles.p_15]}
+                                     rowHeaders={this.state.rowHeaders}
+                                     rowData={bids["pending_orders"]} rowColumns={this.state.rowColumns}
+                                     buttonText="View Details" onPress={this._showPendingOrder}/>
+                    </Content>
+                </ScrollView>
+                <AppFooter/>
+            </AppBackground>
+        );
     }
 }
 

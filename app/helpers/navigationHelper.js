@@ -11,9 +11,10 @@ function setTopLevelNavigator(navigatorRef) {
 }
 
 function navigate(routeName, params) {
+
     _navigator.dispatch(
         NavigationActions.navigate({
-            routeName,
+            routeName:routeName,
             params,
         })
     );

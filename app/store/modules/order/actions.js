@@ -74,11 +74,10 @@ export const acceptBid = (bid_id, payment_method) => {
         dispatch(appActions.loading(true));
         orderService.acceptBid(bid_id, payment_method).then((res) => {
             navigationHelper.navigate('AcceptedOrders');
-            appActions.loading(false);
+            // appActions.loading(false);
         }).catch((err) => {
             console.log(err);
             appActions.loading(false);
-
         });
     }
 };

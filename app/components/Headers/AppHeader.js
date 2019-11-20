@@ -1,5 +1,5 @@
 import React from "react";
-import {Image} from "react-native";
+import {Image, Platform, StatusBar} from "react-native";
 import {Button, Icon, Left, Body, Right, Header} from "native-base";
 import navigationHelper from "../../helpers/navigationHelper";
 
@@ -23,12 +23,12 @@ export default class AppHeader extends React.Component {
 
     render(){
         return (
-            <Header style={[appStyles.bgTransparent,appStyles.headerHeight,appStyles.pb_15]} noShadow>
+            <Header style={[appStyles.bgTransparent,appStyles.headerHeight]} noShadow>
                 <Left style={appStyles.flex1}>
                   {this.customMenu()}
                 </Left>
                 <Body style={[appStyles.flex1,appStyles.flexRow, appStyles.flexCenter]}>
-                    <Image source={require("../../../assets/Logo18.png")} style={appStyles.appHeader} />
+                    <Image source={require("../../../assets/Logo18.png")} style={[appStyles.appHeader]} />
                 </Body>
                 <Right style={[appStyles.flex1]}>
                     <Button transparent onPress={()=>navigationHelper.navigate("My Profile")}>

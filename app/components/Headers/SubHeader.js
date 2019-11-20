@@ -27,7 +27,7 @@ export default class SubHeader extends React.Component {
         let iconType = this.props["iconType"] ? this.props["iconType"] : "FontAwesome5";
         let iconName = this.props["iconName"];
         return (
-            <View style={{paddingTop: 30, height: 125, position: "relative"}}>
+            <View style={appStyles.subHeaderBg}>
                 <Svg height="100%" width="100%">
                     <Polygon width="100%" fill-rule="evenodd" clip-rule="evenodd" fill="#14E22A" fill-opacity="0.9961"
                              points="410.25,64.436 0.25,80 0.25,0   410.25,0 "/>
