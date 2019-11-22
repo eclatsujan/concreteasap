@@ -63,6 +63,7 @@ class UserProfileForm extends React.Component {
                 <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Title</Text>
                 <Field name="title" placeholder="Title" component={csPicker} type="input"
                        validate={[formValidation.required]}>
+                    <Picker.Item style={[appStyles.baseFont]} label={"Gender"} value={""}/>
                     <Picker.Item style={[appStyles.baseFont]} label={"Mr"} value={"Mr"}/>
                     <Picker.Item style={[appStyles.baseFont]} label={"Mrs"} value={"Mrs"}/>
                     <Picker.Item style={[appStyles.baseFont]} label={"Miss"} value={"Miss"}/>

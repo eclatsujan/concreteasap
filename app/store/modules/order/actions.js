@@ -261,3 +261,14 @@ export function updatePaymentType(bid_id, payment_type) {
         });
     }
 }
+
+export function repReleaseOrder(order_id){
+    return async (dispatch) => {
+        dispatch(appActions.loading());
+        await orderService.repReleaseOrder(order_id).then((res)=>{
+
+        }).catch((err)=>{
+            dispatch(appActions.loading(false));
+        });
+    }
+}

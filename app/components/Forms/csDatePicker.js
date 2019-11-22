@@ -38,7 +38,7 @@ export default class csDatePicker extends React.Component {
         return (full_date);
     }
 
-    formatValue(value){
+    formatValue(value,dateFormat="DD/MM/YYYY"){
         return moment(value).format("DD/MM/YYYY").toString();
     }
 
@@ -47,7 +47,8 @@ export default class csDatePicker extends React.Component {
     }
 
     setDefaultDate(value){
-        return value?new Date():new Date();
+        return new Date();
+        // return value?moment(value,"YYYY-MM-DD").toString():moment().toString();
     }
 
 
@@ -78,6 +79,7 @@ export default class csDatePicker extends React.Component {
                         textStyle={[appStyles.baseFontSize, appStyles.colorBlack, appStyles.defaultFont]}
                         placeHolderTextStyle={[appStyles.colorBlack, appStyles.defaultFont]}
                         onDateChange={(value) => {
+                            // console.log(value);
                             input.onChange(this.formatValue(value))
                         }}
                         onBlur={input.onBlur}

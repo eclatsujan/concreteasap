@@ -8,7 +8,7 @@ export default class orderDetails extends React.Component {
         super(props);
         this.state = {
             headers: [
-                "Suburb / Post Code",
+                "Post Code",
                 "MPA",
                 "AGG",
                 "Slump",
@@ -36,12 +36,12 @@ export default class orderDetails extends React.Component {
                     {this.renderHeader()}
                 </Col>
                 <Col style={{marginTop: 15}}>
-                    <Text>Suburb / Post Code</Text>
+                    <Text>Post Code</Text>
                     <Text>Type</Text>
                     <Text>MPA</Text>
                     <Text>AGG</Text>
                     <Text>Slump</Text>
-                    <Text>Addatives</Text>
+                    <Text>ACC</Text>
                     <Text>Placement Type</Text>
                     <Text>Quantity</Text>
                     <Text>Time</Text>

@@ -142,8 +142,9 @@ async function markAsRead(notification_id) {
 function getFormData(data,photo){
 
     const editProfileData=new FormData();
-    console.log(typeof photo==="object");
-    if(typeof photo==="object"){
+    console.log(typeof photo==="undefined");
+    console.log(photo);
+    if(typeof photo==="object"&&photo!==null){
         editProfileData.append("photo", {
             name: !photo.fileName ? "prof-image" : photo.fileName,
             type: "image/jpeg",

@@ -83,7 +83,7 @@ export default class OrderDetails extends React.Component {
                     <ScrollView>
                         <Grid>
                             <Col style={{marginLeft:15, marginTop:15}}>
-                                <Text>Suburb / Post Code</Text>
+                                <Text>Post Code</Text>
                                 <Text>Type</Text>
                                 <Text>MPA</Text>
                                 <Text>AGG</Text>

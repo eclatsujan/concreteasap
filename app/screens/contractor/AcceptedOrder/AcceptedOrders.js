@@ -17,6 +17,7 @@ import {appStyles} from "../../../../assets/styles/app_styles";
 
 import {actions} from "../../../store/modules";
 import HomeButton from "../../../components/Button/HomeButton";
+import ButtonIcon from "../../../components/Button/ButtonIcon";
 
 class AcceptedOrders extends React.Component {
     constructor(props) {
@@ -24,11 +25,14 @@ class AcceptedOrders extends React.Component {
         this.state = {
             tableHead: ['Order', 'Status', ''],
             tableData: [],
+            rowHeaders: ['Order No.', 'Status'],
+            rowColumns: ["id", "status"],
         };
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
             // this.setState({loading: true});
             this.props.getAcceptedOrder();
         });
+        this._alertIndex=this._alertIndex.bind(this);
     }
 
     componentWillUnmount() {
@@ -36,18 +40,19 @@ class AcceptedOrders extends React.Component {
         this.focusListener.remove();
     }
 
-    _alertIndex(id) {
+    _alertIndex(order) {
+        // console.log(order["id"]);
         this.props.navigation.navigate("DayOfPour",{
-            order_id:id
+            order_id:order["id"]
         });
     }
 
     displayTableHeader() {
         return (
-            <Row style={[appStyles.borderBottom, appStyles.pb_15]}>
+            <Row style={[appStyles.borderBottom, appStyles.paddingYDefault]}>
                 {this.state.tableHead.map((rowData, index) => (
-                    <Col key={index} style={{marginLeft: 10,}}>
-                        <Text>{rowData}</Text>
+                    <Col key={index}>
+                        <Text style={[appStyles.upperCase,appStyles.baseSmallFontSize]}>{rowData}</Text>
                     </Col>
                 ))}
             </Row>
@@ -58,32 +63,41 @@ class AcceptedOrders extends React.Component {
         let order=this.props["order"].toJS();
         return order.accepted_orders.map((rowData, index) => (
             <Row key={index} style={[appStyles.borderBottom, appStyles.py_10]}>
-                <Col><Text>{rowData.id}</Text></Col>
-                <Col><Text>{rowData.status}</Text></Col>
                 <Col>
-                    <TouchableOpacity onPress={() => this._alertIndex(rowData.id)}>
-                        <View style={appStyles.flexRow}>
-                            <View style={appStyles.w_25}>
-                                <Icon type="FontAwesome5" name="eye" style={appStyles.ft_20}/>
-                            </View>
-                            <View style={appStyles.w_75}><Text>View Details</Text></View>
-                        </View>
-                    </TouchableOpacity>
+                    <Text style={[appStyles.baseSmallFontSize,appStyles.arialFont]}>
+                        {rowData.id}
+                    </Text>
+                </Col>
+                <Col>
+                    <Text style={[appStyles.baseSmallFontSize,appStyles.arialFont]}>{rowData.status}</Text>
+                </Col>
+                <Col style={[appStyles.verticalCenter,appStyles.baseSmallFontSize]}>
+                    <View>
+                        <ButtonIcon small btnText={"View"} onPress={()=>{
+                            this._alertIndex(rowData.id)
+                        }} />
+                    </View>
+
                 </Col>
             </Row>
         ));
     }
 
     render() {
+        let order=this.props["order"].toJS();
         return (
             <AppBackground alignTop noKeyBoard>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"/>
-                    <Content>
-                        <View style={[appStyles.bgWhite, appStyles.p_5]}>
-                            {this.displayTableHeader()}
-                            {this.displayTableData()}
+                    <Content style={appStyles.bottomMarginDefault}>
+                        <View style={[appStyles.bgWhite, appStyles.paddingAppDefault]}>
+                            <CustomTable bgStyle={[appStyles.bgWhite, appStyles.p_15]}
+                                         rowHeaders={this.state.rowHeaders}
+                                         rowData={order["accepted_orders"]} rowColumns={this.state.rowColumns}
+                                         colButtonComponent={this.showComponentButton}
+                                         customRowComponent={this.showCustomRow}
+                                         buttonText="View" onPress={this._alertIndex}/>
                         </View>
                     </Content>
                 </ScrollView>

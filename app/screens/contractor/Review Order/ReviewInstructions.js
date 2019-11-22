@@ -11,7 +11,7 @@ import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
 
 //StyleSheet
-import {appStyles} from "../../assets/app_styles";
+import {appStyles} from "../../../../assets/styles/app_styles";
 
 
 class ReviewInstructions extends React.Component {
@@ -21,7 +21,7 @@ class ReviewInstructions extends React.Component {
 
     submitForm(full_order, order_id) {
         if (order_id) {
-            full_order["order_id"]=order_id;
+            full_order["order_id"] = order_id;
             // console.log(full_order);
             this.props.modifyOrder(full_order)
         } else {
@@ -39,24 +39,23 @@ class ReviewInstructions extends React.Component {
                 <ScrollView style={appStyles.pb_45}>
                     <AppHeader backMenu/>
                     <SubHeader iconName="search" title="Review Instructions"/>
-                    <Content>
-                        <Form>
-                            <View style={appStyles.my_5}>
-                                <Text style={[appStyles.baseFont, appStyles.colorPrimary]}>Special Instructions</Text>
-                                <Textarea disabled={true} value={full_order["special_instructions"]}
-                                          style={[appStyles.bgWhite, appStyles.py_5, appStyles.my_5]}/>
-                            </View>
-                            <View style={appStyles.my_5}>
-                                <Text style={[appStyles.baseFont, appStyles.colorPrimary]}>Delivery Instructions</Text>
-                                <Textarea disabled={true} value={full_order["delivery_instructions"]}
-                                          style={[appStyles.bgWhite, appStyles.py_5, appStyles.my_5]}/>
-                            </View>
-                            <Button style={[appStyles.button, appStyles.bgPrimary, appStyles.horizontalCenter]}
-                                    onPress={() => this.submitForm(full_order, order_id)}>
-                                <Text style={appStyles.colorBlack}>NEXT</Text>
-                            </Button>
-                        </Form>
+                    <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault, appStyles.p_10]}>
+                        <View style={[appStyles.my_5]}>
+                            <Text style={[appStyles.baseFont, appStyles.upperCase, appStyles.colorBlack,appStyles.mb_10]}>Special
+                                Instructions</Text>
+                            <Text style={[appStyles.baseFont]}>{full_order["special_instructions"]}</Text>
+                        </View>
+                        <View style={[appStyles.borderBottom2, appStyles.borderGray44, appStyles.my_30]}/>
+                        <View style={[appStyles.my_5]}>
+                            <Text style={[appStyles.baseFont, appStyles.upperCase, appStyles.colorBlack,appStyles.mb_10]}>Delivery
+                                Instructions</Text>
+                            <Text style={[appStyles.baseFont]}>{full_order["delivery_instructions"]}</Text>
+                        </View>
                     </Content>
+                    <Button style={[appStyles.button, appStyles.bgPrimary, appStyles.horizontalCenter]}
+                            onPress={() => this.submitForm(full_order, order_id)}>
+                        <Text style={appStyles.colorBlack}>NEXT</Text>
+                    </Button>
                 </ScrollView>
             </AppBackground>
         );

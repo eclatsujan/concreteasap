@@ -29,6 +29,7 @@ import DayOfPour from '../screens/contractor/AcceptedOrder/DayOfPour';
 
 //All Orders
 import OrderBidStatus from '../screens/contractor/AllOrders/OrderBidStatus';
+import ViewOrderDetail from "../screens/contractor/AllOrders/ViewOrderDetail";
 import ViewOrderBids from '../screens/contractor/AllOrders/ViewOrderBids';
 import ViewBids from '../screens/contractor/AllOrders/ViewBids';
 
@@ -70,6 +71,7 @@ export const pendingOrder = createStackNavigator({
         "View Order Bids": ViewOrderBids,
         ViewBids: ViewBids,
         OrderBidStatus: OrderBidStatus,
+        "ViewOrderDetail":ViewOrderDetail
     },
     {
         headerMode: 'none',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView,Alert} from 'react-native';
 import {Content} from "native-base";
 
 import AppHeader from "../../components/Headers/AppHeader";
@@ -29,7 +29,7 @@ export default class RepHomeScreen extends React.Component {
                         <HomeButton onPress={() => this.props.navigation.navigate("Current Orders")}
                                     text="Accepted Bids" iconType="ConcreteASAP" iconName="accepted-order"/>
 
-                        <HomeButton onPress={() => this.props.navigation.navigate("Past Orders")}
+                        <HomeButton onPress={() => Alert.alert("Feature","Coming Soon")}
                                     text="Open Orders" iconType="ConcreteASAP" iconName="place-order"/>
 
                         <HomeButton onPress={() => this.props.navigation.navigate("Rep Notifications")}

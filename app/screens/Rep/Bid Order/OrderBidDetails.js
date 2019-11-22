@@ -35,7 +35,7 @@ export default class OrderBidDetails extends React.Component {
             keyTitle: {},
             rowColumns: [
                 {
-                    title: "Suburb/Post-Code",
+                    title: "Post-Code",
                     key: "suburb"
                 },
                 {
@@ -81,6 +81,19 @@ export default class OrderBidDetails extends React.Component {
                 {
                     title: "Message Required",
                     key: "message_required"
+                },
+                {
+                    title:"Colour",
+                    key:"colours"
+
+                },
+                {
+                    title:"Special Instructions",
+                    key:"special_instructions"
+                },
+                {
+                    title:"Delivery Instructions",
+                    key:"delivery_instructions"
                 }
             ]
         };
@@ -180,7 +193,7 @@ export default class OrderBidDetails extends React.Component {
         let order = this.props.navigation.state.params.orderDetail;
         let title = "Order Details ID #" + order["order_concrete"]["id"];
         let order_concrete = order["order_concrete"];
-
+        // console.log(order_concrete);
         let btnStatus = !(this.state.total_cost || this.state.total_cost === "0");
         return (
             <AppBackground enableKeyBoard>

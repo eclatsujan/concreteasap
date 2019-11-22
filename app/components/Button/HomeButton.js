@@ -1,5 +1,5 @@
 import React from "react";
-import {View, TouchableOpacity} from "react-native";
+import {View, TouchableHighlight} from "react-native";
 import {Icon, Text, Button} from 'native-base';
 
 
@@ -25,25 +25,24 @@ export default class HomeButton extends React.Component {
         let circleColor = this.props["iconColor"] ? {borderColor: this.props["iconColor"]} : {borderColor: "#14E22A"};
         let bgColor = this.props["bgColor"] ? {backgroundColor: this.props["bgColor"]} : {backgroundColor: "#2E2E2E"};
         let borderColor = this.props["borderColor"] ? {borderColor: this.props["borderColor"]} : {borderColor: "#14E22A"};
-        console.log(borderColor);
         return (
-            <TouchableOpacity onPress={this.props.onPress}>
+            <TouchableHighlight onPress={this.props.onPress}>
                 <View>
                     <View
-                        style={[appStyles.button, bgColor, borderColor, appStyles.border2, appStyles.py_15, appStyles.flexRow]}>
-                        <View style={[appStyles.w_35, appStyles.verticalCenter]}>
+                        style={[appStyles.button, bgColor, borderColor, appStyles.border2, appStyles.py_20, appStyles.flexRow]}>
+                        <View style={[appStyles.verticalCenter,appStyles.px_20]}>
                             <View style={[appStyles.circle, circleColor, appStyles.flexRow, appStyles.flexCenter]}>
                                 {this.displayIcon(iconType, this.props.iconName, iconColor)}
                             </View>
                         </View>
-                        <View style={[appStyles.w_65, appStyles.flexRow, appStyles.verticalCenter]}>
+                        <View style={[appStyles.flexRow, appStyles.verticalCenter]}>
                             <Text style={[appStyles.upperCase, appStyles.baseFontSize, {color: textColor}]}>
                                 {this.props.text}
                             </Text>
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
         );
     }
 }

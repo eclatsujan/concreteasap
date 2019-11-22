@@ -142,7 +142,7 @@ export const appStyles = StyleSheet.create({
         borderRadius: 7
     },
     ft_small:{
-      fontSize:PixelRatio.get()<2?10:13
+      fontSize:PixelRatio.get()<2?10:10
     },
     ft_20:{
       fontSize:20

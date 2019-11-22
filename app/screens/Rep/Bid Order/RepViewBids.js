@@ -15,6 +15,8 @@ import CustomTable from '../../../components/Tables/CustomTable'
 import {styles} from '../styles.js';
 import {appStyles} from '../../assets/app_styles.js';
 import AppFooter from "../../../components/Footer/AppFooter";
+import EmptyTable from "../../../components/Tables/EmptyTable";
+import StatusRow from "../../../components/Tables/StatusRow";
 
 
 class RepViewBids extends React.Component {
@@ -22,12 +24,13 @@ class RepViewBids extends React.Component {
         super(props);
         this.state = {
             rowHeaders: ['Order No.', 'Suburb', 'Cubic m'],
-            rowColumns: ["id", "order_concrete.suburb", "order_concrete.quantity"]
+            rowColumns: ["id", "order_concrete.suburb", "order_concrete.quantity"],
         };
-        this._showDetails=this._showDetails.bind(this);
+        this._showDetails = this._showDetails.bind(this);
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
             this.props.getBiddingOrders();
         });
+        this.showCustomRow=this.showCustomRow.bind(this);
     }
 
     componentWillUnmount() {
@@ -43,7 +46,16 @@ class RepViewBids extends React.Component {
     }
 
     _showDetails(rowData) {
+        console.log(rowData);
         this.props.navigation.navigate("View Bid Detail", {orderDetail: rowData});
+    }
+
+    showComponentButton(row) {
+
+    }
+
+    showCustomRow(row) {
+        return <StatusRow row={row} onBtnClick={this._showDetails}/>;
     }
 
     render() {
@@ -55,12 +67,15 @@ class RepViewBids extends React.Component {
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="View Orders Requests"/>
                     <Content>
-                        <CustomTable isLoading={app.loading} bgStyle={[appStyles.bgWhite,appStyles.p_15]} rowHeaders={this.state.rowHeaders}
+                        <CustomTable isLoading={app.loading} bgStyle={[appStyles.bgWhite, appStyles.p_15]}
+                                     rowHeaders={this.state.rowHeaders}
                                      rowData={order["bidding_orders"]} rowColumns={this.state.rowColumns}
-                                     buttonText="View Details" onPress={this._showDetails}/>
+                                     colButtonComponent={this.showComponentButton}
+                                     customRowComponent={this.showCustomRow}
+                                     buttonText="View" onPress={this._showDetails}/>
                     </Content>
                 </ScrollView>
-                <AppFooter />
+                <AppFooter/>
             </AppBackground>
         );
     }

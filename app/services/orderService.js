@@ -16,7 +16,8 @@ export const orderService = {
     getRepPendingOrders,
     getRepAcceptedOrders,
     repCancelOrder,
-    updateBidPaymentMethod
+    updateBidPaymentMethod,
+    repReleaseOrder
 };
 
 //Common Function
@@ -168,5 +169,15 @@ async function repCancelOrder(order_id){
         body: JSON.stringify({order_id})
     };
     return fetch(REP_PREFIX_URI+'cancel_order', requestOptions).then(handleResponse);
+}
+
+async function repReleaseOrder(order_id){
+    let token=await getToken();
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
+        body: JSON.stringify({order_id})
+    };
+    return fetch(REP_PREFIX_URI+'release_order', requestOptions).then(handleResponse);
 }
 

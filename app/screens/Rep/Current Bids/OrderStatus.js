@@ -9,11 +9,12 @@ import AppHeader from "../../../components/Headers/AppHeader";
 import AppBackground from "../../../components/AppBackground";
 import SubHeader from "../../../components/Headers/SubHeader";
 
-import {appStyles} from "../../assets/app_styles";
+import {appStyles} from "../../../../assets/styles/app_styles";
 import {actions} from "../../../store/modules";
 import TableRow from "../../../components/Tables/TableRow";
 
 import {getPhoneURL} from "../../../helpers/app";
+import {app} from "../../../store/modules/app";
 
 
 class OrderStatus extends React.Component {
@@ -24,7 +25,7 @@ class OrderStatus extends React.Component {
             rowColumns: [
                 {title: "Price Per M2", key: "price"},
                 {title: "Required M2", key: "order.order_concrete.quantity"},
-                {title: "Suburb/Post Code", key: "order.order_concrete.suburb"},
+                {title: "Post Code", key: "order.order_concrete.suburb"},
                 {title: "Type", key: "order.order_concrete.type"}, {title: "MPA", key: "order.order_concrete.mpa"},
                 {title: "Agg", key: "order.order_concrete.agg"}, {title: "slump", key: "order.order_concrete.slump"},
                 {title: "ACC", key: "order.order_concrete.acc"},
@@ -49,26 +50,12 @@ class OrderStatus extends React.Component {
     showAwaitingButton(bid) {
         return (
             <View>
-                <Button style={[appStyles.button, appStyles.buttonPrimary]}
-                        onPress={() => {
-                            this.props.updatePaymentType(bid["id"], "Account");
-                        }}
-                >
-                    <Text>Account Payment</Text>
-                </Button>
-
-                <Button style={[appStyles.button, appStyles.buttonPrimary]}
-                        onPress={() => {
-                            this.props.updatePaymentType(bid["id"], "COD");
-                        }}
-                >
-                    <Text>Invoice Paid (COD)</Text>
-                </Button>
+                {bid["order"]["status"] !== "Invoice Paid" ?this.showPaymentButtons(bid): this.showReleaseButton(bid)}
 
                 <Button style={[appStyles.button, appStyles.buttonPrimary]}
                         onPress={() => {
                             Linking.openURL(getPhoneURL(bid["order"]["user"]["detail"]["concrete"])).catch((err) => {
-                                console.log(err);
+                                // console.log(err);
                             });
                         }}>
                     <Text>Contact Contractor</Text>
@@ -84,9 +71,28 @@ class OrderStatus extends React.Component {
         );
     }
 
-    showReleaseButton(bid) {
+    showPaymentButtons(bid) {
         return (
             <View>
+                <Button style={[appStyles.button, appStyles.buttonPrimary]}
+                        onPress={() => {
+                            this.props.updatePaymentType(bid["id"], "Account");
+                        }}>
+                    <Text>Account Payment</Text>
+                </Button>
+                <Button style={[appStyles.button, appStyles.buttonPrimary]}
+                        onPress={() => {
+                            this.props.updatePaymentType(bid["id"], "COD");
+                        }}>
+                    <Text>Invoice Paid (COD)</Text>
+                </Button>
+            </View>
+        )
+    }
+
+    showReleaseButton(bid) {
+        return (
+            <View style={[appStyles.button, appStyles.buttonPrimary]}>
                 <Button onPress={() => {
                     this.props.releaseOrder(bid["order"]["id"]);
                 }}>
@@ -105,11 +111,11 @@ class OrderStatus extends React.Component {
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="accepted-order" title={"Order Status"}/>
-                    <Content>
+                    <Content style={appStyles.bottomMarginDefault}>
                         <View style={[appStyles.bgWhite, appStyles.mb_10]}>
                             <TableRow rowData={bid} rowColumns={this.state.rowColumns}/>
                         </View>
-                        {bid["order"]["status"] !== "Invoice Paid" ? this.showAwaitingButton(bid) : this.showReleaseButton(bid)}
+                        {bid["order"]["status"] !== "Complete"&&bid["order"]["status"]!=="Cancelled" ? this.showAwaitingButton(bid) : null}
 
                     </Content>
                 </ScrollView>
@@ -126,8 +132,8 @@ const mapDispatchToProps = (dispatch) => {
         cancelOrder: (order_id) => {
             return dispatch(actions.order.repCancelOrder(order_id));
         },
-        releaseOrder:(order_id)=>{
-
+        releaseOrder: (order_id) => {
+            return dispatch(actions.order.repReleaseOrder(order_id));
         }
     }
 };

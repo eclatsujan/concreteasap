@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native';
-import {Content, View, Row, Col, Text} from 'native-base';
+import {Content, View} from "native-base";
 import AppBackground from "../../../components/AppBackground";
 import AppHeader from "../../../components/Headers/AppHeader";
+import TableRow from "../../../components/Tables/TableRow";
 import SubHeader from "../../../components/Headers/SubHeader";
 import {appStyles} from "../../../../assets/styles/app_styles";
-import TableRow from "../../../components/Tables/TableRow";
+import {ScrollView} from "react-native";
 
+export default class ViewOrderDetail extends React.Component {
 
-export default class ViewFullOrderDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -82,38 +82,17 @@ export default class ViewFullOrderDetails extends React.Component {
         }
     }
 
-    nextActions(formData, special) {
-        if (formData.message_required !== "No") {
-            this.props.navigation.navigate("ReviewInstructions", {formData: formData, special: special})
-        } else {
-
-        }
-    }
-
-    displayRow(title, value) {
-        return (
-            <Row>
-                <Col><Text>{title}</Text></Col>
-                <Col><Text>{value}</Text></Col>
-            </Row>
-        )
-    }
-
     render() {
-        /* 2. Read the params from the navigation state */
-        const {params} = this.props.navigation.state;
-        const order = params ? params.order : null;
+        let order=this.props.navigation.getParam("order");
         return (
             <AppBackground>
-                <ScrollView>
-                    <AppHeader/>
-                    <SubHeader title="Active Order" iconType="ConcreteASAP" iconName="accepted-order"/>
-                    <Content style={[appStyles.bgWhite,appStyles.bottomMarginDefault]}>
-                        <View style={[appStyles.p_5]}>
-                            <TableRow rowData={order["order_concrete"]} rowColumns={this.state.rowColumns}/>
-                        </View>
-                    </Content>
-                </ScrollView>
+                <AppHeader/>
+                <SubHeader title="Order Details" iconType="ConcreteASAP" iconName="accepted-order"/>
+                <Content style={[appStyles.bgWhite,appStyles.bottomMarginDefault]}>
+                    <View style={[appStyles.p_5]}>
+                        <TableRow rowData={order["order_concrete"]} rowColumns={this.state.rowColumns}/>
+                    </View>
+                </Content>
             </AppBackground>
         );
     }

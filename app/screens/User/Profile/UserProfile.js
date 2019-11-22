@@ -47,7 +47,8 @@ class UserProfile extends React.Component {
 
     displayUserRow(detail) {
         return !this.state.rowColumns ? null : this.state.rowColumns.map((column, index) => (
-            <View key={index} style={[appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
+            <View key={index}
+                  style={[appStyles.py_10,appStyles.borderBottom, appStyles.borderGray44]}>
                 <Row>
                     <Col>
                         <Text style={[appStyles.upperCase, appStyles.colorGray44]}>{column["title"]}</Text>
@@ -55,7 +56,7 @@ class UserProfile extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                        <Text>{getNested(detail, column.key)}</Text>
+                        <Text style={appStyles.arialFont}>{getNested(detail, column.key)}</Text>
                     </Col>
                 </Row>
             </View>
@@ -88,7 +89,7 @@ class UserProfile extends React.Component {
                     <AppHeader/>
                     <SubHeader title="User Profile" iconType="ConcreteASAP" iconName="user"/>
                     <Content contentContainerStyle={styles.content}>
-                        <View style={[appStyles.bgWhite, appStyles.p_10]}>
+                        <View style={[appStyles.bgWhite, appStyles.p_20]}>
                             {this.displayProfileImage(user["detail"]["profile_image"])}
                             {this.displayUserRow(user["detail"])}
                         </View>

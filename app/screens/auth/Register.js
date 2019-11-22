@@ -26,13 +26,6 @@ import {styles} from './styles';
 import {appStyles} from "../assets/app_styles";
 
 class Register extends React.Component {
-    static navigationOptions = {
-        // header: null,
-        title: 'Concrete ASAP',
-        headerStyle: {
-            backgroundColor: '#f4511e',
-        }
-    };
 
     constructor(props) {
         super(props);

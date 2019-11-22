@@ -8,40 +8,53 @@ import {appStyles} from "../../../assets/styles/app_styles";
 /**
  * to be wrapped with redux-form Field component
  */
-export default function csPicker(props) {
-    const {input: {onChange, value, ...input}, meta: {touched, error, warning}, pickerChildren, ...inputProps} = props;
-
-    let hasError = false;
-
-    if (touched && ((error) || (warning))) {
-        hasError = true;
+class csPicker extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            pickerValue:this.props["input"]["value"]?this.props["input"]["value"]:""
+        }
     }
 
-    return (
-        <View>
-            <View style={[appStyles.bgWhite, appStyles.my_7, appStyles.borderRadiusDefault]}>
-                <Picker
-                    textStyle={[appStyles.fontSize,appStyles.defaultFont]}
-                    itemTextStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
-                    headerTitleStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
-                    headerBackButtonTextStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
-                    placeholderStyle={[appStyles.baseFontSize,appStyles.defaultFont]}
-                    itemStylePropType={[appStyles.baseFontSize,appStyles.defaultFont]}
-                    // headerStyle=
-                    onValueChange={(val) => {
-                        requestAnimationFrame(() => {
+    updateState(){
+
+    }
+
+    render() {
+        const {input: {onChange, value, ...input}, meta: {touched, error, warning,submitting}, pickerChildren, ...inputProps} = this.props;
+
+        let hasError = false;
+
+        if (touched && ((error) || (warning))) {
+            hasError = true;
+        }
+
+        return (
+            <View>
+                <View style={[appStyles.bgWhite, appStyles.my_7, appStyles.borderRadiusDefault]}>
+                    <Picker
+                        textStyle={[appStyles.fontSize, appStyles.defaultFont]}
+                        itemTextStyle={[appStyles.baseFontSize, appStyles.defaultFont]}
+                        headerTitleStyle={[appStyles.baseFontSize, appStyles.defaultFont]}
+                        headerBackButtonTextStyle={[appStyles.baseFontSize, appStyles.defaultFont]}
+                        placeholderStyle={[appStyles.baseFontSize, appStyles.defaultFont]}
+                        itemStylePropType={[appStyles.baseFontSize, appStyles.defaultFont]}
+                        // headerStyle=
+                        onValueChange={(val) => {
                             onChange(val);
-                        })
-                    }}
-                    mode={"dropdown"}
-                    selectedValue={value}
-                    {...inputProps}
-                    {...input}
-                >
-                    {props.children}
-                </Picker>
+                            this.setState({pickerValue:val})
+                        }}
+                        mode={"dropdown"}
+                        selectedValue={this.state.pickerValue}
+                    >
+                        {this.props.children}
+                    </Picker>
+                </View>
+                {hasError ? showErrorMessage(error) : null}
             </View>
-            {hasError ? showErrorMessage(error) : null}
-        </View>
-    );
+        );
+    }
+
 }
+
+export default csPicker;

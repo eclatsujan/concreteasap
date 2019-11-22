@@ -19,7 +19,7 @@ class OrderBidStatus extends React.Component {
         this.state = {
             payment_method: "COD",
             rowColumns: [
-                {title: "Suburb/Post-Code", key: "suburb"},
+                {title: "Post-Code", key: "suburb"},
                 {
                     title: "Type",
                     key: "type"
@@ -81,18 +81,18 @@ class OrderBidStatus extends React.Component {
         return (
             <AppBackground>
                 <AppHeader/>
-                <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="Order Bid Status"/>
-                <Content>
-                    <ScrollView>
-                        <View style={appStyles.bgWhite}>
+                <ScrollView>
+                    <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="Order Bid Status"/>
+                    <Content>
+                        <View style={[appStyles.bgWhite,appStyles.p_10]}>
                             <TableRow rowData={order["order_concrete"]} rowColumns={this.state.rowColumns}/>
                             <Row>
-                                <Col><Text> Select Payment Method</Text></Col>
+                                <Col><Text style={appStyles.baseSmallFontSize}>Select Payment Method</Text></Col>
                             </Row>
-                            <Row style={[appStyles.w_75, appStyles.p_5]}>
+                            <Row style={[appStyles.w_75, appStyles.p_5,appStyles.verticalCenter]}>
                                 <Col>
                                     <Row>
-                                        <Col style={appStyles.w_25}>
+                                        <Col style={[appStyles.w_35]}>
                                             <Radio
                                                 color={"#f0ad4e"}
                                                 selectedColor={"#5cb85c"}
@@ -102,14 +102,14 @@ class OrderBidStatus extends React.Component {
                                                 }}
                                             />
                                         </Col>
-                                        <Col style={appStyles.w_75}>
-                                            <Text>COD</Text>
+                                        <Col style={appStyles.w_65}>
+                                            <Text style={[appStyles.baseSmallFontSize,appStyles.pl_5]}>COD</Text>
                                         </Col>
                                     </Row>
                                 </Col>
                                 <Col>
                                     <Row>
-                                        <Col style={appStyles.w_25}>
+                                        <Col style={[appStyles.w_35]}>
                                             <Radio
                                                 color={"#f0ad4e"}
                                                 selectedColor={"#5cb85c"}
@@ -119,8 +119,8 @@ class OrderBidStatus extends React.Component {
                                                 }}
                                             />
                                         </Col>
-                                        <Col style={appStyles.w_75}>
-                                            <Text>Account</Text>
+                                        <Col style={appStyles.w_65}>
+                                            <Text style={[appStyles.baseSmallFontSize,appStyles.pl_5]}>Account</Text>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -129,8 +129,8 @@ class OrderBidStatus extends React.Component {
                         <Button primary style={[appStyles.my_5, appStyles.horizontalCenter]} onPress={this.submitBid}>
                             <Text style={appStyles.colorBlack}>Confirm</Text>
                         </Button>
-                    </ScrollView>
-                </Content>
+                    </Content>
+                </ScrollView>
             </AppBackground>
         );
     }

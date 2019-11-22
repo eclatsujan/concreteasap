@@ -19,7 +19,7 @@ export const isXXXHDPI = PixelRatio.get() === 3.5;
 export const appStyles = StyleSheet.create({
     //Base Size
     baseFontSize: {
-        fontSize: (isMDPI) ? 13 : 15
+        fontSize: (isMDPI) ? 13 : 14
     },
     baseSmallFontSize: {
         fontSize: (isMDPI || isHDPI) ? 10 : 13
@@ -44,6 +44,17 @@ export const appStyles = StyleSheet.create({
         height: 100,
         borderRadius: 50
     },
+    defaultPadding:{
+        paddingTop:12,
+        paddingBottom:12
+    },
+    defaultMargin:{
+        marginTop:20,
+        marginBottom:20
+    },
+    bottomMarginDefault:{
+        marginBottom:20
+    },
     inputHeightBase: {
         minHeight: 50
     },
@@ -63,6 +74,12 @@ export const appStyles = StyleSheet.create({
     bgBlack: {
         backgroundColor: "#000000"
     },
+    bgSuccess:{
+        backgroundColor:"#14E22A"
+    },
+    bgDanger:{
+        backgroundColor:"#DC0000"
+    },
     bgError: {
         backgroundColor: "#B00020"
     },
@@ -70,6 +87,9 @@ export const appStyles = StyleSheet.create({
         backgroundColor: "#CFFFD3"
     },
     //Text Colours
+    colorSuccess:{
+        color:"#14E22A"
+    },
     colorPrimary: {
         color: "#14E22A"
     },
@@ -89,7 +109,7 @@ export const appStyles = StyleSheet.create({
         color: "#000"
     },
     colorDanger: {
-        color: "#FF0000"
+        color: "#DC0000"
     },
     colorComplete: {
         color: "#2E7400"
@@ -120,6 +140,9 @@ export const appStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // textAlign: "center"
+    },
+    justifyRight:{
+        justifyContent:'flex-end'
     },
     flexRow: {
         flex: 1,
@@ -153,12 +176,15 @@ export const appStyles = StyleSheet.create({
     selfVerticalCenter: {},
     //Padding and Margins
     paddingYDefault: {
-        paddingTop: 7,
-        paddingBottom: 7
+        paddingTop: 12,
+        paddingBottom: 12
     },
     marginDefault: {
         marginTop: 7,
         marginBottom: 7,
+    },
+    m_10:{
+        margin:10
     },
     ml_10: {
         marginLeft: 10
@@ -168,6 +194,9 @@ export const appStyles = StyleSheet.create({
     },
     mt_10: {
         marginTop: 10
+    },
+    mt_15:{
+        marginTop:15
     },
     my_5: {
         marginTop: 5,
@@ -199,13 +228,22 @@ export const appStyles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
+
+    mx_5:{
+        marginLeft:5,
+        marginRight:5
+    },
+    mx_10:{
+        marginLeft:20,
+        marginRight:20
+    },
     mx7: {
         marginTop: 7,
         marginBottom: 7
     },
     paddingXDefault: {
-        paddingTop: 15,
-        paddingBottom: 15
+        paddingTop: 12,
+        paddingBottom: 12
     },
     paddingX7: {
         paddingTop: 7,
@@ -256,9 +294,20 @@ export const appStyles = StyleSheet.create({
     pr_15: {
         paddingRight: 15
     },
+    pr_20:{
+        paddingRight:20
+    },
+    px_5:{
+        paddingLeft:5,
+        paddingRight:5
+    },
     px_10: {
         paddingLeft: 10,
         paddingRight: 10
+    },
+    px_20:{
+        paddingLeft:20,
+        paddingRight:20
     },
     py_5: {
         paddingTop: 5,
@@ -282,17 +331,26 @@ export const appStyles = StyleSheet.create({
     w_10: {
         width: "10%"
     },
+    w_20:{
+        width:"20%"
+    },
     w_25: {
         width: "20%"
     },
     w_35: {
         width: "35%"
     },
+    w_40:{
+        width:"40%"
+    },
     w_45: {
         width: "45%"
     },
     w_50: {
         width: "50%"
+    },
+    w_60:{
+        width:"60%"
     },
     w_65: {
         width: "65%"
@@ -346,7 +404,7 @@ export const appStyles = StyleSheet.create({
         borderColor: "#000000"
     },
     borderGray44: {
-        borderColor: "#707070"
+        borderColor: "#DFDFDF"
     },
     borderTransparent: {
         borderColor: 'transparent'
@@ -425,13 +483,10 @@ export const appStyles = StyleSheet.create({
         height: isXXHDPI ? 50 : 60,
         resizeMode: 'contain',
     },
-    headerHeight: {
-        height: isXXHDPI ? 100 : 80
-    },
     subHeaderBg: {
-        height: 80,
-        position: "relative",
-        marginBottom: 25
+        // height: 80,
+        // position: "relative",
+        // marginBottom: 20
     },
     customMargin: {
         marginTop: 30,
@@ -460,16 +515,15 @@ export const appStyles = StyleSheet.create({
         // marginRight:20
     },
     paddingAppDefault: {
-        // paddingLeft:10,
-        // paddingRight:10
+        paddingLeft:10,
+        paddingRight:10
     },
     inputForm: {},
     subHeader: {
-        position: "relative",
-        paddingTop: 25,
-        paddingBottom: 25,
-        alignItems: "center",
-        backgroundColor: 'transparent',
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft:20,
+        paddingRight:20
     },
     headerIcon: {
         fontSize: 40,
@@ -495,8 +549,8 @@ export const appStyles = StyleSheet.create({
         textAlign: "center",
     },
     appMargin: {
-        marginLeft: PixelRatio.get() <= 2 ? 10 : 20,
-        marginRight: PixelRatio.get() <= 2 ? 10 : 20
+        marginLeft: PixelRatio.get() <= 2 ? 20 : 30,
+        marginRight: PixelRatio.get() <= 2 ? 20 : 30
     },
     circle: {
         width: 50,
@@ -504,6 +558,12 @@ export const appStyles = StyleSheet.create({
         borderRadius: 50 / 2,
         // borderColor: "#14E22A",
         borderWidth: 2
+    },
+    smallCircle:{
+        width:30,
+        height:30,
+        borderRadius:30/2,
+        borderWidth:2
     },
     modalBg: {
         backgroundColor: 'rgba(000,000,000,0.7)'
@@ -518,5 +578,30 @@ export const appStyles = StyleSheet.create({
     iconCol: {
         width: "15%",
         paddingLeft: 10
+    },
+    navBar: {
+        height: isXXHDPI ? 100 : 80,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    leftContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    rightContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    rightIcon: {
+        height: 10,
+        width: 10,
+        resizeMode: 'contain',
+    },
+    customCard:{
+        padding:15
     }
 });

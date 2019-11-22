@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native';
+import {TouchableHighlight, ScrollView, ActivityIndicator,Alert} from 'react-native';
 import {Col, Row, View, Button, Text, Content, Icon, Footer, FooterTab} from 'native-base';
 
 import {connect} from 'react-redux';
@@ -14,13 +14,16 @@ import {withNavigation} from "react-navigation";
 import AppBackground from '../../../components/AppBackground'
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
-import HomeButton from "../../../components/Button/HomeButton";
+import ButtonIcon from "../../../components/Button/ButtonIcon";
+import CustomTable from "../../../components/Tables/CustomTable";
+import {app} from "../../../store/modules/app";
+import OrderView from '../../../components/contractor/TableView/OrderView'
 
 class ViewOrderBids extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tableHead: ['Order', 'Status', ''],
+            tableHead: ['Order', 'Status', '', ''],
             loading: true
         };
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
@@ -29,6 +32,7 @@ class ViewOrderBids extends React.Component {
                 this.setState({loading: false});
             });
         });
+        this._alertIndex=this._alertIndex.bind(this);
     }
 
     componentWillUnmount() {
@@ -48,7 +52,16 @@ class ViewOrderBids extends React.Component {
     }
 
     _alertIndex(order) {
-        this.props.navigation.navigate("ViewBids", {order});
+        if(order["status"]==="Complete"||order["status"]==="Cancelled"){
+            this.props.navigation.navigate("ViewOrderDetail",{order});
+        }
+        else{
+            this.props.navigation.navigate("ViewBids", {order});
+        }
+    }
+
+    _archiveOrder(order){
+        Alert.alert("Archive Message","Coming Soon");
     }
 
     displayTableHeader() {
@@ -64,10 +77,13 @@ class ViewOrderBids extends React.Component {
         );
     }
 
-    getColor(status){
-        let status_colors={"Complete":"#2E7400","Cancelled":"#FF0000"};
-        let color=status_colors[status]?status_colors[status]:"#000000";
-        return {color};
+    getStatusText(status){
+        let text="View Details";
+        if(status==="Pending"||status==="Open"){
+            text="View Bids";
+        }
+        return text;
+
     }
 
     displayTableData() {
@@ -76,24 +92,8 @@ class ViewOrderBids extends React.Component {
         }
         let order = this.props.order.toJS();
         return order.pending_orders.map((order, index) => (
-            <Row key={index} style={[appStyles.borderBottom, appStyles.py_10]}>
-                <Col><Text>{order.id}</Text></Col>
-                <Col><Text style={this.getColor(order.status)}>{order.status}</Text></Col>
-                <Col>
-                    {order.status !== "Pending" ? null :
-                        <TouchableOpacity onPress={() => this._alertIndex(order)}>
-                            <View style={appStyles.flexRow}>
-                                <View style={appStyles.w_25}>
-                                    <Icon type="FontAwesome5" name="eye" style={appStyles.ft_20}/>
-                                </View>
-                                <View style={appStyles.w_75}>
-                                    <Text>View Bids</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    }
-                </Col>
-            </Row>
+            <OrderView order={order} buttonViewText={this.getStatusText(order["status"])} key={index}
+                       onViewHandler={this._alertIndex} onArchiveHandler={this._archiveOrder} />
         ));
     }
 
@@ -103,10 +103,9 @@ class ViewOrderBids extends React.Component {
             <AppBackground>
                 <ScrollView style={[appStyles.mb_10]}>
                     <AppHeader/>
-                    <SubHeader  iconType="ConcreteASAP" iconName="pending-order" title="View Order Requests"/>
+                    <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="View Order Requests"/>
                     <Content contentContainerStyle={styles.content}>
                         <View style={[appStyles.bgWhite, appStyles.p_5]}>
-                            {this.displayTableHeader()}
                             {app.loading ? <ActivityIndicator size="large"/> : this.displayTableData()}
                         </View>
                     </Content>

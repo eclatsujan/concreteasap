@@ -17,12 +17,12 @@ class PlaceOrderForm extends React.Component {
             <View>
                 <View style={appStyles.my_5}>
                     <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Post Code</Text>
-                    <Field name="suburb" placeholder="Post Code" component={csTextBox} type="select"
+                    <Field name="suburb" placeholder="Post Code" keyboardType="numeric" component={csTextBox} type="select"
                            validate={[formValidation.required]}/>
                 </View>
                 <View style={appStyles.my_5}>
-                    <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Quantity</Text>
-                    <Field name="quantity" keyboardType="numeric" placeholder="Quantity" component={csTextBox}
+                    <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Quantity (m3)</Text>
+                    <Field name="quantity" keyboardType="numeric" placeholder="Quantity (m3)" component={csTextBox}
                            type="text" validate={[formValidation.required]}/>
                 </View>
                 <View style={appStyles.my_5}>

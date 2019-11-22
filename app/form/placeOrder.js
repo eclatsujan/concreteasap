@@ -53,7 +53,7 @@ export const orderForm = {
     acc: [{
         label: "ACC",
         key: ""
-    }, {label: "1% Bronze", key: "1%"}, {label: "2% Sliver", key: "2%"}, {label: "3% Gold", key: "3%"}],
+    }, {label: "1% Bronze", key: "1%"}, {label: "2% Silver", key: "2%"}, {label: "3% Gold", key: "3%"}],
     placement_types: [{label: "Placement Type", key: ""}, {label: "Chute", key: "Chute", value: "Chute"},
         {label: "Line Pump", key: "Line Pump", value: "Line Pump"}, {
             label: "Boom Pump",

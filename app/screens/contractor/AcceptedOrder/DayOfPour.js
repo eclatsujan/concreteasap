@@ -17,7 +17,9 @@ class DayOfPour extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            "loading":true
+            "loading":true,
+
+
         };
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
             // this.setState({loading: true});
@@ -33,7 +35,7 @@ class DayOfPour extends React.Component {
 
     displayRow(title, value) {
         return (
-            <Row>
+            <Row style={[appStyles.borderBottom,appStyles.pt_5]}>
                 <Col>
                     <Text>{title}</Text>
                 </Col>
@@ -63,12 +65,12 @@ class DayOfPour extends React.Component {
                     <AppHeader/>
                     <SubHeader title="Active Order" iconType="ConcreteASAP" iconName="accepted-order"/>
                     <Content>
-                        <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
+                        <Button style={[appStyles.marginDefault, appStyles.horizontalCenter,appStyles.flexRow]}
                                 onPress={() => this.viewFullOrder(order)}>
                             <Icon style={[appStyles.colorBlack]} type="FontAwesome" name="eye"/>
                             <Text style={[appStyles.colorBlack]}>View Full Order Details</Text>
                         </Button>
-                        <View style={[appStyles.bgWhite, appStyles.my_10, appStyles.p_5]}>
+                        <View style={[appStyles.bgWhite, appStyles.my_10,appStyles.p_10,appStyles.p_5]}>
                             {this.displayRow("On Site/On Call", concrete_order["preference"])}
                             {this.displayRow("Total Amount", "$" + bid["price"])}
                             {this.displayRow("Order Number", order_id)}
@@ -76,12 +78,6 @@ class DayOfPour extends React.Component {
                             {this.displayRow("Time Preference", concrete_order["time_preference1"])}
                             {this.displayRow("Suburb", concrete_order["suburb"])}
                         </View>
-                        <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
-                                onPress={() => this.props.confirmDelivery(order.current_order["id"],{
-                                    order_id
-                                })}>
-                            <Text style={[appStyles.colorBlack]}>Confirm Order Delivery</Text>
-                        </Button>
                         <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
                                 onPress={() => this.props.navigation.navigate("modifyOrder",{
                                     order_id

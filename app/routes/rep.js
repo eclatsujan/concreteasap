@@ -4,7 +4,6 @@ import {createStackNavigator} from "react-navigation-stack";
 import RepViewBids from '../screens/Rep/Bid Order/RepViewBids';
 import OrderBidDetails from '../screens/Rep/Bid Order/OrderBidDetails';
 
-
 //Current Order Bids
 import CurrentAcceptedOrder from '../screens/Rep/Current Bids/CurrentAcceptedOrder';
 import OrderStatus from '../screens/Rep/Current Bids/OrderStatus';
@@ -12,6 +11,7 @@ import OrderStatus from '../screens/Rep/Current Bids/OrderStatus';
 //Pending Order Request
 import PendingOrderRequest from '../screens/Rep/My Bids/PendingOrderRequest';
 import OrderPendingDetails from '../screens/Rep/My Bids/OrderPendingDetails'
+
 //Rep Notifications
 import Notifications from '../screens/User/Notification/Notifications';
 
@@ -28,6 +28,7 @@ export const repAcceptedOrder=createStackNavigator({
 
 export const repViewOrder=createStackNavigator({
     "View Bids":RepViewBids,
+    // "ViewOrderDetail":ViewOrderDetail,
     "View Bid Detail":OrderBidDetails,
     "Bid Message":BidMessageHome,
 },{

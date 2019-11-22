@@ -17,9 +17,6 @@ import {appStyles} from '../assets/app_styles'
 import {withNavigation} from "react-navigation";
 
 class LoginScreen extends React.Component {
-    static navigationOptions = {
-        header: null,
-    };
 
     constructor(props) {
         super(props);
@@ -29,6 +26,24 @@ class LoginScreen extends React.Component {
             isLoading: true,
             type: 'contractor'
         };
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            // The screen is focused
+            // Call any action
+        });
+    }
+
+    componentDidMount() {
+        this.setState({isLoading:false});
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.app.loading!==this.prevProps.app.loading){
+            console.log("ok");
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.flushError();
     }
 
     login() {
@@ -41,9 +56,9 @@ class LoginScreen extends React.Component {
     }
 
     render() {
+        console.log(this.state.isLoading);
         let app = this.props.app.toJS();
         let error = this.props.error.toJS();
-        // this.renderButton(app.loading);
         return (<AppBackground loading={app.loading} enableKeyBoard alignContent="center">
             <Content>
                 <LoginHeader/>

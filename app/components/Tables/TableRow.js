@@ -22,16 +22,16 @@ export default class TableRow extends React.Component {
 
     renderRow(row) {
         return (
-            <View style={appStyles.flex1}>
+            <View style={[appStyles.flex1]}>
                 {this.props["rowColumns"].map((column, index) => {
                     let columnValue = getNested(row, column["key"]);
                     return (
-                        <Row key={index} style={[appStyles.py_10, appStyles.borderBottom2, appStyles.borderBlack]}>
+                        <Row key={index} style={[appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
                             <Col style={appStyles.w_65}>
-                                <Text>{column["title"]}</Text>
+                                <Text style={[appStyles.upperCase,appStyles.baseSmallFontSize]}>{column["title"]}</Text>
                             </Col>
                             <Col style={appStyles.w_35}>
-                                <Text style={appStyles.arialFont}>
+                                <Text style={[appStyles.arialFont,appStyles.baseSmallFontSize]}>
                                     {!isBoolean(columnValue) ? columnValue : boolToAffirmative(columnValue)}
                                 </Text>
                             </Col>
@@ -44,7 +44,7 @@ export default class TableRow extends React.Component {
 
 
     render() {
-        let bgStyle = this.props["bgStyle"] ? this.props["bgStyle"] : [appStyles.bgWhite, appStyles.p_5];
+        let bgStyle = this.props["bgStyle"] ? this.props["bgStyle"] : [appStyles.bgWhite,appStyles.p_10];
         return (
             <View style={bgStyle}>
                 {this.renderRowData(this.props["rowData"])}

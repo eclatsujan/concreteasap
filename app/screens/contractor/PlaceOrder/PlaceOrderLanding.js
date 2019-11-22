@@ -22,8 +22,8 @@ export default class PlaceOrderLanding extends React.Component {
         return (
             <AppBackground>
                 <AppHeader/>
-                <SubHeader iconType="ConcreteASAP" iconName="place-order" title="Place Order Request"/>
                 <ScrollView>
+                    <SubHeader iconType="ConcreteASAP" iconName="place-order" title="Place Order Request"/>
                     <Content contentContainerStyle={[appStyles.horizontalCenter, appStyles.flex1]}>
                         <View>
                             <HomeButton onPress={() => this.props.navigation.navigate("PlaceOrderRequest")}

@@ -1,4 +1,5 @@
 import React from "react";
+import {View} from "native-base";
 import {Button,FooterTab, Text, Footer} from "native-base";
 
 import {appStyles} from "../../../assets/styles/app_styles";
@@ -13,14 +14,7 @@ export default class AppFooter extends React.Component {
 
     render(){
         return (
-            <Footer style={appStyles.mb_30} style={appStyles.bgTransparent}>
-                <FooterTab style={appStyles.bgTransparent}>
-                    <Button style={[appStyles.button, appStyles.buttonPrimary]}
-                            onPress={() => navigationHelper.navigate("Home")}>
-                        <Text style={appStyles.buttonBlack}>Back to Home</Text>
-                    </Button>
-                </FooterTab>
-            </Footer>
+            <View></View>
         );
     }
 }

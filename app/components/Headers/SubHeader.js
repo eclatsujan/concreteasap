@@ -18,7 +18,7 @@ export default class SubHeader extends React.Component {
     }
 
     renderIcon(iconType, iconName) {
-        let iconStyle = [appStyles.headerIcon, appStyles.pr_15];
+        let iconStyle = [appStyles.headerIcon, appStyles.pr_20, appStyles.ft_20];
         return iconType === "ConcreteASAP" ? <ConcreteIcon name={iconName} style={iconStyle}/> :
             <Icon active type={iconType} name={iconName} style={iconStyle}/>;
     }
@@ -26,24 +26,21 @@ export default class SubHeader extends React.Component {
     render() {
         let iconType = this.props["iconType"] ? this.props["iconType"] : "FontAwesome5";
         let iconName = this.props["iconName"];
+        console.log(this.props.title);
         return (
-            <View style={appStyles.subHeaderBg}>
-                <Svg height="100%" width="100%">
-                    <Polygon width="100%" fill-rule="evenodd" clip-rule="evenodd" fill="#14E22A" fill-opacity="0.9961"
-                             points="410.25,64.436 0.25,80 0.25,0   410.25,0 "/>
-                </Svg>
-                <View style={[appStyles.absoluteCenter, appStyles.verticalCenter]}>
-                    <Row style={[appStyles.bgPrimary, appStyles.subHeader]}>
-                        <Col style={[appStyles.w_25,{alignItems:"center"}]}>
-                            {this.renderIcon(iconType, iconName)}
-                        </Col>
-                        <Col style={[appStyles.subHeaderTxtCol,appStyles.w_75]}>
-                            <Text
-                                style={[appStyles.baseFont, appStyles.subHeaderTxt, appStyles.upperCase]}>
-                                {this.props.title}
-                            </Text>
-                        </Col>
-                    </Row>
+            <View>
+                <View
+                    style={[appStyles.flexRow,appStyles.flexWrap, appStyles.bgPrimary, appStyles.subHeader,
+                        appStyles.bottomMarginDefault,appStyles.mt_15]}>
+                    <View style={[appStyles.verticalCenter]}>
+                        {this.renderIcon(iconType, iconName)}
+                    </View>
+                    <View>
+                        <Text
+                            style={[appStyles.baseFont, appStyles.subHeaderTxt, appStyles.upperCase]}>
+                            {this.props.title}
+                        </Text>
+                    </View>
                 </View>
             </View>
         );

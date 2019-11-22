@@ -26,7 +26,13 @@ class AuthLoadingScreen extends React.Component {
     }
 
     componentDidMount(){
-        this._bootstrapAsync().then((res)=>{console.log(res)});
+        try{
+            this._bootstrapAsync().then((res)=>{console.log(res)});
+        }
+        catch(err) {
+            this.props.navigation.navigate('Auth');
+        }
+
     }
 
     async getDeviceIds(){
@@ -37,8 +43,12 @@ class AuthLoadingScreen extends React.Component {
 
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = async () => {
-        let user_token=await SecureStore.getItemAsync("user_token");
-        let user_role=await SecureStore.getItemAsync("user_role");
+        let user_token=await SecureStore.getItemAsync("user_token").catch((err)=>{
+            this.props.navigation.navigate('Auth');
+        });
+        let user_role=await SecureStore.getItemAsync("user_role").catch((err)=>{
+            this.props.navigation.navigate('Auth');
+        });
         let user= await userService.getUser(user_token);
         this.props.updateUserState(user);
         if(user_token!==null){
