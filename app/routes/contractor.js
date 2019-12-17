@@ -38,8 +38,11 @@ import ViewFullOrderDetails from '../screens/contractor/AcceptedOrder/ViewFullOr
 import ModifyOrderRequest from "../screens/contractor/Modify Order/ModifyOrderRequest";
 import ModifyAdditionalRequest from "../screens/contractor/Modify Order/ModifyAdditionalRequest";
 
-//User Profile
+//Confirm Order
 import ConfirmReview from "../screens/contractor/Confirm Order/ConfirmReview";
+import ConfirmComment from "../screens/contractor/Confirm Order/ConfirmComment";
+
+//User Profile
 import UserDetail from "../screens/User/Contact/UserDetail";
 
 //Day Of Pour
@@ -62,7 +65,7 @@ export const calculator = createStackNavigator({
 
 export const placeOrderStack = createStackNavigator({
         PlaceOrderRequest: PlaceOrderRequest,
-        orderCalculator:calculator,
+        orderCalculator: calculator,
         "Place Order Additional Request": PlaceOrderAdditionalRequest,
         SpecialRequests: SpecialRequests,
         ReviewOrder: ReviewOrder,
@@ -129,7 +132,8 @@ export const dayofPourStack = createStackNavigator({
         DayOfPour: DayOfPour,
         ViewFullOrderDetails: ViewFullOrderDetails,
         modifyOrder,
-        ConfirmReview,
+        "Confirm Review": ConfirmReview,
+        "Confirm Comment": ConfirmComment,
         "User Contact Detail": UserDetail,
     },
     {

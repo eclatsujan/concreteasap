@@ -94,8 +94,9 @@ class DayOfPour extends React.Component {
         let bid = order?.get("bids") ? order?.get("bids").get(0) : null;
         let user = bid ? bid?.get("user") : null;
 
+        let price=parseFloat(bid?.get("price"));
         let quantity=parseFloat(concrete_order?.get("quantity"));
-        let total=parseFloat(bid?.get("price"))*quantity;
+        let total=price*quantity;
 
         return (
             <AppBackground>
@@ -125,16 +126,17 @@ class DayOfPour extends React.Component {
                         <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
                                 onPress={() => this.props.navigation.navigate("modifyOrder", {
                                     order_id,
-                                    total,
-                                    quantity
                                 })}>
                             <Text style={[appStyles.colorBlack, appStyles.arialFont, appStyles.boldFont]}>
                                 Modify Order
                             </Text>
                         </Button>
                         <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
-                                onPress={() => this.props.navigation.navigate("ConfirmReview", {
+                                onPress={() => this.props.navigation.navigate("Confirm Review", {
                                     order_id,
+                                    total,
+                                    quantity,
+                                    price
                                 })}>
                             <Text style={[appStyles.colorBlack, appStyles.arialFont, appStyles.boldFont]}>
                                 Complete Order

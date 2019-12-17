@@ -22,18 +22,37 @@ import {formValidation} from "../../../helpers/validation";
 import csTextArea from "../../../components/Forms/csTextArea";
 // import StarReview from "react-native-star-review";
 
-    import {AirbnbRating} from 'react-native-ratings';
+import {AirbnbRating} from 'react-native-ratings';
 import {order} from "../../../store/modules/order";
 import {actions} from "../../../store/modules";
+import ConfirmReviewForm from "../../../components/contractor/Confirm/ConfirmReviewForm";
 
 class ConfirmReview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rating: ""
+            rating: "",
+            initialValues:{
+                total:"0",
+                quantity:"0",
+                total_m3:"0",
+                total_amount:"0"
+            }
         };
-        this.ratingCompleted = this.ratingCompleted.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onQuantityChange=this.onQuantityChange.bind(this);
+    }
+
+    componentDidMount() {
+        let total=this.props.navigation.getParam("total");
+        let quantity=this.props.navigation.getParam("quantity");
+        let initialValues={...this.state.initialValues};
+        initialValues.total=total?.toString();
+        initialValues.quantity=quantity?.toString();
+        initialValues.total_m3=quantity?.toString();
+        initialValues.total_amount=total?.toString();
+        this.setState({initialValues});
     }
 
     ratingCompleted(rating) {
@@ -41,108 +60,35 @@ class ConfirmReview extends React.Component {
     }
 
     handleSubmit(values) {
-        let order_review = values;
-        order_review=order_review.set("rating",this.state.rating);
-        order_review=order_review.set("order_id",this.props.navigation.getParam("order_id"));
-        order_review.toJS();
-        this.props.completeOrder(order_review);
+
+        this.props.navigation.navigate("Confirm Comment",{
+            review:values,
+            order_id:this.props.navigation.getParam("order_id")
+        });
+    }
+
+    onQuantityChange(message_m3){
+        let price=this.props.navigation.getParam("price");
+        let m3=parseFloat(message_m3);
+        m3=isNaN(m3)?0:m3;
+        let initialValues={...this.state.initialValues};
+        let total=!isNaN(m3)?price*m3:0;
+        initialValues.message_total=total.toString();
+        initialValues.total_m3=(parseFloat(this.state.initialValues.quantity)+m3).toString();
+        initialValues.total_amount=(parseFloat(this.state.initialValues.total)+total).toString();
+        this.setState({initialValues});
     }
 
     render() {
-        const {handleSubmit} = this.props;
-        let total=this.props.navigation.getParam("total");
-        let quantity=this.props.navigation.getParam("quantity");
+        // const {handleSubmit} = this.props;
         return (
             <AppBackground loading={this.props.app.get("loading")} alignTop>
                 <ScrollView style={[appStyles.pb_45]}>
                     <AppHeader/>
                     <SubHeader title="Job Complete" iconType="ConcreteASAP" iconName="accepted-order"/>
                     <Content style={[appStyles.bgWhite, appStyles.p_10]}>
-                        <View>
-                            <View>
-                                <Text style={[appStyles.customFont,appStyles.boldFont,appStyles.upperCase]}>
-                                    Initial Order
-                                </Text>
-                            </View>
-                            <Row style={[appStyles.py_5]}>
-                                <Col>
-                                    <Field name="quantity" initialValue={quantity} keyboardType="numeric"
-                                           placeholder="Final Quantity" component={csTextBox}
-                                           type="text" validate={[formValidation.required]}/>
-                                </Col>
-                                <Col style={appStyles.p_5}>
-                                    <Text style={appStyles.boldFont}>M3 Ordered</Text>
-                                </Col>
-                            </Row>
-                            <Row style={[appStyles.py_5]}>
-                                <Col>
-                                    <Field name="quantity" keyboardType="numeric" placeholder="Final Quantity"
-                                           component={csTextBox}
-                                           type="text" validate={[formValidation.required]}/>
-                                </Col>
-                                <Col style={appStyles.p_5}>
-                                    <Text style={appStyles.boldFont}>Amount</Text>
-                                </Col>
-                            </Row>
-                        </View>
-                        <View>
-                            <View>
-                                <Text style={[appStyles.customFont,appStyles.boldFont,appStyles.upperCase]}>
-                                    Message (Please enter Amount Ordered)
-                                </Text>
-                            </View>
-                            <Row style={[appStyles.py_5]}>
-                                <Col>
-                                    <Field name="m3_message" keyboardType="numeric" placeholder="M3 Message"
-                                           component={csTextBox}
-                                           type="text" validate={[formValidation.required]}/>
-                                </Col>
-                                <Col style={appStyles.p_5}>
-                                    <Text>M3 Message</Text>
-                                </Col>
-                            </Row>
-                            <Row style={[appStyles.borderBottom, appStyles.py_5]}>
-                                <Col>
-                                    <Field name="message_amount" keyboardType="numeric" placeholder="Amount"
-                                           component={csTextBox}
-                                           type="text" validate={[formValidation.required]}/>
-                                </Col>
-                                <Col style={appStyles.p_5}>
-                                    <Text>Amount</Text>
-                                </Col>
-                            </Row>
-                        </View>
-                        <View>
-                            <View>
-                                <Text style={[appStyles.customFont,appStyles.boldFont,appStyles.upperCase]}>
-                                    Total Amount
-                                </Text>
-                            </View>
-                            <Row style={[ appStyles.py_5]}>
-                                <Col>
-                                    <Field name="total_m3" keyboardType="numeric" placeholder="Total M3 Poured"
-                                           component={csTextBox}
-                                           type="text" validate={[formValidation.required]}/>
-                                </Col>
-                                <Col style={appStyles.p_5}>
-                                    <Text>Total M3 Poured</Text>
-                                </Col>
-                            </Row>
-                            <Row style={[appStyles.borderBottom, appStyles.py_5]}>
-                                <Col>
-                                    <Field name="total_amount" keyboardType="numeric" placeholder="Total Amount"
-                                           component={csTextBox}
-                                           type="text" validate={[formValidation.required]}/>
-                                </Col>
-                                <Col style={appStyles.p_5}>
-                                    <Text>Total Amount</Text>
-                                </Col>
-                            </Row>
-                        </View>
-                        <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
-                                onPress={handleSubmit(this.handleSubmit)}>
-                            <Text style={appStyles.colorBlack}>Confirm Job Completion</Text>
-                        </Button>
+                        <ConfirmReviewForm onSubmit={this.handleSubmit} onQuantityChange={this.onQuantityChange}
+                                           initialValues={this.state.initialValues} />
                     </Content>
                 </ScrollView>
             </AppBackground>
@@ -165,7 +111,5 @@ const mapStateToProps = (state) => {
     }
 };
 
-let reviewFormRedux = reduxForm({form: "orderReview"})(ConfirmReview);
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(reviewFormRedux);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmReview);

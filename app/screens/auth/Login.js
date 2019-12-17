@@ -61,7 +61,7 @@ class LoginScreen extends React.Component {
                         <Form style={appStyles.loginForm}>
                             <FormItem style={appStyles.loginInput} regular>
                                 <Input style={[appStyles.baseFont]} placeholder='Email' value={this.state.email}
-                                       autoCapitalize = 'none'
+                                       autoCapitalize='none'
                                        onChangeText={(text) => this.setState({email: text})}/>
                                 <Icon active type="FontAwesome" name='user'/>
                             </FormItem>
@@ -69,7 +69,7 @@ class LoginScreen extends React.Component {
                                 <Input style={[appStyles.baseFont]} placeholder='••••••••'
                                        value={this.state.password}
                                        secureTextEntry={true}
-                                       autoCapitalize = 'none'
+                                       autoCapitalize='none'
                                        onChangeText={(text) => this.setState({password: text})}/>
                                 <Icon active type="FontAwesome5" name='key'/>
                             </FormItem>

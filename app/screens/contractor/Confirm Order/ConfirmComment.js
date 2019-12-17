@@ -12,11 +12,27 @@ import {connect} from "react-redux";
 import {AirbnbRating} from "react-native-ratings";
 import csTextArea from "../../../components/Forms/csTextArea";
 import {formValidation} from "../../../helpers/validation";
+import ConfirmCommentForm from "../../../components/contractor/Confirm/ConfirmCommentForm";
 
 class ConfirmComment extends React.Component {
 
     constructor(props){
         super(props);
+        this.handleSubmit=this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(values){
+        let order_review={};
+        order_review["order_id"]=this.props.navigation.getParam("order_id");
+        order_review["message_quantity"]=parseFloat(values.get("total"));
+        order_review["message_total"]=parseFloat(values.get("message_total"));
+        order_review["quantity"]=parseFloat(values.get("quantity"));
+        order_review["total"]=parseFloat(values.get("total"));
+        order_review["rating"]=values.get("rating");
+        order_review["comment"]=values.get("comment");
+
+        console.log(order_review);
+
     }
 
     render(){
@@ -26,34 +42,7 @@ class ConfirmComment extends React.Component {
                     <AppHeader/>
                     <SubHeader title="Job Complete" iconType="ConcreteASAP" iconName="accepted-order"/>
                     <Content style={[appStyles.bgWhite, appStyles.p_10]}>
-                        <View>
-                            <Row style={[appStyles.borderBottom, appStyles.py_5]}>
-                                <Col style={[appStyles.flexAlignLeft, appStyles.horizontalCenter]}>
-                                    <AirbnbRating
-                                        showRating={false}
-                                        type="star"
-                                        ratingCount={5}
-                                        defaultRating={0}
-                                        size={22}
-                                        onFinishRating={this.ratingCompleted}
-                                    />
-                                </Col>
-                                <Col style={appStyles.py_5}>
-                                    <Text>Rate Concrete Company</Text>
-                                </Col>
-                            </Row>
-                            <Row style={[appStyles.borderBottom, appStyles.p_5]}>
-                                <Col>
-                                    <Text style={[appStyles.baseFont]}>COMMENTS</Text>
-                                </Col>
-                            </Row>
-                            <Row style={[appStyles.py_5]}>
-                                <Col>
-                                    <Field name="comment" placeholder="" component={csTextArea}
-                                           type="text" validate={[formValidation.required]}/>
-                                </Col>
-                            </Row>
-                        </View>
+                        <ConfirmCommentForm onSubmit={this.handleSubmit} />
                     </Content>
                 </ScrollView>
             </AppBackground>
@@ -75,8 +64,5 @@ const mapStateToProps = (state) => {
         initialValues: {}
     }
 };
-
-let reviewFormRedux = reduxForm({form: "orderReview"})(ConfirmComment);
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmComment);
