@@ -3,7 +3,7 @@ import {ScrollView} from 'react-native';
 import {View, Content} from 'native-base';
 
 //Styles
-import {appStyles} from "../../assets/app_styles";
+import {appStyles} from "../../../../assets/styles/app_styles";
 
 //App Component
 import AppBackground from '../../../components/AppBackground';

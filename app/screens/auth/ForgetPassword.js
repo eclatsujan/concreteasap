@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import {actions} from '../../store';
 
 //Custom Styles
-import {appStyles} from '../assets/app_styles'
+import {appStyles} from '../../../assets/styles/app_styles'
 
 class ForgetPassword extends React.Component {
     constructor(props) {
@@ -31,6 +31,10 @@ class ForgetPassword extends React.Component {
         this.props.flushError();
     }
 
+    componentWillUnmount() {
+        this.props.flushError();
+    }
+
     resetPassword() {
         this.props.resetPassword(this.state.email);
     }
@@ -40,10 +44,10 @@ class ForgetPassword extends React.Component {
     }
 
     render() {
-        let app=this.props.app.toJS();
+        let app=this.props.app;
         let error=this.props.error.toJS();
         return (
-            <AppBackground loading={app.loading} enableKeyBoard alignContent="center">
+            <AppBackground loading={app.get("loading")} enableKeyBoard alignContent="center">
                 <Content style={[appStyles.content]}>
                     <LoginHeader/>
                     <ErrorHeader error={error}/>

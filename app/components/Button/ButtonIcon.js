@@ -1,5 +1,5 @@
 import React from "react";
-import {View, TouchableHighlight} from "react-native";
+import {View, TouchableWithoutFeedback} from "react-native";
 import {Icon, Text} from 'native-base';
 
 import {appStyles} from "../../../assets/styles/app_styles";
@@ -18,17 +18,21 @@ export default class ButtonIcon extends React.Component {
         let iconType = this.props["iconType"] ? this.props["iconType"] : "FontAwesome5";
         let iconName = this.props["iconName"] ? this.props["iconName"] : "eye";
         return (
-            <TouchableHighlight onPress={this.props["onPress"]}>
-                <View
-                    style={[appStyles.flexRow,appStyles.flexWrap,btnBgColor,appStyles.justifyItemsCenter,appStyles.borderRadiusDefault,appStyles.p_5]}>
-                    <View style={appStyles.pr_5}>
-                        <Icon type={iconType} name={iconName} style={[btnFontSize, iconColor]}/>
+            <View style={[appStyles.pr_5,appStyles.mb_10]}>
+                <TouchableWithoutFeedback onPress={this.props["onPress"]}>
+                    <View
+                        style={[appStyles.flexRow,appStyles.flexWrap,btnBgColor,appStyles.justifyItemsCenter,appStyles.borderRadiusDefault,appStyles.p_5]}>
+                        <View style={appStyles.pr_5}>
+                            <Icon type={iconType} name={iconName} style={[btnFontSize, iconColor]}/>
+                        </View>
+                        <View>
+                            <Text style={[appStyles.baseSmallFontSize,appStyles.upperCase,appStyles.customFont,textColor]}>
+                                {this.props["btnText"]}
+                            </Text>
+                        </View>
                     </View>
-                    <View>
-                        <Text style={[appStyles.baseSmallFontSize,appStyles.upperCase, textColor]}>{this.props["btnText"]}</Text>
-                    </View>
-                </View>
-            </TouchableHighlight>
+                </TouchableWithoutFeedback>
+            </View>
         );
     }
 }

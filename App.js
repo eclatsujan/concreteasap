@@ -1,5 +1,7 @@
 import * as Font from 'expo-font';
-import React, {Component} from "react";
+import React,{Component} from "react";
+
+import {Platform,UIManager} from "react-native";
 
 import {StyleProvider, Root, Toast} from "native-base";
 import mitt from 'mitt'
@@ -19,10 +21,12 @@ import NavigationService from './app/helpers/navigationHelper';
 
 import {createIconSetFromIcoMoon} from 'react-native-vector-icons';
 import icoMoonConfig from './assets/fonts/selection.json';
+import OneSignal from "react-native-onesignal";
 
 const emitter = mitt();
 
 export default class SetupScreen extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,10 +35,16 @@ export default class SetupScreen extends Component {
     }
 
     componentDidMount() {
+
         this.loadFonts().then(() => {
             this.setState({isReady: true});
-        })
+        });
+
     }
+
+
+
+
 
     componentWillUnmount() {
 

@@ -13,7 +13,7 @@ import LoginHeader from '../../components/Headers/LoginHeader';
 //States
 import {actions} from '../../store';
 
-import {appStyles} from '../assets/app_styles'
+import {appStyles} from "../../../assets/styles/app_styles";
 import {withNavigation} from "react-navigation";
 
 class LoginScreen extends React.Component {
@@ -33,13 +33,7 @@ class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({isLoading:false});
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.app.loading!==this.prevProps.app.loading){
-            console.log("ok");
-        }
+        this.setState({isLoading: false});
     }
 
     componentWillUnmount() {
@@ -56,18 +50,18 @@ class LoginScreen extends React.Component {
     }
 
     render() {
-        console.log(this.state.isLoading);
-        let app = this.props.app.toJS();
-        let error = this.props.error.toJS();
-        return (<AppBackground loading={app.loading} enableKeyBoard alignContent="center">
+        let app = this.props.app;
+        let error = this.props.error;
+        return (<AppBackground loading={app.get("loading")} enableKeyBoard alignContent={"center"}>
             <Content>
                 <LoginHeader/>
                 <ErrorHeader error={error}/>
-                <Row style={{fontSize: 56}}>
+                <Row style={[{fontSize: 56}]}>
                     <Col>
                         <Form style={appStyles.loginForm}>
                             <FormItem style={appStyles.loginInput} regular>
-                                <Input style={{fontFamily: "Hancock"}} placeholder='Email' value={this.state.email}
+                                <Input style={[appStyles.baseFont]} placeholder='Email' value={this.state.email}
+                                       autoCapitalize = 'none'
                                        onChangeText={(text) => this.setState({email: text})}/>
                                 <Icon active type="FontAwesome" name='user'/>
                             </FormItem>
@@ -75,12 +69,13 @@ class LoginScreen extends React.Component {
                                 <Input style={[appStyles.baseFont]} placeholder='••••••••'
                                        value={this.state.password}
                                        secureTextEntry={true}
+                                       autoCapitalize = 'none'
                                        onChangeText={(text) => this.setState({password: text})}/>
                                 <Icon active type="FontAwesome5" name='key'/>
                             </FormItem>
                             <FormItem style={appStyles.borderTransparent} regular>
                                 <Right>
-                                    <Text style={[appStyles.baseFont, appStyles.colorPrimary]}
+                                    <Text style={[appStyles.customFont, appStyles.colorPrimary]}
                                           onPress={() => this.props.navigation.navigate('Forget Password')}>FORGOT
                                         PASSWORD</Text>
                                 </Right>

@@ -21,35 +21,32 @@ class ReviewInstructions extends React.Component {
 
     submitForm(full_order, order_id) {
         if (order_id) {
-            full_order["order_id"] = order_id;
-            // console.log(full_order);
-            this.props.modifyOrder(full_order)
+            this.props.modifyOrder(full_order.set("order_id",order_id).toJS());
         } else {
-            this.props.createOrder(full_order);
+            this.props.createOrder(full_order.toJS());
         }
     }
 
     render() {
         const {params} = this.props.navigation.state;
         const full_order = params ? params.full_order : null;
-        let app = this.props.app.toJS();
         let order_id = this.props.navigation.getParam("order_id");
         return (
-            <AppBackground loading={app.loading}>
+            <AppBackground loading={this.props.app.get("loading")}>
                 <ScrollView style={appStyles.pb_45}>
                     <AppHeader backMenu/>
                     <SubHeader iconName="search" title="Review Instructions"/>
                     <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault, appStyles.p_10]}>
                         <View style={[appStyles.my_5]}>
-                            <Text style={[appStyles.baseFont, appStyles.upperCase, appStyles.colorBlack,appStyles.mb_10]}>Special
+                            <Text style={[appStyles.boldFont,appStyles.upperCase, appStyles.colorBlack,appStyles.mb_10]}>Special
                                 Instructions</Text>
-                            <Text style={[appStyles.baseFont]}>{full_order["special_instructions"]}</Text>
+                            <Text style={[appStyles.baseFont]}>{full_order.get("special_instructions")}</Text>
                         </View>
                         <View style={[appStyles.borderBottom2, appStyles.borderGray44, appStyles.my_30]}/>
                         <View style={[appStyles.my_5]}>
-                            <Text style={[appStyles.baseFont, appStyles.upperCase, appStyles.colorBlack,appStyles.mb_10]}>Delivery
+                            <Text style={[appStyles.boldFont, appStyles.upperCase, appStyles.colorBlack,appStyles.mb_10]}>Delivery
                                 Instructions</Text>
-                            <Text style={[appStyles.baseFont]}>{full_order["delivery_instructions"]}</Text>
+                            <Text style={[appStyles.baseFont]}>{full_order.get("delivery_instructions")}</Text>
                         </View>
                     </Content>
                     <Button style={[appStyles.button, appStyles.bgPrimary, appStyles.horizontalCenter]}

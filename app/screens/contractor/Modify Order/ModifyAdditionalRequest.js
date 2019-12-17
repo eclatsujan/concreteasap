@@ -4,14 +4,14 @@ import * as React from 'react';
 import {connect} from "react-redux";
 
 //styles
-import {appStyles} from "../../assets/app_styles";
+import {appStyles} from "../../../../assets/styles/app_styles";
 
 // Custom Component
 import AppBackground from '../../../components/AppBackground'
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
 import AdditionalOrderForm from "../../../components/contractor/AdditionalOrderForm";
-
+import {formValueSelector} from "redux-form/lib/immutable";
 
 
 class ModifyAdditionalRequest extends React.Component {
@@ -23,17 +23,15 @@ class ModifyAdditionalRequest extends React.Component {
 
     displayReview(values) {
         let order = this.props.navigation.getParam("order");
-        let order_id=this.props.navigation.getParam("order_id");
-        order = order.toJS();
-        let newValues = values.toJS();
-        const full_order = {...order, ...newValues};
-        if (full_order.message_required === "Yes") {
-            console.log(full_order);
+        let order_id = this.props.navigation.getParam("order_id");
+        const full_order = order.merge(values);
+
+        if (full_order.get("message_required") === "Yes") {
             this.props.navigation.navigate("ModifySpecialRequests", {
                 order: full_order,
                 order_id
             })
-        } else if (full_order.message_required === "No") {
+        } else if (full_order.get("message_required") === "No") {
             this.props.navigation.navigate("ReviewOrder", {
                 order: full_order,
                 order_id
@@ -47,11 +45,21 @@ class ModifyAdditionalRequest extends React.Component {
             <AppBackground enableKeyBoard>
                 <AppHeader backMenu/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Place Order"/>
-                <AdditionalOrderForm onSubmit={this.displayReview} initialValues={order} />
+                <AdditionalOrderForm onSubmit={this.displayReview} initialValues={order}
+                                     selectedTime={this.props.time}/>
             </AppBackground>
         );
     }
 
 }
 
-export default connect(null, null)(ModifyAdditionalRequest);
+
+const selector = formValueSelector('placeOrder');
+
+const mapStateToProps = (state) => {
+    return {
+        time: selector(state, "time1", "time2", "time3"),
+    }
+};
+
+export default connect(mapStateToProps, null)(ModifyAdditionalRequest);

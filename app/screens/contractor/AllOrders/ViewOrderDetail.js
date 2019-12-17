@@ -6,6 +6,7 @@ import TableRow from "../../../components/Tables/TableRow";
 import SubHeader from "../../../components/Headers/SubHeader";
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {ScrollView} from "react-native";
+import {formatTime, formatDate} from "../../../helpers/time";
 
 export default class ViewOrderDetail extends React.Component {
 
@@ -13,6 +14,10 @@ export default class ViewOrderDetail extends React.Component {
         super(props);
         this.state = {
             rowColumns: [
+                {
+                    title:"Address",
+                    key:"address"
+                },
                 {
                     title: "Post Code",
                     key: "suburb"
@@ -44,27 +49,33 @@ export default class ViewOrderDetail extends React.Component {
                 },
                 {
                     title: "Delivery Preference 1",
-                    key: "delivery_date"
+                    key: "delivery_date",
+                    format:formatDate
                 },
                 {
                     title: "Delivery Preference 2",
-                    key: "delivery_date1"
+                    key: "delivery_date1",
+                    format:formatDate
                 },
                 {
                     title: "Delivery Preference 3",
-                    key: "delivery_date2"
+                    key: "delivery_date2",
+                    format:formatDate
                 },
                 {
                     title: "Time Preference 1",
-                    key: "time_preference1"
+                    key: "time_preference1",
+                    format:formatTime
                 },
                 {
                     title: "Time Preference 2",
-                    key: "time_preference2"
+                    key: "time_preference2",
+                    format:formatTime
                 },
                 {
                     title: "Time Preference 3",
-                    key: "time_preference3"
+                    key: "time_preference3",
+                    format:formatTime
                 },
                 {
                     title: "Time Urgency",
@@ -83,16 +94,18 @@ export default class ViewOrderDetail extends React.Component {
     }
 
     render() {
-        let order=this.props.navigation.getParam("order");
+        let order = this.props.navigation.getParam("order");
         return (
             <AppBackground>
                 <AppHeader/>
-                <SubHeader title="Order Details" iconType="ConcreteASAP" iconName="accepted-order"/>
-                <Content style={[appStyles.bgWhite,appStyles.bottomMarginDefault]}>
-                    <View style={[appStyles.p_5]}>
-                        <TableRow rowData={order["order_concrete"]} rowColumns={this.state.rowColumns}/>
-                    </View>
-                </Content>
+                <ScrollView>
+                    <SubHeader title="Order Details" iconType="ConcreteASAP" iconName="accepted-order"/>
+                    <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault]}>
+                        <View style={[appStyles.p_5]}>
+                            <TableRow rowData={order?.get("order_concrete")} rowColumns={this.state.rowColumns}/>
+                        </View>
+                    </Content>
+                </ScrollView>
             </AppBackground>
         );
     }

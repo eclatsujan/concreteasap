@@ -150,8 +150,8 @@ export default {
 
   // Font
   DefaultFontSize: 15,
-  fontFamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
-  fontSizeBase: 15,
+  fontFamily: platform === PLATFORM.IOS ? 'Arial' : 'Arial',
+  fontSizeBase: 13,
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
   },
@@ -203,7 +203,7 @@ export default {
   iconHeaderSize: platform === PLATFORM.IOS ? 33 : 24,
 
   // InputGroup
-  inputFontSize: PixelRatio.get()<2?13:13,
+  inputFontSize: PixelRatio.get()<2?13:14,
   inputBorderColor: '#14E22A',
   inputSuccessBorderColor: '#2b8339',
   inputErrorBorderColor: '#ed2f2f',

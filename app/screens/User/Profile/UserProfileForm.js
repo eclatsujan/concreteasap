@@ -49,47 +49,38 @@ class UserProfileForm extends React.Component {
         const {handleSubmit} = this.props;
         return (
             <View>
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Company</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>Company</Text>
                 <Field name="company" placeholder="Company" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>ABN</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>ABN</Text>
                 <Field name="abn" placeholder="ABN" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Logo</Text>
-                <Field name="profile_image" placeholder={"profile_image"} component={csImageInput} type={"dropdown"} />
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>Logo</Text>
+                <Field name="profile_image" placeholder={"profile_image"} component={csImageInput} type={"dropdown"}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Title</Text>
-                <Field name="title" placeholder="Title" component={csPicker} type="input"
-                       validate={[formValidation.required]}>
-                    <Picker.Item style={[appStyles.baseFont]} label={"Gender"} value={""}/>
-                    <Picker.Item style={[appStyles.baseFont]} label={"Mr"} value={"Mr"}/>
-                    <Picker.Item style={[appStyles.baseFont]} label={"Mrs"} value={"Mrs"}/>
-                    <Picker.Item style={[appStyles.baseFont]} label={"Miss"} value={"Miss"}/>
-                </Field>
-
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>First Name</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>First Name</Text>
                 <Field name="first_name" placeholder="First Name" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Last Name</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>Last Name</Text>
                 <Field name="last_name" placeholder="Last Name" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Email</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>Email</Text>
                 <Field name="email" placeholder="Email" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>Phone</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>Phone</Text>
                 <Field name="phone_number" placeholder="Phone" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>City</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>City</Text>
                 <Field name="city" placeholder="City" component={csTextBox} type="input"
                        validate={[formValidation.required]}/>
 
-                <Text style={[appStyles.upperCase, appStyles.colorPrimary]}>State</Text>
+                <Text style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont]}>State</Text>
                 <Field name="state" placeholder="State" component={csPicker} type="input"
                        validate={[formValidation.required]}>
                     <Picker.Item style={[appStyles.baseFont]} label={"NSW"} value={"NSW"}/>
@@ -113,7 +104,7 @@ class UserProfileForm extends React.Component {
                     <Col>
                         <View style={[appStyles.w_90, appStyles.flex1, appStyles.selfRight]}>
                             <Button style={[appStyles.flexRow, appStyles.flexCenter]}
-                                    onPress={handleSubmit(this.props.onSubmit)} >
+                                    onPress={handleSubmit(this.props.onSubmit)}>
                                 <Text style={[appStyles.colorBlack, appStyles.txtCenter]}>Save Changes</Text>
                             </Button>
                         </View>

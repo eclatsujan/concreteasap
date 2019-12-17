@@ -11,8 +11,8 @@ export default class ErrorHeader extends React.Component {
     }
 
     render() {
-        if (this.props.error.error_msg === "" || !this.props.error.error_msg) {
-            return (<Text></Text>);
+        if (this.props.error.get("error_msg") === "" || !this.props.error.get("error_msg")) {
+            return null;
         } else {
             return (
                 <Row
@@ -21,7 +21,7 @@ export default class ErrorHeader extends React.Component {
                         <Icon name='close-circle' style={[appStyles.colorWhite]}/>
                     </View>
                     <View>
-                        <Text style={[appStyles.colorWhite]}>{this.props.error.error_msg}</Text>
+                        <Text style={[appStyles.colorWhite]}>{this.props.error.get("error_msg")}</Text>
                     </View>
                 </Row>
             );

@@ -1,47 +1,68 @@
 import {createStackNavigator} from "react-navigation-stack";
 
 //Bid
-import RepViewBids from '../screens/Rep/Bid Order/RepViewBids';
-import OrderBidDetails from '../screens/Rep/Bid Order/OrderBidDetails';
-
-//Current Order Bids
-import CurrentAcceptedOrder from '../screens/Rep/Current Bids/CurrentAcceptedOrder';
-import OrderStatus from '../screens/Rep/Current Bids/OrderStatus';
+import BidOrderList from '../screens/Rep/Bid Orders/BidOrderList';
+import BidOrderDetail from '../screens/Rep/Bid Orders/BidOrderDetail';
+import BidMessageHome from "../screens/Rep/Bid Orders/BidMessageHome";
 
 //Pending Order Request
-import PendingOrderRequest from '../screens/Rep/My Bids/PendingOrderRequest';
-import OrderPendingDetails from '../screens/Rep/My Bids/OrderPendingDetails'
+import PendingBidList from '../screens/Rep/Pending Bids/PendingBidList';
+import PendingBidDetail from '../screens/Rep/Pending Bids/PendingBidDetail'
 
-//Rep Notifications
-import Notifications from '../screens/User/Notification/Notifications';
+//Current Order Bids
+import AcceptedBidList from '../screens/Rep/Accepted Bids/AcceptedBidList';
+import AcceptedBidDetail from '../screens/Rep/Accepted Bids/AcceptedBidDetail';
+import UserDetail from "../screens/User/Contact/UserDetail";
 
-import BidMessageHome from "../screens/Rep/Order/BidMessageHome";
+//Previous Bid
+import PreviousBidList from "../screens/Rep/Previous Orders/PreviousBidList";
+import PreviousBidDetail from "../screens/Rep/Previous Orders/PreviousBidDetail";
 
-export const repAcceptedOrder=createStackNavigator({
-    CurrentAcceptedOrder:CurrentAcceptedOrder,
-    "OrderStatus":OrderStatus,
+import ViewOrderDetail from "../screens/contractor/AllOrders/ViewOrderDetail";
+
+export const repPendingBids= createStackNavigator({
+    "Pending Bid List": PendingBidList,
+    "Pending Bid Detail": PendingBidDetail,
+}, {
+    initialRouteName: 'Pending Bid List',
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
+export const repBidOrders = createStackNavigator({
+    "Bid Order List": BidOrderList,
+    "Bid Order Detail": BidOrderDetail,
+    "Bid Message": BidMessageHome,
+}, {
+    initialRouteName: 'Bid Order List',
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
+export const repAcceptedBids = createStackNavigator({
+    "Accepted Bid List": AcceptedBidList,
+    "Accepted Bid Detail": AcceptedBidDetail,
+    "Rep User Contact Detail": UserDetail,
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
+
+export const repPreviousBids = createStackNavigator({
+    "Previous Bid List":PreviousBidList,
+    "Previous Bid Detail":PreviousBidDetail,
 },{
     headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
-    }});
+    }
+});
 
-export const repViewOrder=createStackNavigator({
-    "View Bids":RepViewBids,
-    // "ViewOrderDetail":ViewOrderDetail,
-    "View Bid Detail":OrderBidDetails,
-    "Bid Message":BidMessageHome,
-},{
-  headerMode: 'none',
-  navigationOptions: {
-      headerVisible: false,
-  }});
 
-export const repPendingOrder=createStackNavigator({
-    "Pending Order":PendingOrderRequest,
-    "Order Pending Details":OrderPendingDetails,
-},{
-  headerMode: 'none',
-  navigationOptions: {
-      headerVisible: false,
-  }});

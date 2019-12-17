@@ -9,16 +9,16 @@ export function showErrorMessage(errorMessage) {
     }
     if (Array.isArray(errorMessage)) {
         return (
-            <View style={{backgroundColor: "red", padding: 2}}>
+            <View style={[appStyles.bgDanger,appStyles.p_5]}>
                 {errorMessage.map((error, index) => {
-                    return <Text style={{color: "#fff"}} key={index}>{error}</Text>
+                    return <Text style={appStyles.colorWhite} key={index}>{error}</Text>
                 })}
             </View>
         );
     } else {
         return (
-            <View style={{backgroundColor: "red", padding: 2}}>
-                <Text style={{color: "#fff"}}>{errorMessage}</Text>
+            <View style={[appStyles.bgDanger,appStyles.p_5]}>
+                <Text style={appStyles.colorWhite}>{errorMessage}</Text>
             </View>
         );
     }
@@ -56,5 +56,5 @@ export function getErrorStyle(condition) {
 }
 
 export function showErrorIcon(condition) {
-    return condition ? <Icon name='close-circle'/> : <Text></Text>;
+    return condition ? <Icon name='close-circle'/> : null;
 }

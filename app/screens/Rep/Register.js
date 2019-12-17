@@ -25,7 +25,7 @@ import {actions} from '../../store';
 
 //Styles
 import {styles} from './styles';
-import {appStyles} from "../assets/app_styles";
+import {appStyles} from '../../../assets/styles/app_styles'
 
 class RegisterRep extends React.Component {
     static navigationOptions = {

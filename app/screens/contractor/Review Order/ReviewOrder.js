@@ -13,9 +13,12 @@ import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
 
 //StyleSheet
-import {appStyles} from "../../assets/app_styles";
+import {appStyles} from "../../../../assets/styles/app_styles";
 import {styles} from '../styles.js';
 import TableRow from "../../../components/Tables/TableRow";
+import {formatDate, formatTime} from "../../../helpers/time";
+
+import * as Immutable from 'immutable';
 
 class ReviewOrder extends React.Component {
 
@@ -23,13 +26,17 @@ class ReviewOrder extends React.Component {
         super(props);
         this.state = {
             "rowColumns": [
+                {key: "address", title: "Address"},
                 {key: "suburb", title: "Post Code"}, {key: "quantity", title: "Quantity"}, {key: "type", title: "Type"},
                 {key: "mpa", title: "MPA"}, {key: "agg", title: "AGG"}, {key: "slu", title: "Slump"},
                 {key: "acc", title: "ACC"}, {key: "placement_type", title: "Placement Type"},
                 {key: "message_required", title: "Message Required"},
-                {key: "delivery_date", title: "Date Preference 1"}, {key: "delivery_date1", title: "Date Preference 2"},
-                {key: "delivery_date2", title: "Date Preference 3"}, {key: "time1", title: "Time Preference 1"},
-                {key: "time2", title: "Time Preference 2"}, {key: "time3", title: "Time Preference 3"},
+                {key: "delivery_date", title: "Date Preference 1", format: formatDate},
+                {key: "delivery_date1", title: "Date Preference 2", format: formatDate},
+                {key: "delivery_date2", title: "Date Preference 3", format: formatDate},
+                {key: "time1", title: "Time Preference 1", format: formatTime},
+                {key: "time2", title: "Time Preference 2", format: formatTime},
+                {key: "time3", title: "Time Preference 3", format: formatTime},
                 {key: "time_difference_deliveries", title: "Time Between  Deliveries"},
                 {key: "urgency", title: "Time Urgency"}, {key: "site_call", title: "On Site/On Call"},
             ]
@@ -37,56 +44,56 @@ class ReviewOrder extends React.Component {
         this.nextActions = this.nextActions.bind(this);
     }
 
-    formatDate(date,timeFormat="DD/MM/YYYY",defaultFormat = "YYYY-MM-DD") {
-        console.log(date);
-        return moment(date,timeFormat).format(defaultFormat).toString();
+    formatDate(date, timeFormat = "DD/MM/YYYY", defaultFormat = "YYYY-MM-DD") {
+        return moment(date, timeFormat).format(defaultFormat).toString();
     }
 
     nextActions(order, special) {
-        let full_order = {};
+        let full_order = Immutable.Map({});
         let order_id = this.props.navigation.getParam("order_id");
-        let timeFormat="DD/MM/YYYY";
-        if(order_id){
-            timeFormat="YYYY-MM-DD";
+        let timeFormat = "DD/MM/YYYY";
+        if (order_id) {
+            timeFormat = "YYYY-MM-DD";
         }
-        full_order["suburb"] = order.suburb;
-        full_order["type"] = order.type;
-        full_order["mpa"] = order.mpa;
-        full_order["agg"] = order.agg;
-        full_order["slump"] = order.slu;
-        full_order["acc"] = order.acc;
-        full_order["placement_type"] = order.placement_type;
-        full_order["quantity"] = order.quantity;
-        full_order["delivery_date"] = this.formatDate(order.delivery_date,timeFormat);
-        full_order["delivery_date1"] = this.formatDate(order.delivery_date1,timeFormat);
-        full_order["delivery_date2"] = this.formatDate(order.delivery_date2,timeFormat);
-        full_order["time_preference1"] = order.time1;
-        full_order["time_preference2"] = order.time2;
-        full_order["time_preference3"] = order.time3;
-        full_order["time_deliveries"] = order.time_difference_deliveries;
-        full_order["urgency"] = order.urgency;
-        full_order["message_required"] = order.message_required;
-        full_order["preference"] = order.site_call;
-        full_order["colours"] = order.colours;
-        // console.log(special);
-        full_order["special_instructions"] = order.message_required === "Yes" ? special["special_instructions"] : "";
-        full_order["delivery_instructions"] = order.message_required === "Yes" ? special["delivery_instructions"] : "";
 
+        full_order=full_order.set("address", order.get("address"));
+        full_order=full_order.set("suburb", order.get("suburb"));
+        full_order=full_order.set("type", order.get("type"));
+        full_order=full_order.set("mpa", order.get("mpa"));
+        full_order=full_order.set("agg", order.get("agg"));
+        full_order=full_order.set("slump", order.get("slu"));
+        full_order=full_order.set("acc", order.get("acc"));
+        full_order=full_order.set("placement_type", order.get("placement_type"));
+        full_order=full_order.set("quantity", order.get("quantity"));
+        full_order=full_order.set("delivery_date", order.get("delivery_date"));
+        full_order=full_order.set("delivery_date1", order.get("delivery_date1"));
+        full_order=full_order.set("delivery_date2", order.get("delivery_date2"));
+        full_order=full_order.set("time_preference1", order.get("time1"));
+        full_order=full_order.set("time_preference2", order.get("time2"));
+        full_order=full_order.set("time_preference3", order.get("time3"));
+        full_order=full_order.set("time_deliveries", order.get("time_difference_deliveries"));
+        full_order=full_order.set("urgency", order.get("urgency"));
+        full_order=full_order.set("message_required", order.get("message_required"));
+        full_order=full_order.set("preference", order.get("site_call"));
+        full_order=full_order.set("colours", order.get("colours"));
 
-        if (order.message_required !== "No") {
-            if(order_id){
+        //Special Instructions
+        full_order=full_order.set("special_instructions", order.get("message_required") === "Yes" ? special.get("special_instructions") : "");
+        full_order=full_order.set("delivery_instructions", order.get("message_required") === "Yes" ? special.get("delivery_instructions") : "");
+
+        if (order.get("message_required") !== "No") {
+            if (order_id) {
                 this.props.navigation.navigate("ModifyReviewInstructions", {
-                    full_order,order_id
+                    full_order, order_id
                 });
-            }
-            else{
+            } else {
                 this.props.navigation.navigate("ReviewInstructions", {
                     full_order
                 });
             }
 
         } else {
-            this.submitForm(full_order,order_id);
+            this.submitForm(full_order.toJS(), order_id);
         }
 
     }
@@ -98,6 +105,7 @@ class ReviewOrder extends React.Component {
         } else {
             this.props.createOrder(order);
         }
+
     }
 
     render() {
@@ -105,10 +113,8 @@ class ReviewOrder extends React.Component {
         const {params} = this.props.navigation.state;
         const order = params ? params.order : null;
         const special = params ? params.special : null;
-        let app = this.props.app.toJS();
-
         return (
-            <AppBackground loading={app.loading}>
+            <AppBackground loading={this.props.app.get("loading")}>
                 <ScrollView>
                     <AppHeader backMenu/>
                     <Content contentContainerStyle={[styles.content]}>
@@ -120,7 +126,7 @@ class ReviewOrder extends React.Component {
                             <Button style={[appStyles.button, appStyles.bgPrimary, appStyles.horizontalCenter]}
                                     onPress={() => this.nextActions(order, special)}>
                                 <Text style={appStyles.colorBlack}>
-                                    {order.message_required === "No" ? "NEXT" : "NEXT"}
+                                    {order.get("message_required") === "No" ? "NEXT" : "NEXT"}
                                 </Text>
                             </Button>
                         </View>

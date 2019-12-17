@@ -10,8 +10,7 @@ import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader'
 
 //StyleSheet
-import {appStyles} from "../../assets/app_styles";
-import {styles} from '../styles.js';
+import {appStyles} from "../../../../assets/styles/app_styles";
 import SpecialOrderForm from "../../../components/contractor/SpecialOrderForm";
 
 class SpecialRequests extends React.Component {
@@ -22,7 +21,6 @@ class SpecialRequests extends React.Component {
     }
 
     handleSubmit(special) {
-        special = special.toJS();
         const {params} = this.props.navigation.state;
         const order = params ? params.order : null;
         if(params.order_id){
@@ -47,7 +45,7 @@ class SpecialRequests extends React.Component {
             /* 2. Read the params from the navigation state */
         return (
             <AppBackground enableKeyBoard>
-                <ScrollView style={appStyles.pb_45}>
+                <ScrollView style={appStyles.pb_45} keyboardShouldPersistTaps={"always"}>
                     <AppHeader backMenu/>
                     <SubHeader iconName="clipboard" title="Special Requests"/>
                     <Content>

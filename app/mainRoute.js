@@ -4,16 +4,21 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 
 
 //contractor
-import {acceptedOrders, calculator, pendingOrder, placeOrderStack,placeOrderDrawerStack} from "./routes/contractor";
+import {
+    acceptedOrders,
+    calculator,
+    pendingOrder,
+    placeOrderStack,
+    placeOrderDrawerStack,
+    dayOfPour, dayofPourStack
+} from "./routes/contractor";
 
 import Notifications from "./screens/User/Notification/Notifications";
 import HomeScreen from "./screens/contractor/Home";
 
 //Rep Navigation
-import {repAcceptedOrder,repViewOrder,repPendingOrder} from "./routes/rep";
+import {repBidOrders,repPendingBids,repAcceptedBids,repPreviousBids} from "./routes/rep";
 import RepHomeScreen from './screens/Rep/RepHomeScreen';
-import RepPastBids from './screens/Rep/Past Bids/RepPastBids';
-import repNotifications from './screens/Rep/Notifications/Notifications'
 
 //General Navigation
 import AuthLoadingScreen from "./screens/auth/AuthLoadingScreen";
@@ -30,9 +35,11 @@ const ContractorDrawer = createDrawerNavigator({
     "Pending Order":pendingOrder,
     "Accepted Order":acceptedOrders,
     "Notifications":Notifications,
+    "Day of Pour":dayOfPour,
     "Calculator":calculator,
     "User Profile":UserProfileStack,
     "Logout":LogoutScreen,
+    dayofPourStack
 },{
     contentComponent: props => <SideBar {...props} />
 });
@@ -40,10 +47,10 @@ const ContractorDrawer = createDrawerNavigator({
 const RepDrawer = createDrawerNavigator({
     //Rep Drawer navigation section
     "Home":RepHomeScreen,
-    "Open Orders":repViewOrder,
-    "Pending Rep Orders":repPendingOrder,
-    "Current Orders":repAcceptedOrder,
-    "Past Orders":RepPastBids,
+    "My Bids":repPendingBids,
+    "Order Quote Request Board":repBidOrders,
+    "Accepted Bids":repAcceptedBids,
+    "Previous Bids":repPreviousBids,
     "Rep Notifications":Notifications,
     "User Profile":UserProfileStack,
     "Logout":LogoutScreen,

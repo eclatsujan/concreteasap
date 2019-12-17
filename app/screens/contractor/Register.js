@@ -20,7 +20,7 @@ import {actions} from '../../store';
 
 //Stylesheets
 import {styles} from './styles';
-import {appStyles} from '../assets/app_styles';
+import {appStyles} from '../../../assets/styles/app_styles'
 
 
 class RegisterContractor extends React.Component {

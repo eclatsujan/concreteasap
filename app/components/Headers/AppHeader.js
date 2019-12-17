@@ -1,6 +1,6 @@
 import React from "react";
-import {Image, Platform, StatusBar,TouchableHighlight} from "react-native";
-import {Button, Icon, Left, Body, Right, Header, View} from "native-base";
+import {Image, TouchableWithoutFeedback} from "react-native";
+import {Icon, View} from "native-base";
 import navigationHelper from "../../helpers/navigationHelper";
 
 import {appStyles} from "../../../assets/styles/app_styles";
@@ -12,11 +12,11 @@ export default class AppHeader extends React.Component {
     }
 
     customMenu() {
-        return this.props["backMenu"] ? <TouchableHighlight onPress={() => navigationHelper.goBack()}>
+        return this.props["backMenu"] ? <TouchableWithoutFeedback onPress={() => navigationHelper.goBack()}>
             <Icon name="arrow-back" style={appStyles.colorPrimary}/>
-        </TouchableHighlight> : <TouchableHighlight onPress={() => navigationHelper.openDrawer()}>
+        </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => navigationHelper.openDrawer()}>
             <Icon name='menu' style={appStyles.colorPrimary}/>
-        </TouchableHighlight>;
+        </TouchableWithoutFeedback>;
     }
 
     render() {
@@ -27,9 +27,9 @@ export default class AppHeader extends React.Component {
                 </View>
                 <Image source={require("../../../assets/Logo18.png")} style={[appStyles.appHeader]}/>
                 <View style={appStyles.rightContainer}>
-                    <TouchableHighlight onPress={() => navigationHelper.navigate("My Profile")}>
+                    <TouchableWithoutFeedback onPress={() => navigationHelper.navigate("My Profile")}>
                         <Icon name='person' style={[appStyles.colorPrimary]}/>
-                    </TouchableHighlight>
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
         );

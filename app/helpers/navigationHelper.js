@@ -11,27 +11,34 @@ function setTopLevelNavigator(navigatorRef) {
 }
 
 function navigate(routeName, params) {
-
     _navigator.dispatch(
         NavigationActions.navigate({
-            routeName:routeName,
-            params,
+            routeName: routeName,
+            params:params,
         })
     );
 }
 
-export function resetHomeNavigation(routeName, params){
+export function resetHomeNavigation(routeName, params) {
     // console.log(NavigationActions);
-    const resetActions=NavigationActions.reset({
-        index:1,
+    const resetActions = NavigationActions.reset({
+        index: 1,
         // key:"Accepted Orders",
-        actions:[NavigationActions.navigate({routeName:"Home"}),NavigationActions.navigate({
+        actions: [NavigationActions.navigate({routeName: "Home"}), NavigationActions.navigate({
             routeName,
             params
         })]
     });
 
     _navigator.dispatch(resetActions);
+}
+
+export function resetNavigation(routeName,key=null,index=0,params={}) {
+    _navigator.dispatch(StackActions.reset({
+        index: index,
+        key: key,
+        actions: [NavigationActions.navigate({routeName: routeName,params})]
+    }))
 }
 
 function goBack() {
@@ -53,5 +60,6 @@ export default {
     setTopLevelNavigator,
     openDrawer,
     resetHomeNavigation,
+    resetNavigation,
     goBack
 };

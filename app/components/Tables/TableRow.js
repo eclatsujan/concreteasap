@@ -1,6 +1,6 @@
 import React from "react";
 import {Row, Col, View, Text} from "native-base";
-import {getNested, isBoolean, boolToAffirmative} from "../../helpers/app";
+import {getNested, isBoolean, boolToAffirmative, getNestedImmutable} from "../../helpers/app";
 
 import {appStyles} from "../../../assets/styles/app_styles";
 
@@ -17,26 +17,36 @@ export default class TableRow extends React.Component {
         } catch (e) {
             console.log(e);
         }
+    }
 
+    formatValue(value,format){
+        if(format){
+            value=format(value);
+        }
+        return value;
     }
 
     renderRow(row) {
         return (
             <View style={[appStyles.flex1]}>
                 {this.props["rowColumns"].map((column, index) => {
-                    let columnValue = getNested(row, column["key"]);
+                    // let columnValue = getNested(row, column["key"]);
+                    let columnValue=getNestedImmutable(row,column["key"]);
+                    // console.log(columnValue);
                     return (
-                        <Row key={index} style={[appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
+                        columnValue?<Row key={index} style={[appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
                             <Col style={appStyles.w_65}>
-                                <Text style={[appStyles.upperCase,appStyles.baseSmallFontSize]}>{column["title"]}</Text>
+                                <Text style={[appStyles.upperCase,appStyles.baseSmallFontSize,appStyles.boldFont]}>
+                                    {column["title"]}
+                                </Text>
                             </Col>
                             <Col style={appStyles.w_35}>
                                 <Text style={[appStyles.arialFont,appStyles.baseSmallFontSize]}>
-                                    {!isBoolean(columnValue) ? columnValue : boolToAffirmative(columnValue)}
+                                    {this.formatValue(columnValue,column["format"])}
                                 </Text>
                             </Col>
                         </Row>
-                    )
+                            :null);
                 })}
             </View>
         );

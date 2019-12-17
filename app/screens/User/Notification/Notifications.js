@@ -1,10 +1,9 @@
 import * as React from 'react';
-import {ScrollView, TouchableHighlight} from 'react-native';
-import {View, Button, Text, Content, Icon, Footer, FooterTab, Row, Col} from 'native-base';
+import {ScrollView, Animated} from 'react-native';
+import {View, Content} from 'native-base';
 
 import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
-import moment from "moment";
 
 //styles
 import {styles} from '../../contractor/styles.js';
@@ -16,22 +15,42 @@ import AppBackground from '../../../components/AppBackground';
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from "../../../components/Headers/SubHeader";
 import EmptyTable from "../../../components/Tables/EmptyTable";
-import {not} from "react-native-reanimated";
+import {notifications} from "../../../store/modules/notifications";
+import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
+import AppFooter from "../../../components/Footer/AppFooter";
+
+import Notification from '../../../components/User/Notification'
 
 class Notifications extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            fadeValue: new Animated.Value(0),
             isLoading: false,
-            emptyMessage: "There are no new Notifications right now."
+            emptyMessage: "There are no new Notifications right now.",
+            transformScale: new Animated.Value(1)
         };
+
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            // this.setState({loading: true});
+            this.props.appLoading();
             this.props.getNotifications();
+            this.interval = setInterval(this.props.getNotifications, 4000);
         });
+
+        this.blurListener = this.props.navigation.addListener('didBlur', () => {
+            clearInterval(this.interval);
+        });
+
+        this.markAsRead = this.markAsRead.bind(this);
+    }
+
+    componentWillUnmount() {
+        this.focusListener.remove();
+        this.blurListener.remove();
     }
 
     componentDidMount() {
+        this.props.appLoading();
         this.props.getNotifications();
     }
 
@@ -39,56 +58,39 @@ class Notifications extends React.Component {
         this.props.markAsRead(notification_id);
     }
 
+    onRoute(notification) {
+        if (!notification["route"] && !notification["params"]) return;
+        let params = notification["params"];
+        this.props.navigation.navigate(notification["route"], params);
+    }
+
     displayNotifications(notifications) {
-        let instance = this;
-        return !notifications["notifications"] ? null :
-            notifications["notifications"].length === 0 ?
-                <EmptyTable message={this.state.emptyMessage}/> :
-                notifications["notifications"].map(function (data, index) {
-                    return (
-                        <Row key={index} style={[appStyles.bgNotification, appStyles.p_15, appStyles.bottomMarginDefault]}>
-                            <Col style={appStyles.w_90}>
-                                <Text style={appStyles.arialFont}>
-                                    {data["notification"]["message"]}
-                                </Text>
-                                <Text style={appStyles.arialFont}>
-                                    ({moment(data["date"]).format("YYYY-MM-DD").toString()})
-                                </Text>
-                            </Col>
-                            <Col
-                                style={[appStyles.w_10, appStyles.verticalCenter, appStyles.flex1, appStyles.verticalSelfCenter]}>
-                                <TouchableHighlight onPress={() => {
-                                    instance.markAsRead(data["id"])
-                                }}>
-                                    <Icon type="FontAwesome5" name="times" style={{fontSize:15}}/>
-                                </TouchableHighlight>
-                            </Col>
-                        </Row>
-                    )
-                });
+        return notifications.get("notifications").size === 0 ?
+            <EmptyTable message={this.state.emptyMessage}/> :
+            notifications.get("notifications").map((data, index) => {
+                return (
+                    <Notification style={[appStyles.bgWhite, {opacity: this.state.fadeValue}]} key={index}
+                                  markAsRead={this.markAsRead} data={data} onRoute={this.onRoute}/>
+                )
+            })
+
     }
 
     render() {
-        let app = this.props.app.toJS();
-        let notifications = this.props.notifications.toJS();
-        console.log(notifications);
+        let notifications = this.props.notifications;
         return (
-            <AppBackground loading={app.loading}>
+            <AppBackground>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Notifications" iconType="ConcreteASAP" iconName="bell"/>
                     <Content contentContainerStyle={styles.content}>
-                        <View>{this.displayNotifications(notifications)}</View>
+                        <View>
+                            {this.props.app.get("loading") ? <SkeletonLoading/>
+                                : this.displayNotifications(notifications)}
+                        </View>
                     </Content>
                 </ScrollView>
-                <Footer style={{marginBottom: 30}}>
-                    <FooterTab>
-                        <Button style={[appStyles.button, appStyles.buttonPrimary]}
-                                onPress={() => this.props.navigation.navigate("Home")}>
-                            <Text style={appStyles.buttonBlack}>Back to Home</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
+                <AppFooter/>
             </AppBackground>
         );
     }
@@ -96,6 +98,9 @@ class Notifications extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        appLoading: () => {
+            return dispatch(actions.app.loading(true));
+        },
         getNotifications: () => {
             return dispatch(actions.notifications.get())
         },

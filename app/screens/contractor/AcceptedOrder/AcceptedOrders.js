@@ -18,8 +18,11 @@ import {appStyles} from "../../../../assets/styles/app_styles";
 import {actions} from "../../../store/modules";
 import HomeButton from "../../../components/Button/HomeButton";
 import ButtonIcon from "../../../components/Button/ButtonIcon";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 
 class AcceptedOrders extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -28,76 +31,53 @@ class AcceptedOrders extends React.Component {
             rowHeaders: ['Order No.', 'Status'],
             rowColumns: ["id", "status"],
         };
+
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            // this.setState({loading: true});
-            this.props.getAcceptedOrder();
+            this.interval = setInterval(this.props.getAcceptedOrder, 4000);
         });
-        this._alertIndex=this._alertIndex.bind(this);
+
+        this.blurListener = this.props.navigation.addListener('didBlur', () => {
+            clearInterval(this.interval);
+        });
+
+        this._alertIndex = this._alertIndex.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.getAcceptedOrder();
     }
 
     componentWillUnmount() {
-        // Remove the event listener
         this.focusListener.remove();
+        this.blurListener.remove();
     }
 
     _alertIndex(order) {
         // console.log(order["id"]);
-        this.props.navigation.navigate("DayOfPour",{
-            order_id:order["id"]
+        this.props.navigation.navigate("DayOfPour", {
+            order_id: order.get("id"),
+            order_type:"accepted_orders"
         });
     }
 
-    displayTableHeader() {
-        return (
-            <Row style={[appStyles.borderBottom, appStyles.paddingYDefault]}>
-                {this.state.tableHead.map((rowData, index) => (
-                    <Col key={index}>
-                        <Text style={[appStyles.upperCase,appStyles.baseSmallFontSize]}>{rowData}</Text>
-                    </Col>
-                ))}
-            </Row>
-        );
-    }
-
-    displayTableData() {
-        let order=this.props["order"].toJS();
-        return order.accepted_orders.map((rowData, index) => (
-            <Row key={index} style={[appStyles.borderBottom, appStyles.py_10]}>
-                <Col>
-                    <Text style={[appStyles.baseSmallFontSize,appStyles.arialFont]}>
-                        {rowData.id}
-                    </Text>
-                </Col>
-                <Col>
-                    <Text style={[appStyles.baseSmallFontSize,appStyles.arialFont]}>{rowData.status}</Text>
-                </Col>
-                <Col style={[appStyles.verticalCenter,appStyles.baseSmallFontSize]}>
-                    <View>
-                        <ButtonIcon small btnText={"View"} onPress={()=>{
-                            this._alertIndex(rowData.id)
-                        }} />
-                    </View>
-
-                </Col>
-            </Row>
-        ));
-    }
-
     render() {
-        let order=this.props["order"].toJS();
+        let app = this.props["app"];
+        let order = this.props["order"];
+        let accepted_order = order?.get("accepted_orders")?.get("data");
         return (
-            <AppBackground alignTop noKeyBoard>
+            <AppBackground alignTop noKeyBoard >
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"/>
                     <Content style={appStyles.bottomMarginDefault}>
                         <View style={[appStyles.bgWhite, appStyles.paddingAppDefault]}>
-                            <CustomTable bgStyle={[appStyles.bgWhite, appStyles.p_15]}
-                                         rowHeaders={this.state.rowHeaders}
-                                         rowData={order["accepted_orders"]} rowColumns={this.state.rowColumns}
-                                         colButtonComponent={this.showComponentButton}
-                                         customRowComponent={this.showCustomRow}
-                                         buttonText="View" onPress={this._alertIndex}/>
+                            {app.get("loading") ? <SkeletonLoading/> :
+                                <CustomTable bgStyle={[appStyles.bgWhite]}
+                                             rowHeaders={this.state.rowHeaders}
+                                             rowData={accepted_order} rowColumns={this.state.rowColumns}
+                                             colButtonComponent={this.showComponentButton}
+                                             customRowComponent={this.showCustomRow}
+                                             buttonText="View" onPress={this._alertIndex}/>}
                         </View>
                     </Content>
                 </ScrollView>
@@ -119,13 +99,16 @@ const mapDispatchToProps = (dispatch) => {
         getAcceptedOrder: () => {
             return dispatch(actions.order.getContractorAcceptedOrder())
         },
+        appLoading: () =>{
+            return dispatch(actions.app.loading());
+        }
     }
 };
 
 const mapStateToProps = (state) => {
     return {
-        order:state.get("order"),
-        app:state.get("app")
+        order: state.get("order"),
+        app: state.get("app")
     };
 };
 

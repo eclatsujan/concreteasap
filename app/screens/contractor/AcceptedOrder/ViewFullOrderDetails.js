@@ -6,6 +6,8 @@ import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
 import {appStyles} from "../../../../assets/styles/app_styles";
 import TableRow from "../../../components/Tables/TableRow";
+import {formatDate, formatTime} from "../../../helpers/time";
+import {boolToAffirmative} from "../../../helpers/app";
 
 
 export default class ViewFullOrderDetails extends React.Component {
@@ -13,90 +15,26 @@ export default class ViewFullOrderDetails extends React.Component {
         super(props);
         this.state = {
             rowColumns: [
-                {
-                    title: "Post Code",
-                    key: "suburb"
-                },
-                {
-                    title: "Quantity",
-                    key: "quantity"
-                },
-
-                {
-                    title: "Type",
-                    key: "type"
-                },
-                {
-                    title: "MPA",
-                    key: "mpa"
-                },
-                {
-                    title: "Slump",
-                    key: "slump"
-                },
-                {
-                    title: "ACC",
-                    key: "acc"
-                },
-                {
-                    title: "Placement Type",
-                    key: "placement_type"
-                },
-                {
-                    title: "Delivery Preference 1",
-                    key: "delivery_date"
-                },
-                {
-                    title: "Delivery Preference 2",
-                    key: "delivery_date1"
-                },
-                {
-                    title: "Delivery Preference 3",
-                    key: "delivery_date2"
-                },
-                {
-                    title: "Time Preference 1",
-                    key: "time_preference1"
-                },
-                {
-                    title: "Time Preference 2",
-                    key: "time_preference2"
-                },
-                {
-                    title: "Time Preference 3",
-                    key: "time_preference3"
-                },
-                {
-                    title: "Time Urgency",
-                    key: "urgency"
-                },
-                {
-                    title: "Message Required",
-                    key: "message_required"
-                },
-                {
-                    title: "On Site / On Call",
-                    key: "preference"
-                },
+                {title: "Bid Date", key: "bids[0].date_delivery", format: formatDate},
+                {title: "Bid Time", key: "bids[0].time_delivery", format: formatTime},
+                {title: "Address", key: "order_concrete.address"}, {title: "Post Code", key: "order_concrete.suburb"},
+                {title: "Quantity", key: "order_concrete.quantity"}, {title: "Type", key: "order_concrete.type"},
+                {title: "MPA", key: "order_concrete.mpa"}, {title: "Slump", key: "order_concrete.slump"},
+                {title: "ACC", key: "order_concrete.acc"},
+                {title: "Placement Type", key: "order_concrete.placement_type"},
+                {key: "order_concrete.delivery_date", title: "Date Preference 1", format: formatDate},
+                {key: "order_concrete.delivery_date1", title: "Date Preference 2", format: formatDate},
+                {key: "order_concrete.delivery_date2", title: "Date Preference 3", format: formatDate},
+                {key: "order_concrete.time_preference1", title: "Time Preference 1", format: formatTime},
+                {key: "order_concrete.time_preference2", title: "Time Preference 2", format: formatTime},
+                {key: "order_concrete.time_preference3", title: "Time Preference 3", format: formatTime},
+                {title: "Time Urgency", key: "order_concrete.urgency"},
+                {title: "Message Required", key: "order_concrete.message_required", format: boolToAffirmative},
+                {title: "On Site / On Call", key: "order_concrete.preference"}, {title: "Colour", key: "colours"},
+                {title: "Special Instructions", key: "order_concrete.special_instructions"},
+                {title: "Delivery Instructions", key: "order_concrete.delivery_instructions"}
             ]
         }
-    }
-
-    nextActions(formData, special) {
-        if (formData.message_required !== "No") {
-            this.props.navigation.navigate("ReviewInstructions", {formData: formData, special: special})
-        } else {
-
-        }
-    }
-
-    displayRow(title, value) {
-        return (
-            <Row>
-                <Col><Text>{title}</Text></Col>
-                <Col><Text>{value}</Text></Col>
-            </Row>
-        )
     }
 
     render() {
@@ -108,9 +46,9 @@ export default class ViewFullOrderDetails extends React.Component {
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Active Order" iconType="ConcreteASAP" iconName="accepted-order"/>
-                    <Content style={[appStyles.bgWhite,appStyles.bottomMarginDefault]}>
+                    <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault]}>
                         <View style={[appStyles.p_5]}>
-                            <TableRow rowData={order["order_concrete"]} rowColumns={this.state.rowColumns}/>
+                            <TableRow rowData={order} rowColumns={this.state.rowColumns}/>
                         </View>
                     </Content>
                 </ScrollView>

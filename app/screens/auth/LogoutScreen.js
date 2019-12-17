@@ -1,47 +1,54 @@
 import * as React from 'react';
-import { ActivityIndicator,StatusBar,Text, View, TextInput, StyleSheet, Label, Button } from 'react-native';
+import {ActivityIndicator, StatusBar, View} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import {userService} from '../../services/userService';
 
-import { actions, States } from '../../store';
+import {actions} from '../../store';
 
 class LogoutScreen extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-  }
+    }
 
-  componentWillMount() {
-    this._logout();
-  }
+    componentWillMount() {
+        this._logout();
+    }
 
-  async _logout() {
-    await this.props.doLogout();
-    await userService.removeUserDeviceId();
-    await SecureStore.deleteItemAsync("user_token");
-    await SecureStore.deleteItemAsync("user_role");
-    this.props.navigation.navigate('AuthLoading');
-  }
+    async _logout() {
+        try {
+            await this.props.doLogout();
+            await userService.removeUserDeviceId();
+            await SecureStore.deleteItemAsync("user_token");
+            await SecureStore.deleteItemAsync("user_role");
+            this.props.navigation.navigate('AuthLoading');
+        } catch (err) {
+            await SecureStore.deleteItemAsync("user_token");
+            await SecureStore.deleteItemAsync("user_role");
+            this.props.navigation.navigate('AuthLoading');
+        }
 
-  render() {
-    return (
-        <View>
-          <ActivityIndicator />
-          <StatusBar barStyle="default" />
-        </View>
-    );
-  }
+    }
+
+    render() {
+        return (
+            <View>
+                <ActivityIndicator/>
+                <StatusBar barStyle="default"/>
+            </View>
+        );
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    doLogout: () => {
-      return dispatch(actions.app.loading(false))
-    },
-  }
+    return {
+        doLogout: () => {
+            return dispatch(actions.app.loading(false))
+        },
+    }
 }
 
-export default connect(null,mapDispatchToProps)(LogoutScreen);
+export default connect(null, mapDispatchToProps)(LogoutScreen);

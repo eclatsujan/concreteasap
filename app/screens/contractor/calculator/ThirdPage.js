@@ -7,7 +7,7 @@ import CalculatorTab from '../../../components/CalculatorTab'
 
 //styles
 import {styles} from '../styles.js';
-import {appStyles} from "../../assets/app_styles";
+import {appStyles} from "../../../../assets/styles/app_styles";
 import SubHeader from "../../../components/Headers/SubHeader";
 
 
@@ -34,23 +34,27 @@ export default class ThirdPage extends React.Component {
     onPressButton() {
         let total;
 
-        let diameter = parseFloat(this.state.first) / 1000.0;
-        let height = parseFloat(this.state.second);
+        let height = parseFloat(this.state.first);
+        let diameter = parseFloat(this.state.second);
         let quantity = parseFloat(this.state.third);
 
-        let final_value = quantity * height * (diameter / 2) * (diameter / 2) * Math.PI;
-        total = final_value;
+        let area=Math.pow((diameter / 2),2) * Math.PI;
+
+        total =  ((height * area))*quantity;
+
+        total=total.toFixed(2).toString();
         this.setState({total: total});
     }
 
     render() {
-
+        let backAction=this.props.navigation.getParam("backAction");
+        let backRoute="PlaceOrderRequest";
         return (
             <AppBackground enableKeyBoard>
                 <AppHeader/>
                 <Content>
                     <SubHeader iconType="ConcreteASAP" iconName="calculators" title="Calculator"/>
-                    <CalculatorTab thirdButton/>
+                    <CalculatorTab thirdButton backAction={backAction} backRoute={backRoute}/>
                     <Form>
                         <Item style={[appStyles.bgWhite, appStyles.marginXDefault,appStyles.my_5]} regular>
                             <Input placeholder="Height(m)" value={this.state.first} style={appStyles.baseFont}
@@ -71,11 +75,26 @@ export default class ThirdPage extends React.Component {
                             <Text style={{fontSize: 20, fontWeight: 'bold'}}>{this.state.total}</Text>
                         </View>
                         <View style={appStyles.my_5}>
-                            <Button style={[appStyles.button]} primary
-                                    onPress={this.onPressButton}><Text> Calculate </Text></Button>
+                            <Button style={[appStyles.button, appStyles.justifyItemsCenter]} primary
+                                    onPress={this.onPressButton}>
+                                <Text style={appStyles.colorBlack}>Calculate</Text>
+                            </Button>
                         </View>
+                        {backAction?<View style={appStyles.my_5}>
+                            <Button style={[appStyles.button, appStyles.justifyItemsCenter]}
+                                    onPress={()=>{
+                                        this.props.navigation.navigate(backRoute,{
+                                            total_quantity:this.state.total
+                                        });
+                                    }}>
+                                <Text style={appStyles.colorBlack}>{"Place Order with Total"}</Text>
+                            </Button>
+                        </View>:null}
                         <View style={appStyles.my_5}>
-                            <Button danger onPress={this.clear}><Text> Clear </Text></Button>
+                            <Button style={[appStyles.button, appStyles.justifyItemsCenter]} danger
+                                    onPress={this.clear}>
+                                <Text style={appStyles.colorBlack}>Clear</Text>
+                            </Button>
                         </View>
                     </Form>
                 </Content>

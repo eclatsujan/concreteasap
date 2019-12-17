@@ -54,7 +54,7 @@ export default {
   badgePadding: platform === PLATFORM.IOS ? 3 : 0,
 
   // Button
-  buttonFontFamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
+  buttonFontFamily: platform === PLATFORM.IOS ? 'Arial' : 'Arial',
   buttonDisabledBg: '#b5b5b5',
   buttonPadding: 6,
   buttonDefaultActiveOpacity: 0.5,
@@ -172,7 +172,7 @@ export default {
 
   // Font
   DefaultFontSize: 16,
-  fontFamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
+  fontFamily: platform === PLATFORM.IOS ? 'Arial' : 'Arial',
   fontSizeBase: 15,
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
@@ -299,7 +299,7 @@ export default {
   },
 
   // Title
-  titleFontfamily: platform === PLATFORM.IOS ? 'Hancock' : 'Hancock',
+  titleFontfamily: platform === PLATFORM.IOS ? 'Arial' : 'Arial',
   titleFontSize: platform === PLATFORM.IOS ? 17 : 19,
   subTitleFontSize: platform === PLATFORM.IOS ? 11 : 14,
   subtitleColor: platform === PLATFORM.IOS ? '#8e8e93' : '#FFF',

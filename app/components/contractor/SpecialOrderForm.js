@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Button, Content, Text, View} from "native-base";
-import {appStyles} from "../../screens/assets/app_styles";
+import {Button, Text, View} from "native-base";
+import {appStyles} from "../../../assets/styles/app_styles";
 import {Field, reduxForm} from "redux-form/lib/immutable";
 import csTextArea from "../Forms/csTextArea";
 import {formValidation} from "../../helpers/validation";
@@ -17,12 +17,12 @@ class SpecialOrderForm extends React.Component {
         return (
             <View>
                 <View style={appStyles.my_5}>
-                    <Text style={[appStyles.baseFont, appStyles.colorPrimary]}>Special Instructions</Text>
+                    <Text style={[appStyles.boldFont, appStyles.colorPrimary]}>Special Instructions</Text>
                     <Field name="special_instructions" rowSpan={5} component={csTextArea} type="text"
                            validate={[formValidation.required]}/>
                 </View>
                 <View style={appStyles.my_5}>
-                    <Text style={[appStyles.baseFont, appStyles.colorPrimary]}>Delivery Instructions</Text>
+                    <Text style={[appStyles.boldFont, appStyles.colorPrimary]}>Delivery Instructions</Text>
                     <Field name="delivery_instructions" rowSpan={5} component={csTextArea} type="text"
                            validate={[formValidation.required]}/>
                 </View>

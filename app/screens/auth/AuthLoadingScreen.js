@@ -7,7 +7,7 @@ import OneSignal from 'react-native-onesignal';
 import { connect } from 'react-redux';
 import { actions, States } from '../../store';
 
-import {appStyles} from '../assets/app_styles'
+import {appStyles} from '../../../assets/styles/app_styles'
 
 import {userService} from '../../services/userService';
 
@@ -27,7 +27,7 @@ class AuthLoadingScreen extends React.Component {
 
     componentDidMount(){
         try{
-            this._bootstrapAsync().then((res)=>{console.log(res)});
+            this._bootstrapAsync().then((res)=>{});
         }
         catch(err) {
             this.props.navigation.navigate('Auth');

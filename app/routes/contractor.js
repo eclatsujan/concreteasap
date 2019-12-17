@@ -39,15 +39,34 @@ import ModifyOrderRequest from "../screens/contractor/Modify Order/ModifyOrderRe
 import ModifyAdditionalRequest from "../screens/contractor/Modify Order/ModifyAdditionalRequest";
 
 //User Profile
-import OrderReview from "../screens/contractor/Confirm Order/OrderReview";
+import ConfirmReview from "../screens/contractor/Confirm Order/ConfirmReview";
+import UserDetail from "../screens/User/Contact/UserDetail";
+
+//Day Of Pour
+import pourDayList from "../screens/contractor/Day of Pour/pourDayList";
+import pourDayDetail from "../screens/contractor/Day of Pour/pourDayDetail";
+
+
+export const calculator = createStackNavigator({
+    //calculator
+    firstCalculator: FirstPage,
+    secondCalculator: SecondPage,
+    thirdCalculator: ThirdPage,
+    fourthCalculator: FourthPage,
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
 
 export const placeOrderStack = createStackNavigator({
         PlaceOrderRequest: PlaceOrderRequest,
+        orderCalculator:calculator,
         "Place Order Additional Request": PlaceOrderAdditionalRequest,
         SpecialRequests: SpecialRequests,
         ReviewOrder: ReviewOrder,
         ReviewInstructions: ReviewInstructions,
-        ViewOrderHome: ViewOrderHome,
     },
     {
         headerMode: 'none',
@@ -59,7 +78,37 @@ export const placeOrderStack = createStackNavigator({
 
 export const placeOrderDrawerStack = createStackNavigator({
     PlaceOrderLanding: PlaceOrderLanding,
-    "Place Order Request": placeOrderStack
+    "Place Order Requests": placeOrderStack,
+    ViewOrderHome: ViewOrderHome,
+}, {
+    headerMode: 'none',
+    initialRouteName: 'PlaceOrderLanding',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
+export const pendingOrder = createStackNavigator({
+        ViewOrderBids: ViewOrderBids,
+        ViewBids: ViewBids,
+        OrderBidStatus: OrderBidStatus,
+        "ViewOrderDetail": ViewOrderDetail
+    },
+    {
+        headerMode: 'none',
+        initialRouteKey: "ViewOrderBids",
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
+export const modifyOrder = createStackNavigator({
+    ModifyOrder: ModifyOrderRequest,
+    ModifyAdditionalRequest: ModifyAdditionalRequest,
+    ModifySpecialRequests: SpecialRequests,
+    ModifyReviewOrder: ReviewOrder,
+    ModifyReviewInstructions: ReviewInstructions,
 }, {
     headerMode: 'none',
     navigationOptions: {
@@ -67,52 +116,37 @@ export const placeOrderDrawerStack = createStackNavigator({
     }
 });
 
-export const pendingOrder = createStackNavigator({
-        "View Order Bids": ViewOrderBids,
-        ViewBids: ViewBids,
-        OrderBidStatus: OrderBidStatus,
-        "ViewOrderDetail":ViewOrderDetail
-    },
-    {
-        headerMode: 'none',
-        navigationOptions: {
-            headerVisible: false,
-        }
-    }
-);
-
-export const modifyOrder=createStackNavigator({
-    ModifyOrder: ModifyOrderRequest,
-    ModifyAdditionalRequest: ModifyAdditionalRequest,
-    ModifySpecialRequests:SpecialRequests,
-    ModifyReviewOrder: ReviewOrder,
-    ModifyReviewInstructions: ReviewInstructions,
-},{
+export const acceptedOrders = createStackNavigator({
+    AcceptedOrders: AcceptedOrders,
+}, {
     headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
     }
 });
 
-export const acceptedOrders = createStackNavigator({
-        AcceptedOrders: AcceptedOrders,
-        OrderReview: OrderReview,
+export const dayofPourStack = createStackNavigator({
         DayOfPour: DayOfPour,
         ViewFullOrderDetails: ViewFullOrderDetails,
-        modifyOrder:modifyOrder
+        modifyOrder,
+        ConfirmReview,
+        "User Contact Detail": UserDetail,
     },
     {
         headerMode: 'none',
         navigationOptions: {
             headerVisible: false,
+            drawerLabel: () => null
         }
     }
 );
 
-export const calculator = createSwitchNavigator({
-    //calculator
-    first: FirstPage,
-    second: SecondPage,
-    third: ThirdPage,
-    fourth: FourthPage,
+
+export const dayOfPour = createStackNavigator({
+    pourDayList,
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
 });

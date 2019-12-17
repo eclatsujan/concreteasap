@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native';
-import {View, Button, Text, Content, Row, Col, Radio, Right, Left} from 'native-base';
+import {View, Button, Text, Content, Row, Col, Radio} from 'native-base';
 
 import {styles} from '../styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
@@ -11,6 +11,8 @@ import SubHeader from '../../../components/Headers/SubHeader'
 import TableRow from "../../../components/Tables/TableRow";
 import {connect} from "react-redux";
 import {actions} from "../../../store/modules";
+import {boolToAffirmative} from "../../../helpers/app";
+import {formatDate, formatTime} from "../../../helpers/time";
 
 
 class OrderBidStatus extends React.Component {
@@ -19,51 +21,20 @@ class OrderBidStatus extends React.Component {
         this.state = {
             payment_method: "COD",
             rowColumns: [
-                {title: "Post-Code", key: "suburb"},
-                {
-                    title: "Type",
-                    key: "type"
-                },
-                {
-                    title: "MPA",
-                    key: "mpa"
-                },
-                {
-                    title: "Slump",
-                    key: "slump"
-                },
-                {
-                    title: "Additives",
-                    key: "acc"
-                },
-                {
-                    title: "Placement Type",
-                    key: "placement_type"
-                },
-                {
-                    title: "delivery_date",
-                    key: "delivery_date"
-                },
-                {
-                    title: "Time Preferences 1",
-                    key: "time_preference1"
-                },
-                {
-                    title: "Time Preferences 2",
-                    key: "time_preference2"
-                },
-                {
-                    title: "Time Preferences 3",
-                    key: "time_preference3"
-                },
-                {
-                    title: "Time Deliveries",
-                    key: "urgency"
-                },
-                {
-                    title: "Message Required",
-                    key: "message_required"
-                }
+                {title: "BID Date", key: "bid.date_delivery", format: formatDate},
+                {title: "BID Time", key: "bid.time_delivery", format: formatTime},
+                {title: "Price M3", key: "bid.price"},
+                {title: "Quantity", key: "order_concrete.quantity"},
+                {title: "Total Price", key: "total"},
+                {title: "Address", key: "order_concrete.address"},
+                {title: "Post-Code", key: "order_concrete.suburb"},
+                {title: "Type", key: "order_concrete.type"},
+                {title: "MPA", key: "order_concrete.mpa"},
+                {title: "Slump", key: "order_concrete.slump"},
+                {title: "Additives", key: "order_concrete.acc"},
+                {title: "Placement Type", key: "order_concrete.placement_type"},
+                {title: "Time Deliveries", key: "order_concrete.urgency"},
+                {title: "Message Required", key: "order_concrete.message_required", format: boolToAffirmative}
             ]
         };
         this.submitBid = this.submitBid.bind(this);
@@ -76,20 +47,24 @@ class OrderBidStatus extends React.Component {
 
     render() {
         /* 2. Read the params from the navigation state */
-        const {params} = this.props.navigation.state;
-        const order = params ? params.order : null;
+        const order = this.props.navigation.getParam("order");
+        let bid_id = this.props.navigation.getParam("bid_id");
+        let bid = order?.get("bids").find((bid) => bid.get("id") === bid_id);
+        let full_order = order.set("bid", bid);
+        full_order = full_order.set("total", parseFloat(bid.get("price")) * parseInt(order.get("order_concrete").get("quantity")));
+
         return (
             <AppBackground>
                 <AppHeader/>
                 <ScrollView>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="Order Bid Status"/>
                     <Content>
-                        <View style={[appStyles.bgWhite,appStyles.p_10]}>
-                            <TableRow rowData={order["order_concrete"]} rowColumns={this.state.rowColumns}/>
+                        <View style={[appStyles.bgWhite, appStyles.p_10]}>
+                            <TableRow rowData={full_order} rowColumns={this.state.rowColumns}/>
                             <Row>
                                 <Col><Text style={appStyles.baseSmallFontSize}>Select Payment Method</Text></Col>
                             </Row>
-                            <Row style={[appStyles.w_75, appStyles.p_5,appStyles.verticalCenter]}>
+                            <Row style={[appStyles.w_75, appStyles.p_5, appStyles.verticalCenter]}>
                                 <Col>
                                     <Row>
                                         <Col style={[appStyles.w_35]}>
@@ -103,7 +78,7 @@ class OrderBidStatus extends React.Component {
                                             />
                                         </Col>
                                         <Col style={appStyles.w_65}>
-                                            <Text style={[appStyles.baseSmallFontSize,appStyles.pl_5]}>COD</Text>
+                                            <Text style={[appStyles.baseSmallFontSize, appStyles.pl_5]}>COD</Text>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -120,7 +95,7 @@ class OrderBidStatus extends React.Component {
                                             />
                                         </Col>
                                         <Col style={appStyles.w_65}>
-                                            <Text style={[appStyles.baseSmallFontSize,appStyles.pl_5]}>Account</Text>
+                                            <Text style={[appStyles.baseSmallFontSize, appStyles.pl_5]}>Account</Text>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -145,5 +120,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
+const mapStateToProps = (state) => {
+    return {
+        orders: state.get("order")
+    }
+};
 
-export default connect(null, mapDispatchToProps)(OrderBidStatus);
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderBidStatus);

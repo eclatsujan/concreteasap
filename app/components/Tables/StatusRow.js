@@ -1,8 +1,6 @@
 import React from "react";
-import {ActivityIndicator} from 'react-native'
 import {Row, Col, View, Text, Icon, Button} from "native-base";
 import {appStyles} from "../../../assets/styles/app_styles";
-import {getNested} from "../../helpers/app";
 
 export default class StatusRow extends React.Component {
 
@@ -11,8 +9,8 @@ export default class StatusRow extends React.Component {
             <Row style={appStyles.my_5}>
                 <Col>
                     <View style={[appStyles.verticalCenter,appStyles.flexRow]}>
-                        <Text style={[appStyles.baseSmallFontSize]}>Status: </Text>
-                        <Text style={[appStyles.ft_small]}>{this.props.row.status}</Text>
+                        <Text style={[appStyles.baseSmallFontSize,appStyles.boldFont]}>Status: </Text>
+                        <Text style={[appStyles.ft_small]}>{this.props.row.get("status")}</Text>
                     </View>
                 </Col>
                 <Col>

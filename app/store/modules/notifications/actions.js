@@ -5,17 +5,16 @@ import * as appActions from "../app/actions";
 export function markAsRead(notification_id) {
 
     return dispatch => {
-        dispatch(appActions.loading(true));
-        dispatch({
-            type: types.REMOVE_NOTIFICATIONS,
-            payload: {
-                notification_id
-            }
-        });
+
         userService.markAsRead(notification_id).then((res) => {
-            dispatch(appActions.loading(false));
+            dispatch({
+                type: types.REMOVE_NOTIFICATIONS,
+                payload: {
+                    notification_id
+                }
+            });
         }).catch((err) => {
-            dispatch(appActions.loading(false));
+
         });
     };
 }
@@ -27,7 +26,6 @@ export function markAsRead(notification_id) {
  */
 export const get = () => {
     return dispatch => {
-        dispatch(appActions.loading(true));
         userService.getNotifications().then((res) => {
             dispatch({
                 type: types.GET_NOTIFICATIONS,

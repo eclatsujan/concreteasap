@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView,BackHandler,Platform} from 'react-native';
 import {View, Content, Footer, FooterTab, Button, Text} from 'native-base';
 
 // Custom Component
@@ -10,12 +10,15 @@ import SubHeader from '../../../components/Headers/SubHeader'
 //styles
 import {styles} from '../styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
-
+import {resetNavigation} from "../../../helpers/navigationHelper";
 
 export default class HomeScreen extends React.Component {
+
     constructor(props) {
         super(props);
     }
+
+
 
     render() {
         const {params} = this.props.navigation.state;
@@ -24,13 +27,13 @@ export default class HomeScreen extends React.Component {
             <AppBackground>
                 <AppHeader/>
                 <ScrollView>
-                    <SubHeader iconName="check" title="View Order Requests"/>
+                    <SubHeader iconName="check" title="Order Requests"/>
                     <Content contentContainerStyle={styles.content}>
                         <View style={[appStyles.bgWhite, appStyles.customCard]}>
                             <Text>{message}</Text>
                         </View>
                         <Button style={[appStyles.justifyItemsCenter, appStyles.defaultMargin]}
-                                onPress={() => this.props.navigation.navigate("Pending Order")}>
+                                onPress={() => resetNavigation("ViewOrderBids","Pending Order")}>
                             <Text style={[appStyles.colorBlack]}>View Order Requests</Text>
                         </Button>
                         <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.justifyItemsCenter]}

@@ -37,7 +37,6 @@ function logout() {
 function register(data, photo) {
 
     let form_data=getFormData(data,photo);
-    console.log(form_data);
     const requestOptions = {
         method: 'POST',
         // headers: {'Content-Type': 'application/json'},

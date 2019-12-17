@@ -16,10 +16,6 @@ class csPicker extends React.Component {
         }
     }
 
-    updateState(){
-
-    }
-
     render() {
         const {input: {onChange, value, ...input}, meta: {touched, error, warning,submitting}, pickerChildren, ...inputProps} = this.props;
 
@@ -43,6 +39,7 @@ class csPicker extends React.Component {
                         onValueChange={(val) => {
                             onChange(val);
                             this.setState({pickerValue:val})
+                            this.props["onSelectValue"]?this.props["onSelectValue"](val):null;
                         }}
                         mode={"dropdown"}
                         selectedValue={this.state.pickerValue}

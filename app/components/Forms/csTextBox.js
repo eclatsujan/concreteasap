@@ -1,40 +1,60 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Item as FormItem, Input} from 'native-base';
+import {View,TouchableOpacity} from 'react-native';
+import {Item as FormItem, Input,Icon} from 'native-base';
 import {appStyles} from "../../../assets/styles/app_styles";
 import {getErrorStyle, showErrorIcon, showErrorMessage} from "../../helpers/error";
 
 /**
  * to be wrapped with redux-form Field component
  */
-export default function csTextBox(props) {
-    const {input, meta: {touched, error, warning}, ...inputProps} = props;
+class csTextBox extends React.Component{
 
-    const formStates = ['active', 'autofilled', 'asyncValidating', 'dirty', 'invalid', 'pristine',
-        'submitting', 'touched', 'valid', 'visited'];
-
-    let hasError = false;
-    if (touched && (error || warning)) {
-        hasError = true;
+    constructor(props) {
+        super(props);
     }
 
-    return (
-        <View>
-            <FormItem style={[appStyles.loginInput, getErrorStyle(hasError)]} regular>
-                <Input
-                    placeholderTextColor={"#000000"}
-                    style={appStyles.baseFontSize}
-                    {...inputProps}
-                    defaultValue={input.value}
-                    onChangeText={(text)=>{
-                        input.onChange(text);
-                    }}
-                    onBlur={input.onBlur}
-                    onFocus={input.onFocus}
-                />
-                {hasError ? showErrorIcon(hasError) : null}
-            </FormItem>
-            {hasError ? showErrorMessage(error) : null}
-        </View>
-    );
+    showIcon(){
+        return <TouchableOpacity onPress={this.props["iconClick"]}>
+            <Icon active name={this.props["iconType"]} />
+        </TouchableOpacity>;
+    }
+
+    showErrorIcon(hasError){
+        return hasError ? showErrorIcon(hasError) : null;
+    }
+
+    render() {
+        const {input, meta: {touched, error, warning}, ...inputProps} = this.props;
+
+        const formStates = ['active', 'autofilled', 'asyncValidating', 'dirty', 'invalid', 'pristine',
+            'submitting', 'touched', 'valid', 'visited'];
+
+        let hasError = false;
+        if (touched && (error || warning)) {
+            hasError = true;
+        }
+
+        return (
+            <View>
+                <FormItem style={[appStyles.loginInput, getErrorStyle(hasError)]} regular>
+                    <Input
+                        placeholderTextColor={"#000000"}
+                        style={appStyles.baseFontSize}
+                        {...inputProps}
+                        defaultValue={input.value}
+                        onChangeText={(text) => {
+                            input.onChange(text);
+                        }}
+                        onBlur={input.onBlur}
+                        onFocus={input.onFocus}
+                    />
+                    {this.props["iconType"] ?this.showIcon():this.showErrorIcon()}
+                </FormItem>
+                {hasError ? showErrorMessage(error) : null}
+            </View>
+        );
+    }
+
 }
+
+export default csTextBox;

@@ -17,15 +17,15 @@ import {formValidation} from "../../../helpers/validation";
 
 import {actions} from "../../../store/modules";
 import {getNested} from "../../../helpers/app";
-import {showSuccessMessage} from "../../../helpers/error";
 
 
 class UserProfile extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
             rowColumns: [
-                {key: "company", title: "Company"}, {key: "abn", title: "ABN"}, {key: "title", title: "Title"},
+                {key: "company", title: "Company"}, {key: "abn", title: "ABN"},
                 {key: "first_name", title: "First Name"}, {key: "last_name", title: "Last Name"},
                 {key: "phone_number", title: "Phone Number"}, {key: "email", title: "email"},
                 {key: "city", title: "City"},{key: "state", title: "State"}
@@ -51,7 +51,9 @@ class UserProfile extends React.Component {
                   style={[appStyles.py_10,appStyles.borderBottom, appStyles.borderGray44]}>
                 <Row>
                     <Col>
-                        <Text style={[appStyles.upperCase, appStyles.colorGray44]}>{column["title"]}</Text>
+                        <Text style={[appStyles.upperCase, appStyles.colorGray44,appStyles.boldFont]}>
+                            {column["title"]}
+                        </Text>
                     </Col>
                 </Row>
                 <Row>
@@ -64,7 +66,6 @@ class UserProfile extends React.Component {
     }
 
     editProfile() {
-        // this.setState({});
         this.props.navigation.navigate("Edit User Profile");
     }
 

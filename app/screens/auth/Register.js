@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {TouchableOpacity} from "react-native";
-
-import {Button, Text, Form, Item as FormItem, Input, Content, View} from "native-base";
+import {Button, Text, Form, Item as FormItem, Input, Content, View, Picker} from "native-base";
 
 //Expo Packages
 import * as ImagePicker from 'expo-image-picker';
@@ -23,7 +21,8 @@ import {helper} from '../../helpers'
 
 //Styles
 import {styles} from './styles';
-import {appStyles} from "../assets/app_styles";
+import {appStyles} from "../../../assets/styles/app_styles";
+import UploadButton from "../../components/Button/UploadButton";
 
 class Register extends React.Component {
 
@@ -50,6 +49,7 @@ class Register extends React.Component {
     }
 
     componentDidMount() {
+        this.props.flushError();
         this.setState({"page_title": this.props.navigation.getParam("title")});
         this.setState({"roles": this.props.navigation.getParam("roles")})
         this.getPermissionAsync();
@@ -89,7 +89,6 @@ class Register extends React.Component {
         let data = {};
         data["company"] = this.state.company;
         data["browse"] = this.state.browse;
-        data["title"] = this.state.title;
         data["first_name"] = this.state.first_name;
         data["last_name"] = this.state.last_name;
         data["email"] = this.state.email;
@@ -104,24 +103,23 @@ class Register extends React.Component {
     }
 
     render() {
-        let app = this.props.app.toJS();
         let error = this.props.error.toJS();
         return (
-            <AppBackground loading={app.loading} enableKeyBoard>
+            <AppBackground loading={this.props.app.get("loading")} enableKeyBoard>
                 <Content>
                     <LoginHeader/>
                     <SubHeader iconType="FontAwesome" iconName="user" title={this.state.page_title}/>
                     <ErrorHeader error={error}/>
                     <Form style={[appStyles.loginForm]}>
-                        <Text style={[appStyles.colorPrimary]}>Company</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Company</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["company"])]}
                             regular>
-                            <Input style={[appStyles.baseFont]} placeholder="Company" value={this.state.company}
-                                   onChangeText={(text) => this.setState({company: text})}/>
+                            <Input style={[appStyles.baseFont, appStyles.colorBlack]} placeholder="Company"
+                                   value={this.state.company} onChangeText={(text) => this.setState({company: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["company"])}
-                        <Text style={[appStyles.colorPrimary]}>ABN</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>ABN</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["abn"])]}
                             regular>
@@ -129,31 +127,12 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({abn: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["abn"])}
-                        <Text style={[appStyles.colorPrimary]}>Logo</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Logo</Text>
                         <View style={[appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.my_5]}>
-                            <TouchableOpacity
-                                style={[appStyles.baseFont, appStyles.py_5, appStyles.px_10]}
-                                onPress={this.uploadLogo}>
-                                <View style={[appStyles.flexRow]}>
-                                    <View style={[appStyles.w_65, appStyles.horizontalCenter]}>
-                                        <Text style={[appStyles.defaultFont]}>{this.state.logoText}</Text>
-                                    </View>
-                                    <View
-                                        style={[appStyles.w_35, appStyles.bgBlack, appStyles.py_10, appStyles.borderRadiusDefault]}>
-                                        <Text style={[appStyles.colorWhite, appStyles.txtCenter]}>Upload</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
+                            <UploadButton onUpload={this.uploadLogo} placeholder={this.state.logoText}/>
                         </View>
-                        <Text style={[appStyles.colorPrimary]}>Title</Text>
-                        <FormItem
-                            style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["title"])]}
-                            regular>
-                            <Input style={[appStyles.baseFont]} placeholder="Title" value={this.state.title}
-                                   onChangeText={(text) => this.setState({title: text})}/>
-                        </FormItem>
-                        {helper.error.showErrorMessage(error.errors["title"])}
-                        <Text style={[appStyles.colorPrimary]}>First Name</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>First
+                            Name</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["first_name"])]}
                             regular>
@@ -161,23 +140,24 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({first_name: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["first_name"])}
-                        <Text style={[appStyles.colorPrimary]}>Last Name</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Last Name</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["last_name"])]}
                             regular>
-                            <Input style={[appStyles.baseFont]} placeholder="Last Name" value={this.state.last_name}
+                            <Input style={[appStyles.baseFont]} placeholder="Last Name"
+                                   value={this.state.last_name}
                                    onChangeText={(text) => this.setState({last_name: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["last_name"])}
-                        <Text style={[appStyles.colorPrimary]}>Email</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Email</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["email"])]}
                             regular>
                             <Input style={[appStyles.baseFont]} placeholder="Email" value={this.state.email}
-                                   onChangeText={(text) => this.setState({email: text})}/>
+                                   autoCapitalize='none' onChangeText={(text) => this.setState({email: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["email"])}
-                        <Text style={[appStyles.colorPrimary]}>Phone</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Phone</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["phone"])]}
                             regular>
@@ -185,7 +165,7 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({phone: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["phone"])}
-                        <Text style={[appStyles.colorPrimary]}>City</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>City</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["city"])]}
                             regular>
@@ -193,15 +173,28 @@ class Register extends React.Component {
                                    onChangeText={(text) => this.setState({city: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["city"])}
-                        <Text style={[appStyles.colorPrimary]}>State</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>State</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["state"])]}
                             regular>
-                            <Input style={[appStyles.baseFont]} placeholder="State" value={this.state.state}
-                                   onChangeText={(text) => this.setState({state: text})}/>
+                            <Picker selectedValue={this.state.state}
+                                    itemStyle={appStyles.ft_small}
+                                    textStyle={appStyles.ft_small}
+                                    itemTextStyle={appStyles.ft_small}
+                                    onValueChange={(text) => {
+                                        this.setState({state: text})
+                                    }}>
+                                <Picker.Item label={"Select One"} value={""}/>
+                                <Picker.Item label={"NSW"} value={"NSW"}/>
+                                <Picker.Item label={"QLD"} value={"QLD"}/>
+                                <Picker.Item label={"SA"} value={"SA"}/>
+                                <Picker.Item label={"TAS"} value={"TAS"}/>
+                                <Picker.Item label={"VIC"} value={"VIC"}/>
+                                <Picker.Item label={"WA"} value={"WA"}/>
+                            </Picker>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["state"])}
-                        <Text style={[appStyles.colorPrimary]}>Password</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Password</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["password"])]}
                             regular>
@@ -209,7 +202,8 @@ class Register extends React.Component {
                                    secureTextEntry={true} onChangeText={(text) => this.setState({password: text})}/>
                         </FormItem>
                         {helper.error.showErrorMessage(error.errors["password"])}
-                        <Text style={[appStyles.colorPrimary]}>Confirm Password</Text>
+                        <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Confirm
+                            Password</Text>
                         <FormItem
                             style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["confirm_password"])]}
                             regular>

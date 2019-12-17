@@ -2,6 +2,7 @@ import {CONTRACTOR_PREFIX_URI, REP_PREFIX_URI} from '../config';
 
 import {getToken} from '../helpers/token';
 import {handleResponse} from '../helpers/httpHandler'
+import {or} from "react-native-reanimated";
 export const orderService = {
     createOrder,
     modifyOrder,
@@ -10,6 +11,7 @@ export const orderService = {
     contractorCompleteOrder,
     getContractorOrders,
     getContractorAcceptedOrders,
+    archiveOrder,
     acceptBid,
     rejectBid,
     getBiddingAllOrders,
@@ -17,13 +19,13 @@ export const orderService = {
     getRepAcceptedOrders,
     repCancelOrder,
     updateBidPaymentMethod,
-    repReleaseOrder
+    repReleaseOrder,
+    getAllDayOfPour
 };
 
 //Common Function
 async function contractorCancelOrder(order_id){
     let token=await  getToken();
-    console.log(token);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
@@ -78,8 +80,7 @@ async function getContractorOrders(){
 	let token=await getToken();
 	const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
-        // body: JSON.stringify(orderData)
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token}
     };
     return fetch(CONTRACTOR_PREFIX_URI+'order/concrete', requestOptions).then(handleResponse);
 }
@@ -88,8 +89,7 @@ async function getContractorAcceptedOrders(){
     let token=await getToken();
     const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
-        // body: JSON.stringify({bid_id})
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token}
     };
     return fetch(CONTRACTOR_PREFIX_URI+'order/get_accepted_orders', requestOptions).then(handleResponse);
 }
@@ -115,7 +115,24 @@ async function rejectBid(bid_id){
     return fetch(CONTRACTOR_PREFIX_URI+'order/reject', requestOptions).then(handleResponse);
 }
 
+async function archiveOrder(order_id){
+    let token=await getToken();
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
+        body: JSON.stringify({order_id})
+    };
+    return fetch(CONTRACTOR_PREFIX_URI+'order/archiveOrder', requestOptions).then(handleResponse);
+}
 
+async function getAllDayOfPour(){
+    let token=await getToken();
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token}
+    };
+    return fetch(CONTRACTOR_PREFIX_URI+'order/getAllDayOfPour', requestOptions).then(handleResponse);
+}
 
 //Rep Orders
 
@@ -124,8 +141,7 @@ async function getBiddingAllOrders(){
     let token=await getToken();
     const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
-        // body: JSON.stringify(orderData)
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token}
     };
     return fetch(REP_PREFIX_URI+'orders', requestOptions).then(handleResponse);
 }
@@ -171,12 +187,12 @@ async function repCancelOrder(order_id){
     return fetch(REP_PREFIX_URI+'cancel_order', requestOptions).then(handleResponse);
 }
 
-async function repReleaseOrder(order_id){
+async function repReleaseOrder(bid_id){
     let token=await getToken();
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
-        body: JSON.stringify({order_id})
+        body: JSON.stringify({bid_id})
     };
     return fetch(REP_PREFIX_URI+'release_order', requestOptions).then(handleResponse);
 }

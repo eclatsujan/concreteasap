@@ -1,11 +1,13 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import {View, DatePicker} from 'native-base';
+import {TouchableOpacity, DatePickerIOS} from 'react-native';
+import {View, DatePicker, Text} from 'native-base';
 import moment from "moment";
 
 import {appStyles} from "../../../assets/styles/app_styles";
-import {getErrorStyle, showErrorIcon, showErrorMessage} from "../../helpers/error";
+import {showErrorMessage} from "../../helpers/error";
 import ConcreteIcon from "../Fonts/ConcreteIcon";
+
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 
 /**
@@ -20,9 +22,11 @@ export default class csDatePicker extends React.Component {
     }
 
     openPicker() {
-        if (this.datePickerRef) {
-            this.datePickerRef["showDatePicker"]();
-        }
+        // console.log(this.props);
+        this.props["onToggle"]();
+        // if (this.datePickerRef) {
+        //     this.datePickerRef["showDatePicker"]();
+        // }
     }
 
     addDays(n) { // adding the few more days in the current days
@@ -38,19 +42,13 @@ export default class csDatePicker extends React.Component {
         return (full_date);
     }
 
-    formatValue(value,dateFormat="DD/MM/YYYY"){
-        return moment(value).format("DD/MM/YYYY").toString();
+    formatValue(value, dateFormat = "DD/MM/YYYY") {
+        return moment(value, dateFormat).format("DD/MM/YYYY").toString();
     }
 
-    displayPlaceHolderText(value,placeholder){
-        return value?this.formatValue(value):placeholder;
+    displayPlaceHolderText(value, placeholder, dateFormat) {
+        return !value ? placeholder : this.formatValue(value, dateFormat);
     }
-
-    setDefaultDate(value){
-        return new Date();
-        // return value?moment(value,"YYYY-MM-DD").toString():moment().toString();
-    }
-
 
     render() {
         const {input, meta: {touched, error, warning}, ...inputProps} = this.props;
@@ -62,35 +60,22 @@ export default class csDatePicker extends React.Component {
         if (touched && (error || warning)) {
             hasError = true;
         }
-
+        let dateFormat = this.formatValue(input.value) === "Invalid date" ? "YYYY-MM-DD" : "DD/MM/YYYY";
+        console.log(input.value);
         return (
-            <View
-                style={[appStyles.flex1, appStyles.flexRow, appStyles.verticalCenter, appStyles.relative, appStyles.bgWhite,
-                    appStyles.py_5, appStyles.my_7, appStyles.borderRadiusDefault, appStyles.border, appStyles.borderPrimary]}>
-                <View style={[appStyles.w_90]}>
-                    <DatePicker
-                        ref={(ref) => this.datePickerRef = ref}
-                        {...inputProps}
-                        defaultDate={this.setDefaultDate(input.value)}
-                        minimumDate={moment().toDate()}
-                        locale={"en"} modalTransparent={false}
-                        animationType={"fade"} androidMode={"default"}
-                        placeHolderText={this.displayPlaceHolderText(input.value,this.props.placeholder)}
-                        textStyle={[appStyles.baseFontSize, appStyles.colorBlack, appStyles.defaultFont]}
-                        placeHolderTextStyle={[appStyles.colorBlack, appStyles.defaultFont]}
-                        onDateChange={(value) => {
-                            // console.log(value);
-                            input.onChange(this.formatValue(value))
-                        }}
-                        onBlur={input.onBlur}
-                        onFocus={input.onFocus}
-                        disabled={false}/>
+            <TouchableOpacity onPress={this.openPicker}>
+                <View
+                    style={[appStyles.flex1, appStyles.flexRow, appStyles.verticalCenter, appStyles.bgWhite,
+                        appStyles.p_10, appStyles.my_7, appStyles.borderRadiusDefault, appStyles.border]}>
+                    <View style={[appStyles.w_90]}>
+                        <Text>{this.displayPlaceHolderText(input.value, this.props.placeholder, dateFormat)}</Text>
+                    </View>
+                    <View style={[appStyles.w_10, appStyles.right_5]}>
+                        <ConcreteIcon name={"calendar"} style={[appStyles.ft_20, appStyles.colorGray44]}/>
+                    </View>
+                    {hasError ? showErrorMessage(error) : null}
                 </View>
-                <TouchableOpacity style={[appStyles.w_10, appStyles.right_5]} onPress={this.openPicker}>
-                    <ConcreteIcon name={"calendar"} style={[appStyles.ft_20, appStyles.colorGray44]}/>
-                </TouchableOpacity>
-                {hasError ? showErrorMessage(error) : null}
-            </View>
+            </TouchableOpacity>
         );
     }
 }

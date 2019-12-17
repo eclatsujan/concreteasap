@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Col, View, Text, Icon, Button} from "native-base";
+import {Row, Col, View, Text} from "native-base";
 import {appStyles} from "../../../assets/styles/app_styles";
 
 export default class EmptyTable extends React.Component {

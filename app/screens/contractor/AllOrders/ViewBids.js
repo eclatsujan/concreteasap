@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {ScrollView, TouchableHighlight} from 'react-native';
-import {View, Col, Row, Button, Text, Content, Footer, FooterTab, Icon} from 'native-base';
+import {ScrollView, TouchableWithoutFeedback} from 'react-native';
+import {View, Content, Icon} from 'native-base';
 
 //Third Party
 import {connect} from "react-redux";
@@ -17,6 +17,10 @@ import {styles} from '../styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {actions} from "../../../store/modules";
 import EmptyTable from "../../../components/Tables/EmptyTable";
+import CustomTable from "../../../components/Tables/CustomTable";
+import AppFooter from "../../../components/Footer/AppFooter";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 
 
 class ViewBids extends React.Component {
@@ -25,31 +29,35 @@ class ViewBids extends React.Component {
 
         this.state = {
             params: props.navigation.state.params,
-            tableHead: ['Bids', 'Amount', 'Company', ''],
-            tableData: [],
+            rowHeaders: ['Bids', 'Price m3', 'Company', ''],
+            rowColumns: ["id", "price", "user.detail.company"],
             emptyMessage: "There is no bids placed at the moment."
         };
+        // this.loadOrderBids = this.loadOrderBids.bind(this);
+        this.showComponentButton = this.showComponentButton.bind(this);
+
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+
+            this.interval=setInterval(this.props.getContractorOrders,6000);
+        });
+
+        this.blurListener=this.props.navigation.addListener('didBlur',()=>{
+            clearInterval(this.interval);
+        });
+        this.acceptBid=this.acceptBid.bind(this);
     }
 
-    componentWillMount() {
-        let order = this.state.params.order;
-        this.setState({tableData: order["bids"]});
+    componentDidMount() {
+        this.props.getContractorOrders();
     }
 
-    displayTableHeader() {
-        return (
-            <Row style={appStyles.borderBottom}>
-                {this.state.tableHead.map((rowData, index) => (
-                    <Col key={index}>
-                        <Text style={[appStyles.upperCase, appStyles.baseSmallFontSize]}>{rowData}</Text>
-                    </Col>
-                ))}
-            </Row>
-        );
+    componentWillUnmount() {
+        this.focusListener.remove();
+        this.blurListener.remove();
     }
 
-    acceptBid(bid_id) {
-        let order = this.state.params.order;
+    acceptBid(bid_id,order_id) {
+        let order = this.getOrder(order_id);
         this.props.navigation.navigate("OrderBidStatus", {
             bid_id,
             order
@@ -60,88 +68,65 @@ class ViewBids extends React.Component {
         this.props.rejectBid(bid_id, order_id);
     }
 
-    displayTableData(order) {
-        console.log(order["bids"]);
-        return order["bids"].map((rowData, index) => (
-            <View key={index} style={[appStyles.borderBottom, appStyles.paddingYDefault, appStyles.verticalCenter]}>
-                <Row style={appStyles.verticalCenter}>
-                    <Col>
-                        <Text style={appStyles.baseSmallFontSize}>{rowData.id}</Text>
-                    </Col>
-                    <Col>
-                        <Text style={appStyles.baseSmallFontSize}>${rowData.price}</Text>
-                    </Col>
-                    <Col>
-                        <Text style={appStyles.baseSmallFontSize}>{rowData["user"]["detail"]["company"]}</Text>
-                    </Col>
-                    <Col>
-                        <View style={[appStyles.flexRow, appStyles.justifyRight]}>
-                            <View style={appStyles.pr_15}>
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.acceptBid(rowData["id"])
-                                    }}>
-                                    <Icon name={"check-circle"} style={appStyles.colorSuccess} type={"FontAwesome5"}/>
-                                </TouchableHighlight>
-
-                            </View>
-                            <View>
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.rejectBid(rowData["id"], rowData["order_id"])
-                                    }}>
-                                    <Icon name={"times-circle"} style={appStyles.colorDanger} type={"FontAwesome5"}/>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                    </Col>
-                </Row>
-            </View>
-        ));
-    }
-
     renderEmptyRow() {
         return (
             <EmptyTable message={this.state.emptyMessage}/>
         );
     }
 
-    renderBidRow(order) {
-        console.log(order["bids"].length);
-        if (order["bids"].length > 0) {
-            return (
-                <View>
-                    {this.displayTableHeader()}
-                    {this.displayTableData(order)}
+    showComponentButton(rowData) {
+        return (
+            <View style={[appStyles.flexRow, appStyles.justifyRight]}>
+                <View style={appStyles.pr_15}>
+                    <TouchableWithoutFeedback
+                        underlayColor="white"
+                        onPress={() => {
+                            this.acceptBid(rowData.get("id"),rowData.get("order_id"))
+                        }}>
+                        <Icon name={"check-circle"} style={appStyles.colorSuccess} type={"FontAwesome5"}/>
+                    </TouchableWithoutFeedback>
+
                 </View>
-            )
-        } else {
-            return this.renderEmptyRow();
-        }
+                <View>
+                    <TouchableWithoutFeedback
+                        underlayColor="white"
+                        onPress={() => {
+                            this.rejectBid(rowData["id"], rowData["order_id"])
+                        }}>
+                        <Icon name={"times-circle"} style={appStyles.colorDanger} type={"FontAwesome5"}/>
+                    </TouchableWithoutFeedback>
+                </View>
+            </View>
+        );
+    }
+
+    showBidOutput(bids,length){
+        return length!==0?<CustomTable bgStyle={[appStyles.bgWhite]}
+                                rowHeaders={this.state.rowHeaders}
+                                rowData={bids} rowColumns={this.state.rowColumns}
+                                colButtonComponent={this.showComponentButton}/>
+                            :<EmptyTable message={this.state.emptyMessage}/>
+    }
+
+    getOrder(order_id){
+        return this.props.order.get("pending_orders").find((order) => order.get("id") === order_id);
     }
 
     render() {
-        let param_order = this.state.params.order;
-        let app = this.props.app.toJS();
-        let orders = this.props.order.toJS();
-        let order = orders["pending_orders"].find((order) => order.id === param_order.id);
+        let order_id = this.state.params.order_id;
+        let order = this.getOrder(order_id);
+        let bids = order?.get("bids") ? order.get("bids") : [];
         return (
-            <AppBackground loading={app.loading}>
+            <AppBackground>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="View Bids"/>
-                    <Content contentContainerStyle={[appStyles.bgWhite, appStyles.p_10]}>
-                        {this.renderBidRow(order)}
+                    <Content>
+                        {this.props.app.get("loading")?<SkeletonLoading />
+                        :this.showBidOutput(bids,bids?.size)}
                     </Content>
                 </ScrollView>
-                <Footer style={{marginBottom: 30}}>
-                    <FooterTab>
-                        <Button style={[appStyles.button, appStyles.buttonPrimary]}
-                                onPress={() => this.props.navigation.navigate("Home")}>
-                            <Text style={appStyles.buttonBlack}>Back to Home</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
+                <AppFooter/>
             </AppBackground>
         );
     }
@@ -151,6 +136,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         rejectBid: (bid_id, order_id) => {
             return dispatch(actions.order.rejectBid(bid_id, order_id));
+        },
+        getContractorOrders: () => {
+            return dispatch(actions.order.getContractorOrders())
+        },
+        appLoading: () => {
+            return dispatch(actions.app.loading())
         }
     }
 };

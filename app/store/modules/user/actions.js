@@ -82,6 +82,7 @@ export const login = (email, password) => {
     return async dispatch => {
         dispatch(appActions.loading());
         userService.login(email, password).then((res) => {
+
             let roles = res.roles.length !== 0 ? res.roles[0]["name"] : "";
             if (roles !== "") {
                 SecureStore.setItemAsync("user_token", res["access_token"]);
@@ -102,7 +103,8 @@ export const login = (email, password) => {
                 //Handle Server issue or no user roles
             }
         }, (err) => {
-            dispatch(errorActions.setError(err.message));
+            // console.log(err);
+            dispatch(errorActions.setError(err));
             dispatch(appActions.loading(false));
         });
 

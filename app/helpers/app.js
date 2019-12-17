@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {Picker} from "native-base";
 import {Platform} from "react-native";
-import {appStyles} from "../screens/assets/app_styles";
+import {appStyles} from '../../assets/styles/app_styles'
 
 export function renderList(data) {
     let view = [];
     if (Array.isArray(data)) {
         data.forEach(function (element) {
             view.push(
-                <Picker.Item style={[appStyles.defaultFont,appStyles.baseFontSize]} label={element.label} value={element.key} key={element.key}/>
+                <Picker.Item style={[appStyles.defaultFont, appStyles.baseFontSize]} label={element.label}
+                             value={element.key !== "" ? element.label : ""} key={element.key}/>
             );
         });
     }
@@ -24,6 +25,15 @@ export function getNested(theObject, path, separator) {
                 return obj[property];
             }, theObject
         );
+    } catch (err) {
+        return undefined;
+    }
+}
+
+export function getNestedImmutable(theObject, path, separator) {
+    try {
+        separator = separator || '.';
+        return theObject.getIn(path.replace('[', separator).replace(']', '').split(separator));
     } catch (err) {
         return undefined;
     }

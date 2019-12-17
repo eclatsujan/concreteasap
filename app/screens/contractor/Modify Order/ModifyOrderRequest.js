@@ -14,68 +14,86 @@ import navigationHelper from "../../../helpers/navigationHelper";
 //styles
 import PlaceOrderForm from "../../../components/contractor/PlaceOrderForm";
 
+import * as Immutable from 'immutable';
+import {order_concrete} from "../../../store/schemas";
+
 class ModifyOrderRequest extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state={
+            quantity:""
+        };
         this.handleSubmit=this.handleSubmit.bind(this);
 
     }
 
+    static getDerivedStateFromProps(props,state){
+        let quantity={...state.quantity};
+        if(props.navigation.getParam("total_quantity")){
+            quantity=props.navigation.getParam("total_quantity");
+        }
+        return {
+            quantity
+        };
+    }
+
     handleSubmit(values) {
         let order_id = this.props.navigation.getParam("order_id");
-        let order = values;
-        order.type = "concrete";
+        // let order = ;
+        let order=values.set("type", "concrete");
         navigationHelper.navigate("ModifyAdditionalRequest", {
             "order": order,
             "order_id":order_id
         });
     }
 
-    loadOrder() {
-        let order = {};
+    loadOrder(type) {
+        let order = new Immutable.Map({});
         let order_id = this.props.navigation.getParam("order_id");
-        if(order_id){
-
-            let orders = this.props.orders.toJS();
-            let accepted_order = orders["accepted_orders"].find((order) => {
-                return order.id === order_id;
+        if(order_id) {
+            let orders = this.props.orders;
+            let accepted_order = orders.get(type).get("data").find((order) => {
+                return order.get("id") === order_id;
             });
-            order = {
-                "id":order_id,
-                "suburb": accepted_order["order_concrete"]["suburb"],
-                "type": accepted_order["order_concrete"].type,
-                "mpa": accepted_order["order_concrete"].mpa,
-                "agg": accepted_order["order_concrete"].agg,
-                "slu": accepted_order["order_concrete"].slump,
-                "acc": accepted_order["order_concrete"].acc,
-                "placement_type": accepted_order["order_concrete"].placement_type,
-                "quantity": accepted_order["order_concrete"].quantity.toString(),
-                "delivery_date": accepted_order["order_concrete"].delivery_date,
-                "delivery_date1": accepted_order["order_concrete"].delivery_date1,
-                "delivery_date2": accepted_order["order_concrete"].delivery_date2,
-                "time1": accepted_order["order_concrete"].time_preference1,
-                "time2": accepted_order["order_concrete"].time_preference2,
-                "time3": accepted_order["order_concrete"].time_preference3,
-                "time_difference_deliveries": accepted_order["order_concrete"].time_deliveries,
-                "urgency": accepted_order["order_concrete"].urgency,
-                "message_required": accepted_order["order_concrete"].message_required ? "Yes" : "No",
-                "site_call": accepted_order["order_concrete"].preference,
-                "colours": accepted_order["order_concrete"].colours,
-                "special_instructions": accepted_order["order_concrete"]["special_instructions"],
-                "delivery_instructions": accepted_order["order_concrete"]["delivery_instructions"],
-            };
+            console.log(type);
+            console.log(orders.get(type));
+            if(accepted_order){
+                let colours = accepted_order.get("order_concrete").get("colours");
+                let concrete = accepted_order.get("order_concrete");
+                order=order.set("id", order_id).set("address", concrete.get("address"))
+                    .set("suburb",concrete.get("suburb"))
+                    .set("type", concrete.get("type")).set("type", concrete.get("type"))
+                    .set("mpa", concrete.get("mpa")).set("agg", concrete.get("mpa"))
+                    .set("agg", concrete.get("agg")).set("slu", concrete.get("slump"))
+                    .set("acc", concrete.get("acc")).set("placement_type", concrete.get("placement_type"))
+                    .set("quantity", concrete.get("quantity").toString()).set("delivery_date", concrete.get("delivery_date"))
+                    .set("delivery_date1", concrete.get("delivery_date1"))
+                    .set("delivery_date2", concrete.get("delivery_date2"))
+                    .set("time1", concrete.get("time_preference1")).set("time2", concrete.get("time_preference2"))
+                    .set("time3", concrete.get("time_preference3"))
+                    .set("time_difference_deliveries", concrete.get("time_deliveries"))
+                    .set("urgency", concrete.get("urgency"))
+                    .set("message_required", concrete.get("message_required") ? "Yes" : "No")
+                    .set("site_call", concrete.get("preference"))
+                    .set("colour_required", colours !== "" ? "Yes" : "No")
+                    .set("colours", colours)
+                    .set("special_instructions", concrete.get("special_instructions"))
+                    .set("delivery_instructions", concrete.get("delivery_instructions"));
+            }
         }
         return order;
     }
 
     render() {
-        let order = this.loadOrder();
+        let type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
+        let order = this.loadOrder(type);
         return (
             <AppBackground enableKeyBoard>
                 <AppHeader/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Modify Order"/>
-                <PlaceOrderForm onSubmit={this.handleSubmit} initialValues={order} />
+                <PlaceOrderForm onSubmit={this.handleSubmit} initialValues={order} quantity={this.state.quantity}
+                                backRoute={"ModifyOrderRequest"}/>
             </AppBackground>
         );
     }
@@ -83,8 +101,9 @@ class ModifyOrderRequest extends React.Component {
 
 
 const mapStateToProps = (state) => {
+
     return {
-        orders: state.get("order")
+        orders: state.get("order"),
     }
 };
 

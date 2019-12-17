@@ -18,7 +18,7 @@ import ErrorHeader from '../../components/Headers/ErrorHeader';
 import {helper} from '../../helpers'
 
 //Custom Styles
-import {appStyles} from '../assets/app_styles'
+import {appStyles} from '../../../assets/styles/app_styles'
 
 class ResetPasswordToken extends React.Component {
 

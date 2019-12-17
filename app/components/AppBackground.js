@@ -1,6 +1,6 @@
 import React from "react";
 
-import {ImageBackground, Dimensions, SafeAreaView, Platform, StatusBar, View} from "react-native";
+import {ImageBackground, Dimensions, SafeAreaView, Platform, StatusBar, View,Keyboard} from "react-native";
 
 import {Container} from "native-base";
 import mitt from 'mitt'
@@ -27,6 +27,10 @@ export default class AppBackground extends React.Component {
 
     }
 
+    _onButtonClick() {
+        Keyboard.dismiss()
+    }
+
     renderIOS() {
         return (<SafeAreaView>
             {this.renderView()}
@@ -36,11 +40,11 @@ export default class AppBackground extends React.Component {
     renderView() {
         let alignContent = this.props.alignContent ? this.props.alignContent : "flex-start";
         let keyBoardStyles = [appStyles.flexRow, {alignItems: alignContent}];
-        let containerStyle = this.props.alignContent === "center" ? [appStyles.appMargin, appStyles.flexRow, appStyles.verticalCenter] : [appStyles.appMargin];
-        if (this.props["enableKeyBoard"]) {
+        let containerStyle = this.props.alignContent === "center" ? [appStyles.appMargin, appStyles.flexRow, appStyles.verticalCenter] : [appStyles.appMargin];if (this.props["enableKeyBoard"]) {
             return (
                 <KeyboardAwareScrollView contentContainerStyle={containerStyle} enableOnAndroid={true}
-                                         keyboardShouldPersistTaps='handled'>
+                                         keyboardShouldPersistTaps={'handled'}
+                                         keyboardDismissMode='on-drag'>
                     {this.props.children}
                 </KeyboardAwareScrollView>);
         } else {

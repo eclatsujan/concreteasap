@@ -21,7 +21,7 @@ export default function csTextArea(props) {
 
     return (
         <View>
-            <Textarea {...inputProps} rowSpan={5} bordered style={[appStyles.bgWhite,appStyles.paddingX7]} onChangeText={input.onChange}/>
+            <Textarea defaultValue={input.value} {...inputProps} rowSpan={5} bordered style={[appStyles.bgWhite,appStyles.paddingX7]} onChangeText={input.onChange}/>
             {hasError ? showErrorMessage(error) : null}
         </View>
     );

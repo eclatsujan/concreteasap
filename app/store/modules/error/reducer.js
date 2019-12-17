@@ -5,13 +5,13 @@ import * as Immutable from 'immutable';
 
 export const defaultState = Immutable.Map({
     error_msg: "",
-    errors: {}
+    errors: Immutable.List([])
 });
 
 export const reducer=(state, action) => {
     switch (action.type) {
         case SET_ERROR:
-            return state.set("error_msg", action.payload.error_msg).set("errors", action.payload.errors);
+            return state.set("error_msg",action.payload.error_msg).setIn(["errors"], Immutable.fromJS(action.payload.errors));
         case REMOVE_ERROR:
             return defaultState;
         default:

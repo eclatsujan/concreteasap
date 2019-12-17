@@ -27,10 +27,13 @@ export const appStyles = StyleSheet.create({
     baseLargeFontSize: {
         fontSize: 18
     },
-    baseExtraLargeFontSize:{
-        fontSize:25
+    baseExtraLargeFontSize: {
+        fontSize: 25
     },
     baseFont: {
+        fontFamily: "Arial"
+    },
+    customFont: {
         fontFamily: "Hancock"
     },
     defaultFont: {
@@ -39,21 +42,24 @@ export const appStyles = StyleSheet.create({
     arialFont: {
         fontFamily: "Arial"
     },
+    boldFont: {
+        fontWeight: "bold"
+    },
     defaultCircle: {
         width: 100,
         height: 100,
         borderRadius: 50
     },
-    defaultPadding:{
-        paddingTop:12,
-        paddingBottom:12
+    defaultPadding: {
+        paddingTop: 12,
+        paddingBottom: 12
     },
-    defaultMargin:{
-        marginTop:20,
-        marginBottom:20
+    defaultMargin: {
+        marginTop: 20,
+        marginBottom: 20
     },
-    bottomMarginDefault:{
-        marginBottom:20
+    bottomMarginDefault: {
+        marginBottom: 20
     },
     inputHeightBase: {
         minHeight: 50
@@ -74,11 +80,11 @@ export const appStyles = StyleSheet.create({
     bgBlack: {
         backgroundColor: "#000000"
     },
-    bgSuccess:{
-        backgroundColor:"#14E22A"
+    bgSuccess: {
+        backgroundColor: "#14E22A"
     },
-    bgDanger:{
-        backgroundColor:"#DC0000"
+    bgDanger: {
+        backgroundColor: "#DB0000"
     },
     bgError: {
         backgroundColor: "#B00020"
@@ -87,8 +93,8 @@ export const appStyles = StyleSheet.create({
         backgroundColor: "#CFFFD3"
     },
     //Text Colours
-    colorSuccess:{
-        color:"#14E22A"
+    colorSuccess: {
+        color: "#14E22A"
     },
     colorPrimary: {
         color: "#14E22A"
@@ -109,7 +115,8 @@ export const appStyles = StyleSheet.create({
         color: "#000"
     },
     colorDanger: {
-        color: "#DC0000"
+        color: "#DB0000"
+
     },
     colorComplete: {
         color: "#2E7400"
@@ -136,13 +143,17 @@ export const appStyles = StyleSheet.create({
     rowReverse: {
         flexDirection: "row-reverse"
     },
+
     justifyItemsCenter: {
         justifyContent: 'center',
         alignItems: 'center',
         // textAlign: "center"
     },
-    justifyRight:{
-        justifyContent:'flex-end'
+    justifySpace: {
+        justifyContent: "space-between"
+    },
+    justifyRight: {
+        justifyContent: 'flex-end'
     },
     flexRow: {
         flex: 1,
@@ -164,6 +175,9 @@ export const appStyles = StyleSheet.create({
     flexAlignLeft: {
         alignItems: "flex-start"
     },
+    verticalLeftSelf: {
+        alignSelf: "flex-start"
+    },
     verticalSelfCenter: {
         alignSelf: "center"
     },
@@ -183,8 +197,8 @@ export const appStyles = StyleSheet.create({
         marginTop: 7,
         marginBottom: 7,
     },
-    m_10:{
-        margin:10
+    m_10: {
+        margin: 10
     },
     ml_10: {
         marginLeft: 10
@@ -192,11 +206,14 @@ export const appStyles = StyleSheet.create({
     ml_20: {
         marginLeft: 20
     },
+    mt_5: {
+        marginTop: 5
+    },
     mt_10: {
         marginTop: 10
     },
-    mt_15:{
-        marginTop:15
+    mt_15: {
+        marginTop: 15
     },
     my_5: {
         marginTop: 5,
@@ -214,6 +231,9 @@ export const appStyles = StyleSheet.create({
         marginBottom: 30,
         marginTop: 30
     },
+    mb_5: {
+        marginBottom: 5
+    },
     mb_10: {
         marginBottom: 10
     },
@@ -229,13 +249,13 @@ export const appStyles = StyleSheet.create({
         marginBottom: 10
     },
 
-    mx_5:{
-        marginLeft:5,
-        marginRight:5
+    mx_5: {
+        marginLeft: 5,
+        marginRight: 5
     },
-    mx_10:{
-        marginLeft:20,
-        marginRight:20
+    mx_10: {
+        marginLeft: 20,
+        marginRight: 20
     },
     mx7: {
         marginTop: 7,
@@ -258,11 +278,11 @@ export const appStyles = StyleSheet.create({
     p_15: {
         padding: 15
     },
-    p_20:{
-        padding:20
+    p_20: {
+        padding: 20
     },
-    p_30:{
-        padding:30
+    p_30: {
+        padding: 30
     },
     pl_20: {
         paddingLeft: 20
@@ -294,20 +314,20 @@ export const appStyles = StyleSheet.create({
     pr_15: {
         paddingRight: 15
     },
-    pr_20:{
-        paddingRight:20
+    pr_20: {
+        paddingRight: 20
     },
-    px_5:{
-        paddingLeft:5,
-        paddingRight:5
+    px_5: {
+        paddingLeft: 5,
+        paddingRight: 5
     },
     px_10: {
         paddingLeft: 10,
         paddingRight: 10
     },
-    px_20:{
-        paddingLeft:20,
-        paddingRight:20
+    px_20: {
+        paddingLeft: 20,
+        paddingRight: 20
     },
     py_5: {
         paddingTop: 5,
@@ -331,8 +351,8 @@ export const appStyles = StyleSheet.create({
     w_10: {
         width: "10%"
     },
-    w_20:{
-        width:"20%"
+    w_20: {
+        width: "20%"
     },
     w_25: {
         width: "20%"
@@ -340,8 +360,8 @@ export const appStyles = StyleSheet.create({
     w_35: {
         width: "35%"
     },
-    w_40:{
-        width:"40%"
+    w_40: {
+        width: "40%"
     },
     w_45: {
         width: "45%"
@@ -349,8 +369,8 @@ export const appStyles = StyleSheet.create({
     w_50: {
         width: "50%"
     },
-    w_60:{
-        width:"60%"
+    w_60: {
+        width: "60%"
     },
     w_65: {
         width: "65%"
@@ -361,6 +381,14 @@ export const appStyles = StyleSheet.create({
     w_90: {
         width: "90%"
     },
+    h_100:{
+        height:"100%"
+    },
+    //input
+    inputGray: {
+        color: "#575757"
+    },
+    //center
     absoluteCenter: {
         position: "absolute",
         top: 0,
@@ -380,6 +408,12 @@ export const appStyles = StyleSheet.create({
     ft_20: {
         fontSize: 20
     },
+    txtLeft: {
+        textAlign: "left"
+    },
+    txtCenter: {
+        textAlign: "center",
+    },
     capitalCase: {
         textTransform: "capitalize"
     },
@@ -387,6 +421,9 @@ export const appStyles = StyleSheet.create({
         textTransform: "uppercase"
     },
     //Borders
+    noBorder:{
+        borderRadius:0
+    },
     border2: {
         borderWidth: 2
     },
@@ -515,15 +552,15 @@ export const appStyles = StyleSheet.create({
         // marginRight:20
     },
     paddingAppDefault: {
-        paddingLeft:10,
-        paddingRight:10
+        paddingLeft: 10,
+        paddingRight: 10
     },
     inputForm: {},
     subHeader: {
         paddingTop: 20,
         paddingBottom: 20,
-        paddingLeft:20,
-        paddingRight:20
+        paddingLeft: 20,
+        paddingRight: 20
     },
     headerIcon: {
         fontSize: 40,
@@ -545,9 +582,6 @@ export const appStyles = StyleSheet.create({
     loginInputBox: {
         fontSize: 14,
     },
-    txtCenter: {
-        textAlign: "center",
-    },
     appMargin: {
         marginLeft: PixelRatio.get() <= 2 ? 20 : 30,
         marginRight: PixelRatio.get() <= 2 ? 20 : 30
@@ -559,11 +593,16 @@ export const appStyles = StyleSheet.create({
         // borderColor: "#14E22A",
         borderWidth: 2
     },
-    smallCircle:{
-        width:30,
-        height:30,
-        borderRadius:30/2,
-        borderWidth:2
+    smallCircle: {
+        width: 30,
+        height: 30,
+        borderRadius: 30 / 2,
+        borderWidth: 2
+    },
+    smallCircleNoBorder: {
+        width: 30,
+        height: 30,
+        borderRadius: 30 / 2,
     },
     modalBg: {
         backgroundColor: 'rgba(000,000,000,0.7)'
@@ -601,7 +640,7 @@ export const appStyles = StyleSheet.create({
         width: 10,
         resizeMode: 'contain',
     },
-    customCard:{
-        padding:15
+    customCard: {
+        padding: 15
     }
 });

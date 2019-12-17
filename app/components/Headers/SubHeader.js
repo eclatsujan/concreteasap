@@ -19,6 +19,8 @@ export default class SubHeader extends React.Component {
 
     renderIcon(iconType, iconName) {
         let iconStyle = [appStyles.headerIcon, appStyles.pr_20, appStyles.ft_20];
+        // console.log(iconName);
+        // console.log(iconStyle)   ;
         return iconType === "ConcreteASAP" ? <ConcreteIcon name={iconName} style={iconStyle}/> :
             <Icon active type={iconType} name={iconName} style={iconStyle}/>;
     }
@@ -26,7 +28,6 @@ export default class SubHeader extends React.Component {
     render() {
         let iconType = this.props["iconType"] ? this.props["iconType"] : "FontAwesome5";
         let iconName = this.props["iconName"];
-        console.log(this.props.title);
         return (
             <View>
                 <View
@@ -37,7 +38,7 @@ export default class SubHeader extends React.Component {
                     </View>
                     <View>
                         <Text
-                            style={[appStyles.baseFont, appStyles.subHeaderTxt, appStyles.upperCase]}>
+                            style={[appStyles.customFont, appStyles.subHeaderTxt, appStyles.upperCase]}>
                             {this.props.title}
                         </Text>
                     </View>

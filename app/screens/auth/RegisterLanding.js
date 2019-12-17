@@ -5,7 +5,7 @@ import {Button, Text, Form, Content, Row, Col} from "native-base";
 import AppBackground from '../../components/AppBackground';
 import LoginHeader from '../../components/Headers/LoginHeader';
 
-import {appStyles} from '../assets/app_styles';
+import {appStyles} from '../../../assets/styles/app_styles';
 
 export default class RegisterLanding extends React.Component {
 
@@ -16,7 +16,7 @@ export default class RegisterLanding extends React.Component {
 
     render() {
         return (
-            <AppBackground alignTop={false} contentContainerStyle={[appStyles.horizontalCenter, appStyles.flex1]}>
+            <AppBackground contentContainerStyle={[appStyles.horizontalCenter]} alignContent="center">
                 <Content>
                     <LoginHeader/>
                     <Row style={[appStyles.marginAppDefault]}>

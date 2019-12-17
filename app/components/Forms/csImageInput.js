@@ -4,6 +4,7 @@ import {Text, View} from 'native-base';
 import {appStyles} from "../../../assets/styles/app_styles";
 import {TouchableOpacity} from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import UploadButton from "../Button/UploadButton";
 
 export default class csImageInput extends React.Component {
 
@@ -46,21 +47,7 @@ export default class csImageInput extends React.Component {
         }
         console.log(hasError);
         return (
-            <View style={[appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.my_5]}>
-                <TouchableOpacity
-                    style={[appStyles.baseFont, appStyles.py_5, appStyles.px_10]}
-                    onPress={this.uploadLogo}>
-                    <View style={[appStyles.flexRow]}>
-                        <View style={[appStyles.w_65, appStyles.horizontalCenter]}>
-                            <Text style={[appStyles.defaultFont]}>{this.state.logo_name}</Text>
-                        </View>
-                        <View
-                            style={[appStyles.w_35, appStyles.bgBlack, appStyles.py_10, appStyles.borderRadiusDefault]}>
-                            <Text style={[appStyles.colorWhite, appStyles.txtCenter]}>Upload</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <UploadButton onUpload={this.uploadLogo} placeholder={this.state.logo_name} />
         );
     }
 }
