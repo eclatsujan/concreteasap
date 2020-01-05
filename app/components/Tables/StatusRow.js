@@ -15,7 +15,6 @@ export default class StatusRow extends React.Component {
                 </Col>
                 <Col>
                     <Button style={[appStyles.bgBlack,appStyles.borderRadiusDefault]} onPress={()=>{
-                        // console.log()
                         this.props["onBtnClick"](this.props.row)
                     }}>
                         <View

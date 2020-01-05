@@ -1,5 +1,7 @@
 //Core React packages
 import * as React from 'react';
+
+import {ScrollView} from 'react-native';
 //Native Base
 import {Icon, Button, Text, Form, Item as FormItem, Input, Content, Row, Col, Right, View} from "native-base";
 //Redux Core
@@ -53,44 +55,46 @@ class LoginScreen extends React.Component {
         let app = this.props.app;
         let error = this.props.error;
         return (<AppBackground loading={app.get("loading")} enableKeyBoard alignContent={"center"}>
-            <Content>
+            <ScrollView>
                 <LoginHeader/>
                 <ErrorHeader error={error}/>
-                <Row style={[{fontSize: 56}]}>
-                    <Col>
-                        <Form style={appStyles.loginForm}>
-                            <FormItem style={appStyles.loginInput} regular>
-                                <Input style={[appStyles.baseFont]} placeholder='Email' value={this.state.email}
-                                       autoCapitalize='none'
-                                       onChangeText={(text) => this.setState({email: text})}/>
-                                <Icon active type="FontAwesome" name='user'/>
-                            </FormItem>
-                            <FormItem style={appStyles.loginInput} regular>
-                                <Input style={[appStyles.baseFont]} placeholder='••••••••'
-                                       value={this.state.password}
-                                       secureTextEntry={true}
-                                       autoCapitalize='none'
-                                       onChangeText={(text) => this.setState({password: text})}/>
-                                <Icon active type="FontAwesome5" name='key'/>
-                            </FormItem>
-                            <FormItem style={appStyles.borderTransparent} regular>
-                                <Right>
-                                    <Text style={[appStyles.customFont, appStyles.colorPrimary]}
-                                          onPress={() => this.props.navigation.navigate('Forget Password')}>FORGOT
-                                        PASSWORD</Text>
-                                </Right>
-                            </FormItem>
-                            <Button full style={[appStyles.marginDefault]} onPress={() => this.login()}>
-                                <Text style={[appStyles.btnLargeTxt, appStyles.colorBlack]}>Continue</Text>
-                            </Button>
-                            <Button full transparent
-                                    onPress={() => this.props.navigation.navigate('Register Landing')}>
-                                <Text style={[appStyles.btnLargeTxt, appStyles.txtCenter]}>New User</Text>
-                            </Button>
-                        </Form>
-                    </Col>
-                </Row>
-            </Content>
+                <View>
+                    <Row style={[{fontSize: 56}]}>
+                        <Col>
+                            <Form style={appStyles.loginForm}>
+                                <FormItem style={appStyles.loginInput} regular>
+                                    <Input style={[appStyles.baseFont]} placeholder='Email' value={this.state.email}
+                                           autoCapitalize='none'
+                                           onChangeText={(text) => this.setState({email: text})}/>
+                                    <Icon active type="FontAwesome" name='user'/>
+                                </FormItem>
+                                <FormItem style={appStyles.loginInput} regular>
+                                    <Input style={[appStyles.baseFont]} placeholder='••••••••'
+                                           value={this.state.password}
+                                           secureTextEntry={true}
+                                           autoCapitalize='none'
+                                           onChangeText={(text) => this.setState({password: text})}/>
+                                    <Icon active type="FontAwesome5" name='key'/>
+                                </FormItem>
+                                <FormItem style={appStyles.borderTransparent} regular>
+                                    <Right>
+                                        <Text style={[appStyles.customFont, appStyles.colorPrimary]}
+                                              onPress={() => this.props.navigation.navigate('Forget Password')}>FORGOT
+                                            PASSWORD</Text>
+                                    </Right>
+                                </FormItem>
+                                <Button full style={[appStyles.marginDefault]} onPress={() => this.login()}>
+                                    <Text style={[appStyles.btnLargeTxt, appStyles.colorBlack]}>Continue</Text>
+                                </Button>
+                                <Button full transparent
+                                        onPress={() => this.props.navigation.navigate('Register Landing')}>
+                                    <Text style={[appStyles.btnLargeTxt, appStyles.txtCenter]}>New User</Text>
+                                </Button>
+                            </Form>
+                        </Col>
+                    </Row>
+                </View>
+            </ScrollView>
         </AppBackground>)
     }
 }

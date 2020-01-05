@@ -3,7 +3,7 @@ import {createStackNavigator} from "react-navigation-stack";
 //Bid
 import BidOrderList from '../screens/Rep/Bid Orders/BidOrderList';
 import BidOrderDetail from '../screens/Rep/Bid Orders/BidOrderDetail';
-import BidMessageHome from "../screens/Rep/Bid Orders/BidMessageHome";
+import BidMessageHome from "../screens/Rep/Accepted Bids/BidMessageHome";
 
 //Pending Order Request
 import PendingBidList from '../screens/Rep/Pending Bids/PendingBidList';
@@ -34,7 +34,7 @@ export const repPendingBids= createStackNavigator({
 export const repBidOrders = createStackNavigator({
     "Bid Order List": BidOrderList,
     "Bid Order Detail": BidOrderDetail,
-    "Bid Message": BidMessageHome,
+    // "Bid Message": BidMessageHome,
 }, {
     initialRouteName: 'Bid Order List',
     headerMode: 'none',
@@ -47,6 +47,7 @@ export const repAcceptedBids = createStackNavigator({
     "Accepted Bid List": AcceptedBidList,
     "Accepted Bid Detail": AcceptedBidDetail,
     "Rep User Contact Detail": UserDetail,
+    "Rep View Message":BidMessageHome
 }, {
     headerMode: 'none',
     navigationOptions: {

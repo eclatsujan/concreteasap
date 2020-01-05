@@ -73,6 +73,15 @@ class AcceptedBidDetail extends React.Component {
 
                 <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.justifyItemsCenter]}
                         onPress={() => {
+                            this.props.navigation.navigate("Rep View Message", {
+                                message: bid.get("order").get("message")
+                            });
+                        }}>
+                    <Text style={appStyles.colorBlack}>View Message/Balance of Order</Text>
+                </Button>
+
+                <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.justifyItemsCenter]}
+                        onPress={() => {
                             this.props.navigation.navigate("Rep User Contact Detail", {
                                 user: bid.get("order").get("user")
                             });
@@ -124,8 +133,7 @@ class AcceptedBidDetail extends React.Component {
 
     getSingleBid(bid_id) {
         let accepted_bids = this.props.bid.get("accepted_bids").get("data");
-        // console.log(accepted_bids);
-        return accepted_bids.find((bid) => bid.id === bid_id);
+        return accepted_bids.find((bid) => bid.get("id") === bid_id);
     }
 
     showBidButton(bid) {

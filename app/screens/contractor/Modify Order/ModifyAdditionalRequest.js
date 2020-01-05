@@ -25,11 +25,13 @@ class ModifyAdditionalRequest extends React.Component {
         let order = this.props.navigation.getParam("order");
         let order_id = this.props.navigation.getParam("order_id");
         const full_order = order.merge(values);
+        let order_type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
 
         if (full_order.get("message_required") === "Yes") {
             this.props.navigation.navigate("ModifySpecialRequests", {
                 order: full_order,
-                order_id
+                order_id,
+                order_type
             })
         } else if (full_order.get("message_required") === "No") {
             this.props.navigation.navigate("ReviewOrder", {

@@ -51,7 +51,7 @@ export default class Notification extends React.Component {
                             </View>
                         </TouchableOpacity>
                         <Text style={appStyles.arialFont}>
-                            ({moment(data.get("date")).format("YYYY-MM-DD").toString()})
+                            ({moment(data.get("date")).format("DD/MM/YYYY").toString()})
                         </Text>
                     </Col>
                     <Col

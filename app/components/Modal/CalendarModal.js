@@ -11,7 +11,7 @@ export default class CalendarModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            markedDates: {}
+            markedDates: this.props.defaultDates
         };
         this.selected={
             selected: true,
@@ -31,37 +31,31 @@ export default class CalendarModal extends React.Component {
     }
 
     componentDidMount() {
-        let markedDates={};
-        this.props["defaultDates"].forEach((date)=>{
-            markedDates[date]=this.selected;
-        });
-        this.setState({markedDates});
+        // let markedDates={};
+        // console.log(this.props["defaultDates"]);
+        // if(this.props["defaultDates"]){
+        //
+        // }
+        //
+        // this.setState({markedDates});
     }
 
     addMarkDate(day) {
         let markedDates = {...this.state.markedDates};
 
         let keys = Object.keys(markedDates);
-
-        if (keys.length < 3) {
-            if(markedDates[day.dateString]){
-                delete markedDates[day.dateString];
+        if(markedDates[day.dateString]===undefined){
+            if (keys.length < 3) {
+                    markedDates[day.dateString] = this.selected;
             }
-            else{
+            else {
+                delete markedDates[keys[0]];
                 markedDates[day.dateString] = this.selected;
             }
-
-        }else {
-            markedDates[day.dateString] = this.selected;
-            delete markedDates[keys[0]];
         }
-
-        Object.keys(markedDates).sort(function(a,b){
-            // Turn your strings into dates, and then subtract them
-            // to get a value that is either negative, positive, or zero.
-            return new Date(a)-new Date(b);
-        });
-        // console.log(markedDates);
+        else{
+            delete markedDates[day.dateString];
+        }
         this.setState({markedDates: markedDates});
         this.props["onSave"](markedDates);
     }

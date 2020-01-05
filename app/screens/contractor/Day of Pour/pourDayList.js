@@ -12,6 +12,7 @@ import {appStyles} from "../../../../assets/styles/app_styles";
 import ButtonIcon from "../../../components/Button/ButtonIcon";
 import {BackHandler} from "react-native";
 import navigationHelper from "../../../helpers/navigationHelper";
+import EmptyTable from "../../../components/Tables/EmptyTable";
 
 
 class pourDayList extends React.Component {
@@ -22,6 +23,7 @@ class pourDayList extends React.Component {
         this.state = {
             rowHeaders: ['Order No.', 'Status', 'Suburb'],
             rowColumns: ["id", "status", 'order_concrete.suburb'],
+            emptyMessage:"There is no day of orders today."
         };
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
@@ -55,7 +57,7 @@ class pourDayList extends React.Component {
                                     this.props.navigation.navigate("DayOfPour", {
                                         order_id: order.get("id"),
                                         order_type: "pour_orders",
-                                        backRoute:"pourDayList"
+                                        backRoute: "pourDayList"
                                     });
                                 }}/>
                 </View>
@@ -73,13 +75,13 @@ class pourDayList extends React.Component {
 
 
     showContent(orders, app) {
-        return app.loading ? <SkeletonLoading/> :
-            <CustomTable bgStyle={[appStyles.bgWhite]}
+        return app.get("loading") ? <SkeletonLoading/> :
+            orders?.size>0?<CustomTable bgStyle={[appStyles.bgWhite]}
                          rowHeaders={this.state.rowHeaders}
                          rowData={orders} rowColumns={this.state.rowColumns}
                          colButtonComponent={this.showComponentButton}
                          customRowComponent={this.showCustomRow}
-                         buttonText="View" onPress={this._alertIndex}/>;
+                         buttonText="View" onPress={this._alertIndex}/>:<EmptyTable message={this.state.emptyMessage} />;
     }
 
 

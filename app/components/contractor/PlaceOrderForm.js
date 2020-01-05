@@ -23,6 +23,8 @@ class PlaceOrderForm extends React.Component {
         this.onCalculatorClick = this.onCalculatorClick.bind(this);
     }
 
+
+    //To use calculator
     static getDerivedStateFromProps(props,state) {
         if(props.quantity!==""&&typeof props.quantity!=="object"){
             props.change("quantity",props.quantity);
@@ -40,7 +42,7 @@ class PlaceOrderForm extends React.Component {
     }
 
     onCalculatorClick() {
-        navigationHelper.navigate("orderCalculator",{
+        navigationHelper.navigate(this.props["calculatorRoute"],{
             "backAction":true,
             "backRoute":this.props["backRoute"]
         });

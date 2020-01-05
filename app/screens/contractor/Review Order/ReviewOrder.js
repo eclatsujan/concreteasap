@@ -81,14 +81,16 @@ class ReviewOrder extends React.Component {
         full_order=full_order.set("special_instructions", order.get("message_required") === "Yes" ? special.get("special_instructions") : "");
         full_order=full_order.set("delivery_instructions", order.get("message_required") === "Yes" ? special.get("delivery_instructions") : "");
 
+        let order_type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
+
         if (order.get("message_required") !== "No") {
             if (order_id) {
                 this.props.navigation.navigate("ModifyReviewInstructions", {
-                    full_order, order_id
+                    full_order, order_id,order_type
                 });
             } else {
                 this.props.navigation.navigate("ReviewInstructions", {
-                    full_order
+                    full_order,
                 });
             }
 

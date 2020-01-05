@@ -104,7 +104,7 @@ export const login = (email, password) => {
             }
         }, (err) => {
             // console.log(err);
-            dispatch(errorActions.setError(err));
+            dispatch(errorActions.setError(err.message));
             dispatch(appActions.loading(false));
         });
 
@@ -136,6 +136,7 @@ export const register = (user, photo) => {
                 //Handle Server issue or no user roles
             }
         }).catch((err) => {
+            // console.log(err);
             dispatch(errorActions.setError(err.message, err.errors));
 
             dispatch(appActions.loading(false));

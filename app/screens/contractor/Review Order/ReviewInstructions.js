@@ -21,7 +21,9 @@ class ReviewInstructions extends React.Component {
 
     submitForm(full_order, order_id) {
         if (order_id) {
-            this.props.modifyOrder(full_order.set("order_id",order_id).toJS());
+            let order_type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
+
+            this.props.modifyOrder(full_order.set("order_id",order_id).toJS(),order_type);
         } else {
             this.props.createOrder(full_order.toJS());
         }
@@ -64,8 +66,8 @@ const mapDispatchToProps = (dispatch) => {
         createOrder: (order) => {
             return dispatch(actions.order.createOrder(order))
         },
-        modifyOrder: (order) => {
-            return dispatch(actions.order.modifyOrder(order));
+        modifyOrder: (order,order_type) => {
+            return dispatch(actions.order.modifyOrder(order,order_type));
         }
     }
 };

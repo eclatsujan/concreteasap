@@ -62,7 +62,8 @@ class PlaceOrderRequest extends React.Component {
             <AppBackground enableKeyBoard>
                 <AppHeader/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Place Order"/>
-                <PlaceOrderForm onSubmit={this.handleSubmit} quantity={this.state.quantity} backRoute={"PlaceOrderRequest"}/>
+                <PlaceOrderForm onSubmit={this.handleSubmit} quantity={this.state.quantity} backRoute={"PlaceOrderRequest"}
+                                calculatorRoute={"orderCalculator"}/>
             </AppBackground>
         );
     }

@@ -6,7 +6,6 @@ import * as types from './constants'
  * @param errors
  */
 export const setError = (error_msg, errors = []) => {
-    console.log(error_msg);
     return {
         type: types.SET_ERROR,
         payload: {error_msg, errors}

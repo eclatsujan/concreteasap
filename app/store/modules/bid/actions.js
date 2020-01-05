@@ -9,9 +9,21 @@ import * as order from '../order/actions'
 import navigationHelper from '../../../helpers/navigationHelper';
 import {PUSH_BIDS} from "./constants";
 
+export function placeMessagePrice(pricePer, order_id) {
+    return (dispatch, getState) => {
+        bidService.placeMessagePrice(pricePer, order_id).then((res) => {
+            navigationHelper.goBack();
+            dispatch(appActions.loading(false));
+        }).catch((err) => {
+            console.log(err);
+            dispatch(appActions.loading(false));
+        });
+    };
+}
+
 
 export const getRepAcceptedBids = () => {
-    return (dispatch,getState) => {
+    return (dispatch, getState) => {
         // console.log(getState().get("bids"));
         // dispatch(setLoadState(true));
         bidService.getRepAcceptedBids().then((res) => {
@@ -36,18 +48,17 @@ export const getRepPendingBids = () => {
 };
 
 export const getRepBidOrders = () => {
-    return (dispatch,getState) => {
-        let isLoading=getState().get("bid").get("bid_orders").get("isLoading");
-        if(!isLoading){
-            dispatch(setLoadState("bid_orders",true));
+    return (dispatch, getState) => {
+        let isLoading = getState().get("bid").get("bid_orders").get("isLoading");
+        if (!isLoading) {
+            dispatch(setLoadState("bid_orders", true));
             bidService.getRepBidOrders().then((res) => {
                 dispatch(pushBids("bid_orders", res["data"], res["current_page"], res["last_page"], res["total"]));
                 dispatch(appActions.loading(false));
-                dispatch(setLoadState("bid_orders",false));
+                dispatch(setLoadState("bid_orders", false));
             }).catch((err) => {
-                // Alert.alert("Issue","Some issue occured while rendering data");
                 dispatch(appActions.loading(false));
-                dispatch(setLoadState("bid_orders",false));
+                dispatch(setLoadState("bid_orders", false));
             });
         }
 
@@ -56,27 +67,21 @@ export const getRepBidOrders = () => {
 
 // export const get
 export const getRepPreviousBids = () => {
-    return (dispatch,getState) => {
-
-        // dispatch(setLoadState("previous_bids",true));
+    return (dispatch, getState) => {
         bidService.getRepPreviousBids().then((res) => {
-            // console.log(res);
             dispatch(pushBids("previous_bids", res["data"], res["current_page"], res["last_page"], res["total"]));
             dispatch(appActions.loading(false));
-            // dispatch(setLoadState("previous_bids",false));
         }).catch((err) => {
-            // console.log(err);
-            // Alert.alert("Issue","Some issue occured while rendering data");
             dispatch(appActions.loading(false));
         });
     }
 };
 
-export const setLoadState= (collectionName,isLoading) =>{
+export const setLoadState = (collectionName, isLoading) => {
     return (dispatch) => {
         dispatch({
-            type:types.SET_LOADSTATE,
-            payload:{
+            type: types.SET_LOADSTATE,
+            payload: {
                 collectionName,
                 isLoading
             }
@@ -88,11 +93,23 @@ export const placeBid = (order_id) => {
     return (dispatch) => {
         dispatch(appActions.loading(true));
         dispatch({
-            type:types.PLACE_BID,
-            payload:{
+            type: types.PLACE_BID,
+            payload: {
                 order_id
             }
         })
+    }
+};
+
+export const addMessage = (price) => {
+    return (dispatch) => {
+        dispatch({
+            type: types.ADD_MESSAGE,
+            payload: {
+                price,
+
+            }
+        });
     }
 };
 

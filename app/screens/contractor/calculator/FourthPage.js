@@ -1,4 +1,4 @@
-import * as React from 'react';
+    import * as React from 'react';
 import {View, Button, Text, Content, Form, Item, Input} from 'native-base';
 
 import AppBackground from '../../../components/AppBackground';

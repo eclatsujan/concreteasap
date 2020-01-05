@@ -20,12 +20,14 @@ export const orderService = {
     repCancelOrder,
     updateBidPaymentMethod,
     repReleaseOrder,
-    getAllDayOfPour
+    getAllDayOfPour,
+    sendOrderMessage
 };
 
 //Common Function
 async function contractorCancelOrder(order_id){
-    let token=await  getToken();
+    console.log(order_id);
+    let token=await getToken();
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
@@ -195,5 +197,16 @@ async function repReleaseOrder(bid_id){
         body: JSON.stringify({bid_id})
     };
     return fetch(REP_PREFIX_URI+'release_order', requestOptions).then(handleResponse);
+}
+
+async function sendOrderMessage(order_id,quantity){
+    let token=await getToken();
+    let value={order_id,quantity};
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
+        body: JSON.stringify(value)
+    };
+    return fetch(CONTRACTOR_PREFIX_URI+'order/messageOrder', requestOptions).then(handleResponse);
 }
 

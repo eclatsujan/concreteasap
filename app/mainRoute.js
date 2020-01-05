@@ -4,14 +4,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 
 
 //contractor
-import {
-    acceptedOrders,
-    calculator,
-    pendingOrder,
-    placeOrderStack,
-    placeOrderDrawerStack,
-    dayOfPour, dayofPourStack
-} from "./routes/contractor";
+import {acceptedOrders, calculator, pendingOrder, placeOrderDrawerStack, dayOfPour, dayofPourStack} from "./routes/contractor";
 
 import Notifications from "./screens/User/Notification/Notifications";
 import HomeScreen from "./screens/contractor/Home";

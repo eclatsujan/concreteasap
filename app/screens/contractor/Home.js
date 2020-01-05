@@ -13,10 +13,12 @@ import HomeButton from '../../components/Button/HomeButton'
 import {appStyles} from "../../../assets/styles/app_styles";
 
 import OneSignal from "react-native-onesignal";
-import {StackActions, NavigationActions} from "react-navigation";
+import {withNavigation} from "react-navigation";
 import navigationHelper, {resetNavigation} from "../../helpers/navigationHelper";
+import {actions} from "../../store/modules";
+import connect from "react-redux/lib/connect/connect";
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -65,19 +67,36 @@ export default class HomeScreen extends React.Component {
                 <ScrollView contentContainerStyle={[appStyles.flexGrow]} style={[appStyles.pb_45]}>
                     <AppHeader/>
                     <Content contentContainerStyle={[appStyles.horizontalCenter, appStyles.flex1]}>
-                        <HomeButton onPress={() => resetNavigation("PlaceOrderLanding")}
-                                    text="Place New Order" iconType="ConcreteASAP" iconName="place-order"/>
-                        <HomeButton onPress={() => resetNavigation("ViewOrderBids", "Pending Order")}
-                                    text="View Order Requests" iconType="ConcreteASAP" iconName="pending-order"/>
-                        <HomeButton onPress={() => resetNavigation("AcceptedOrders", "Accepted Order")}
-                                    text="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"/>
-                        <HomeButton onPress={() => resetNavigation("pourDayList", "Day of Pour")}
-                                    text={"Day of Pour"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
-                                    iconName={"truck"}/>
-                        <HomeButton onPress={() => this.props.navigation.navigate("Notifications")}
-                                    text="Notifications" iconType="ConcreteASAP" iconName="bell"/>
-                        <HomeButton onPress={() => this.props.navigation.navigate("Calculator")}
-                                    text="Calculators" iconType="ConcreteASAP" iconName="calculators"/>
+                        <HomeButton text="Place New Order" iconType="ConcreteASAP" iconName="place-order"
+                                    onPress={() => {
+                                        resetNavigation("PlaceOrderLanding");
+                                        this.props.appLoading();
+                                    }}/>
+                        <HomeButton text="View Order Requests" iconType="ConcreteASAP" iconName="pending-order"
+                                    onPress={() => {
+                                        resetNavigation("ViewOrderBids", "Pending Order");
+                                        this.props.appLoading();
+                                    }}/>
+                        <HomeButton text="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"
+                                    onPress={() => {
+                                        resetNavigation("AcceptedOrders", "Accepted Order");
+                                        this.props.appLoading();
+                                    }}/>
+                        <HomeButton text={"Day of Pour"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
+                                    iconName={"truck"}
+                                    onPress={() => {
+                                        resetNavigation("pourDayList", "Day of Pour");
+                                        this.props.appLoading();
+                                    }}/>
+                        <HomeButton text="Notifications" iconType="ConcreteASAP" iconName="bell"
+                                    onPress={() => {
+                                        this.props.navigation.navigate("Notifications");
+                                        this.props.appLoading();
+                                    }}/>
+                        <HomeButton text="Calculators" iconType="ConcreteASAP" iconName="calculators"
+                                    onPress={() => {
+                                        this.props.navigation.navigate("Calculator")
+                                    }}/>
                         <HomeButton onPress={() => this.props.navigation.navigate("FAQ")}
                                     text="faq" iconType="ConcreteASAP" iconName="question"/>
                     </Content>
@@ -86,3 +105,14 @@ export default class HomeScreen extends React.Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        appLoading: () => {
+            return dispatch(actions.app.loading())
+        }
+    }
+};
+
+
+export default withNavigation(connect(null, mapDispatchToProps)(HomeScreen));

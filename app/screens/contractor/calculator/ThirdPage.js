@@ -35,7 +35,7 @@ export default class ThirdPage extends React.Component {
         let total;
 
         let height = parseFloat(this.state.first);
-        let diameter = parseFloat(this.state.second);
+        let diameter = parseFloat(this.state.second)/1000;
         let quantity = parseFloat(this.state.third);
 
         let area=Math.pow((diameter / 2),2) * Math.PI;

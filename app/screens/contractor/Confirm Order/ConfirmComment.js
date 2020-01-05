@@ -22,6 +22,8 @@ class ConfirmComment extends React.Component {
     }
 
     handleSubmit(values){
+        let order_type = this.props.navigation.getParam("order_type") ? this.props.navigation.getParam("order_type") : "accepted_orders";
+
         let order_review={};
         order_review["order_id"]=this.props.navigation.getParam("order_id");
         order_review["message_quantity"]=parseFloat(values.get("total"));
@@ -30,8 +32,7 @@ class ConfirmComment extends React.Component {
         order_review["total"]=parseFloat(values.get("total"));
         order_review["rating"]=values.get("rating");
         order_review["comment"]=values.get("comment");
-
-        console.log(order_review);
+        this.props.completeOrder(order_review,order_type);
 
     }
 
@@ -52,8 +53,8 @@ class ConfirmComment extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        completeOrder: (order_review) => {
-            return dispatch(actions.order.contractorCompleteOrder(order_review))
+        completeOrder: (order_review,order_type) => {
+            return dispatch(actions.order.contractorCompleteOrder(order_review,order_type))
         }
     }
 };

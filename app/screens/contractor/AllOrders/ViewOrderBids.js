@@ -59,6 +59,7 @@ class ViewOrderBids extends React.Component {
     }
 
     _alertIndex(order) {
+        this.props.appLoading();
         this.props.navigation.navigate("ViewBids", {order_id: order.get("id")});
     }
 
@@ -79,7 +80,7 @@ class ViewOrderBids extends React.Component {
     }
 
     render() {
-        let orders = this.props.order.get("pending_orders");
+        let orders = this.props.order.get("pending_orders").get("data");
         return (
             <AppBackground>
                 <ScrollView style={[appStyles.mb_10]}>
@@ -107,6 +108,9 @@ class ViewOrderBids extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        appLoading: () => {
+            return dispatch(actions.app.loading())
+        },
         getContractorOrders: () => {
             return dispatch(actions.order.getContractorOrders())
         },

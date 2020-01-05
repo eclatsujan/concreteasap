@@ -56,10 +56,10 @@ class ResetPasswordToken extends React.Component {
     }
 
     render() {
-        let error=this.props.error.toJS();
-        let app=this.props.app.toJS();
+        let errors=this.props.error.get("errors");
+        let app=this.props.app;
         return (
-            <AppBackground loading={app.loading} alignContent="center" enableKeyBoard>
+            <AppBackground loading={app.get("loading")} alignContent="center" enableKeyBoard>
                 <Content style={[appStyles.content]}>
                     <LoginHeader/>
                     <ErrorHeader error={this.props.error}/>
@@ -68,43 +68,43 @@ class ResetPasswordToken extends React.Component {
                             <Form style={appStyles.loginForm}>
                                 {!this.props.navigation.getParam("email") > 0 &&
                                 <FormItem
-                                    style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["email"])]}
+                                    style={[appStyles.loginInput, helper.error.getErrorStyle(errors.get("email"))]}
                                     regular>
                                     <Input style={[appStyles.baseFont]} placeholder='Email' value={this.state.email}
                                            onChangeText={(text) => this.setState({email: text})}/>
                                     <Icon active type="FontAwesome5" name='user'/>
                                 </FormItem>
                                 }
-                                {helper.error.showErrorMessage(error.errors["email"])}
+                                {helper.error.showErrorMessage(errors.get("email"))}
                                 <FormItem
-                                    style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["token"])]}
+                                    style={[appStyles.loginInput, helper.error.getErrorStyle(errors.get("token"))]}
                                     regular>
                                     <Input style={[appStyles.baseFont]} placeholder='Token' value={this.state.token}
                                            onChangeText={(text) => this.setState({token: text})}/>
                                     <Icon active type="FontAwesome5" name='shield-alt'/>
                                 </FormItem>
-                                {helper.error.showErrorMessage(error.errors["token"])}
+                                {helper.error.showErrorMessage(errors.get("token"))}
                                 <FormItem
-                                    style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["password"])]}
+                                    style={[appStyles.loginInput, helper.error.getErrorStyle(errors.get("password"))]}
                                     regular>
                                     <Input style={[appStyles.baseFont]} placeholder='Password'
                                            value={this.state.password}
                                            onChangeText={(text) => this.setState({password: text})}/>
                                     <Icon active type="FontAwesome5" name='key'/>
                                 </FormItem>
-                                {helper.error.showErrorMessage(error.errors["password"])}
+                                {helper.error.showErrorMessage(errors.get("password"))}
                                 <FormItem
-                                    style={[appStyles.loginInput, helper.error.getErrorStyle(error.errors["password_confirmation"])]}
+                                    style={[appStyles.loginInput, helper.error.getErrorStyle(errors.get("password_confirmation"))]}
                                     regular>
                                     <Input style={[appStyles.baseFont]} placeholder='Confirm Password'
                                            value={this.state.password_confirmation}
                                            onChangeText={(text) => this.setState({password_confirmation: text})}/>
                                     <Icon active type="FontAwesome5" name='key'/>
                                 </FormItem>
-                                {helper.error.showErrorMessage(error.errors["password_confirmation"])}
+                                {helper.error.showErrorMessage(errors.get("password_confirmation"))}
                             </Form>
-                            <Button full style={[appStyles.button, appStyles.btnPadding]} onPress={this.resetPassword}>
-                                <Text style={[appStyles.btnTxt, appStyles.baseFont]}>Reset Password</Text>
+                            <Button full style={[appStyles.button]} onPress={this.resetPassword}>
+                                <Text style={[appStyles.btnTxt, appStyles.customFont]}>Reset Password</Text>
                             </Button>
                         </Col>
                     </Row>

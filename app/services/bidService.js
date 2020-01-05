@@ -1,12 +1,14 @@
 import {REP_PREFIX_URI} from '../config';
 import * as SecureStore from 'expo-secure-store';
-import {getToken,handleResponse} from '../helpers/token';
+import {getToken} from '../helpers/token';
+import {handleResponse} from '../helpers/httpHandler'
 export const bidService = {
     placeBid,
     getRepBidOrders,
     getRepAcceptedBids,
     getRepPendingBids,
-    getRepPreviousBids
+    getRepPreviousBids,
+    placeMessagePrice
 };
 
 
@@ -62,3 +64,12 @@ async function getRepPreviousBids(){
     return fetch(REP_PREFIX_URI+"bid/previous_order",requestOptions).then(handleResponse);
 }
 
+async function placeMessagePrice(price,order_id){
+    let token=await getToken();
+    const requestOptions={
+        method:'POST',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token },
+        body: JSON.stringify({price,order_id})
+    };
+    return fetch(REP_PREFIX_URI+"order/setMessagePrice",requestOptions).then(handleResponse);
+}

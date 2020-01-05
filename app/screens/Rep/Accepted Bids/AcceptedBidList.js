@@ -29,11 +29,11 @@ class AcceptedBidList extends React.Component {
             rowColumns: ["order.id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
             loading: true,
             emptyMessage: "There are no Accepted Orders right now.",
-            reRender:false
+            reRender: false
         };
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            this.interval = setInterval(()=>{
+            this.interval = setInterval(() => {
                 this.props.getRepAcceptedBids();
             }, 6000);
         });
@@ -44,12 +44,12 @@ class AcceptedBidList extends React.Component {
 
         this._alertIndex = this._alertIndex.bind(this);
 
-        this.showCustomRow=this.showCustomRow.bind(this);
+        this.showCustomRow = this.showCustomRow.bind(this);
     }
 
     componentDidMount() {
         this.props.getRepAcceptedBids();
-        this.setState({reRender:true});
+        this.setState({reRender: true});
     }
 
     componentWillUnmount() {
@@ -58,16 +58,17 @@ class AcceptedBidList extends React.Component {
     }
 
     _alertIndex(bid) {
-        this.props.navigation.navigate("Accepted Bid Detail", {bid_id:bid["id"]});
+        let bid_id=bid.get("id");
+        this.props.navigation.navigate("Accepted Bid Detail", {bid_id});
     }
 
-    showComponentButton(){
+    showComponentButton() {
 
     }
 
-    showCustomRow(rowData){
+    showCustomRow(rowData) {
         return (
-            <StatusRow row={rowData} status={getNested(rowData, "order.status")} onBtnClick={this._alertIndex} />
+            <StatusRow row={rowData} status={getNested(rowData, "order.status")} onBtnClick={this._alertIndex}/>
         );
     }
 
@@ -78,7 +79,7 @@ class AcceptedBidList extends React.Component {
                          buttonText="View Details" onPress={this._alertIndex}
                          colButtonComponent={this.showComponentButton}
                          customRowComponent={this.showCustomRow}/>
-             :<EmptyTable message={this.state.emptyMessage}/>;
+            : <EmptyTable message={this.state.emptyMessage}/>;
     }
 
     render() {
@@ -91,7 +92,7 @@ class AcceptedBidList extends React.Component {
                     <SubHeader iconType="ConcreteASAP" iconName="accepted-order" title="Accepted Bids"/>
                     <Content>
                         <View style={[appStyles.bgWhite]}>
-                            {app.get("loading")? <SkeletonLoading/>
+                            {app.get("loading") ? <SkeletonLoading/>
                                 : this.displayRow(accepted_bids.get("data"))}
                         </View>
                     </Content>

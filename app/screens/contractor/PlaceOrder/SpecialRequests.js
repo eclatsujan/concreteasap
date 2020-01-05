@@ -23,11 +23,15 @@ class SpecialRequests extends React.Component {
     handleSubmit(special) {
         const {params} = this.props.navigation.state;
         const order = params ? params.order : null;
+
+        let order_type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
+
         if(params.order_id){
             this.props.navigation.navigate("ModifyReviewOrder", {
                 order,
                 special,
-                "order_id":params.order_id
+                "order_id":params.order_id,
+                order_type
             });
         }
         else{

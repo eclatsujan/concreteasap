@@ -12,9 +12,10 @@ export default class AppHeader extends React.Component {
     }
 
     customMenu() {
-        return this.props["backMenu"] ? <TouchableWithoutFeedback onPress={() => navigationHelper.goBack()}>
+        return this.props["backMenu"] ? <TouchableWithoutFeedback style={appStyles.bgWhite}
+                                                                  onPress={() => navigationHelper.goBack()}>
             <Icon name="arrow-back" style={appStyles.colorPrimary}/>
-        </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => navigationHelper.openDrawer()}>
+        </TouchableWithoutFeedback> : <TouchableWithoutFeedback style={appStyles.flex1} onPress={() => navigationHelper.openDrawer()}>
             <Icon name='menu' style={appStyles.colorPrimary}/>
         </TouchableWithoutFeedback>;
     }

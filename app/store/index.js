@@ -16,10 +16,9 @@ import { reducer as formReducer } from 'redux-form/immutable';
 
 import { reducers, actions,States } from './modules'
 
-// import compose from 'redux/lib/compose';
-
 const initialStates=new Immutable.Map({
   app:States.app,
+  alert:States.alert,
   user:States.user,
   contractor:States.contractor,
   rep:States.rep,
@@ -43,7 +42,6 @@ const middleware = applyMiddleware(thunk);
 /**
  * Create app store.
  */
-// const initialState = Immutable.Map();
 const createStore = _createStore(combineReducers(merged),initialStates,middleware);
 
 export { createStore, actions }

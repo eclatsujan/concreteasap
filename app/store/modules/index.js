@@ -12,6 +12,7 @@ import {notifications} from './notifications'
  */
 export const States = {
   app:app.defaultState,
+  alert:app.defaultState,
   user:user.defaultState,
   contractor:contractor.defaultState,
   rep:rep.defaultState,
@@ -26,6 +27,7 @@ export const States = {
  */
 export const reducers = {
   app: app.reducer,
+  alert:app.reducer,
   user: user.reducer,
   contractor:contractor.reducer,
   rep:rep.reducer,
@@ -40,6 +42,7 @@ export const reducers = {
  */
 export const actions = {
   app: app.actions,
+  alert:alert.actions,
   user: user.actions,
   contractor: contractor.actions,
   rep:rep.actions,

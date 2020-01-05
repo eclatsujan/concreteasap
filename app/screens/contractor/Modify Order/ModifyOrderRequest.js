@@ -39,25 +39,25 @@ class ModifyOrderRequest extends React.Component {
     }
 
     handleSubmit(values) {
+        let order_type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
         let order_id = this.props.navigation.getParam("order_id");
-        // let order = ;
         let order=values.set("type", "concrete");
         navigationHelper.navigate("ModifyAdditionalRequest", {
             "order": order,
-            "order_id":order_id
+            "order_id":order_id,
+            order_type
         });
     }
 
     loadOrder(type) {
         let order = new Immutable.Map({});
         let order_id = this.props.navigation.getParam("order_id");
+
         if(order_id) {
             let orders = this.props.orders;
             let accepted_order = orders.get(type).get("data").find((order) => {
                 return order.get("id") === order_id;
             });
-            console.log(type);
-            console.log(orders.get(type));
             if(accepted_order){
                 let colours = accepted_order.get("order_concrete").get("colours");
                 let concrete = accepted_order.get("order_concrete");
@@ -88,12 +88,13 @@ class ModifyOrderRequest extends React.Component {
     render() {
         let type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
         let order = this.loadOrder(type);
+        console.log(order);
         return (
             <AppBackground enableKeyBoard>
                 <AppHeader/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Modify Order"/>
                 <PlaceOrderForm onSubmit={this.handleSubmit} initialValues={order} quantity={this.state.quantity}
-                                backRoute={"ModifyOrderRequest"}/>
+                                calculatorRoute={"Modify Order Calculator"}/>
             </AppBackground>
         );
     }

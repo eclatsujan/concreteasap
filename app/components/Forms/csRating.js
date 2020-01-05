@@ -29,8 +29,7 @@ export default class csRating extends React.Component {
                     showRating={false} type="star"
                     ratingCount={5} defaultRating={0}
                     size={22} onFinishRating={(rate) => {
-                        console.log(rate);
-                    input.onChange(rate);
+                        input.onChange(rate);
                 }}/>
                 </View>
                 {hasError ? showErrorMessage(error) : null}

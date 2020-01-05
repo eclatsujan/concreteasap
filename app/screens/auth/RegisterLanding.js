@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Button, Text, Form, Content, Row, Col} from "native-base";
-
+import {Button, Text, Form, Row, Col} from "native-base";
+import {ScrollView} from 'react-native';
 //Custom Component
 import AppBackground from '../../components/AppBackground';
 import LoginHeader from '../../components/Headers/LoginHeader';
@@ -17,7 +17,7 @@ export default class RegisterLanding extends React.Component {
     render() {
         return (
             <AppBackground contentContainerStyle={[appStyles.horizontalCenter]} alignContent="center">
-                <Content>
+                <ScrollView>
                     <LoginHeader/>
                     <Row style={[appStyles.marginAppDefault]}>
                         <Col>
@@ -39,7 +39,7 @@ export default class RegisterLanding extends React.Component {
                             </Form>
                         </Col>
                     </Row>
-                </Content>
+                </ScrollView>
             </AppBackground>
         );
     }

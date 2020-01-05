@@ -6,7 +6,7 @@ import {Field, reduxForm} from "redux-form/lib/immutable";
 import csTextBox from "../../Forms/csTextBox";
 import {formValidation} from "../../../helpers/validation";
 
-class ConfirmReviewForm extends React.Component {
+class ConfirmReviewDetail extends React.Component {
 
     constructor(props) {
         super(props);
@@ -48,7 +48,7 @@ class ConfirmReviewForm extends React.Component {
                 <View>
                     <View>
                         <Text style={[appStyles.customFont, appStyles.boldFont, appStyles.upperCase]}>
-                            Message (Please enter Amount Ordered)
+                            Message
                         </Text>
                     </View>
                     <Row style={[appStyles.py_5, appStyles.verticalCenter]}>
@@ -112,6 +112,6 @@ class ConfirmReviewForm extends React.Component {
 }
 
 
-let confirmReviewForm = reduxForm({form: "orderReview", "enableReinitialize": true})(ConfirmReviewForm);
+let confirmReviewForm = reduxForm({form: "orderReview", "enableReinitialize": true})(ConfirmReviewDetail);
 
 export default confirmReviewForm;

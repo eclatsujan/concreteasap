@@ -37,7 +37,6 @@ export default class csMapBoxPicker extends React.Component {
             setTimeout(() => {
                 mapBoxService.searchText(search_value).then((res) => {
                     if (!res.ok) {
-                        console.log(res);
                         throw new Error("error");
                         // throw new Error(res[""]);
                     }

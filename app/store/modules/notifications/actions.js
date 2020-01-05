@@ -5,7 +5,7 @@ import * as appActions from "../app/actions";
 export function markAsRead(notification_id) {
 
     return dispatch => {
-
+        loading(true);
         userService.markAsRead(notification_id).then((res) => {
             dispatch({
                 type: types.REMOVE_NOTIFICATIONS,
@@ -13,6 +13,7 @@ export function markAsRead(notification_id) {
                     notification_id
                 }
             });
+            loading(false);
         }).catch((err) => {
 
         });
@@ -24,8 +25,9 @@ export function markAsRead(notification_id) {
  * Set loading status on/off
  * @param {boolean} yes Loading status
  */
+
 export const get = () => {
-    return dispatch => {
+    return (dispatch,getState) => {
         userService.getNotifications().then((res) => {
             dispatch({
                 type: types.GET_NOTIFICATIONS,
@@ -38,5 +40,16 @@ export const get = () => {
             dispatch(appActions.loading(false));
         });
     };
+};
+
+export const loading = (isLoading) => {
+    return dispatch => {
+        dispatch({
+            type:types.SET_LOADING,
+            payload:{
+                isLoading
+            }
+        })
+    }
 };
 

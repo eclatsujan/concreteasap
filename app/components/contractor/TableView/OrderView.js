@@ -27,7 +27,25 @@ export default class OrderView extends React.Component {
     }
 
     closeAnimation() {
-        this.props["onArchiveHandler"](this.props["order"]);
+        Animated.parallel([
+            // Animated.timing(
+            //     this.state.height,
+            //     {
+            //         toValue:0,
+            //         duration:1000
+            //     }
+            // ),
+            // Animated.timing(
+            //     this.state.opacity,
+            //     {
+            //         toValue:0,
+            //         duration:1000
+            //     }
+            // )
+        ]).start(()=>{
+            this.props["onArchiveHandler"](this.props["order"]);
+        });
+
     }
 
     render() {

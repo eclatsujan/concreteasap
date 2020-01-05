@@ -11,6 +11,7 @@ export const defaultState = Immutable.Map({
 export const reducer=(state, action) => {
     switch (action.type) {
         case SET_ERROR:
+            console.log(action.payload.error_msg);
             return state.set("error_msg",action.payload.error_msg).setIn(["errors"], Immutable.fromJS(action.payload.errors));
         case REMOVE_ERROR:
             return defaultState;

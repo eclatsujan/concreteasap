@@ -24,6 +24,20 @@ class AdditionalOrderForm extends React.Component {
             selectedDate: [],
             showCalendar: false
         };
+        this.selected={
+            selected: true,
+            marked: true,
+            // selectedColor: '#14E22A',
+            customStyles: {
+                container: {
+                    backgroundColor: '#14E22A'
+                },
+                text: {
+                    color: 'black',
+                    fontWeight: 'bold'
+                },
+            },
+        };
         this.updateDate = this.updateDate.bind(this);
         this.updateDateStateOnClose = this.updateDateStateOnClose.bind(this);
         this.updateDateState = this.updateDateState.bind(this);
@@ -92,9 +106,28 @@ class AdditionalOrderForm extends React.Component {
 
     }
 
+    formatDate(initialDates){
+        let markedDates={};
+        if(this.props["defaultDates"]){
+            this.props["defaultDates"].forEach((date)=>{
+                markedDates[date]=this.selected;
+            });
+        }
+        return markedDates;
+    }
+
     render() {
         const {handleSubmit, initialValues} = this.props;
         const {show, date, mode} = this.state;
+        let dates=[];
+        if(!initialValues?.get("delivery_date")&&!initialValues?.get("delivery_date1")&&!initialValues?.get("delivery_date2")){
+            dates=[];
+        }
+        else{
+            dates=[initialValues?.get("delivery_date"),
+                initialValues?.get("delivery_date1"), initialValues?.get("delivery_date2")];
+        }
+        let markedDates=this.formatDate(dates);
         return (
             <View>
                 <View>
@@ -178,8 +211,7 @@ class AdditionalOrderForm extends React.Component {
                 </View>
 
                 <CalendarModal modalVisibility={this.state.showCalendar} onSave={this.updateDateState}
-                               defaultDates={[initialValues?.get("delivery_date"),
-                                   initialValues?.get("delivery_date1"), initialValues?.get("delivery_date2")]}
+                               defaultDates={markedDates}
                                onClose={this.updateDateStateOnClose}/>
 
                 <TimePicker onCancel={() => this.onCancel()}

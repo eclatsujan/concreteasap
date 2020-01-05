@@ -78,7 +78,8 @@ class DayOfPour extends React.Component {
     }
 
     onModelClick(order) {
-        this.props.cancelOrder(order?.["id"]);
+        let order_type = this.props.navigation.getParam("order_type") ? this.props.navigation.getParam("order_type") : "accepted_orders";
+        this.props.cancelOrder(order?.get("id"),order_type);
         this.setState({cancelModalVisibility: false});
     }
 
@@ -89,7 +90,9 @@ class DayOfPour extends React.Component {
     render() {
         let order_id = this.props.navigation.getParam("order_id");
         let order_type = this.props.navigation.getParam("order_type") ? this.props.navigation.getParam("order_type") : "accepted_orders";
+
         let order = this.getPourOrder(order_id, order_type);
+
         let concrete_order = order?.get("order_concrete") ? order?.get("order_concrete") : null;
         let bid = order?.get("bids") ? order?.get("bids").get(0) : null;
         let user = bid ? bid?.get("user") : null;
@@ -97,9 +100,8 @@ class DayOfPour extends React.Component {
         let price=parseFloat(bid?.get("price"));
         let quantity=parseFloat(concrete_order?.get("quantity"));
         let total=price*quantity;
-
         return (
-            <AppBackground>
+            <AppBackground alerts={this.props.alerts}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Active Order" iconType="ConcreteASAP" iconName="accepted-order"/>
@@ -126,20 +128,25 @@ class DayOfPour extends React.Component {
                         <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
                                 onPress={() => this.props.navigation.navigate("modifyOrder", {
                                     order_id,
+                                    order_type,
+                                    total,
+                                    quantity,
+                                    price,
                                 })}>
                             <Text style={[appStyles.colorBlack, appStyles.arialFont, appStyles.boldFont]}>
                                 Modify Order
                             </Text>
                         </Button>
                         <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
-                                onPress={() => this.props.navigation.navigate("Confirm Review", {
-                                    order_id,
-                                    total,
-                                    quantity,
-                                    price
-                                })}>
-                            <Text style={[appStyles.colorBlack, appStyles.arialFont, appStyles.boldFont]}>
-                                Complete Order
+                                onPress={()=>{
+                                    this.props.navigation.navigate("Order Message", {
+                                        order_id,
+                                        order,
+                                        order_type
+                                    });
+                                }}>
+                            <Text style={[appStyles.colorBlack,appStyles.arialFont,appStyles.boldFont]}>
+                                Balance of Order/Message
                             </Text>
                         </Button>
                         <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
@@ -166,8 +173,8 @@ class DayOfPour extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        cancelOrder: (order_id) => {
-            return dispatch(actions.order.contractorCancelOrder(order_id))
+        cancelOrder: (order_id,order_type) => {
+            return dispatch(actions.order.contractorCancelOrder(order_id,order_type))
         }
     }
 };
@@ -175,7 +182,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         order: state.get("order"),
-        app: state.get("app")
+        app: state.get("app"),
+        alerts:state.get("alert")
     };
 };
 

@@ -1,4 +1,5 @@
 export const PLACE_BID = 'REP/PLACE_BID';
+export const ADD_MESSAGE='REP/ADD_MESSAGE';
 export const GET_ORDERS='REP/GET_ORDERS';
 export const PREVIOUS_BIDS='REP/BID/GET_PREVIOUS';
 export const OPEN_BIDS='REP/BID/OPEN_BIDS';

@@ -109,7 +109,7 @@ class ViewBids extends React.Component {
     }
 
     getOrder(order_id){
-        return this.props.order.get("pending_orders").find((order) => order.get("id") === order_id);
+        return this.props.order.get("pending_orders").get("data").find((order) => order.get("id") === order_id);
     }
 
     render() {

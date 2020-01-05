@@ -61,7 +61,6 @@ export default class csDatePicker extends React.Component {
             hasError = true;
         }
         let dateFormat = this.formatValue(input.value) === "Invalid date" ? "YYYY-MM-DD" : "DD/MM/YYYY";
-        console.log(input.value);
         return (
             <TouchableOpacity onPress={this.openPicker}>
                 <View

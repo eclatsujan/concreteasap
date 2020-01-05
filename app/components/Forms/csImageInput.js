@@ -45,7 +45,6 @@ export default class csImageInput extends React.Component {
         if (touched && (error || warning)) {
             hasError = true;
         }
-        console.log(hasError);
         return (
             <UploadButton onUpload={this.uploadLogo} placeholder={this.state.logo_name} />
         );

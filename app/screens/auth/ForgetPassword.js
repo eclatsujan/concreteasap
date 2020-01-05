@@ -45,7 +45,7 @@ class ForgetPassword extends React.Component {
 
     render() {
         let app=this.props.app;
-        let error=this.props.error.toJS();
+        let error=this.props.error;
         return (
             <AppBackground loading={app.get("loading")} enableKeyBoard alignContent="center">
                 <Content style={[appStyles.content]}>
@@ -60,12 +60,12 @@ class ForgetPassword extends React.Component {
                                     <Icon active type="FontAwesome" name='user'/>
                                 </FormItem>
                             </Form>
-                            <Button full style={[appStyles.button, appStyles.btnPadding]} onPress={this.resetPassword}>
-                                <Text style={[appStyles.btnTxt, appStyles.baseFont]}>Reset Password</Text>
+                            <Button full style={[appStyles.button]} onPress={this.resetPassword}>
+                                <Text style={[appStyles.btnTxt, appStyles.customFont]}>Reset Password</Text>
                             </Button>
-                            <Button full style={[appStyles.button, appStyles.btnPadding]}
+                            <Button full style={[appStyles.button]}
                                     onPress={this.showResetPassword}>
-                                <Text style={[appStyles.btnTxt, appStyles.baseFont]}>Already Have Token</Text>
+                                <Text style={[appStyles.btnTxt, appStyles.customFont]}>Already Have Token</Text>
                             </Button>
                         </Col>
                     </Row>
