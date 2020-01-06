@@ -88,7 +88,6 @@ export const reducer = (state, action) => {
 
             return newState;
         case constants.CANCEL_ORDER:
-
             return state.updateIn([action.payload.order_type, "data"], (orders) => {
                 return orders.filter((order) => {
                     return order.get("id") !== action.payload.order_id;
@@ -107,12 +106,13 @@ export const reducer = (state, action) => {
                 })
             });
         case constants.ADD_MESSAGE:
-             return state.updateIn([action.payload.order_type,"data"],(orders)=>{
-                let orderKey=orders.findIndex((order)=>{
-                    return order.get("id")===action.payload.order_id;
+            return state.updateIn([action.payload.order_type, "data"], (orders) => {
+                let index = orders.findIndex((order) => {
+                    return order.get("id") === action.payload.order_id;
                 });
-                return orders.updateIn([orderKey],(order)=>{
-                    return order?.set("message",Immutable.fromJS(action.payload.data));
+                console.log(index);
+                return orders.updateIn([index], (order) => {
+                    return order?.set("message", Immutable.fromJS(action.payload.data));
                 });
             });
         case constants.REMOVE_BID:

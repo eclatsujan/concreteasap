@@ -23,7 +23,7 @@ class ConfirmComment extends React.Component {
 
     handleSubmit(values){
         let order_type = this.props.navigation.getParam("order_type") ? this.props.navigation.getParam("order_type") : "accepted_orders";
-
+        console.log(this.props.navigation.getParam("order_id"));
         let order_review={};
         order_review["order_id"]=this.props.navigation.getParam("order_id");
         order_review["message_quantity"]=parseFloat(values.get("total"));

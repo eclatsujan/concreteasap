@@ -13,6 +13,7 @@ export function placeMessagePrice(pricePer, order_id) {
     return (dispatch, getState) => {
         bidService.placeMessagePrice(pricePer, order_id).then((res) => {
             navigationHelper.goBack();
+
             dispatch(appActions.loading(false));
         }).catch((err) => {
             console.log(err);

@@ -408,6 +408,9 @@ export const appStyles = StyleSheet.create({
     ft_20: {
         fontSize: 20
     },
+    ft_15:{
+        fontSize:15
+    },
     txtLeft: {
         textAlign: "left"
     },

@@ -16,11 +16,11 @@ class OrderMessage extends React.Component {
         this.state = {
             initialValues: {
                 quantity: "0",
-                total:"0",
-                message_m3:"0",
-                message_total:"0",
-                total_m3:"0",
-                total_amount:"0"
+                total: "0",
+                message_m3: "0",
+                message_total: "0",
+                total_m3: "0",
+                total_amount: "0"
             }
         };
         this.onSubmit = this.onSubmit.bind(this);
@@ -46,6 +46,7 @@ class OrderMessage extends React.Component {
     }
 
     showLabel(message) {
+        let price=!message?.get("price")?0:message?.get("price");
         return (
             <View>
                 <View style={[appStyles.bgWhite, appStyles.p_10]}>
@@ -59,18 +60,10 @@ class OrderMessage extends React.Component {
                     </Row>
                     <Row style={[appStyles.borderBottom, appStyles.py_5]}>
                         <Col>
-                            <Text style={appStyles.boldFont}>Price Per (m3)</Text>
-                        </Col>
-                        <Col>
-                            <Text>{message?.get("price")}</Text>
-                        </Col>
-                    </Row>
-                    <Row style={[appStyles.borderBottom, appStyles.py_5]}>
-                        <Col>
                             <Text style={appStyles.boldFont}>Total</Text>
                         </Col>
                         <Col>
-                            <Text>{message?.get("quantity") * message?.get("price")}</Text>
+                            <Text>{price}</Text>
                         </Col>
                     </Row>
                 </View>
@@ -93,7 +86,7 @@ class OrderMessage extends React.Component {
                     <View>
                         <Row>
                             <Col>
-                                {order?.get("message")?.get("price") > 0 && order?.get("message")?.get("price") !== "" ?
+                                {order?.get("message") ?
                                     this.showLabel(order?.get("message")) :
                                     <OrderMessageForm onSubmit={this.onSubmit} backRoute={"Order Message"}
                                                       initialValues={this.state.initialValues}
@@ -103,7 +96,7 @@ class OrderMessage extends React.Component {
                                     <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
                                             onPress={() =>
                                                 this.props.navigation.navigate("Confirm Review", {
-                                                    order,order_type
+                                                    order,order_id, order_type
                                                 })
                                             }>
                                         <Text style={[appStyles.colorBlack, appStyles.arialFont, appStyles.boldFont]}>

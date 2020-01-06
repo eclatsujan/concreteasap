@@ -61,25 +61,64 @@ export default class FourthPage extends React.Component {
                     <SubHeader iconType="ConcreteASAP" iconName="calculators" title="Calculator"/>
                     <CalculatorTab fourthButton backAction={backAction} backRoute={backRoute}/>
                     <Form>
-                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                            <Input placeholder="W(m)" value={this.state.first} style={appStyles.baseFont}
-                                   onChangeText={(first) => this.setState({first})} keyboardType='numeric'/>
-                        </Item>
-                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                            <Input placeholder="Riser H (mm)" value={this.state.second} style={appStyles.baseFont}
-                                   onChangeText={(second) => this.setState({second})} keyboardType='numeric'/>
-                        </Item>
-                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                            <Input placeholder="Step Depth(mm)" value={this.state.third} style={appStyles.baseFont}
-                                   onChangeText={(third) => this.setState({third})} keyboardType='numeric'/>
-                        </Item>
-                        <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                            <Input placeholder="No. of steps" value={this.state.fourth} style={appStyles.baseFont}
-                                   onChangeText={(fourth) => this.setState({fourth})} keyboardType='numeric'/>
-                        </Item>
-                        <View style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.p_5, appStyles.my_5]}>
-                            <Text>Total:</Text>
-                            <Text style={{fontSize: 20, fontWeight: 'bold'}}>{this.state.total}</Text>
+                        <View>
+                            <View>
+                                <Text
+                                    style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
+                                    W(m)
+                                </Text>
+                            </View>
+                            <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
+                                <Input placeholder="W(m)" value={this.state.first} style={appStyles.baseFont}
+                                       onChangeText={(first) => this.setState({first})} keyboardType='numeric'/>
+                            </Item>
+                        </View>
+                        <View>
+                            <View>
+                                <Text
+                                    style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
+                                    Riser H (mm)
+                                </Text>
+                            </View>
+                            <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
+                                <Input placeholder="Riser H (mm)" value={this.state.second} style={appStyles.baseFont}
+                                       onChangeText={(second) => this.setState({second})} keyboardType='numeric'/>
+                            </Item>
+                        </View>
+                        <View>
+                            <View>
+                                <Text
+                                    style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
+                                    Step Depth(mm)
+                                </Text>
+                            </View>
+                            <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
+                                <Input placeholder="Step Depth(mm)" value={this.state.third} style={appStyles.baseFont}
+                                       onChangeText={(third) => this.setState({third})} keyboardType='numeric'/>
+                            </Item>
+                        </View>
+                        <View>
+                            <View>
+                                <Text
+                                    style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
+                                    No. of steps
+                                </Text>
+                            </View>
+                            <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
+                                <Input placeholder="No. of steps" value={this.state.fourth} style={appStyles.baseFont}
+                                       onChangeText={(fourth) => this.setState({fourth})} keyboardType='numeric'/>
+                            </Item>
+                        </View>
+                        <View>
+                            <View>
+                                <Text
+                                    style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
+                                    Total:
+                                </Text>
+                            </View>
+                            <View style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.p_15, appStyles.my_5]}>
+                                <Text style={{fontSize: 20, fontWeight: 'bold'}}>{this.state.total}</Text>
+                            </View>
                         </View>
                         <View style={appStyles.my_5}>
                             <Button style={[appStyles.button, appStyles.justifyItemsCenter]} primary

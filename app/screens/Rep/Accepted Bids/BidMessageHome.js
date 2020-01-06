@@ -27,6 +27,8 @@ class BidMessageHome extends React.Component {
     }
 
     showContent(message) {
+        let price=!message.get("price")?0:parseFloat(message.get("price"));
+        // console.log(message);
         return !message ? <EmptyTable message={this.state.emptyMessage}/> : (
             <View style={[appStyles.bgWhite, appStyles.p_10]}>
                 <View>
@@ -36,7 +38,7 @@ class BidMessageHome extends React.Component {
                     </Row>
                 </View>
                 <View>
-                    {message.price > 0 ? this.showInput(message) :this.showLabel(message)}
+                    {price<=0 ? this.showInput(message) :this.showLabel(message)}
                 </View>
             </View>
 
@@ -47,12 +49,8 @@ class BidMessageHome extends React.Component {
         return (
             <View>
                 <Row style={[appStyles.borderBottom2, appStyles.py_5]}>
-                    <Col><Text style={appStyles.boldFont}>Price per (m3)</Text></Col>
+                    <Col><Text style={appStyles.boldFont}>Total Price</Text></Col>
                     <Col><Text>{message.get("price")}</Text></Col>
-                </Row>
-                <Row style={[appStyles.borderBottom2, appStyles.py_5]}>
-                    <Col><Text style={appStyles.boldFont}>Total</Text></Col>
-                    <Col><Text>{message.get("quantity")*message.get("price")}</Text></Col>
                 </Row>
                 <Row style={[appStyles.borderBottom2, appStyles.py_5]}>
                     <Col><Text style={appStyles.boldFont}>Status</Text></Col>
@@ -76,19 +74,15 @@ class BidMessageHome extends React.Component {
     }
 
     showInput(message) {
-        console.log();
-        console.log(message.get("status"));
         let price = this.state.pricePer.toString();
-        let total = this.state.total.toString();
         let btnStatus = this.state.total === 0;
-        let message_total = message.get("quantity") * message.get("price");
         return (
             <View>
                 <Row style={[appStyles.mt_5, appStyles.verticalCenter, appStyles.borderBottom2, appStyles.pb_5]}>
                     <Col>
                         <Text
                             style={[appStyles.upperCase, appStyles.boldFont, appStyles.baseSmallFontSize]}>
-                            Price per m3
+                            Price total
                         </Text>
                     </Col>
                     <Col>
@@ -96,20 +90,6 @@ class BidMessageHome extends React.Component {
                             <TextInput keyboardType={'numeric'} placeholder="ENTER BID AMOUNT"
                                        style={appStyles.baseFont}
                                        value={price} onChangeText={this.setPerPrice}/>
-                        </Item>
-                    </Col>
-                </Row>
-                <Row style={[appStyles.mt_5, appStyles.verticalCenter, appStyles.borderBottom2, appStyles.pb_5]}>
-                    <Col>
-                        <Text
-                            style={[appStyles.upperCase, appStyles.boldFont, appStyles.baseSmallFontSize]}>
-                            Total
-                        </Text>
-                    </Col>
-                    <Col>
-                        <Item style={[appStyles.loginInput, appStyles.p_10, appStyles.border2]} regular>
-                            <TextInput keyboardType={'numeric'} placeholder="Total" style={appStyles.baseFont}
-                                       value={total} editable={false}/>
                         </Item>
                     </Col>
                 </Row>

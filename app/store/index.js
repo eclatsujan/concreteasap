@@ -12,6 +12,8 @@ import * as Immutable from 'immutable';
 
 import thunk from 'redux-thunk';
 
+import createSagaMiddleware from 'redux-saga'
+
 import { reducer as formReducer } from 'redux-form/immutable';
 
 import { reducers, actions,States } from './modules'
@@ -35,9 +37,12 @@ const obj={
 
 let merged = {...reducers,...obj};
 
+const sagaMiddleware = createSagaMiddleware();
+
+// sagaMiddleware.run(handleNewMessage);
 
 // Apply thunk middleware
-const middleware = applyMiddleware(thunk);
+const middleware = applyMiddleware(thunk,sagaMiddleware);
 
 /**
  * Create app store.

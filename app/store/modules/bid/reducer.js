@@ -1,4 +1,4 @@
-import {PREVIOUS_BIDS,SET_LOADSTATE, OPEN_BIDS, PUSH_BIDS, PLACE_BID} from './constants'
+import {PREVIOUS_BIDS,SET_LOADSTATE, OPEN_BIDS, PUSH_BIDS, PLACE_BID,ADD_MESSAGE_PRICE} from './constants'
 
 import * as Immutable from 'immutable';
 
@@ -34,6 +34,7 @@ export const defaultState = Immutable.Map({
 });
 
 export const reducer = (state, action) => {
+    let new_state,index;
     switch (action.type) {
         case OPEN_BIDS:
             return state;
@@ -61,8 +62,12 @@ export const reducer = (state, action) => {
             current_state = current_state.updateIn([action.payload["collectionName"], "last_page"], (val) => {
                 return action.payload.last_page;
             });
-            // console.log(current_state);
             return current_state;
+        case ADD_MESSAGE_PRICE:
+            index=state.findIndex([action.payload["collectionName"],"data"],(order)=>{
+                return order.order_id===action.payload.order_id
+            });
+            return state;
         case PLACE_BID:
             let order_id = action.payload.order_id;
             // console.log(state.get("bid_orders"));

@@ -74,7 +74,8 @@ class AcceptedBidDetail extends React.Component {
                 <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.justifyItemsCenter]}
                         onPress={() => {
                             this.props.navigation.navigate("Rep View Message", {
-                                message: bid.get("order").get("message")
+                                message: bid.get("order").get("message"),
+                                order_id:bid.get("order").get("id")
                             });
                         }}>
                     <Text style={appStyles.colorBlack}>View Message/Balance of Order</Text>

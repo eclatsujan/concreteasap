@@ -37,15 +37,22 @@ export default class ConfirmReview extends React.Component {
         const order_concrete = order?.get("order_concrete");
         const bids = order?.get("bids").get(0);
 
-        let total = (order_concrete?.get("quantity") * bids?.get("price"));
-        let message_total = parseFloat(order.get("message").get("quantity"))
-            + parseFloat(order.get("message").get("price"));
 
-        let total_m3 = parseFloat(order_concrete?.get("quantity")) + parseFloat(order?.get("message")?.get("quantity"));
+        let message_m3=order?.get("message")?.get("quantity");
+        message_m3=!message_m3?0:message_m3;
+
+        let total = (order_concrete?.get("quantity") * bids?.get("price"));
+        total=!total?0:total;
+
+        let message_total = parseFloat(message_m3)
+            + parseFloat(order?.get("message")?.get("price"));
+        message_total=!message_total?0:message_total;
+
+        let total_m3 = parseFloat(order_concrete?.get("quantity")) + parseFloat(message_m3);
 
         initialValues.quantity = order_concrete?.get("quantity").toString();
         initialValues.total = total?.toString();
-        initialValues.message_m3 = order?.get("message")?.get("quantity").toString();
+        initialValues.message_m3 = message_m3.toString();
         initialValues.message_total = message_total.toString();
         initialValues.total_m3 =total_m3.toString();
         initialValues.total_amount = (total + message_total).toString();
@@ -61,6 +68,7 @@ export default class ConfirmReview extends React.Component {
 
     handleSubmit(values) {
         let order_type = this.props.navigation.getParam("order_type") ? this.props.navigation.getParam("order_type") : "accepted_orders";
+        console.log(this.props.navigation.getParam("order_id"));
         this.props.navigation.navigate("Confirm Comment", {
             review: values,
             order_id: this.props.navigation.getParam("order_id"),

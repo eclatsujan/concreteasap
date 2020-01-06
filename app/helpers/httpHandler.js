@@ -13,6 +13,7 @@ export function handleResponse(response){// this function handles the responses 
             return data;
         }
         else{
+            console.log(text);
             throw {"message":"Some issue occured in server"}
         }
     });
