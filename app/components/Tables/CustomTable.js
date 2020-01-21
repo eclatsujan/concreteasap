@@ -43,9 +43,6 @@ export default class CustomTable extends React.Component {
                 <Row style={[appStyles.verticalCenter]}>
                     {this.props ["rowColumns"].map((column, index) => {
                         let columnValue = getNestedImmutable(row, column);
-                        if(columnValue===undefined){
-                            console.log(row);
-                        }
                         return (
                             <Col key={index}>
                                 <Text style={[appStyles.baseSmallFontSize]}>{columnValue}</Text>

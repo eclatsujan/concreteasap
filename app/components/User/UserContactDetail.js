@@ -24,7 +24,6 @@ export class UserContactDetail extends React.Component {
     }
 
     render() {
-        // console.log(this.props.rowColumns);
         return (
             <View style={[appStyles.bgWhite, appStyles.p_10]}>
                 <View style={[appStyles.flex, appStyles.verticalCenter]}>

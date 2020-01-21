@@ -12,7 +12,6 @@ export const register = (user) => {
     return dispatch => {
         dispatch(appActions.loading());
         userService.register(user).then((res)=>{
-            // console.log(res);
             SecureStore.setItemAsync("user_token",res.access_token);
             dispatch({
                 type: UPDATEUSER,

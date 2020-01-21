@@ -1,14 +1,10 @@
 import * as React from 'react';
 //Custom Plugins for redux
 import {connect} from 'react-redux';
-import {ScrollView} from 'react-native';
-
 // Custom Component
 import AppBackground from '../../../components/AppBackground'
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from '../../../components/Headers/SubHeader';
-
-
 //helpers
 import navigationHelper from "../../../helpers/navigationHelper";
 

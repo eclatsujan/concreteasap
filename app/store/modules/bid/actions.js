@@ -25,12 +25,9 @@ export function placeMessagePrice(pricePer, order_id) {
 
 export const getRepAcceptedBids = () => {
     return (dispatch, getState) => {
-        // console.log(getState().get("bids"));
-        // dispatch(setLoadState(true));
         bidService.getRepAcceptedBids().then((res) => {
             dispatch(pushBids("accepted_bids", res["data"], res["current_page"], res["last_page"], res["total"]));
             dispatch(appActions.loading(false));
-            // dispatch(setLoadState(false));
         }).catch((err) => {
             dispatch(appActions.loading(false));
         });

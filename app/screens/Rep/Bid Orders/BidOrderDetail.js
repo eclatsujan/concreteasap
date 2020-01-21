@@ -36,6 +36,7 @@ class BidOrderDetail extends React.Component {
             meter: '',
             total_cost: 0,
             bidPayment: false,
+            showCard:false,
             modalVisible: false,
             SaveDetails: false,
             paymentSuccessModal: false,
@@ -123,9 +124,11 @@ class BidOrderDetail extends React.Component {
         });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-    }
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if(this.state.token&&!this.state.bidPayment&&!this.state.modalVisible){
+    //
+    //     }
+    // }
 
     setPerPrice(price) {
         this.setState({pricePer: price});
@@ -147,12 +150,15 @@ class BidOrderDetail extends React.Component {
     }
 
     submitBid() {
-        this.stripePayment().then((token) => {
-            this.setState({token: token});
-            this.setModalVisible(true);
-        }).catch((err) => {
-            console.log(err);
-        });
+        this.setState({bidPayment: false});
+        setTimeout(()=>{
+            this.stripePayment().then((token)=>{
+                this.setState({token});
+                this.setState({modalVisible:true});
+            }).catch((err)=>{
+                console.log(err);
+            });
+        },1000);
 
     }
 
@@ -162,13 +168,13 @@ class BidOrderDetail extends React.Component {
                 this.setState({token: token});
                 this.setModalVisible(true);
             });
-        }).catch(() => {
+        }).catch((err) => {
 
         });
     }
 
     payNow() {
-        this.closePriceModal();
+        this.submitBid();
     }
 
     openPriceModal() {
@@ -176,10 +182,7 @@ class BidOrderDetail extends React.Component {
     }
 
     closePriceModal() {
-        this.setState({bidPayment: false},()=>{
-            // console.log("ok");
-            this.submitBid();
-        });
+        this.setState({bidPayment: false});
     }
 
     scanCard() {
@@ -326,11 +329,12 @@ class BidOrderDetail extends React.Component {
                         }}>
                             <Text style={appStyles.colorBlack}>Bid</Text>
                         </Button>
-                        <BidPayment modalVisibility={this.state.bidPayment} handleModel={this.payNow}
-                                    cancelModel={this.closePriceModal}/>
                         <CardPayment modalVisibility={this.state.modalVisible} handleModel={this.showDetailsModel}/>
                         <PaymentSuccess modalVisibility={this.state.paymentSuccessModal}
                                         handleModel={this.paymentSuccess}/>
+                        <BidPayment modalVisibility={this.state.bidPayment} handleModel={this.payNow}
+                                    cancelModel={this.closePriceModal}/>
+
                     </Content>
                 </ScrollView>
             </AppBackground>

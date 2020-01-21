@@ -61,7 +61,7 @@ class Register extends React.Component {
     }
 
 
-    getPermissionAsync = async () => {
+    async getPermissionAsync() {
         if (Constants.platform.ios) {
             const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
             if (status !== 'granted') {
@@ -71,7 +71,6 @@ class Register extends React.Component {
     }
 
     async uploadLogo() {
-        // console.log("ok");
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,

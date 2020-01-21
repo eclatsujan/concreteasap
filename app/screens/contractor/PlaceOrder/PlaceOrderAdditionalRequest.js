@@ -44,15 +44,9 @@ class PlaceOrderAdditionalRequest extends React.Component {
 
         this.props.removeAppLoading();
 
-        if (full_order.get("message_required") === "Yes") {
-            this.props.navigation.navigate("SpecialRequests", {
-                order: full_order
-            })
-        } else if (full_order.get("message_required") === "No") {
-            this.props.navigation.navigate("ReviewOrder", {
-                order: full_order
-            })
-        }
+        this.props.navigation.navigate("SpecialRequests", {
+            order: full_order
+        })
     }
 
 

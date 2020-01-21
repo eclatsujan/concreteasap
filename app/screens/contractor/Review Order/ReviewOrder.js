@@ -27,7 +27,7 @@ class ReviewOrder extends React.Component {
         this.state = {
             "rowColumns": [
                 {key: "address", title: "Address"},
-                {key: "suburb", title: "Post Code"}, {key: "quantity", title: "Quantity"}, {key: "type", title: "Type"},
+                {key: "postcode", title: "Post Code"}, {key: "quantity", title: "Quantity"}, {key: "type", title: "Type"},
                 {key: "mpa", title: "MPA"}, {key: "agg", title: "AGG"}, {key: "slu", title: "Slump"},
                 {key: "acc", title: "ACC"}, {key: "placement_type", title: "Placement Type"},
                 {key: "message_required", title: "Message Required"},
@@ -57,6 +57,8 @@ class ReviewOrder extends React.Component {
         }
 
         full_order=full_order.set("address", order.get("address"));
+        full_order=full_order.set("postcode",order.get("postcode"));
+        full_order=full_order.set("state",order.get("state"));
         full_order=full_order.set("suburb", order.get("suburb"));
         full_order=full_order.set("type", order.get("type"));
         full_order=full_order.set("mpa", order.get("mpa"));
@@ -78,24 +80,26 @@ class ReviewOrder extends React.Component {
         full_order=full_order.set("colours", order.get("colours"));
 
         //Special Instructions
-        full_order=full_order.set("special_instructions", order.get("message_required") === "Yes" ? special.get("special_instructions") : "");
-        full_order=full_order.set("delivery_instructions", order.get("message_required") === "Yes" ? special.get("delivery_instructions") : "");
+        full_order=full_order.set("special_instructions", special?.get("special_instructions"));
+        full_order=full_order.set("delivery_instructions",special?.get("delivery_instructions"));
 
         let order_type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
 
-        if (order.get("message_required") !== "No") {
-            if (order_id) {
-                this.props.navigation.navigate("ModifyReviewInstructions", {
-                    full_order, order_id,order_type
-                });
-            } else {
-                this.props.navigation.navigate("ReviewInstructions", {
-                    full_order,
-                });
-            }
+        // if (order.get("message_required") !== "No") {
+        //
+        //
+        // } else {
+        //     this.submitForm(full_order.toJS(), order_id);
+        // }
 
+        if (order_id) {
+            this.props.navigation.navigate("ModifyReviewInstructions", {
+                full_order, order_id,order_type
+            });
         } else {
-            this.submitForm(full_order.toJS(), order_id);
+            this.props.navigation.navigate("ReviewInstructions", {
+                full_order,
+            });
         }
 
     }

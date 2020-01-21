@@ -16,7 +16,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import { reducer as formReducer } from 'redux-form/immutable';
 
-import { reducers, actions,States } from './modules'
+import { reducers, actions,States,rootSaga } from './modules'
 
 const initialStates=new Immutable.Map({
   app:States.app,
@@ -27,6 +27,7 @@ const initialStates=new Immutable.Map({
   bid:States.bid,
   error:States.error,
   order:States.order,
+  pending_order:States.pending_order,
   notifications:States.notifications
 });
 
@@ -38,15 +39,15 @@ const obj={
 let merged = {...reducers,...obj};
 
 const sagaMiddleware = createSagaMiddleware();
-
-// sagaMiddleware.run(handleNewMessage);
-
 // Apply thunk middleware
 const middleware = applyMiddleware(thunk,sagaMiddleware);
+
 
 /**
  * Create app store.
  */
 const createStore = _createStore(combineReducers(merged),initialStates,middleware);
+
+sagaMiddleware.run(rootSaga);
 
 export { createStore, actions }

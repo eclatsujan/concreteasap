@@ -3,8 +3,11 @@ import {Animated} from 'react-native';
 import {View, Row, Col, Text, Icon} from 'native-base';
 import ButtonIcon from "../../Button/ButtonIcon";
 import {appStyles} from "../../../../assets/styles/app_styles";
+import {actions} from "../../../store/modules";
+import {withNavigationFocus} from "react-navigation";
+import {connect} from 'react-redux';
 
-export default class OrderView extends React.Component {
+class OrderView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,11 +52,14 @@ export default class OrderView extends React.Component {
     }
 
     render() {
-        let order_id = this.props["order"].get("order_id");
-        let id = this.props["order"].get("id");
-        let status = this.props["order"].get("status");
-        let bids = this.props["order"].get("bids");
+        let pending_orders=this.props.pending_order.get("data").get("orders");
+        let pending_order_bids=this.props.pending_order.get("data").get("bids");
+        let order=pending_orders.get(this.props.order_id);
+        let order_id=order.get("id");
+        let status=order.get("status");
+        let order_bids=order.get("bids");
         let height=this.state.height._value===1?"auto":this.state.height;
+
         return (
             <Animated.View
                 style={[{opacity: this.state.opacity,height},appStyles.py_10, appStyles.borderBottom, appStyles.mx_10]}>
@@ -64,7 +70,7 @@ export default class OrderView extends React.Component {
                                 Order ID:#
                             </Text>
                             <Text
-                                style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>{id}</Text>
+                                style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>{order_id}</Text>
                             <Text
                                 style={[appStyles.baseSmallFontSize, appStyles.pl_20, appStyles.upperCase, appStyles.boldFont]}>
                                 Status:
@@ -83,7 +89,7 @@ export default class OrderView extends React.Component {
                                 <Text style={[appStyles.baseSmallFontSize, appStyles.upperCase]}>Company:</Text>
                                 <Text
                                     style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>
-                                    {bids?.get(0)?.get("user").get("detail").get("company")}
+                                    {pending_order_bids?.get(order_bids.get(0).toString())?.get("user").get("detail").get("company")}
                                 </Text>
                             </View>
                         </Col>
@@ -96,14 +102,14 @@ export default class OrderView extends React.Component {
                                 <ButtonIcon small
                                             btnText={this.props["buttonViewText"]}
                                             onPress={() => {
-                                                this.props["onViewHandler"](this.props["order"])
+                                                this.props["onBidHandler"](order_id)
                                             }}/> : null}
                         </View>
                         <View style={[appStyles.pr_5, appStyles.mb_10]}>
                             <ButtonIcon small
                                         btnText={"View Details"}
                                         onPress={() => {
-                                            this.props["onDetailHandler"] ? this.props["onDetailHandler"](this.props["order"]) : null;
+                                            this.props["onDetailHandler"] ? this.props["onDetailHandler"](order_id) : null;
                                         }}/>
                         </View>
                         <View style={appStyles.pr_5}>
@@ -121,7 +127,7 @@ export default class OrderView extends React.Component {
                             <View
                                 style={[appStyles.smallCircleNoBorder, appStyles.bgPrimary, appStyles.justifyItemsCenter]}>
                                 <Text style={[appStyles.boldFont, appStyles.ft_20]}>
-                                    {bids?.size}
+                                    {order_bids?.size}
                                 </Text>
                             </View>
                             : null}
@@ -130,5 +136,21 @@ export default class OrderView extends React.Component {
             </Animated.View>
         );
     }
-
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getContractorPendingOrders:()=>{
+            return dispatch(actions.order.pendingOrder.fetchPendingOrders());
+        }
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+        pending_order:state.get("pending_order")
+    };
+};
+
+
+export default withNavigationFocus(connect(mapStateToProps, mapDispatchToProps)(OrderView));

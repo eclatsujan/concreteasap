@@ -14,30 +14,44 @@ import {actions} from "../../../store/modules";
 import {boolToAffirmative} from "../../../helpers/app";
 import {formatDate, formatTime} from "../../../helpers/time";
 
+import RadioGroup from 'react-native-radio-buttons-group';
+
+import {merge} from 'immutable';
 
 class OrderBidStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             payment_method: "COD",
+            data: [
+                {
+                    label: 'COD',
+                    value: "COD",
+                },
+                {
+                    label: 'Account',
+                    value: 'Account',
+                },
+            ],
             rowColumns: [
                 {title: "BID Date", key: "bid.date_delivery", format: formatDate},
                 {title: "BID Time", key: "bid.time_delivery", format: formatTime},
                 {title: "Price M3", key: "bid.price"},
-                {title: "Quantity", key: "order_concrete.quantity"},
+                {title: "Quantity", key: "concrete.quantity"},
                 {title: "Total Price", key: "total"},
-                {title: "Address", key: "order_concrete.address"},
-                {title: "Post-Code", key: "order_concrete.suburb"},
-                {title: "Type", key: "order_concrete.type"},
-                {title: "MPA", key: "order_concrete.mpa"},
-                {title: "Slump", key: "order_concrete.slump"},
-                {title: "Additives", key: "order_concrete.acc"},
-                {title: "Placement Type", key: "order_concrete.placement_type"},
-                {title: "Time Deliveries", key: "order_concrete.urgency"},
-                {title: "Message Required", key: "order_concrete.message_required", format: boolToAffirmative}
+                {title: "Address", key: "concrete.address"},
+                {title: "Post-Code", key: "concrete.suburb"},
+                {title: "Type", key: "concrete.type"},
+                {title: "MPA", key: "concrete.mpa"},
+                {title: "Slump", key: "concrete.slump"},
+                {title: "Additives", key: "concrete.acc"},
+                {title: "Placement Type", key: "concrete.placement_type"},
+                {title: "Time Deliveries", key: "concrete.urgency"},
+                {title: "Message Required", key: "concrete.message_required", format: boolToAffirmative}
             ]
         };
         this.submitBid = this.submitBid.bind(this);
+        this.onPress=this.onPress.bind(this);
     }
 
     submitBid() {
@@ -45,13 +59,28 @@ class OrderBidStatus extends React.Component {
         this.props.acceptBid(bid_id, this.state.payment_method);
     }
 
+    onPress(data){
+        let selected=data.find((obj)=>{
+            console.log(obj.selected);
+            return obj.selected;
+        });
+        data?this.setState({payment_method:selected.value}):null;
+
+    }
+
     render() {
+
+        let pending_data=this.props.pending_orders.get("data");
+        let pending_orders=pending_data.get("orders");
         /* 2. Read the params from the navigation state */
-        const order = this.props.navigation.getParam("order");
-        let bid_id = this.props.navigation.getParam("bid_id");
-        let bid = order?.get("bids").find((bid) => bid.get("id") === bid_id);
-        let full_order = order.set("bid", bid);
-        full_order = full_order.set("total", parseFloat(bid.get("price")) * parseInt(order.get("order_concrete").get("quantity")));
+        let order = pending_orders.get(this.props.navigation.getParam("order_id").toString());
+        let bid=pending_data.get("bids").get(this.props.navigation.getParam("bid_id").toString());
+        let order_concrete=pending_data.get("order_concrete").get(order.get("order_concrete").toString());
+
+        let total=(parseFloat(order_concrete.get("quantity"))*parseFloat(bid.get("price"))).toString();
+
+        let newOrder=order?.mergeIn(["bid"],bid).mergeIn(["concrete"],order_concrete)
+                    .set("total",total);
 
         return (
             <AppBackground>
@@ -60,45 +89,12 @@ class OrderBidStatus extends React.Component {
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="Order Bid Status"/>
                     <Content>
                         <View style={[appStyles.bgWhite, appStyles.p_10]}>
-                            <TableRow rowData={full_order} rowColumns={this.state.rowColumns}/>
+                            <TableRow rowData={newOrder} rowColumns={this.state.rowColumns}/>
                             <Row>
                                 <Col><Text style={appStyles.baseSmallFontSize}>Select Payment Method</Text></Col>
                             </Row>
-                            <Row style={[appStyles.w_75, appStyles.p_5, appStyles.verticalCenter]}>
-                                <Col>
-                                    <Row>
-                                        <Col style={[appStyles.w_35]}>
-                                            <Radio
-                                                color={"#f0ad4e"}
-                                                selectedColor={"#5cb85c"}
-                                                selected={this.state.payment_method === "COD"}
-                                                onPress={() => {
-                                                    this.setState({"payment_method": "COD"})
-                                                }}
-                                            />
-                                        </Col>
-                                        <Col style={appStyles.w_65}>
-                                            <Text style={[appStyles.baseSmallFontSize, appStyles.pl_5]}>COD</Text>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                                <Col>
-                                    <Row>
-                                        <Col style={[appStyles.w_35]}>
-                                            <Radio
-                                                color={"#f0ad4e"}
-                                                selectedColor={"#5cb85c"}
-                                                selected={this.state.payment_method === "Account"}
-                                                onPress={() => {
-                                                    this.setState({"payment_method": "Account"})
-                                                }}
-                                            />
-                                        </Col>
-                                        <Col style={appStyles.w_65}>
-                                            <Text style={[appStyles.baseSmallFontSize, appStyles.pl_5]}>Account</Text>
-                                        </Col>
-                                    </Row>
-                                </Col>
+                            <Row>
+                                <RadioGroup radioButtons={this.state.data} onPress={this.onPress} flexDirection='row' />
                             </Row>
                         </View>
                         <Button primary style={[appStyles.my_5, appStyles.horizontalCenter]} onPress={this.submitBid}>
@@ -114,7 +110,6 @@ class OrderBidStatus extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         acceptBid: (bid_id, payment_method) => {
-            // console.log(bid_id);
             return dispatch(actions.order.acceptBid(bid_id, payment_method))
         }
     }
@@ -122,7 +117,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        orders: state.get("order")
+        pending_orders:state.get("pending_order")
     }
 };
 

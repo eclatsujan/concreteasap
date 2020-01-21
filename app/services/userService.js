@@ -63,7 +63,6 @@ async function loadUserProfile() {
 async function editUserDetail(user_detail,photo) {
     let token = await getToken();
     let form_data=getFormData(user_detail,photo);
-    console.log(form_data);
     const requestOptions = {
         method: 'POST',
         headers: {'Authorization': 'Bearer ' + token},
@@ -74,7 +73,6 @@ async function editUserDetail(user_detail,photo) {
 
 async function saveUserDeviceId(deviceId) {
     let token = await getToken();
-    // console.log(COMMON_USER_URI+'save_device');
     const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
@@ -87,7 +85,6 @@ async function saveUserDeviceId(deviceId) {
 
 async function removeUserDeviceId() {
     let token = await getToken();
-    // console.log(COMMON_USER_URI+'save_device');
     const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token}
@@ -141,8 +138,6 @@ async function markAsRead(notification_id) {
 function getFormData(data,photo){
 
     const editProfileData=new FormData();
-    console.log(typeof photo==="undefined");
-    console.log(photo);
     if(typeof photo==="object"&&photo!==null){
         editProfileData.append("photo", {
             name: !photo.fileName ? "prof-image" : photo.fileName,

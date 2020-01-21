@@ -19,6 +19,7 @@ import SubHeader from '../../../components/Headers/SubHeader';
 import OrderView from '../../../components/contractor/TableView/OrderView';
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 
+
 class ViewOrderBids extends React.Component {
     constructor(props) {
         super(props);
@@ -27,43 +28,24 @@ class ViewOrderBids extends React.Component {
             loading: true
         };
 
-        this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            this.interval = setInterval(this.getOrders, 6000);
-        });
-
-        this.blurListener = this.props.navigation.addListener('didBlur', () => {
-            clearInterval(this.interval);
-        });
-
-        this._alertIndex = this._alertIndex.bind(this);
+        this._showOrderBids = this._showOrderBids.bind(this);
         this._showFullDetails = this._showFullDetails.bind(this);
         this._archiveOrder = this._archiveOrder.bind(this);
         this.getOrders = this.getOrders.bind(this);
-    }
 
-    componentDidMount() {
-        this.getOrders().then(() => {
-            // console.log("ok");
-        });
-
-
-    }
-
-    componentWillUnmount() {
-        this.focusListener.remove();
-        this.blurListener.remove();
+        this.props.getContractorPendingOrders();
     }
 
     async getOrders() {
-        await this.props.getContractorOrders();
+        // await this.props.getContractorOrders();
     }
 
-    _alertIndex(order) {
+    _showOrderBids(order_id) {
         this.props.appLoading();
-        this.props.navigation.navigate("ViewBids", {order_id: order.get("id")});
+        this.props.navigation.navigate("ViewBids", {order_id});
     }
 
-    _showFullDetails(order) {
+    _showFullDetails(order_id) {
         this.props.navigation.navigate("ViewOrderDetail", {order});
     }
 
@@ -72,15 +54,16 @@ class ViewOrderBids extends React.Component {
     }
 
     displayTableData(orders) {
-        return orders?.map((order, index) => (
-            <OrderView order={order} buttonViewText={"View Bids"} key={index}
-                       onViewHandler={this._alertIndex} onArchiveHandler={this._archiveOrder}
+        // console.log()
+        return orders.keySeq()?.map((order_id,index) => (
+            <OrderView order_id={order_id} buttonViewText={"View Bids"} key={index}
+                       onBidHandler={this._showOrderBids} onArchiveHandler={this._archiveOrder}
                        onDetailHandler={this._showFullDetails}/>
         ));
     }
 
     render() {
-        let orders = this.props.order.get("pending_orders").get("data");
+        let orders=this.props.pending_order.get("data").get("orders");
         return (
             <AppBackground>
                 <ScrollView style={[appStyles.mb_10]}>
@@ -111,11 +94,12 @@ const mapDispatchToProps = (dispatch) => {
         appLoading: () => {
             return dispatch(actions.app.loading())
         },
-        getContractorOrders: () => {
-            return dispatch(actions.order.getContractorOrders())
-        },
         archiveOrder: (order_id) => {
             return dispatch(actions.order.archiveOrder(order_id));
+        },
+        getContractorPendingOrders:()=>{
+            console.log("ok");
+            return dispatch(actions.order.pendingOrder.fetchPendingOrders());
         }
     }
 };
@@ -123,7 +107,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         app: state.get("app"),
-        order: state.get("order")
+        // order: state.get("order"),
+        pending_order:state.get("pending_order")
     };
 };
 

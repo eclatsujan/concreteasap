@@ -33,11 +33,6 @@ class DayOfPour extends React.Component {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonPressAndroid);
     }
 
-    componentWillUnmount() {
-        // Remove the event listener
-        // this.focusListener.remove();
-    }
-
     handleBackButtonPressAndroid() {
         if (!this.props.navigation.isFocused()) {
             // The screen is not focused, so don't do anything
@@ -139,7 +134,7 @@ class DayOfPour extends React.Component {
                         </Button>
                         <Button style={[appStyles.marginDefault, appStyles.horizontalCenter]}
                                 onPress={()=>{
-                                    this.props.navigation.navigate("Order Message", {
+                                    this.props.navigation.navigate("Order Message List", {
                                         order_id,
                                         order,
                                         order_type

@@ -21,7 +21,5 @@ export function handleResponse(response){// this function handles the responses 
         else{
             throw {"message":"Some issue occured in server"}
         }
-        // console.log(data);
-
 	});
 }

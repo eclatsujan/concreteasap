@@ -14,7 +14,7 @@ class LogoutScreen extends React.Component {
 
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._logout();
     }
 

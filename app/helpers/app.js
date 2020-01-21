@@ -21,7 +21,6 @@ export function getNested(theObject, path, separator) {
         separator = separator || '.';
         return path.replace('[', separator).replace(']', '').split(separator).reduce(
             function (obj, property) {
-                // console.log(path);
                 return obj[property];
             }, theObject
         );
@@ -33,6 +32,7 @@ export function getNested(theObject, path, separator) {
 export function getNestedImmutable(theObject, path, separator) {
     try {
         separator = separator || '.';
+
         return theObject.getIn(path.replace('[', separator).replace(']', '').split(separator));
     } catch (err) {
         return undefined;

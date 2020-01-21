@@ -10,7 +10,6 @@ export const reducer= (state, action) => {
     switch(action.type) {
         case types.PUSH_ALERT:
             let alert=Immutable.fromJS(action.payload.alert);
-            console.log(alert);
             newState=state.update("alerts",(val)=>{
                 return val.push(alert);
             });

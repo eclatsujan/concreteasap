@@ -645,5 +645,38 @@ export const appStyles = StyleSheet.create({
     },
     customCard: {
         padding: 15
+    },
+    tp_header: {
+        height: 45,
+        borderBottomWidth: 1,
+        borderColor: "#ccc",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    tp_buttonAction: {
+        height: "100%",
+        paddingHorizontal: 20,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    tp_buttonText: {
+        fontSize: 20,
+        color: "#006BFF",
+        fontWeight: "500"
+    },
+    tp_buttonTextCancel: {
+        color: "#666",
+        fontWeight: "400"
+    },
+    tp_body: {
+        flexDirection: "row"
+    },
+    tp_picker: {
+        flex: 1
+    },
+    tp_separator: {
+        alignSelf: "center",
+        fontSize: 16
     }
 });

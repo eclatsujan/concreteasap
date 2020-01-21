@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Field, reduxForm} from "redux-form/lib/immutable";
 import {Button, Text, View} from "native-base";
-import TimePicker from "react-native-24h-timepicker";
-
+// import TimePicker from "react-native-24h-timepicker";
+import TimePicker from "../Modal/TimePicker";
 import {appStyles} from "../../../assets/styles/app_styles";
 import {formValidation} from "../../helpers/validation";
 
@@ -42,10 +42,6 @@ class AdditionalOrderForm extends React.Component {
         this.updateDateStateOnClose = this.updateDateStateOnClose.bind(this);
         this.updateDateState = this.updateDateState.bind(this);
         this.showCalendarModal = this.showCalendarModal.bind(this);
-    }
-
-    componentWillUnmount() {
-        // console.log("ok");
     }
 
     openTimePicker(time_input) {

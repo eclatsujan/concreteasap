@@ -77,7 +77,6 @@ class RegisterRep extends React.Component {
     };
 
     async uploadLogo() {
-        // console.log("ok");
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,

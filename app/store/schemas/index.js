@@ -7,9 +7,21 @@ import { normalize, schema } from 'normalizr';
 
 // Define your comments schema
 
-export const order_concrete=new schema.Entity('order_concrete');
+const order_concrete=new schema.Entity('order_concrete');
 
-// Define your article
-export const order = new schema.Entity('order', {
-    order_concrete: [order_concrete]
+// Define a users schema
+const user = new schema.Entity('user');
+
+const bids= new schema.Entity("bids");
+
+const order = new schema.Entity('orders', {
+    order_concrete: order_concrete,
+    user:user,
+    bids:[bids]
 });
+
+// const orders=new schema.Array
+export const normalizedOrderData = (originalData) =>{
+    return normalize(originalData, [order])
+};
+

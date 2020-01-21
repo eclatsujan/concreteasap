@@ -16,9 +16,6 @@ import CustomTable from "../../../components/Tables/CustomTable";
 import {appStyles} from "../../../../assets/styles/app_styles";
 
 import {actions} from "../../../store/modules";
-import HomeButton from "../../../components/Button/HomeButton";
-import ButtonIcon from "../../../components/Button/ButtonIcon";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 
 class AcceptedOrders extends React.Component {
@@ -53,7 +50,6 @@ class AcceptedOrders extends React.Component {
     }
 
     _alertIndex(order) {
-        // console.log(order["id"]);
         this.props.navigation.navigate("DayOfPour", {
             order_id: order.get("id"),
             order_type:"accepted_orders"

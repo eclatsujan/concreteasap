@@ -2,7 +2,7 @@ import {CONTRACTOR_PREFIX_URI, REP_PREFIX_URI} from '../config';
 
 import {getToken} from '../helpers/token';
 import {handleResponse} from '../helpers/httpHandler'
-import {or} from "react-native-reanimated";
+
 export const orderService = {
     createOrder,
     modifyOrder,
@@ -21,12 +21,12 @@ export const orderService = {
     updateBidPaymentMethod,
     repReleaseOrder,
     getAllDayOfPour,
-    sendOrderMessage
+    sendOrderMessage,
+    sendOrderMessageStatus
 };
 
 //Common Function
 async function contractorCancelOrder(order_id){
-    console.log(order_id);
     let token=await getToken();
     const requestOptions = {
         method: 'POST',
@@ -208,5 +208,15 @@ async function sendOrderMessage(order_id,quantity){
         body: JSON.stringify(value)
     };
     return fetch(CONTRACTOR_PREFIX_URI+'order/messageOrder', requestOptions).then(handleResponse);
+}
+
+async function sendOrderMessageStatus(order_id,status){
+    let token=await getToken();
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
+        body: JSON.stringify({order_id,status})
+    };
+    return fetch(CONTRACTOR_PREFIX_URI+"order/updateMessageStatus",requestOptions).then(handleResponse);
 }
 

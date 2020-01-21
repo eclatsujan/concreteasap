@@ -54,7 +54,7 @@ class ConfirmReviewDetail extends React.Component {
                     <Row style={[appStyles.py_5, appStyles.verticalCenter]}>
                         <Col>
                             <Field name="message_m3" keyboardType="numeric" placeholder="M3 Message"
-                                   component={csTextBox} onChange={(text) => {
+                                   component={csTextBox} editable={false} onChange={(text) => {
                                 this.props?.onQuantityChange(text);
                             }}
                                    type="text" validate={[formValidation.required]}/>

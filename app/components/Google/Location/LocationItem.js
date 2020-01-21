@@ -20,7 +20,9 @@ export default class LocationItem extends React.Component {
             <ListItem style={[appStyles.p_5]} button={true} onPress={() => {
                 this.onListPress({
                     location_name,
-                    postcode:this.props["postcode"]
+                    postcode:this.props["postcode"],
+                    state:this.props["state"],
+                    suburb:this.props["suburb"]
                 });
             }}>
                 <Left>

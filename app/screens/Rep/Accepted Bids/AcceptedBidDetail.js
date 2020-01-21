@@ -43,39 +43,31 @@ class AcceptedBidDetail extends React.Component {
             ]
         };
 
-        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+        this.focusListener = this.props.navigation.addListener('willFocus', () => {
             this.interval = setInterval(() => {
                 this.props.getRepAcceptedBids();
+                console.log("2 Page");
             }, 6000);
         });
 
-        this.blurListener = this.props.navigation.addListener('didBlur', () => {
+        this.blurListener = this.props.navigation.addListener('willBlur', (payload) => {
             clearInterval(this.interval);
         });
 
         this.getSingleBid = this.getSingleBid.bind(this);
     }
 
-    componentDidMount() {
-        this.props.getRepAcceptedBids();
-    }
-
-    componentWillUnmount() {
-        this.focusListener.remove();
-        this.blurListener.remove();
-    }
-
     showAwaitingButton(bid) {
         let status=bid.get("order").get("status");
         return (
             <View>
-                {status !== "Invoice Paid" ? this.showPaymentButtons(bid) : this.showReleaseButton(bid)}
+                {this.showReleaseButton(bid)}
 
                 <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.justifyItemsCenter]}
                         onPress={() => {
                             this.props.navigation.navigate("Rep View Message", {
                                 message: bid.get("order").get("message"),
-                                order_id:bid.get("order").get("id")
+                                bid_id:bid.get("id")
                             });
                         }}>
                     <Text style={appStyles.colorBlack}>View Message/Balance of Order</Text>
@@ -151,9 +143,13 @@ class AcceptedBidDetail extends React.Component {
 
     render() {
         let bid = this.getSingleBid(this.props.navigation.getParam("bid_id"));
-        let quantity=parseFloat(bid.get("order").get("order_concrete").get("quantity"));
-        let price=parseFloat(bid.get("price"));
-        bid=bid.set("total",quantity*price);
+
+        if(bid){
+            let quantity=parseFloat(bid.get("order").get("order_concrete").get("quantity"));
+            let price=parseFloat(bid.get("price"));
+            bid=bid.set("total",quantity*price);
+        }
+
         return (
             <AppBackground>
                 <ScrollView>

@@ -20,7 +20,6 @@ function navigate(routeName, params) {
 }
 
 export function resetHomeNavigation(routeName, params) {
-    // console.log(NavigationActions);
     const resetActions = NavigationActions.reset({
         index: 1,
         // key:"Accepted Orders",

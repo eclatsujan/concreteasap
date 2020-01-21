@@ -6,7 +6,16 @@ import * as appActions from '../app/actions';
 import navigationHelper from '../../../helpers/navigationHelper';
 import * as httpHandler from '../../../helpers/httpHandler';
 
-import actions from "redux-form/lib/actions";
+// import actions from "redux-form/lib/actions";
+import {normalizedOrderData} from "../../schemas";
+
+import {pending} from '../orders';
+
+import * as pendingActions from "./pending/actions";
+import {app} from "../app";
+
+export const pendingOrder=pendingActions;
+
 
 export function getAllDayOfPour() {
     return (dispatch,getState) => {
@@ -42,17 +51,14 @@ export const createOrder = (order) => {
     return (dispatch, getState) => {
         dispatch(appActions.loading(true));
         orderService.createOrder(order).then((res) => {
-            console.log(res);
             dispatch({
                 type: types.ADD_ORDER,
                 payload: {
                     order: order
                 }
             });
-            dispatch(actions["destroy"]("placeOrder"));
             navigationHelper.resetNavigation('ViewOrderHome',"Place Order Request",0,
                 {message: res["message"]});
-            dispatch(appActions.loading(false));
         }).catch((err) => {
             console.log(err);
             Alert.alert("Server Error", "There is some issue in the server");
@@ -65,7 +71,6 @@ export const modifyOrder = (order,order_type="accepted_orders") => {
     return (dispatch) => {
         dispatch(appActions.loading(true));
         orderService.modifyOrder(order).then((res) => {
-            dispatch(actions["destroy"]("placeOrder"));
             dispatch({
                type:types.MODIFY_ORDER,
                payload:{
@@ -109,7 +114,6 @@ export const archiveOrder = (order_id) => {
 
 export const getContractorOrders = () => {
     return (dispatch, getState) => {
-        console.log(getState().get("order").get("pending_orders").get("isLoading"));
         if(!getState().get("order").get("pending_orders").get("isLoading")){
             setOrderLoading(true,"pending_orders");
             orderService.getContractorOrders().then((res) => {
@@ -119,9 +123,11 @@ export const getContractorOrders = () => {
                         pending_orders: res
                     }
                 });
+                setOrderLoading(false,"pending_orders");
                 dispatch(appActions.loading(false));
-                // dispatch(appActions.loading(false));
             }).catch((err)=>{
+                console.log(err);
+                setOrderLoading(false,"pending_orders");
                 dispatch(appActions.loading(false));
             });
         }
@@ -412,7 +418,28 @@ export function sendOrderMessage(order_id,quantity,order_type){
     }
 }
 
+export function sendOrderMessageStatus(order_id,status,order_type){
+    return async (dispatch)=>{
+        dispatch(appActions.loading());
+        await orderService.sendOrderMessageStatus(order_id,status).then((res)=>{
+            dispatch({
+                type:types.UPDATE_STATUS,
+                payload:{
+                    order_id,
+                    status:res["status"],
+                    order_type
+                }
+            });
+            dispatch(appActions.loading(false));
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(appActions.loading(false));
+        });
+    }
+}
+
 
 export function getRepPreviousOrders() {
     return undefined;
 }
+

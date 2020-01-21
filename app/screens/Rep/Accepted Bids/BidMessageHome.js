@@ -13,22 +13,33 @@ import {actions} from "../../../store/modules";
 import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 import CustomTable from "../../../components/Tables/CustomTable";
+import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 
 class BidMessageHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             emptyMessage: "There are no Bid Message right now.",
-            pricePer: 0,
+            pricePer: "",
             total: 0,
             quantity: 0,
         };
         this.setPerPrice = this.setPerPrice.bind(this);
+        this.getSingleBid= this.getSingleBid.bind(this);
+
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.interval = setInterval(() => {
+                this.props.getRepAcceptedBids();
+            }, 6000);
+        });
+
+        this.blurListener = this.props.navigation.addListener('didBlur', (payload) => {
+            clearInterval(this.interval);
+        });
     }
 
     showContent(message) {
-        let price=!message.get("price")?0:parseFloat(message.get("price"));
-        // console.log(message);
+        let price=!message?.get("price")?0:parseFloat(message?.get("price"));
         return !message ? <EmptyTable message={this.state.emptyMessage}/> : (
             <View style={[appStyles.bgWhite, appStyles.p_10]}>
                 <View>
@@ -61,21 +72,25 @@ class BidMessageHome extends React.Component {
     }
 
     setPerPrice(price) {
-        const {params} = this.props.navigation.state;
-        const message = params ? params.message : null;
-        let total = 0;
-        if (price !== "") {
-            let quantity = parseFloat(message.get("quantity"));
+        // const {params} = this.props.navigation.state;
+        // let bid=this.getSingleBid(params.bid_id);
+        // let message = null;
+        // if(bid){
+        //     message=bid.get("order").get("message");
+        // }
+        if(price!==""){
             price = parseFloat(price);
-            total = quantity * price;
+            this.setState({pricePer: price});
         }
-        this.setState({total});
-        this.setState({pricePer: price});
+        else{
+            this.setState({pricePer:""});
+        }
+
     }
 
     showInput(message) {
         let price = this.state.pricePer.toString();
-        let btnStatus = this.state.total === 0;
+        let btnStatus = this.state.pricePer==="";
         return (
             <View>
                 <Row style={[appStyles.mt_5, appStyles.verticalCenter, appStyles.borderBottom2, appStyles.pb_5]}>
@@ -105,9 +120,18 @@ class BidMessageHome extends React.Component {
         );
     }
 
+    getSingleBid(bid_id) {
+        let accepted_bids = this.props.bid.get("accepted_bids").get("data");
+        return accepted_bids.find((bid) => bid.get("id") === bid_id);
+    }
+
     render() {
         const {params} = this.props.navigation.state;
-        const message = params ? params.message : null;
+        let bid=this.getSingleBid(params.bid_id);
+        let message = null;
+        if(bid){
+            message=bid.get("order").get("message");
+        }
 
         return (
             <AppBackground>
@@ -115,7 +139,7 @@ class BidMessageHome extends React.Component {
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="accepted-order" title={"Order Message"}/>
                     <Content contentContainerStyle={styles.content}>
-                        {this.showContent(message)}
+                        {this.props.app.get("loading") ? <SkeletonLoading/>:this.showContent(message)}
                     </Content>
                 </ScrollView>
                 <Footer>
@@ -137,10 +161,21 @@ const mapDispatchToProps = (dispatch) => {
     return {
         placeMessagePrice: (pricePer, order_id) => {
             return dispatch(actions.bid.placeMessagePrice(pricePer, order_id))
+        },
+        getRepAcceptedBids: async () => {
+            return await dispatch(actions.bid.getRepAcceptedBids())
         }
     }
 };
 
+const mapStateToProps = (state) => {
+    return {
+        app: state.get("app"),
+        bid: state.get("bid")
+    };
+};
 
-export default withNavigation(connect(null, mapDispatchToProps)(BidMessageHome));
+
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(BidMessageHome));
 

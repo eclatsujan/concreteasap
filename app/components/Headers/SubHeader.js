@@ -19,8 +19,6 @@ export default class SubHeader extends React.Component {
 
     renderIcon(iconType, iconName) {
         let iconStyle = [appStyles.headerIcon, appStyles.pr_20, appStyles.ft_20];
-        // console.log(iconName);
-        // console.log(iconStyle)   ;
         return iconType === "ConcreteASAP" ? <ConcreteIcon name={iconName} style={iconStyle}/> :
             <Icon active type={iconType} name={iconName} style={iconStyle}/>;
     }

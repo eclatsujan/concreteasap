@@ -11,6 +11,7 @@ export default class CardPayment extends React.Component {
     }
 
     render() {
+        console.log(this.props["modalVisibility"]);
         return (
             <Modal
                 animationType="slide"

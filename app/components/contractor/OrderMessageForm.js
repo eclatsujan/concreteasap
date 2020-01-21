@@ -37,7 +37,7 @@ class OrderMessageForm extends React.Component {
                 <View style={appStyles.my_5}>
                     <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.horizontalCenter]}
                             onPress={handleSubmit(this.props.onSubmit)}>
-                        <Text style={appStyles.buttonBlack}>Next</Text>
+                        <Text style={appStyles.buttonBlack}>Order Message</Text>
                     </Button>
                 </View>
             </View>

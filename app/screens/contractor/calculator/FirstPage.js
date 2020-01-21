@@ -34,7 +34,6 @@ export default class FirstPage extends React.Component {
 
     onPressButton() {
         let backAction = this.props.navigation.getParam("backAction");
-        // console.log(this.props.navigation.get);
         let total = 0;
         let l = parseFloat(this.state.first);
         let w = parseFloat(this.state.second);

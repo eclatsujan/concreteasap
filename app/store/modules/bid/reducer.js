@@ -70,7 +70,6 @@ export const reducer = (state, action) => {
             return state;
         case PLACE_BID:
             let order_id = action.payload.order_id;
-            // console.log(state.get("bid_orders"));
             return state;
         default:
             return state

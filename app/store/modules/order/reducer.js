@@ -1,7 +1,5 @@
 import * as constants from './constants'
 import * as Immutable from 'immutable';
-import {update} from "immutable";
-import {normalize} from "normalizr";
 
 export const defaultState = Immutable.Map({
     orders: Immutable.List([]),
@@ -9,9 +7,9 @@ export const defaultState = Immutable.Map({
     pending_orders: Immutable.Map({
         last_page: 0,
         current_page: 0,
-        total: 0,
         data: Immutable.List([]),
-        isLoading: false
+        error:false,
+        loading:false
     }),
     accepted_orders: Immutable.Map({
         last_page: 0,
@@ -50,7 +48,6 @@ export const reducer = (state, action) => {
                 .setIn(["pour_orders", "isLoading"], action.payload.isLoading);
         case constants.ADD_ORDER:
             orders = state.get("pending_orders").get("data");
-
             orders.push(Immutable.fromJS(action.payload.order));
             return state.setIn(["pending_orders", "data"], orders);
         case constants.MODIFY_ORDER:
@@ -61,7 +58,6 @@ export const reducer = (state, action) => {
                 return order.get("id") === action.payload.order.order_id;
             });
 
-            console.log(state.get(type).get("data").get(index).get("order_concrete"));
             newState = state.updateIn([type, "data", index, "order_concrete"], (val) => {
                 // console.log(val);
                 return val.set("address", action.payload.order.address)
@@ -107,12 +103,21 @@ export const reducer = (state, action) => {
             });
         case constants.ADD_MESSAGE:
             return state.updateIn([action.payload.order_type, "data"], (orders) => {
+                console.log(orders);
                 let index = orders.findIndex((order) => {
                     return order.get("id") === action.payload.order_id;
                 });
-                console.log(index);
                 return orders.updateIn([index], (order) => {
                     return order?.set("message", Immutable.fromJS(action.payload.data));
+                });
+            });
+        case constants.UPDATE_STATUS:
+            return state.updateIn([action.payload.order_type, "data"], (orders) => {
+                let index = orders.findIndex((order) => {
+                    return order.get("id") === action.payload.order_id;
+                });
+                return orders.updateIn([index,"status"], (status) => {
+                    return action.payload.status
                 });
             });
         case constants.REMOVE_BID:

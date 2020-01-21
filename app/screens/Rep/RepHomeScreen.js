@@ -19,7 +19,7 @@ class RepHomeScreen extends React.Component {
     constructor(props) {
         super(props);
         OneSignal.addEventListener("inAppMessageClicked", function (event) {
-            console.log(event);
+            // console.log(event);
         });
     }
 

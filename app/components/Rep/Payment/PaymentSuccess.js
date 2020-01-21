@@ -15,12 +15,9 @@ export default class PaymentSuccess extends React.Component {
         return (
             <Modal animationType="slide" transparent={true} visible={this.props["modalVisibility"]}
                    onRequestClose={(title, message) => {
-                       // console.log(this.props["cancelModel"]);
                        this.props["handleModel"]();
                    }}
-                   onBackdropPress={() => {
-                       console.log("ok");
-                   }}>
+                   onBackdropPress={() => { }}>
 
                 <TouchableOpacity
                     style={[appStyles.modalBg, appStyles.verticalCenter, appStyles.horizontalCenter, appStyles.flex1]}

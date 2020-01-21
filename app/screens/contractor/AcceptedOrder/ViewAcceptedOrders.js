@@ -1,22 +1,7 @@
 import * as React from 'react';
 import {TouchableOpacity, ScrollView} from 'react-native';
-import {
-    Grid,
-    Col,
-    Row,
-    View,
-    Button,
-    Text,
-    Header,
-    Content,
-    Right,
-    Body,
-    Left,
-    Icon,
-    Footer,
-    FooterTab,
-    Title,
-} from 'native-base';
+import {Grid, Col, Row, View, Button, Text, Header, Content, Right, Body,
+        Left, Icon, Footer, FooterTab, Title} from 'native-base';
 import {DrawerActions} from 'react-navigation-drawer';
 
 import {styles} from '../styles.js';
@@ -55,7 +40,6 @@ export default class ViewAcceptedOrders extends React.Component {
     }
 
     _alertIndex(id) {
-        console.log("bids:", id);
         this.props.navigation.navigate("ViewBids", {itemId: id});
     }
 

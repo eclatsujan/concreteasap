@@ -42,18 +42,8 @@ class HomeScreen extends React.Component {
         }
     }
 
-    showNotification() {
-
-    }
-
-    onReceived(notification) {
-
-        // console.log(notification);
-    }
-
     onInAppClicked(action) {
         let {clickUrl, clickName, firstClick, closesMessage} = action;
-        console.log(clickUrl);
     }
 
     componentWillUnmount() {
@@ -82,12 +72,20 @@ class HomeScreen extends React.Component {
                                         resetNavigation("AcceptedOrders", "Accepted Order");
                                         this.props.appLoading();
                                     }}/>
+
+                        <HomeButton text="Previous Orders" iconType="ConcreteASAP" iconName="accepted-order"
+                                    onPress={() => {
+                                        resetNavigation("Previous Order", "Accepted Order");
+                                        this.props.appLoading();
+                                    }}/>
+
                         <HomeButton text={"Day of Pour"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
                                     iconName={"truck"}
                                     onPress={() => {
                                         resetNavigation("pourDayList", "Day of Pour");
                                         this.props.appLoading();
                                     }}/>
+
                         <HomeButton text="Notifications" iconType="ConcreteASAP" iconName="bell"
                                     onPress={() => {
                                         this.props.navigation.navigate("Notifications");

@@ -3,7 +3,9 @@ export const orderForm = {
         {label: "Select One", key: ""}, {label: "Standard Mix", key: "standard-mix"},
         {label: "Block Fill Mix", key: "block-fill"}, {label: "Long Line", key: "long-line"},
         {label: "Tremmi Mix", key: "tremmi-fill"}, {label: "Spray Crete/Shot Crete", key: "crete"},
-        {label: "Kerb Gutter Mix", key: "kerb-gutter-mix"},{label: "Color Mix", key: "color-mix"},
+        {label: "Kerb Gutter Mix", key: "kerb-gutter-mix"},{label: "Builders Mix", key: "builders-mix"},
+        {label: "Builders Mix", key: "builders-mix"},{label: "Other", key: "other"},
+        {label: "Color Mix", key: "color-mix"},
     ],
     mpa: [
         {label: "Select One", key: ""}, {label: "20", key: "20"}, {label: "25", key: "25"},
@@ -36,7 +38,7 @@ export const orderForm = {
         {label: "Select One", key: ""}, {label: "On Site", key: "On Site"}, {label: "On Call", key: "On Call"}
     ],
     time_difference_deliveries: [
-        {label: "Select One", key: ""}, {label: "10 Min", key: "10min"},
+        {label: "Select One", key: ""}, {label: "10 Min", key: "10min"},{label: "15 Min", key: "15min"},
         {label: "20 Min", key: "20min"}, {label: "30 Min", key: "30min"}
     ],
     urgency: [

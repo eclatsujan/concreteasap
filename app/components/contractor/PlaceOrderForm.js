@@ -25,16 +25,19 @@ class PlaceOrderForm extends React.Component {
 
 
     //To use calculator
-    static getDerivedStateFromProps(props,state) {
-        if(props.quantity!==""&&typeof props.quantity!=="object"){
-            props.change("quantity",props.quantity);
+    static getDerivedStateFromProps(props, state) {
+        if (props.quantity !== "" && typeof props.quantity !== "object") {
+            props.change("quantity", props.quantity);
         }
 
         return state;
     }
 
     onMapPick(value) {
-        value["postcode"] ? this.props.change("suburb", value["postcode"]) : null;
+        value["postcode"] ? this.props.change("postcode", value["postcode"]) : null;
+        value["suburb"] ? this.props.change("suburb", value["suburb"]) : null; 
+        value["state"] ? this.props.change("state", value["state"]) : null;
+        console.log(value);
     }
 
     onSelect(val) {
@@ -42,9 +45,9 @@ class PlaceOrderForm extends React.Component {
     }
 
     onCalculatorClick() {
-        navigationHelper.navigate(this.props["calculatorRoute"],{
-            "backAction":true,
-            "backRoute":this.props["backRoute"]
+        navigationHelper.navigate(this.props["calculatorRoute"], {
+            "backAction": true,
+            "backRoute": this.props["backRoute"]
         });
     }
 
@@ -65,7 +68,7 @@ class PlaceOrderForm extends React.Component {
                         style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont, appStyles.baseLargeFontSize]}>
                         Post Code
                     </Text>
-                    <Field name="suburb" placeholder="Post Code" keyboardType="numeric" component={csTextBox}
+                    <Field name="postcode" placeholder="Post Code" keyboardType="numeric" component={csTextBox}
                            type="select"
                            validate={[formValidation.required]}/>
                 </View>

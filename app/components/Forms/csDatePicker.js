@@ -22,16 +22,11 @@ export default class csDatePicker extends React.Component {
     }
 
     openPicker() {
-        // console.log(this.props);
         this.props["onToggle"]();
-        // if (this.datePickerRef) {
-        //     this.datePickerRef["showDatePicker"]();
-        // }
     }
 
     addDays(n) { // adding the few more days in the current days
         let t = new Date();
-        //console.log(t);
         t.setDate(t.getDate() + n);
         let month = "0" + (t.getMonth() + 1);
         let date = "0" + t.getDate();

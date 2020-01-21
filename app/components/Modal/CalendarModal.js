@@ -30,16 +30,6 @@ export default class CalendarModal extends React.Component {
         this.addMarkDate = this.addMarkDate.bind(this);
     }
 
-    componentDidMount() {
-        // let markedDates={};
-        // console.log(this.props["defaultDates"]);
-        // if(this.props["defaultDates"]){
-        //
-        // }
-        //
-        // this.setState({markedDates});
-    }
-
     addMarkDate(day) {
         let markedDates = {...this.state.markedDates};
 
@@ -104,17 +94,15 @@ export default class CalendarModal extends React.Component {
                     // Handler which gets executed on day press. Default = undefined
                     onDayPress={(day) => {
                         this.addMarkDate(day);
-                        // console.log('selected day', day)
                     }}
                     // Handler which gets executed on day long press. Default = undefined
                     onDayLongPress={(day) => {
-                        // console.log('selected day', day)
+
                     }}
                     // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
                     monthFormat={'MMMM yyyy'}
                     // Handler which gets executed when visible month changes in calendar. Default = undefined
                     onMonthChange={(month) => {
-                        // console.log('month changed', month)
                     }}
                     // Hide month navigation arrows. Default = false
 

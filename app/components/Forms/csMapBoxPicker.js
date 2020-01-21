@@ -42,18 +42,41 @@ export default class csMapBoxPicker extends React.Component {
                     }
                     res.json().then((res) => {
                         let locations = res["features"].map((res) => {
+
+                            let suburb_context=res["context"].find((context)=>{
+                                return context["id"].startsWith("locality");
+                            });
                             let postcode_context = res["context"].find((context) => {
                                 return context["id"].startsWith("postcode");
                             });
+
+                            let state_context = res["context"].find((context) => {
+                                return context["id"].startsWith("region");
+                            });
+
+                            let state="";
+                            if(state_context){
+                                state=state_context["text"];
+                            }
+
                             let postcode = "";
                             if (postcode_context) {
                                 postcode = postcode_context["text"];
                             }
 
+                            let suburb="";
+                            if(suburb_context){
+                                suburb=suburb_context["text"]
+                            }
+
                             let location_name = res["place_name"].replace(postcode + ", Australia", '');
+
                             return {
+                                // address,
                                 location_name,
-                                postcode: postcode
+                                postcode: postcode,
+                                state,
+                                suburb
                             };
                         });
                         this.setState({locations});
@@ -68,7 +91,9 @@ export default class csMapBoxPicker extends React.Component {
     }
 
     onLocationSelect(value) {
+        // console.log(value);
         const {input: {onChange}} = this.props;
+        // console.log(this.state.locations);
         this.setState({location: value["location_name"]});
         this.setState({locations: []});
         this.props.onMapPick(value);

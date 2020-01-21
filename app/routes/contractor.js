@@ -35,15 +35,16 @@ import ViewBids from '../screens/contractor/AllOrders/ViewBids';
 
 //View Bids
 import ViewFullOrderDetails from '../screens/contractor/AcceptedOrder/ViewFullOrderDetails';
-import ModifyOrderRequest from "../screens/contractor/Modify Order/ModifyOrderRequest";
-import ModifyAdditionalRequest from "../screens/contractor/Modify Order/ModifyAdditionalRequest";
+import ModifyOrderRequest from "../screens/contractor/AcceptedOrder/Modify Order/ModifyOrderRequest";
+import ModifyAdditionalRequest from "../screens/contractor/AcceptedOrder/Modify Order/ModifyAdditionalRequest";
 
 //Order Message
-import OrderMessage from '../screens/contractor/Message Order/OrderMessage'
+import OrderMessageList from '../screens/contractor/AcceptedOrder/Order Message/OrderMessageList'
+import OrderMessageDetail from "../screens/contractor/AcceptedOrder/Order Message/OrderMessageDetail";
 
 //Confirm Order
-import ConfirmReview from "../screens/contractor/Confirm Order/ConfirmReview";
-import ConfirmComment from "../screens/contractor/Confirm Order/ConfirmComment";
+import ConfirmReview from "../screens/contractor/AcceptedOrder/Confirm Order/ConfirmReview";
+import ConfirmComment from "../screens/contractor/AcceptedOrder/Confirm Order/ConfirmComment";
 
 //User Profile
 import UserDetail from "../screens/User/Contact/UserDetail";
@@ -51,6 +52,8 @@ import UserDetail from "../screens/User/Contact/UserDetail";
 //Day Of Pour
 import pourDayList from "../screens/contractor/Day of Pour/pourDayList";
 import pourDayDetail from "../screens/contractor/Day of Pour/pourDayDetail";
+
+import PreviousOrderList from "../screens/contractor/Previous Order/PreviousOrderList"
 
 
 export const calculator = createStackNavigator({
@@ -131,6 +134,16 @@ export const acceptedOrders = createStackNavigator({
     }
 });
 
+export const orderMessage=createStackNavigator({
+    "Order Message List": OrderMessageList,
+    "Order Message Detail":OrderMessageDetail
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
 export const dayofPourStack = createStackNavigator({
         DayOfPour: DayOfPour,
         ViewFullOrderDetails: ViewFullOrderDetails,
@@ -139,7 +152,7 @@ export const dayofPourStack = createStackNavigator({
         "Confirm Review": ConfirmReview,
         "Confirm Comment": ConfirmComment,
         "User Contact Detail": UserDetail,
-        "Order Message":OrderMessage,
+        "Order Message":orderMessage,
     },
     {
         headerMode: 'none',
@@ -153,6 +166,15 @@ export const dayofPourStack = createStackNavigator({
 
 export const dayOfPour = createStackNavigator({
     pourDayList,
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
+export const previousOrders= createStackNavigator({
+    PreviousOrderList,
 }, {
     headerMode: 'none',
     navigationOptions: {

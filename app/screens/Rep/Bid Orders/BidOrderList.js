@@ -67,7 +67,6 @@ class BidOrderList extends React.Component {
     }
 
     showContent(orders) {
-        // console.log(orders);
         return orders.size < 1 ? <EmptyTable message={this.state.emptyMsg}/>
             : <CustomTable bgStyle={[appStyles.bgWhite]}
                            rowHeaders={this.state.rowHeaders}

@@ -32,13 +32,13 @@ class AcceptedBidList extends React.Component {
             reRender: false
         };
 
-        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+        this.focusListener = this.props.navigation.addListener('willFocus', () => {
             this.interval = setInterval(() => {
                 this.props.getRepAcceptedBids();
             }, 6000);
         });
 
-        this.blurListener = this.props.navigation.addListener('didBlur', () => {
+        this.blurListener = this.props.navigation.addListener('willBlur', (payload) => {
             clearInterval(this.interval);
         });
 

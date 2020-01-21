@@ -30,9 +30,7 @@ export default class TableRow extends React.Component {
         return (
             <View style={[appStyles.flex1]}>
                 {this.props["rowColumns"].map((column, index) => {
-                    // let columnValue = getNested(row, column["key"]);
                     let columnValue=getNestedImmutable(row,column["key"]);
-                    // console.log(columnValue);
                     return (
                         columnValue?<Row key={index} style={[appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
                             <Col style={appStyles.w_65}>
