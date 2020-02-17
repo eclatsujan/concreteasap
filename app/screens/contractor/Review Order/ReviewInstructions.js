@@ -36,7 +36,7 @@ class ReviewInstructions extends React.Component {
         return (
             <AppBackground loading={this.props.app.get("loading")}>
                 <ScrollView style={appStyles.pb_45}>
-                    <AppHeader backMenu/>
+                    <AppHeader/>
                     <SubHeader iconName="search" title="Review Instructions"/>
                     <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault, appStyles.p_10]}>
                         <View style={[appStyles.my_5]}>

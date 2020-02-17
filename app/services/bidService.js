@@ -64,12 +64,12 @@ async function getRepPreviousBids(){
     return fetch(REP_PREFIX_URI+"bid/previous_order",requestOptions).then(handleResponse);
 }
 
-async function placeMessagePrice(price,order_id){
+async function placeMessagePrice(price,message_id){
     let token=await getToken();
     const requestOptions={
         method:'POST',
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token },
-        body: JSON.stringify({price,order_id})
+        body: JSON.stringify({price,message_id})
     };
     return fetch(REP_PREFIX_URI+"order/setMessagePrice",requestOptions).then(handleResponse);
 }

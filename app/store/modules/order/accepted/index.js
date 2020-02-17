@@ -1,7 +1,7 @@
-import {pendingReducer,pendingDefaultState} from './reducer'
-import * as pendingActions from './actions'
+import {acceptedReducer,acceptedDefaultState} from './reducer'
+import * as acceptedActions from './actions'
 
 //combining the reducer and actions of the order
-export const actions=pendingActions;
-export const reducer=pendingReducer;
-export const defaultState=pendingDefaultState;
+export const actions=acceptedActions;
+export const reducer=acceptedReducer();
+export const defaultState=acceptedDefaultState;

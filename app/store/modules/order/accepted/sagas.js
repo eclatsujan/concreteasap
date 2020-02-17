@@ -5,31 +5,30 @@ import * as appActions from '../../app/actions';
 import {orderService} from "../../../../services/orderService";
 import {normalizedOrderData} from "../../../schemas";
 
-function* fetchPendingOrders(){
+function* fetchAcceptedOrders(){
     try{
         const data=yield call(()=>{
-            return orderService.getContractorOrders().then((res)=>{
+            return orderService.getContractorAcceptedOrders().then((res)=>{
                 return normalizedOrderData(res);
             });
         });
-        yield put(actions.requestPendingOrdersSuccess(data["entities"]));
+        yield put(actions.requestAcceptedOrdersSuccess(data["entities"]));
         yield put(appActions.loading(false));
         yield delay(6000);
     }
     catch(err){
         console.log(err);
-        yield put(actions.requestPendingOrdersError());
+        yield put(actions.requestAcceptedOrdersError());
         yield put(appActions.loading(false));
     }
 }
 
 export default function* fetchOrders() {
     while(true){
-        const data = yield take(constants.FETCH_PENDING_ORDERS);
+        const data = yield take(constants.FETCH_ACCEPTED_ORDERS);
         yield race({
-            task:call(fetchPendingOrders),
-            cancel:constants.REQUEST_PENDING_ORDERS_FAILED,
-
+            task:call(fetchAcceptedOrders),
+            cancel:constants.REQUEST_ACCEPTED_ORDERS_FAILED,
         });
     }
 }

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {Button, Text, Form, Row, Col} from "native-base";
-import {ScrollView} from 'react-native';
+import {ScrollView,View} from 'react-native';
 //Custom Component
 import AppBackground from '../../components/AppBackground';
 import LoginHeader from '../../components/Headers/LoginHeader';
 
 import {appStyles} from '../../../assets/styles/app_styles';
+import AppFooter from "../../components/Footer/AppFooter";
 
 export default class RegisterLanding extends React.Component {
 
@@ -16,8 +17,8 @@ export default class RegisterLanding extends React.Component {
 
     render() {
         return (
-            <AppBackground contentContainerStyle={[appStyles.horizontalCenter]} alignContent="center">
-                <ScrollView>
+            <AppBackground alignContent="center" enableKeyBoard>
+                <ScrollView keyboardShouldPersistTaps={"always"}>
                     <LoginHeader/>
                     <Row style={[appStyles.marginAppDefault]}>
                         <Col>

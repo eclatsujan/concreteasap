@@ -19,19 +19,27 @@ class PreviousBidList extends React.Component {
         super(props);
 
         this.state = {
-            rowHeaders: ['Order No', 'Suburb', 'Cubic m'],
-            rowColumns: ["order.id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
+            rowHeaders: ['Job No', 'Suburb', 'Cubic m'],
+            rowColumns: ["order.job_id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
             emptyMessage: "No previous bids found.",
-            reRender:false
+            reRender: false
         };
 
         this.showCustomRow = this.showCustomRow.bind(this);
         this.showDetails = this.showDetails.bind(this);
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.props.getRepPreviousBids();
+            this.interval = setInterval(this.props.getRepPreviousBids, 10000);
+        });
+
+        this.blurListener = this.props.navigation.addListener('didBlur', () => {
+            clearInterval(this.interval);
+        });
     }
 
     componentDidMount() {
         this.props.getRepPreviousBids();
-        this.setState({reRender:true});
+        this.setState({reRender: true});
     }
 
     showComponentButton() {
@@ -40,14 +48,14 @@ class PreviousBidList extends React.Component {
 
     showDetails(rowData) {
         this.props.navigation.navigate("Previous Bid Detail", {
-            bid: rowData
+            bid_id: rowData?.get("id")
         });
     }
 
     showCustomRow(rowData) {
+        // console.log(rowData);
         return (
-            <StatusRow status={getNested(rowData, "order.status")} onBtnClick={this.showDetails} row={rowData}/>
-
+            <StatusRow status={rowData?.get("order")?.get("status")} onBtnClick={this.showDetails} row={rowData}/>
         );
     }
 
@@ -63,15 +71,13 @@ class PreviousBidList extends React.Component {
 
     render() {
         let bidding_orders = this.props.bid.get("previous_bids");
-
         return (
-            <AppBackground>
+            <AppBackground loading={this.props.app.get("loading")}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader iconName="search" title="Previous Bids"/>
                     <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault]}>
-                        {this.props.app.get("loading") ? <SkeletonLoading/>
-                            : this.showContent(bidding_orders.get("data"))}
+                        {this.showContent(bidding_orders.get("data"))}
                     </Content>
                 </ScrollView>
             </AppBackground>

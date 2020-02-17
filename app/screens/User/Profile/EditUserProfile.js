@@ -38,7 +38,7 @@ class EditUserProfile extends React.Component {
         let app = this.props.app.toJS();
         user["detail"]["email"] = user["email"];
         return (
-            <AppBackground loading={app.loading} enableKeyBoard>
+            <AppBackground loading={app.loading} enableKeyBoard disableBack>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="User Profile" iconType="ConcreteASAP" iconName="user"/>

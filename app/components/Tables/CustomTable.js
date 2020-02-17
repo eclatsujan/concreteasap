@@ -3,12 +3,14 @@ import {ActivityIndicator} from 'react-native'
 import {Row, Col, View, Text, Icon, Button} from "native-base";
 import {appStyles} from "../../../assets/styles/app_styles";
 import {getNested, getNestedImmutable} from "../../helpers/app";
+import EmptyTable from "./EmptyTable";
 
 export default class CustomTable extends React.Component {
 
     constructor(props) {
         super(props);
         this.props = props;
+        // this.renderHeader=this.renderHeader.bind(this);
     }
 
     renderHeaderData(headerData) {
@@ -25,33 +27,46 @@ export default class CustomTable extends React.Component {
             </Row>
     }
 
-    renderRowData(rowData) {
+    renderView(rowData) {
         try {
-            return !rowData ? null : rowData.map((row, index) => {
-                return this.renderRow(row, index)
-            });
+            return !rowData||rowData.size===0 ? (
+                <EmptyTable message={this.props["errorMsg"]} />
+            ) : this.renderTable(rowData);
         } catch (e) {
             console.log(e);
         }
 
     }
 
+    renderTable(rowData){
+        return (
+            <View>
+                {this.renderHeaderData(this.props["rowHeaders"])}
+                {rowData?.map((row, index) => {
+                    return this.renderRow(row, index)
+                })}
+            </View>
+        );
+    }
+
     renderRow(row, index) {
         return (
-            <View key={index}
-                  style={[appStyles.flex1, appStyles.mx_10, appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
-                <Row style={[appStyles.verticalCenter]}>
-                    {this.props ["rowColumns"].map((column, index) => {
-                        let columnValue = getNestedImmutable(row, column);
-                        return (
-                            <Col key={index}>
-                                <Text style={[appStyles.baseSmallFontSize]}>{columnValue}</Text>
-                            </Col>
-                        )
-                    })}
-                    {this.props["colButtonComponent"] ? this.props["colButtonComponent"](row) : this.showNormalButton(row)}
-                </Row>
-                {this.props["customRowComponent"] ? this.props["customRowComponent"](row) : null}
+            <View key={index}>
+                <View style={[appStyles.flex1, appStyles.mx_10, appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
+                    <Row style={[appStyles.verticalCenter]}>
+                        {this.props ["rowColumns"].map((column, index) => {
+                            let columnValue = getNestedImmutable(row, column);
+                            let firstValue=column==="price"?"$":"";
+                            return (
+                                <Col key={index}>
+                                    <Text style={[appStyles.baseSmallFontSize]}>{firstValue} {columnValue}</Text>
+                                </Col>
+                            )
+                        })}
+                        {this.props["colButtonComponent"] ? this.props["colButtonComponent"](row) : this.showNormalButton(row)}
+                    </Row>
+                    {this.props["customRowComponent"] ? this.props["customRowComponent"](row) : null}
+                </View>
             </View>
         );
     }
@@ -84,8 +99,7 @@ export default class CustomTable extends React.Component {
         let bgStyle = this.props["bgStyle"] ? this.props["bgStyle"] : [appStyles.bgWhite];
         return (
             <View style={bgStyle}>
-                {this.renderHeaderData(this.props["rowHeaders"])}
-                {!isLoading ? this.renderRowData(this.props["rowData"]) : <ActivityIndicator size="large"/>}
+                {!isLoading ? this.renderView(this.props["rowData"]) : <ActivityIndicator size="large"/>}
             </View>
         );
     }

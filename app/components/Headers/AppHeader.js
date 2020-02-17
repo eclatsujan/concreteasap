@@ -15,18 +15,28 @@ export default class AppHeader extends React.Component {
         return this.props["backMenu"] ? <TouchableWithoutFeedback style={appStyles.bgWhite}
                                                                   onPress={() => navigationHelper.goBack()}>
             <Icon name="arrow-back" style={appStyles.colorPrimary}/>
-        </TouchableWithoutFeedback> : <TouchableWithoutFeedback style={appStyles.flex1} onPress={() => navigationHelper.openDrawer()}>
-            <Icon name='menu' style={appStyles.colorPrimary}/>
+        </TouchableWithoutFeedback> : <TouchableWithoutFeedback style={[appStyles.w_50]} onPress={() => navigationHelper.openDrawer()}>
+            <View>
+                <Icon name='menu' style={appStyles.colorPrimary}/>
+            </View>
         </TouchableWithoutFeedback>;
     }
 
     render() {
         return (
             <View style={appStyles.navBar}>
-                <View style={appStyles.leftContainer}>
-                    {this.customMenu()}
+                <View style={[appStyles.leftContainer]}>
+                    <View style={[appStyles.flex1]}>
+                        {this.customMenu()}
+                    </View>
                 </View>
-                <Image source={require("../../../assets/Logo18.png")} style={[appStyles.appHeader]}/>
+                <View>
+                    <TouchableWithoutFeedback onPress={()=>{
+                        navigationHelper.navigate("Home");
+                    }}>
+                        <Image source={require("../../../assets/Logo18.png")} style={[appStyles.appHeader]}/>
+                    </TouchableWithoutFeedback>
+                </View>
                 <View style={appStyles.rightContainer}>
                     <TouchableWithoutFeedback onPress={() => navigationHelper.navigate("My Profile")}>
                         <Icon name='person' style={[appStyles.colorPrimary]}/>

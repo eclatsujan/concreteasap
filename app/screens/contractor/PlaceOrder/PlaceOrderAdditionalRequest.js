@@ -53,7 +53,7 @@ class PlaceOrderAdditionalRequest extends React.Component {
     render() {
         return (
             <AppBackground enableKeyBoard>
-                <AppHeader backMenu/>
+                <AppHeader/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Place Order"/>
                 <AdditionalOrderForm onSubmit={this.displayReview}
                                      selectedTime={this.props.time}/>

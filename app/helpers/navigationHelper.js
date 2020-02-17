@@ -32,6 +32,10 @@ export function resetHomeNavigation(routeName, params) {
     _navigator.dispatch(resetActions);
 }
 
+export function addParamForNavigation(params){
+    _navigator.dispatch(NavigationActions.setParams(params));
+}
+
 export function resetNavigation(routeName,key=null,index=0,params={}) {
     _navigator.dispatch(StackActions.reset({
         index: index,
@@ -52,6 +56,12 @@ function openDrawer() {
     );
 }
 
+// function setState(){
+//     _navigator.dispatch(
+//         DrawerActions.
+//     );
+// }
+
 // add other navigation functions that you need and export them
 
 export default {
@@ -60,5 +70,6 @@ export default {
     openDrawer,
     resetHomeNavigation,
     resetNavigation,
-    goBack
+    goBack,
+    addParamForNavigation
 };

@@ -18,13 +18,11 @@ class SpecialOrderForm extends React.Component {
             <View>
                 <View style={appStyles.my_5}>
                     <Text style={[appStyles.boldFont, appStyles.colorPrimary]}>Special Instructions</Text>
-                    <Field name="special_instructions" rowSpan={5} component={csTextArea} type="text"
-                           validate={[formValidation.required]}/>
+                    <Field name="special_instructions" rowSpan={5} component={csTextArea} type="text"/>
                 </View>
                 <View style={appStyles.my_5}>
                     <Text style={[appStyles.boldFont, appStyles.colorPrimary]}>Delivery Instructions</Text>
-                    <Field name="delivery_instructions" rowSpan={5} component={csTextArea} type="text"
-                           validate={[formValidation.required]}/>
+                    <Field name="delivery_instructions" rowSpan={5} component={csTextArea} type="text"/>
                 </View>
                 <Button style={[appStyles.button, appStyles.bgPrimary, appStyles.horizontalCenter]}
                         onPress={handleSubmit(this.props.onSubmit)}>

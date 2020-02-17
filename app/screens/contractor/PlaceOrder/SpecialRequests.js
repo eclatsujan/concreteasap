@@ -12,6 +12,7 @@ import SubHeader from '../../../components/Headers/SubHeader'
 //StyleSheet
 import {appStyles} from "../../../../assets/styles/app_styles";
 import SpecialOrderForm from "../../../components/contractor/SpecialOrderForm";
+import AppFooter from "../../../components/Footer/AppFooter";
 
 class SpecialRequests extends React.Component {
 
@@ -50,7 +51,7 @@ class SpecialRequests extends React.Component {
         return (
             <AppBackground enableKeyBoard>
                 <ScrollView style={appStyles.pb_45} keyboardShouldPersistTaps={"always"}>
-                    <AppHeader backMenu/>
+                    <AppHeader/>
                     <SubHeader iconName="clipboard" title="Special Requests"/>
                     <Content>
                         <SpecialOrderForm onSubmit={this.handleSubmit} initialValues={order} />

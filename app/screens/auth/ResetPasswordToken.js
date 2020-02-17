@@ -1,7 +1,7 @@
 import React from 'react';
 
 //Native Base components
-import {Icon, Button, Text, Form, Item as FormItem, Input, Content, Row, Col} from "native-base";
+import {Icon, Button, Text, Form, Item as FormItem, Input, Content, Row, Col,View} from "native-base";
 
 //Redux Core
 import {connect} from 'react-redux';
@@ -63,6 +63,9 @@ class ResetPasswordToken extends React.Component {
                 <Content style={[appStyles.content]}>
                     <LoginHeader/>
                     <ErrorHeader error={this.props.error}/>
+                    <View style={[appStyles.bgWhite,appStyles.px_10,appStyles.py_10]}>
+                        <Text>Please Check your email for your token.</Text>
+                    </View>
                     <Row>
                         <Col>
                             <Form style={appStyles.loginForm}>

@@ -24,17 +24,18 @@ class BidOrderList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rowHeaders: ['Order No.', 'Suburb', 'Cubic m'],
-            rowColumns: ["id", "order_concrete.suburb", "order_concrete.quantity"],
+            rowHeaders: ['Job No.', 'Suburb', 'Cubic m'],
+            rowColumns: ["job_id", "order_concrete.suburb", "order_concrete.quantity"],
             emptyMsg: "Currently, there is no orders available.",
             reRender:false
         };
         this._showDetails = this._showDetails.bind(this);
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.props.getRepBidOrders();
             this.interval = setInterval(()=>{
                 this.props.getRepBidOrders();
-            }, 6000);
+            }, 10000);
         });
 
         this.blurListener = this.props.navigation.addListener('didBlur', () => {
@@ -80,16 +81,14 @@ class BidOrderList extends React.Component {
         let bidding_orders = this.props.bid?.get("bid_orders")?.get("data");
 
         return (
-            <AppBackground alignTop>
+            <AppBackground alignTop loading={this.props.app.get("loading")}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="Orders Requests"/>
                     <Content>
-                        {this.props.app.get("loading") ? <SkeletonLoading/>
-                            : this.showContent(bidding_orders)}
+                        {this.showContent(bidding_orders)}
                     </Content>
                 </ScrollView>
-                <AppFooter/>
             </AppBackground>
         );
     }

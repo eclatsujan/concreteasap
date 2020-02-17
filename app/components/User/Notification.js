@@ -4,6 +4,7 @@ import {Col, Icon, Row, Text, View} from "native-base";
 import {appStyles} from "../../../assets/styles/app_styles";
 import {Animated, TouchableOpacity} from "react-native";
 import moment from "moment";
+import ButtonIcon from "../Button/ButtonIcon";
 
 export default class Notification extends React.Component {
 
@@ -28,39 +29,51 @@ export default class Notification extends React.Component {
     }
 
     onRoute(notification) {
-        this.props.onRoute(notification);
+        this.props.onRoute(notification?.get("notification"));
     }
 
 
     render() {
         let data = this.props.data;
-        let notification = data.get("notification");
+        let notification = data?.get("notification");
         let height = this.state.height._value === 1 ? "auto" : this.state.height;
         return (
             <Animated.View style={{opacity: this.state.fadeValue, height}}>
                 <Row
                     style={[appStyles.bgNotification, appStyles.p_15, appStyles.my_5]}>
                     <Col style={appStyles.w_90}>
-                        <TouchableOpacity onPress={() => {
-                            this.onRoute(data);
-                        }}>
-                            <View>
-                                <Text style={appStyles.arialFont}>
-                                    {notification.get("message")}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <Text style={appStyles.arialFont}>
-                            ({moment(data.get("date")).format("DD/MM/YYYY").toString()})
-                        </Text>
+                        <View>
+                            <TouchableOpacity onPress={() => {
+                                this.onRoute(data);
+                            }}>
+                                <View>
+                                    <Text style={appStyles.arialFont}>
+                                        {notification?.get("message")}
+                                    </Text>
+                                </View>
+                                <View style={[appStyles.flexRow,appStyles.flexWrap,appStyles.verticalCenter]}>
+                                    <Text style={appStyles.arialFont}>
+                                        ({moment(data?.get("date")).format("DD/MM/YYYY").toString()})
+                                    </Text>
+                                    <View style={appStyles.pl_5}>
+                                        <ButtonIcon small btnText={"View"} btnSize={10} btnIconSize={10} onPress={()=>{
+                                            this.onRoute(data);
+                                        }}/>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </Col>
                     <Col
                         style={[appStyles.w_10, appStyles.verticalCenter, appStyles.flex1, appStyles.verticalSelfCenter]}>
                         <TouchableOpacity style={[appStyles.h_100, appStyles.horizontalCenter]}
                                           onPress={() => {
-                                              this.markAsRead(data.get("id"))
+                                              this.markAsRead(data?.get("id"))
                                           }}>
-                            <Icon type="FontAwesome5" name="times" style={{fontSize: 15}}/>
+                            <View>
+                                <Icon type="FontAwesome5" name="times" style={{fontSize: 15}}/>
+                            </View>
+
                         </TouchableOpacity>
                     </Col>
                 </Row>

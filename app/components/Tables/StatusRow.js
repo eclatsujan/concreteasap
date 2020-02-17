@@ -5,13 +5,14 @@ import {appStyles} from "../../../assets/styles/app_styles";
 export default class StatusRow extends React.Component {
 
     render(){
-        return (
+         return (
             <Row style={appStyles.my_5}>
                 <Col>
                     <View style={[appStyles.verticalCenter,appStyles.flexRow]}>
                         <Text style={[appStyles.baseSmallFontSize,appStyles.boldFont]}>Status: </Text>
-                        <Text style={[appStyles.ft_small]}>{this.props.row.get("status")}</Text>
+                        <Text style={[appStyles.ft_small]}>{this.props.status}</Text>
                     </View>
+
                 </Col>
                 <Col>
                     <Button style={[appStyles.bgBlack,appStyles.borderRadiusDefault]} onPress={()=>{

@@ -60,11 +60,11 @@ export default class ThirdPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    Height(m)
+                                    Height(m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault,appStyles.my_5]} regular>
-                                <Input placeholder="Height(m)" value={this.state.first} style={appStyles.baseFont}
+                                <Input placeholder="Height(m3)" value={this.state.first} style={appStyles.baseFont}
                                        onChangeText={(first) => this.setState({first})}
                                        keyboardType='numeric'/>
                             </Item>
@@ -73,11 +73,11 @@ export default class ThirdPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    Diameter(mm)
+                                    Diameter(m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault,appStyles.my_5]} regular>
-                                <Input placeholder="Diameter(m)" value={this.state.second} style={appStyles.baseFont}
+                                <Input placeholder="Diameter(m3)" value={this.state.second} style={appStyles.baseFont}
                                        onChangeText={(second) => this.setState({second})} keyboardType='numeric'/>
                             </Item>
                         </View>
@@ -85,11 +85,11 @@ export default class ThirdPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    Qty
+                                    Quantity
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault,appStyles.my_5]} regular>
-                                <Input placeholder="Qty" style={appStyles.baseFont} value={this.state.third}
+                                <Input placeholder="Quantity" style={appStyles.baseFont} value={this.state.third}
                                        style={appStyles.baseFont}
                                        onChangeText={(third) => this.setState({third})} keyboardType='numeric'/>
                             </Item>

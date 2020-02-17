@@ -10,6 +10,7 @@ import {actions} from "../../../../store/modules";
 import {appStyles} from "../../../../../assets/styles/app_styles";
 import {OrderMessageView} from "../../../../components/contractor/OrderMessageView";
 import CustomButton from "../../../../components/Button/CustomButton";
+import AppFooter from "../../../../components/Footer/AppFooter";
 
 class OrderMessageDetail extends React.Component {
 

@@ -35,19 +35,9 @@ export default class SetupScreen extends Component {
     }
 
     componentDidMount() {
-
         this.loadFonts().then(() => {
             this.setState({isReady: true});
         });
-
-    }
-
-
-
-
-
-    componentWillUnmount() {
-
     }
 
     async loadFonts() {

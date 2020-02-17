@@ -6,17 +6,18 @@ import {ScrollView} from 'react-native';
 import {Content} from 'native-base';
 
 //App Component
-import AppBackground from '../../components/AppBackground';
-import AppHeader from '../../components/Headers/AppHeader'
-import HomeButton from '../../components/Button/HomeButton'
+import AppBackground from '../../../components/AppBackground';
+import AppHeader from '../../../components/Headers/AppHeader'
+import HomeButton from '../../../components/Button/HomeButton'
 
-import {appStyles} from "../../../assets/styles/app_styles";
+import {appStyles} from "../../../../assets/styles/app_styles";
 
 import OneSignal from "react-native-onesignal";
 import {withNavigation} from "react-navigation";
-import navigationHelper, {resetNavigation} from "../../helpers/navigationHelper";
-import {actions} from "../../store/modules";
+import navigationHelper, {resetNavigation} from "../../../helpers/navigationHelper";
+import {actions} from "../../../store/modules";
 import connect from "react-redux/lib/connect/connect";
+import SubHeader from "../../../components/Headers/SubHeader";
 
 class HomeScreen extends React.Component {
 
@@ -25,12 +26,6 @@ class HomeScreen extends React.Component {
         OneSignal.addEventListener('received', this.onReceived);
         OneSignal.addEventListener('opened', this.onOpened);
         this.onOpened = this.onOpened.bind(this);
-    }
-
-    componentDidMount() {
-        // OneSignal.sendSelfNotification({
-        //
-        // });
     }
 
     onOpened(event) {
@@ -53,39 +48,40 @@ class HomeScreen extends React.Component {
 
     render() {
         return (
-            <AppBackground alignTop>
+            <AppBackground disableBack alignTop>
                 <ScrollView contentContainerStyle={[appStyles.flexGrow]} style={[appStyles.pb_45]}>
                     <AppHeader/>
                     <Content contentContainerStyle={[appStyles.horizontalCenter, appStyles.flex1]}>
-                        <HomeButton text="Place New Order" iconType="ConcreteASAP" iconName="place-order"
+                        <SubHeader iconType="ConcreteASAP" iconName="truck" title="Concrete Home"/>
+
+                        <HomeButton text="I Need Concrete" iconType="ConcreteASAP" iconName="place-order"
                                     onPress={() => {
-                                        resetNavigation("PlaceOrderLanding");
+                                        resetNavigation("Place Order Requests",null);
                                         this.props.appLoading();
                                     }}/>
-                        <HomeButton text="View Order Requests" iconType="ConcreteASAP" iconName="pending-order"
+                        <HomeButton text={"Today's Orders"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
+                                    iconName={"truck"}
                                     onPress={() => {
-                                        resetNavigation("ViewOrderBids", "Pending Order");
+                                        this.props.navigation.navigate("pourDayList");
+
+                                        this.props.appLoading();
+                                    }}/>
+                        <HomeButton text="Pending Orders" iconType="ConcreteASAP" iconName="pending-order"
+                                    onPress={() => {
+                                        resetNavigation("ViewOrderBids", "Pending Orders");
                                         this.props.appLoading();
                                     }}/>
                         <HomeButton text="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"
                                     onPress={() => {
-                                        resetNavigation("AcceptedOrders", "Accepted Order");
+                                        this.props.navigation.navigate("Accepted Order");
+                                        // resetNavigation("Accepted Order", "Accepted Order List",1);
                                         this.props.appLoading();
                                     }}/>
-
-                        <HomeButton text="Previous Orders" iconType="ConcreteASAP" iconName="accepted-order"
+                        <HomeButton text="Previous Orders" iconType="ConcreteASAP" iconName="prev-order"
                                     onPress={() => {
-                                        resetNavigation("Previous Order", "Accepted Order");
+                                        resetNavigation("Previous Order List", "Previous Orders");
                                         this.props.appLoading();
                                     }}/>
-
-                        <HomeButton text={"Day of Pour"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
-                                    iconName={"truck"}
-                                    onPress={() => {
-                                        resetNavigation("pourDayList", "Day of Pour");
-                                        this.props.appLoading();
-                                    }}/>
-
                         <HomeButton text="Notifications" iconType="ConcreteASAP" iconName="bell"
                                     onPress={() => {
                                         this.props.navigation.navigate("Notifications");
@@ -94,6 +90,10 @@ class HomeScreen extends React.Component {
                         <HomeButton text="Calculators" iconType="ConcreteASAP" iconName="calculators"
                                     onPress={() => {
                                         this.props.navigation.navigate("Calculator")
+                                    }}/>
+                        <HomeButton text="Back To Home" iconName="home"
+                                    onPress={() => {
+                                        this.props.navigation.navigate("Main Home")
                                     }}/>
                         <HomeButton onPress={() => this.props.navigation.navigate("FAQ")}
                                     text="faq" iconType="ConcreteASAP" iconName="question"/>

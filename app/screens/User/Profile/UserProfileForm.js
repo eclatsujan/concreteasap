@@ -9,6 +9,8 @@ import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import csImageInput from "../../../components/Forms/csImageInput";
+import CustomButton from "../../../components/Button/CustomButton";
+import navigationHelper from "../../../helpers/navigationHelper";
 
 
 class UserProfileForm extends React.Component {
@@ -95,18 +97,14 @@ class UserProfileForm extends React.Component {
                 <Row>
                     <Col>
                         <View style={appStyles.w_90}>
-                            <Button style={[appStyles.flexRow, appStyles.flexCenter]}
-                                    onPress={this.props["cancelHandler"]}>
-                                <Text style={[appStyles.colorBlack, appStyles.txtCenter]}>Cancel</Text>
-                            </Button>
+                            <CustomButton btnIcon="arrow-left" btnText={"Back"} onPress={()=>{
+                                navigationHelper.goBack();
+                            }}/>
                         </View>
                     </Col>
                     <Col>
                         <View style={[appStyles.w_90, appStyles.flex1, appStyles.selfRight]}>
-                            <Button style={[appStyles.flexRow, appStyles.flexCenter]}
-                                    onPress={handleSubmit(this.props.onSubmit)}>
-                                <Text style={[appStyles.colorBlack, appStyles.txtCenter]}>Save Changes</Text>
-                            </Button>
+                            <CustomButton btnText={"Save Changes"} onPress={handleSubmit(this.props.onSubmit)} />
                         </View>
                     </Col>
                 </Row>

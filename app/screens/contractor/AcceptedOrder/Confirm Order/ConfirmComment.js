@@ -13,6 +13,7 @@ import {AirbnbRating} from "react-native-ratings";
 import csTextArea from "../../../../components/Forms/csTextArea";
 import {formValidation} from "../../../../helpers/validation";
 import ConfirmCommentForm from "../../../../components/contractor/Confirm/ConfirmCommentForm";
+import AppFooter from "../../../../components/Footer/AppFooter";
 
 class ConfirmComment extends React.Component {
 
@@ -31,18 +32,20 @@ class ConfirmComment extends React.Component {
         order_review["total"]=parseFloat(values.get("total"));
         order_review["rating"]=values.get("rating");
         order_review["comment"]=values.get("comment");
+        // console.log(order_id);
+        console.log(order_review);
         this.props.completeOrder(order_review,order_type);
     }
 
     render(){
         return (
-            <AppBackground loading={this.props.app.get("loading")} alignTop>
-                <ScrollView style={[appStyles.pb_45]}>
+            <AppBackground loading={this.props.app.get("loading")} enableKeyboard>
+                <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Job Complete" iconType="ConcreteASAP" iconName="accepted-order"/>
-                    <Content style={[appStyles.bgWhite, appStyles.p_10]}>
+                    <View style={[appStyles.bgWhite, appStyles.p_10]}>
                         <ConfirmCommentForm onSubmit={this.handleSubmit} />
-                    </Content>
+                    </View>
                 </ScrollView>
             </AppBackground>
         );

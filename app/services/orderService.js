@@ -22,7 +22,8 @@ export const orderService = {
     repReleaseOrder,
     getAllDayOfPour,
     sendOrderMessage,
-    sendOrderMessageStatus
+    sendOrderMessageStatus,
+    getPreviousOrders
 };
 
 //Common Function
@@ -210,13 +211,21 @@ async function sendOrderMessage(order_id,quantity){
     return fetch(CONTRACTOR_PREFIX_URI+'order/messageOrder', requestOptions).then(handleResponse);
 }
 
-async function sendOrderMessageStatus(order_id,status){
+async function sendOrderMessageStatus(message_id,status){
     let token=await getToken();
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token},
-        body: JSON.stringify({order_id,status})
+        body: JSON.stringify({message_id,status})
     };
     return fetch(CONTRACTOR_PREFIX_URI+"order/updateMessageStatus",requestOptions).then(handleResponse);
 }
 
+async function getPreviousOrders(){
+    let token=await getToken();
+    const requestOptions={
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+token}
+    };
+    return fetch(CONTRACTOR_PREFIX_URI+"orders/previous",requestOptions).then(handleResponse);
+}

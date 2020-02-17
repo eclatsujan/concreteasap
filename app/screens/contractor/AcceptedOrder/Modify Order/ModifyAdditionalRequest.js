@@ -12,6 +12,7 @@ import AppHeader from '../../../../components/Headers/AppHeader'
 import SubHeader from '../../../../components/Headers/SubHeader'
 import AdditionalOrderForm from "../../../../components/contractor/AdditionalOrderForm";
 import {formValueSelector} from "redux-form/lib/immutable";
+import AppFooter from "../../../../components/Footer/AppFooter";
 
 
 class ModifyAdditionalRequest extends React.Component {
@@ -38,7 +39,7 @@ class ModifyAdditionalRequest extends React.Component {
         let order = this.props.navigation.getParam("order");
         return (
             <AppBackground enableKeyBoard>
-                <AppHeader backMenu/>
+                <AppHeader/>
                 <SubHeader iconType="ConcreteASAP" iconName="truck" title="Place Order"/>
                 <AdditionalOrderForm onSubmit={this.displayReview} initialValues={order}
                                      selectedTime={this.props.time}/>

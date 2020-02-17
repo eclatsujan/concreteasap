@@ -17,20 +17,23 @@ import {appStyles} from "../../../../assets/styles/app_styles";
 
 import {actions} from "../../../store/modules";
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
+import AppFooter from "../../../components/Footer/AppFooter";
 
-class AcceptedOrders extends React.Component {
+class AcceptedOrderList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             tableHead: ['Order', 'Status', ''],
             tableData: [],
-            rowHeaders: ['Order No.', 'Status'],
-            rowColumns: ["id", "status"],
+            rowHeaders: ['Job No.', 'Status'],
+            rowColumns: ["job_id", "status"],
+            errorMsg: "There is no accepted orders."
         };
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            this.interval = setInterval(this.props.getAcceptedOrder, 4000);
+            this.props.getAcceptedOrder();
+            this.interval = setInterval(this.props.getAcceptedOrder, 10000);
         });
 
         this.blurListener = this.props.navigation.addListener('didBlur', () => {
@@ -50,9 +53,11 @@ class AcceptedOrders extends React.Component {
     }
 
     _alertIndex(order) {
+        console.log(order.get("id"));
         this.props.navigation.navigate("DayOfPour", {
             order_id: order.get("id"),
-            order_type:"accepted_orders"
+            order_type: "accepted_orders",
+            backRoute:this.props.navigation.state.routeName
         });
     }
 
@@ -61,30 +66,21 @@ class AcceptedOrders extends React.Component {
         let order = this.props["order"];
         let accepted_order = order?.get("accepted_orders")?.get("data");
         return (
-            <AppBackground alignTop noKeyBoard >
+            <AppBackground alignTop noKeyBoard loading={this.props.app.get("loading")}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"/>
                     <Content style={appStyles.bottomMarginDefault}>
                         <View style={[appStyles.bgWhite, appStyles.paddingAppDefault]}>
-                            {app.get("loading") ? <SkeletonLoading/> :
-                                <CustomTable bgStyle={[appStyles.bgWhite]}
-                                             rowHeaders={this.state.rowHeaders}
-                                             rowData={accepted_order} rowColumns={this.state.rowColumns}
-                                             colButtonComponent={this.showComponentButton}
-                                             customRowComponent={this.showCustomRow}
-                                             buttonText="View" onPress={this._alertIndex}/>}
+                            {<CustomTable errorMsg={this.state.errorMsg} bgStyle={[appStyles.bgWhite]}
+                                          rowHeaders={this.state.rowHeaders}
+                                          rowData={accepted_order} rowColumns={this.state.rowColumns}
+                                          colButtonComponent={this.showComponentButton}
+                                          customRowComponent={this.showCustomRow}
+                                          buttonText="View" onPress={this._alertIndex}/>}
                         </View>
                     </Content>
                 </ScrollView>
-                <Footer>
-                    <FooterTab>
-                        <Button style={[appStyles.button, appStyles.buttonPrimary]}
-                                onPress={() => this.props.navigation.navigate("Home")}>
-                            <Text style={appStyles.buttonBlack}>Back to Home</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
             </AppBackground>
         );
     }
@@ -95,7 +91,7 @@ const mapDispatchToProps = (dispatch) => {
         getAcceptedOrder: () => {
             return dispatch(actions.order.getContractorAcceptedOrder())
         },
-        appLoading: () =>{
+        appLoading: () => {
             return dispatch(actions.app.loading());
         }
     }
@@ -108,6 +104,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(AcceptedOrders));
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(AcceptedOrderList));
 
 // export default ;

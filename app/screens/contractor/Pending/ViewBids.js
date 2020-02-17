@@ -36,7 +36,8 @@ class ViewBids extends React.Component {
         this.showComponentButton = this.showComponentButton.bind(this);
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            this.interval = setInterval(this.props.getContractorOrders, 6000);
+            this.props.getContractorOrders();
+            this.interval = setInterval(this.props.getContractorOrders, 10000);
         });
 
         this.blurListener = this.props.navigation.addListener('didBlur', () => {
@@ -54,9 +55,9 @@ class ViewBids extends React.Component {
         this.blurListener.remove();
     }
 
-    acceptBid(bid_id,order_id) {
+    acceptBid(bid_id, order_id) {
         this.props.navigation.navigate("OrderBidStatus", {
-            bid_id,order_id
+            bid_id, order_id
         });
     }
 
@@ -76,7 +77,7 @@ class ViewBids extends React.Component {
 
                 <ButtonIcon iconName={"check-circle"} iconType={"FontAwesome5"} btnBgColor={"#fff"}
                             iconColor={appStyles.colorSuccess} onPress={() => {
-                    this.acceptBid(rowData.get("id"),rowData.get("order_id"))
+                    this.acceptBid(rowData.get("id"), rowData.get("order_id"))
                 }}/>
 
                 <ButtonIcon iconName={"times-circle"} iconType={"FontAwesome5"} btnBgColor={"#fff"}
@@ -88,8 +89,6 @@ class ViewBids extends React.Component {
     }
 
     showBidOutput(bids, length) {
-
-
         return length !== 0 ? <CustomTable bgStyle={[appStyles.bgWhite]}
                                            rowHeaders={this.state.rowHeaders}
                                            rowData={bids} rowColumns={this.state.rowColumns}
@@ -105,23 +104,26 @@ class ViewBids extends React.Component {
     render() {
         let pending_bids = this.props.pending_orders.get("data").get("bids");
         let order_id = this.props.navigation.getParam("order_id");
-
+        console.log(this.props.navigation.state.params);
         let order = this.getOrder(order_id);
 
-        let bids = order.get("bids").valueSeq().map((bid_id) => {
+        let bids = order?.get("bids").valueSeq().map((bid_id) => {
             return pending_bids.get(bid_id.toString());
         });
         return (
-            <AppBackground>
+            <AppBackground loading={this.props.app.get("loading")}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="View Bids"/>
                     <Content>
-                        {this.props.app.get("loading") ? <SkeletonLoading/>
-                            : this.showBidOutput(bids, bids?.size)}
+                        {typeof order === "undefined" ? (
+                            <View>
+                                <EmptyTable message={"Bids has been already accepted."} />
+
+                            </View>
+                        ): this.showBidOutput(bids, bids?.size)}
                     </Content>
                 </ScrollView>
-                <AppFooter/>
             </AppBackground>
         );
     }

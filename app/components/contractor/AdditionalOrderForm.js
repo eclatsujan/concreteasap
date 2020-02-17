@@ -14,6 +14,7 @@ import {orderForm} from "../../form/placeOrder";
 import csDatePicker from "../Forms/csDatePicker";
 import csTimePicker from "../Forms/csTimePicker";
 import CalendarModal from "../Modal/CalendarModal";
+import CustomButton from "../Button/CustomButton";
 
 
 class AdditionalOrderForm extends React.Component {
@@ -24,7 +25,7 @@ class AdditionalOrderForm extends React.Component {
             selectedDate: [],
             showCalendar: false
         };
-        this.selected={
+        this.selected = {
             selected: true,
             marked: true,
             // selectedColor: '#14E22A',
@@ -92,21 +93,26 @@ class AdditionalOrderForm extends React.Component {
     }
 
     updateDateState(dates) {
-
         let keys = Object.keys(dates);
-
-        keys.sort((a, b) => new Date(a) - new Date(b)).forEach((key, index) => {
+        keys = keys.sort((a, b) => new Date(a) - new Date(b));
+        keys.forEach((key, index) => {
             let name_index = index !== 0 ? index : "";
             this.props.change("delivery_date" + name_index, key);
         });
+        if (keys.length < 3) {
+            for (let i = keys.length - 1; i < 2; i++) {
+                let index = i === 0 ? "" : i;
+                this.props.change("delivery_date" + index, keys[i]);
+            }
 
+        }
     }
 
-    formatDate(initialDates){
-        let markedDates={};
-        if(this.props["defaultDates"]){
-            this.props["defaultDates"].forEach((date)=>{
-                markedDates[date]=this.selected;
+    formatDate(initialDates) {
+        let markedDates = {};
+        if (this.props["defaultDates"]) {
+            this.props["defaultDates"].forEach((date) => {
+                markedDates[date] = this.selected;
             });
         }
         return markedDates;
@@ -115,70 +121,78 @@ class AdditionalOrderForm extends React.Component {
     render() {
         const {handleSubmit, initialValues} = this.props;
         const {show, date, mode} = this.state;
-        let dates=[];
-        if(!initialValues?.get("delivery_date")&&!initialValues?.get("delivery_date1")&&!initialValues?.get("delivery_date2")){
-            dates=[];
-        }
-        else{
-            dates=[initialValues?.get("delivery_date"),
+        let dates = [];
+        if (!initialValues?.get("delivery_date") && !initialValues?.get("delivery_date1") && !initialValues?.get("delivery_date2")) {
+            dates = [];
+        } else {
+            dates = [initialValues?.get("delivery_date"),
                 initialValues?.get("delivery_date1"), initialValues?.get("delivery_date2")];
         }
-        let markedDates=this.formatDate(dates);
+        let markedDates = this.formatDate(dates);
         return (
             <View>
                 <View>
                     <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>
-                        Please select 3 potential dates and 3 potential time slots for
-                        delivery.
+                        Please select 3 Date and Time slots for delivery.
                     </Text>
                 </View>
 
                 <View style={appStyles.my_5}>
                     <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Date Preference
-                        1</Text>
+                        A</Text>
                     <Field name="delivery_date" onToggle={this.showCalendarModal} component={csDatePicker}
-                           placeholder={"Date Preference 1"} validate={[formValidation.requiredSelect]} dateIndex={0}
+                           placeholder={"Date Preference A"} validate={[formValidation.requiredSelect]} dateIndex={0}
                            updateDate={this.updateDate}/>
                 </View>
-
-                <View style={appStyles.my_5}>
-                    <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Date Preference
-                        2</Text>
-                    <Field name="delivery_date1" onToggle={this.showCalendarModal} component={csDatePicker}
-                           placeholder={"Date Preference 2"} validate={[formValidation.requiredSelect]} dateIndex={1}
-                           updateDate={this.updateDate}/>
-                </View>
-
-                <View style={appStyles.my_5}>
-                    <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Date Preference
-                        3</Text>
-                    <Field name="delivery_date2" onToggle={this.showCalendarModal} component={csDatePicker}
-                           placeholder={"Date Preference 3"} validate={[formValidation.requiredSelect]} dateIndex={2}
-                           updateDate={this.updateDate}/>
-                </View>
-
                 <View style={appStyles.my_5}>
                     <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Time Preference
-                        1</Text>
-                    <Field name="time1" placeholder="Time Preference 1" component={csTimePicker}
+                        A</Text>
+                    <Field name="time1" placeholder="Time Preference A" component={csTimePicker}
                            validate={[formValidation.requiredSelect]}
                            onPress={() =>
                                this.openTimePicker("time1")
                            }/>
                 </View>
+                <View style={appStyles.my_5}>
+                    <View style={[appStyles.borderBottom, appStyles.borderWhite]}/>
+                </View>
 
                 <View style={appStyles.my_5}>
-                    <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Time Preference
-                        2</Text>
-                    <Field name="time2" component={csTimePicker} validate={[formValidation.requiredSelect]}
-                           placeholder="Time Preference 2" onPress={() => this.openTimePicker("time2")}/>
+                    <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Date Preference
+                        B</Text>
+                    <Field name="delivery_date1" onToggle={this.showCalendarModal} component={csDatePicker}
+                           placeholder={"Date Preference B"} validate={[formValidation.requiredSelect]} dateIndex={1}
+                           updateDate={this.updateDate}/>
                 </View>
 
                 <View style={appStyles.my_5}>
                     <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Time Preference
-                        3</Text>
+                        B</Text>
+                    <Field name="time2" component={csTimePicker} validate={[formValidation.requiredSelect]}
+                           placeholder="Time Preference B" onPress={() => this.openTimePicker("time2")}/>
+                </View>
+
+                <View style={appStyles.my_5}>
+                    <View style={[appStyles.borderBottom, appStyles.borderWhite]}/>
+                </View>
+
+                <View style={appStyles.my_5}>
+                    <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Date Preference
+                        C</Text>
+                    <Field name="delivery_date2" onToggle={this.showCalendarModal} component={csDatePicker}
+                           placeholder={"Date Preference C"} validate={[formValidation.requiredSelect]} dateIndex={2}
+                           updateDate={this.updateDate}/>
+                </View>
+
+                <View style={appStyles.my_5}>
+                    <Text style={[appStyles.upperCase, appStyles.boldFont, appStyles.colorPrimary]}>Time Preference
+                        C</Text>
                     <Field name="time3" component={csTimePicker} validate={[formValidation.requiredSelect]}
-                           placeholder="Time Preference 3" onPress={() => this.openTimePicker("time3")}/>
+                           placeholder="Time Preference C" onPress={() => this.openTimePicker("time3")}/>
+                </View>
+
+                <View style={appStyles.my_5}>
+                    <View style={[appStyles.borderBottom, appStyles.borderWhite]}/>
                 </View>
 
                 <View style={appStyles.my_5}>
@@ -216,11 +230,9 @@ class AdditionalOrderForm extends React.Component {
                             ref={ref => {
                                 this.TimePicker = ref;
                             }}/>
-
-                <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.horizontalCenter]}
-                        onPress={handleSubmit(this.props.onSubmit)}>
-                    <Text style={appStyles.buttonBlack}>Next</Text>
-                </Button>
+                <View>
+                    <CustomButton btnText={"Next"} onPress={handleSubmit(this.props.onSubmit)}/>
+                </View>
             </View>
         );
     }

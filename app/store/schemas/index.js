@@ -17,11 +17,19 @@ const bids= new schema.Entity("bids");
 const order = new schema.Entity('orders', {
     order_concrete: order_concrete,
     user:user,
-    bids:[bids]
+    bids:[bids],
+    idAttribute: (value) => {
+        return value.id+"-";
+    }
 });
+
+const notifications = new schema.Entity("notifications");
 
 // const orders=new schema.Array
 export const normalizedOrderData = (originalData) =>{
     return normalize(originalData, [order])
 };
 
+export const normalizedNotificationData=(originalData)=>{
+    return normalize(originalData,[notifications]);
+};

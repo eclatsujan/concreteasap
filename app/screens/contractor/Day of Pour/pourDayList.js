@@ -21,15 +21,16 @@ class pourDayList extends React.Component {
         super(props);
 
         this.state = {
-            rowHeaders: ['Order No.', 'Status', 'Suburb'],
-            rowColumns: ["id", "status", 'order_concrete.suburb'],
-            emptyMessage:"There is no day of orders today."
+            rowHeaders: ['Job No.', 'Status', 'Suburb'],
+            rowColumns: ["job_id", "status", 'order_concrete.suburb'],
+            emptyMsg:"There is no day of orders today."
         };
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.props.getPourOrders();
             this.interval = setInterval(() => {
                 this.props.getPourOrders();
-            }, 4000);
+            }, 10000);
         });
 
         this.blurListener = this.props.navigation.addListener('didBlur', () => {
@@ -74,28 +75,28 @@ class pourDayList extends React.Component {
     }
 
 
-    showContent(orders, app) {
-        return app.get("loading") ? <SkeletonLoading/> :
-            orders?.size>0?<CustomTable bgStyle={[appStyles.bgWhite]}
+    showContent(orders) {
+        console.log(orders);
+        return orders?.size>0?<CustomTable bgStyle={[appStyles.bgWhite]}
                          rowHeaders={this.state.rowHeaders}
                          rowData={orders} rowColumns={this.state.rowColumns}
                          colButtonComponent={this.showComponentButton}
                          customRowComponent={this.showCustomRow}
-                         buttonText="View" onPress={this._alertIndex}/>:<EmptyTable message={this.state.emptyMessage} />;
+                         buttonText="View" onPress={this._alertIndex}/>:<EmptyTable message={this.state.emptyMsg} />;
     }
 
 
     render() {
         let orders = this.props.orders;
         let app = this.props.app;
-        let pour_orders = orders.get("pour_orders").get("data");
+        let pour_orders = orders?.get("pour_orders")?.get("data");
         return (
-            <AppBackground>
+            <AppBackground loading={app.get("loading")}>
                 <AppHeader/>
                 <Content>
-                    <SubHeader iconName="truck" iconType="ConcreteASAP" title="Review Order"/>
+                    <SubHeader iconName="truck" iconType="ConcreteASAP" title="Day of Pour"/>
                     <View>
-                        {this.showContent(pour_orders, app)}
+                        {this.showContent(pour_orders)}
                     </View>
                 </Content>
             </AppBackground>

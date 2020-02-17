@@ -14,7 +14,7 @@ class OrderView extends React.Component {
         this.state = {
             opacity: new Animated.Value(1),
             transformScale: new Animated.Value(1),
-            height:new Animated.Value(1)
+            height: new Animated.Value(1)
         };
         this.closeAnimation = this.closeAnimation.bind(this);
     }
@@ -29,40 +29,30 @@ class OrderView extends React.Component {
         return {color};
     }
 
-    closeAnimation() {
-        Animated.parallel([
-            // Animated.timing(
-            //     this.state.height,
-            //     {
-            //         toValue:0,
-            //         duration:1000
-            //     }
-            // ),
-            // Animated.timing(
-            //     this.state.opacity,
-            //     {
-            //         toValue:0,
-            //         duration:1000
-            //     }
-            // )
-        ]).start(()=>{
-            this.props["onArchiveHandler"](this.props["order"]);
-        });
+    closeAnimation(order) {
+        this.props["onArchiveHandler"](order);
 
     }
 
     render() {
-        let pending_orders=this.props.pending_order.get("data").get("orders");
-        let pending_order_bids=this.props.pending_order.get("data").get("bids");
-        let order=pending_orders.get(this.props.order_id);
-        let order_id=order.get("id");
-        let status=order.get("status");
-        let order_bids=order.get("bids");
-        let height=this.state.height._value===1?"auto":this.state.height;
+        let pending_data = this.props.pending_order?.get("data");
+        let order = pending_data?.get("orders")?.get(this.props.order_id);
+
+        let pending_order_bids = pending_data?.get("bids");
+        let order_concrete = pending_data?.get("order_concrete")?.get(order?.get("order_concrete").toString());
+
+        let order_id = order?.get("id");
+        let jobId = order?.get("job_id");
+        let status = order?.get("status");
+        let order_bids = order?.get("bids");
+        let height = this.state.height._value === 1 ? "auto" : this.state.height;
 
         return (
             <Animated.View
-                style={[{opacity: this.state.opacity,height},appStyles.py_10, appStyles.borderBottom, appStyles.mx_10]}>
+                style={[{
+                    opacity: this.state.opacity,
+                    height
+                }, appStyles.py_10, appStyles.borderBottom, appStyles.mx_10]}>
                 <Row>
                     <View style={[appStyles.flexRow, appStyles.pb_5]}>
                         <View style={[appStyles.flexRow, {alignItems: "flex-end"}]}>
@@ -70,7 +60,7 @@ class OrderView extends React.Component {
                                 Order ID:#
                             </Text>
                             <Text
-                                style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>{order_id}</Text>
+                                style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>{jobId}</Text>
                             <Text
                                 style={[appStyles.baseSmallFontSize, appStyles.pl_20, appStyles.upperCase, appStyles.boldFont]}>
                                 Status:
@@ -82,34 +72,20 @@ class OrderView extends React.Component {
                         </View>
                     </View>
                 </Row>
-                {status === "Complete" || status === "Cancelled" ?
-                    <Row style={[appStyles.pb_5]}>
-                        <Col>
-                            <View style={[appStyles.flexRow]}>
-                                <Text style={[appStyles.baseSmallFontSize, appStyles.upperCase]}>Company:</Text>
-                                <Text
-                                    style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>
-                                    {pending_order_bids?.get(order_bids.get(0).toString())?.get("user").get("detail").get("company")}
-                                </Text>
-                            </View>
-                        </Col>
-                    </Row>
-                    : null}
                 <View style={[appStyles.flex1, appStyles.flexRow]}>
                     <View style={[appStyles.flexRow, appStyles.flexWrap, appStyles.py_5, appStyles.w_90]}>
-                        <View>
-                            {status !== "Complete" && status !== "Cancelled" ?
-                                <ButtonIcon small
-                                            btnText={this.props["buttonViewText"]}
-                                            onPress={() => {
-                                                this.props["onBidHandler"](order_id)
-                                            }}/> : null}
+                        <View style={[appStyles.pr_5, appStyles.mb_10]}>
+                            <ButtonIcon small
+                                        btnText={this.props["buttonViewText"]}
+                                        onPress={() => {
+                                            this.props["onBidHandler"](order_id)
+                                        }}/>
                         </View>
                         <View style={[appStyles.pr_5, appStyles.mb_10]}>
                             <ButtonIcon small
                                         btnText={"View Details"}
                                         onPress={() => {
-                                            this.props["onDetailHandler"] ? this.props["onDetailHandler"](order_id) : null;
+                                            this.props["onDetailHandler"] ? this.props["onDetailHandler"](order_concrete) : null;
                                         }}/>
                         </View>
                         <View style={appStyles.pr_5}>
@@ -118,19 +94,17 @@ class OrderView extends React.Component {
                                         iconName={"archive"}
                                         btnBgColor={"#707070"}
                                         onPress={() => {
-                                            this.closeAnimation();
+                                            this.closeAnimation(order);
                                         }}/>
                         </View>
                     </View>
                     <View style={appStyles.w_10}>
-                        {status !== "Complete" && status !== "Cancelled" ?
-                            <View
-                                style={[appStyles.smallCircleNoBorder, appStyles.bgPrimary, appStyles.justifyItemsCenter]}>
-                                <Text style={[appStyles.boldFont, appStyles.ft_20]}>
-                                    {order_bids?.size}
-                                </Text>
-                            </View>
-                            : null}
+                        <View
+                            style={[appStyles.smallCircleNoBorder, appStyles.bgPrimary, appStyles.justifyItemsCenter]}>
+                            <Text style={[appStyles.boldFont, appStyles.ft_20]}>
+                                {order_bids?.size}
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </Animated.View>
@@ -140,7 +114,7 @@ class OrderView extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getContractorPendingOrders:()=>{
+        getContractorPendingOrders: () => {
             return dispatch(actions.order.pendingOrder.fetchPendingOrders());
         }
     }
@@ -148,7 +122,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        pending_order:state.get("pending_order")
+        pending_order: state.get("pending_order")
     };
 };
 

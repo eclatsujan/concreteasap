@@ -7,6 +7,7 @@ import SubHeader from "../../../components/Headers/SubHeader";
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {ScrollView} from "react-native";
 import {formatTime, formatDate} from "../../../helpers/time";
+import AppFooter from "../../../components/Footer/AppFooter";
 
 export default class ViewOrderDetail extends React.Component {
 
@@ -20,7 +21,15 @@ export default class ViewOrderDetail extends React.Component {
                 },
                 {
                     title: "Post Code",
+                    key: "post_code"
+                },
+                {
+                    title: "Suburb",
                     key: "suburb"
+                },
+                {
+                    title:"State",
+                    key:"state"
                 },
                 {
                     title: "Quantity",
@@ -94,7 +103,7 @@ export default class ViewOrderDetail extends React.Component {
     }
 
     render() {
-        let order = this.props.navigation.getParam("order");
+        let order_concrete = this.props.navigation.getParam("order_concrete");
         return (
             <AppBackground>
                 <AppHeader/>
@@ -102,7 +111,7 @@ export default class ViewOrderDetail extends React.Component {
                     <SubHeader title="Order Details" iconType="ConcreteASAP" iconName="accepted-order"/>
                     <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault]}>
                         <View style={[appStyles.p_5]}>
-                            <TableRow rowData={order?.get("order_concrete")} rowColumns={this.state.rowColumns}/>
+                            <TableRow rowData={order_concrete} rowColumns={this.state.rowColumns}/>
                         </View>
                     </Content>
                 </ScrollView>

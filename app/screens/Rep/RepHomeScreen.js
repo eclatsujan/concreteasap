@@ -21,44 +21,48 @@ class RepHomeScreen extends React.Component {
         OneSignal.addEventListener("inAppMessageClicked", function (event) {
             // console.log(event);
         });
+
     }
 
     render() {
         return (
-            <AppBackground>
+            <AppBackground disableBack>
                 <AppHeader/>
                 <Content contentContainerStyle={[appStyles.flex1, appStyles.horizontalCenter]}>
                     <ScrollView contentContainerStyle={[appStyles.flexGrow, appStyles.horizontalCenter]}>
+
+                        <HomeButton text="Concrete Jobs for Tender" iconType="ConcreteASAP" iconName="pending-order"
+                                    onPress={() => {
+                                        resetNavigation("Bid Order List","Concrete Jobs for Tender");
+                                        this.props.appLoading();
+                                    }}/>
+
+                        <HomeButton text="My Bids" iconType="ConcreteASAP" iconName="existing-order"
+                                    onPress={() => {
+                                        resetNavigation("Pending Bid List", "My Bids");
+                                        this.props.appLoading();
+                                    }}/>
+
+                        <HomeButton text="Jobs Won" iconType="ConcreteASAP" iconName="accepted-order"
+                                    onPress={() => {
+                                        resetNavigation("Accepted Bid List", "Jobs Won");
+                                        this.props.appLoading();
+                                    }}/>
+
+                        <HomeButton text="Previous Bids" iconType="ConcreteASAP" iconName="place-order"
+                                    onPress={() => {
+                                        resetNavigation("Previous Bid List", "Previous Bids");
+                                        this.props.appLoading();
+                                    }}/>
+
                         <HomeButton onPress={() => {
-                            resetNavigation("Pending Bid List", "My Bids");
+                            this.props.navigation.navigate("Rep Notifications");
                             this.props.appLoading();
                         }}
-                                    text="My Bids" iconType="ConcreteASAP" iconName="existing-order"/>
+                                    text="Notifications" iconName="bell"/>
 
-                        <HomeButton onPress={() => {
-                            resetNavigation("Bid Order List", "Order Quote Request Board");
-                            this.props.appLoading();
-                        }}
-                                    text="Order Quote Request Board" iconType="ConcreteASAP" iconName="pending-order"/>
-
-                        <HomeButton onPress={() => {
-                            resetNavigation("Accepted Bid List", "Accepted Bids");
-                            this.props.appLoading();
-                        }}
-                                    text="Accepted Bids" iconType="ConcreteASAP" iconName="accepted-order"/>
-
-                        <HomeButton onPress={() => {
-                            resetNavigation("Previous Bid List", "Previous Bids");
-                            this.props.appLoading();
-                        }}
-                                    text="Previous Bids" iconType="ConcreteASAP" iconName="place-order"/>
-
-                        <HomeButton onPress={() => {
-                            this.props.navigation.navigate("Rep Notifications")
-                        }} text="Notifications" iconName="bell"/>
-
-                        <HomeButton onPress={() => this.props.navigation.navigate("FAQ")}
-                                    text="FAQ" iconType="ConcreteASAP" iconName="question"/>
+                        <HomeButton onPress={() => this.props.navigation.navigate("FAQ")} text="FAQ"
+                                    iconType="ConcreteASAP" iconName="question"/>
                     </ScrollView>
                 </Content>
             </AppBackground>

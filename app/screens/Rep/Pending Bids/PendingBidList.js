@@ -24,14 +24,15 @@ class PendingOrderRequest extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rowHeaders: ['Order', 'Post Code', 'Cubic m3'],
-            rowColumns: ["order.id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
+            rowHeaders: ['Job No', 'Post Code', 'Cubic m3'],
+            rowColumns: ["order.job_id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
             emptyMessage: "There are no bids right now."
         };
         this._showPendingOrder = this._showPendingOrder.bind(this);
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            this.interval = setInterval(this.props.getRepPendingOrders, 6000);
+            this.props.getRepPendingOrders();
+            this.interval = setInterval(this.props.getRepPendingOrders, 10000);
         });
 
         this.blurListener = this.props.navigation.addListener('didBlur', () => {
@@ -76,15 +77,14 @@ class PendingOrderRequest extends React.Component {
     render() {
         let pending_bids = this.props.bid.get("pending_bids").get("data");
         return (
-            <AppBackground alignTop>
+            <AppBackground alignTop loading={this.props.app.get("loading")}>
                 <AppHeader/>
                 <ScrollView>
                     <SubHeader iconType="ConcreteASAP" iconName="existing-order" title="My Bids"/>
                     <Content contentContainerStyle={[styles.content, appStyles.bgWhite, {marginBottom: 10}]}>
-                        {this.props.app.get("loading") ? <SkeletonLoading/> : this.showContent(pending_bids)}
+                        {this.showContent(pending_bids)}
                     </Content>
                 </ScrollView>
-                <AppFooter/>
             </AppBackground>
         );
     }

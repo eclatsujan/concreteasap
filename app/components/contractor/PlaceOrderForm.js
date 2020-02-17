@@ -1,6 +1,6 @@
 import * as React from "react";
 import {TouchableOpacity} from "react-native-gesture-handler";
-import {Field, reduxForm} from "redux-form/lib/immutable";
+import {Field, reduxForm,SubmissionError} from "redux-form/lib/immutable";
 import {Button, Text, View} from "native-base";
 import {appStyles} from "../../../assets/styles/app_styles";
 import csTextBox from "../Forms/csTextBox";
@@ -10,13 +10,18 @@ import {renderList} from "../../helpers/app";
 import {orderForm} from "../../form/placeOrder";
 import csMapBoxPicker from "../Forms/csMapBoxPicker";
 import navigationHelper from "../../helpers/navigationHelper";
+import {showErrorMessage} from "../../helpers/error";
 
 class PlaceOrderForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showColor: false
+            showColor: false,
+            errors:{
+
+            },
+            isError:false
         };
         this.onMapPick = this.onMapPick.bind(this);
         this.onSelect = this.onSelect.bind(this);
@@ -34,10 +39,9 @@ class PlaceOrderForm extends React.Component {
     }
 
     onMapPick(value) {
-        value["postcode"] ? this.props.change("postcode", value["postcode"]) : null;
-        value["suburb"] ? this.props.change("suburb", value["suburb"]) : null; 
+        value["postcode"] ? this.props.change("post_code", value["postcode"]) : null;
+        value["suburb"] ? this.props.change("suburb", value["suburb"]) : null;
         value["state"] ? this.props.change("state", value["state"]) : null;
-        console.log(value);
     }
 
     onSelect(val) {
@@ -68,7 +72,7 @@ class PlaceOrderForm extends React.Component {
                         style={[appStyles.upperCase, appStyles.colorPrimary, appStyles.boldFont, appStyles.baseLargeFontSize]}>
                         Post Code
                     </Text>
-                    <Field name="postcode" placeholder="Post Code" keyboardType="numeric" component={csTextBox}
+                    <Field name="post_code" placeholder="Post Code" keyboardType="numeric" component={csTextBox}
                            type="select"
                            validate={[formValidation.required]}/>
                 </View>
@@ -197,6 +201,7 @@ let placeOrderForm = reduxForm({
     // destroyOnUnmount: false,        // <------ preserve form data
     // forceUnregisterOnUnmount: true,  // <------ unregister fields on unmount
     // enableReinitialize:true
+    validate:formValidation.addressValidation
 })(PlaceOrderForm);
 
 export default placeOrderForm;

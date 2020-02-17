@@ -8,6 +8,7 @@ import {showErrorMessage} from "../../helpers/error";
 import ConcreteIcon from "../Fonts/ConcreteIcon";
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import CustomButton from "../Button/CustomButton";
 
 
 /**
@@ -67,6 +68,8 @@ export default class csDatePicker extends React.Component {
                     <View style={[appStyles.w_10, appStyles.right_5]}>
                         <ConcreteIcon name={"calendar"} style={[appStyles.ft_20, appStyles.colorGray44]}/>
                     </View>
+                </View>
+                <View>
                     {hasError ? showErrorMessage(error) : null}
                 </View>
             </TouchableOpacity>

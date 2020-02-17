@@ -1,8 +1,9 @@
 import * as React from 'react';
+import {View,Text} from 'react-native';
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-
-
+import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
+import MainSidebar from './components/Sidebar/MainSidebar'
+import screenMapping from './routes/ContractorScreenMenu'
 //contractor
 import {
     acceptedOrders,
@@ -15,10 +16,10 @@ import {
 } from "./routes/contractor";
 
 import Notifications from "./screens/User/Notification/Notifications";
-import HomeScreen from "./screens/contractor/Home";
+import HomeScreen from "./screens/contractor/Concrete/Home";
 
 //Rep Navigation
-import {repBidOrders, repPendingBids, repAcceptedBids, repPreviousBids} from "./routes/rep";
+import {repBidOrders, repPendingBids, repAcceptedBids, repPreviousBids,repDayofPourBids} from "./routes/rep";
 import RepHomeScreen from './screens/Rep/RepHomeScreen';
 
 //General Navigation
@@ -28,38 +29,53 @@ import LogoutScreen from "./screens/auth/LogoutScreen";
 
 import SideBar from "./components/SideBar";
 
+import MainHome from "./screens/contractor/MainHome";
+import {ConcreteDrawer} from "./components/ConcreteDrawer";
 
-const ContractorDrawer = createDrawerNavigator({
+const ContractorConcreteDrawer = createDrawerNavigator({
     //Contractor Drawer navigation section
     Home: HomeScreen,
-    "Place Order Request": placeOrderDrawerStack,
-    "Pending Order": pendingOrder,
-    "Accepted Order": acceptedOrders,
-    "Previous Order": previousOrders,
+    "I Need Concrete": placeOrderDrawerStack,
+    "Today's Orders": dayOfPour,
+    "Pending Orders": pendingOrder,
+    "Accepted Orders": acceptedOrders,
+    "Previous Orders":previousOrders,
+    // "Previous Order": previousOrders,
     "Notifications": Notifications,
-    "Day of Pour": dayOfPour,
     "Calculator": calculator,
-    "User Profile": UserProfileStack,
-    "Logout": LogoutScreen,
     dayofPourStack
 }, {
     contentComponent: props => <SideBar {...props} />
 });
 
+
+
+const Main=createDrawerNavigator({
+    "Main Home":MainHome,
+    ...screenMapping,
+    "User Profile": UserProfileStack,
+    "Logout": LogoutScreen,
+    ConcreteHome: ContractorConcreteDrawer,
+},{
+    contentComponent:props=><MainSidebar {...props} />
+});
+
 const RepDrawer = createDrawerNavigator({
     //Rep Drawer navigation section
     "Home": RepHomeScreen,
+    "Concrete Jobs for Tender": repBidOrders,
     "My Bids": repPendingBids,
-    "Order Quote Request Board": repBidOrders,
-    "Accepted Bids": repAcceptedBids,
+    "Jobs Won": repAcceptedBids,
+    // "Day of Pour":repDayofPourBids,
     "Previous Bids": repPreviousBids,
     "Rep Notifications": Notifications,
     "User Profile": UserProfileStack,
-    "Logout": LogoutScreen,
+    // "Logout": LogoutScreen,
     // RepOrder:RepOrderStatus
 }, {
     contentComponent: props => <SideBar {...props} />
 });
+
 
 
 const MainRoute = createAppContainer(
@@ -70,7 +86,7 @@ const MainRoute = createAppContainer(
                 navigationOptions: {header: null},
             },
             Auth: AuthStack,
-            App: ContractorDrawer,
+            MainContractorScreen:Main,
             Rep: RepDrawer
         },
         {

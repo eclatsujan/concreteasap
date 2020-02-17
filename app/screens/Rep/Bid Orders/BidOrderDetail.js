@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TextInput, ScrollView,InteractionManager,} from 'react-native';
+import {TextInput, ScrollView, InteractionManager,} from 'react-native';
 import {View, Button, Text, Content, Row, Col, Item as FormItem, Picker} from 'native-base';
 
 //Latest
@@ -24,19 +24,21 @@ import {actions} from "../../../store/modules";
 import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 import {boolToAffirmative} from "../../../helpers/app";
+import AppFooter from "../../../components/Footer/AppFooter";
+import CustomButton from "../../../components/Button/CustomButton";
 
 class BidOrderDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading:true,
+            loading: false,
             orderDetail: {}, //data from navigation state
             // bid:{},
             pricePer: '',
             meter: '',
             total_cost: 0,
             bidPayment: false,
-            showCard:false,
+            showCard: false,
             modalVisible: false,
             SaveDetails: false,
             paymentSuccessModal: false,
@@ -47,7 +49,15 @@ class BidOrderDetail extends React.Component {
             rowColumns: [
                 {
                     title: "Post Code",
+                    key: "post_code"
+                },
+                {
+                    title: "Suburb",
                     key: "suburb"
+                },
+                {
+                    title: "State",
+                    key: "state"
                 },
                 {
                     title: "Type",
@@ -142,23 +152,30 @@ class BidOrderDetail extends React.Component {
     showDetailsModel(val) {
         this.setModalVisible(!this.state.modalVisible);
         this.setState({SaveDetails: val});
-        this.payBid().then((res) => {
-            this.setState({"paymentSuccessModal": true})
-        }).catch((err)=>{
-            console.log(err);
-        });
+
     }
 
     submitBid() {
         this.setState({bidPayment: false});
-        setTimeout(()=>{
-            this.stripePayment().then((token)=>{
+        setTimeout(() => {
+            this.stripePayment().then((token) => {
+                this.setState({loading:true});
                 this.setState({token});
-                this.setState({modalVisible:true});
-            }).catch((err)=>{
+                // this.setState({modalVisible: true});
+                this.payBid().then((res) => {
+                    this.setState({"loading":false});
+                    this.setState({"paymentSuccessModal": true});
+                    setTimeout(()=>{
+                        this.setState({"paymentSuccessModal":false});
+                        this.props.navigation.navigate("Home");
+                    },2000);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }).catch((err) => {
                 console.log(err);
             });
-        },1000);
+        }, 1000);
 
     }
 
@@ -226,7 +243,7 @@ class BidOrderDetail extends React.Component {
             </Col>
             <Col>
                 <TextInput
-                    style={[appStyles.loginInput, appStyles.p_10, appStyles.border2, appStyles.borderBlack]}
+                    style={[appStyles.customInput, appStyles.p_10, appStyles.colorWhite, appStyles.bgGray]}
                     value={value}
                     editable={false}/>
             </Col>
@@ -236,11 +253,12 @@ class BidOrderDetail extends React.Component {
 
     render() {
         let order = this.props.navigation.state.params.orderDetail;
-        let title = "Order Details ID #" + order?.get("order_concrete")?.get("id");
+        let title = "Order Details ID #" + order?.get("job_id");
         let order_concrete = order?.get("order_concrete");
-        let btnStatus = this.state.total_cost === 0 || this.state.datePreference === "" || this.state.timePreference === "";
+        let btnStatus = this.state.total_cost === 0 || this.state.datePreference === "";
+
         return (
-            <AppBackground loading={this.state.loading} enableKeyBoard>
+            <AppBackground loading={this.state.loading} enableKeyBoard disableBack>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title={title}/>
@@ -253,57 +271,35 @@ class BidOrderDetail extends React.Component {
                                 <Col>
                                     <Text
                                         style={[appStyles.upperCase, appStyles.boldFont, appStyles.baseSmallFontSize]}>
-                                        Select Date
+                                        Select Date and Time
                                     </Text>
                                 </Col>
                                 <Col>
-                                    <FormItem style={[appStyles.loginInput, appStyles.border2]} regular>
+                                    <View style={[appStyles.loginInput, appStyles.border2]}>
                                         <Picker selectedValue={this.state.datePreference}
-                                                itemTextStyle={appStyles.arialFont}
+                                                itemTextStyle={[appStyles.arialFont]}
+                                                itemStyle={[appStyles.arialFont]}
                                                 headerTitleStyle={appStyles.arialFont}
                                                 headerBackButtonTextStyle={appStyles.arialFont}
                                                 onValueChange={(itemValue) => {
                                                     this.setState({datePreference: itemValue});
                                                 }}>
+
                                             <Picker.Item label={"Select One"} value={""}/>
 
-                                            <Picker.Item label={formatDate(order_concrete?.get("delivery_date"))}
-                                                         value={order_concrete?.get("delivery_date")}/>
+                                            <Picker.Item
+                                                label={formatDate(order_concrete?.get("delivery_date"))+", "+formatTime(order_concrete?.get("time_preference1"))}
+                                                value={"time1"}/>
 
-                                            <Picker.Item label={formatDate(order_concrete?.get("delivery_date1"))}
-                                                         value={order_concrete?.get("delivery_date1")}/>
+                                            <Picker.Item
+                                                label={formatDate(order_concrete?.get("delivery_date1"))+", "+formatTime(order_concrete?.get("time_preference2"))}
+                                                value={"time2"}/>
 
-                                            <Picker.Item label={formatDate(order_concrete?.get("delivery_date2"))}
-                                                         value={order_concrete?.get("delivery_date2")}/>
+                                            <Picker.Item
+                                                label={formatDate(order_concrete?.get("delivery_date2"))+", "+formatTime(order_concrete?.get("time_preference3"))}
+                                                value={"time3"}/>
                                         </Picker>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row style={[appStyles.mt_5, appStyles.verticalCenter]}>
-                                <Col>
-                                    <Text
-                                        style={[appStyles.upperCase, appStyles.boldFont, appStyles.baseSmallFontSize]}>
-                                        Select Time
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <FormItem style={[appStyles.loginInput, appStyles.border2]} regular>
-                                        <Picker itemTextStyle={appStyles.arialFont}
-                                                headerTitleStyle={appStyles.arialFont}
-                                                headerBackButtonTextStyle={appStyles.arialFont}
-                                                selectedValue={this.state.timePreference}
-                                                onValueChange={(itemValue) => {
-                                                    this.setState({timePreference: itemValue});
-                                                }}>
-                                            <Picker.Item label={"Select One"} value={""}/>
-                                            <Picker.Item label={formatTime(order_concrete?.get("time_preference1"))}
-                                                         value={order_concrete?.get("time_preference1")}/>
-                                            <Picker.Item label={formatTime(order_concrete?.get("time_preference2"))}
-                                                         value={order_concrete?.get("time_preference2")}/>
-                                            <Picker.Item label={formatTime(order_concrete?.get("time_preference3"))}
-                                                         value={order_concrete?.get("time_preference3")}/>
-                                        </Picker>
-                                    </FormItem>
+                                    </View>
                                 </Col>
                             </Row>
                             <Row style={[appStyles.mt_5, appStyles.verticalCenter]}>
@@ -314,7 +310,8 @@ class BidOrderDetail extends React.Component {
                                     </Text>
                                 </Col>
                                 <Col>
-                                    <FormItem style={[appStyles.loginInput, appStyles.p_10, appStyles.border2]} regular>
+                                    <FormItem style={[appStyles.customInput, appStyles.p_10, appStyles.border2]}
+                                              regular>
                                         <TextInput keyboardType={'numeric'} placeholder="ENTER BID AMOUNT"
                                                    style={appStyles.baseFont}
                                                    value={this.state.pricePer} onChangeText={this.setPerPrice}/>
@@ -324,11 +321,19 @@ class BidOrderDetail extends React.Component {
                             {this.renderNonEditableInput("Required m3", this.state.meter)}
                             {this.renderNonEditableInput("Total\n(Plus 10% Admin Fee)", this.state.total_cost.toString())}
                         </View>
-                        <Button disabled={btnStatus} style={appStyles.horizontalCenter} onPress={() => {
-                            this.openPriceModal();
-                        }}>
-                            <Text style={appStyles.colorBlack}>Bid</Text>
-                        </Button>
+                        <View style={[appStyles.flexRow,appStyles.flexWrap,appStyles.justifyBetween]}>
+                            <View style={[appStyles.w_45]}>
+                                <CustomButton btnIcon="arrow-left" btnText={"Back"} onPress={()=>{
+                                    this.props.navigation.goBack()
+                                }} />
+                            </View>
+                            <View style={[appStyles.w_45]}>
+                                <CustomButton disabled={btnStatus} btnText={"Bid"} onPress={()=>{
+                                    this.openPriceModal()
+                                }} />
+                            </View>
+                        </View>
+
                         <CardPayment modalVisibility={this.state.modalVisible} handleModel={this.showDetailsModel}/>
                         <PaymentSuccess modalVisibility={this.state.paymentSuccessModal}
                                         handleModel={this.paymentSuccess}/>

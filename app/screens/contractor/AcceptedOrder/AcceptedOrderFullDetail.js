@@ -8,16 +8,18 @@ import {appStyles} from "../../../../assets/styles/app_styles";
 import TableRow from "../../../components/Tables/TableRow";
 import {formatDate, formatTime} from "../../../helpers/time";
 import {boolToAffirmative} from "../../../helpers/app";
+import AppFooter from "../../../components/Footer/AppFooter";
 
 
-export default class ViewFullOrderDetails extends React.Component {
+export default class AcceptedOrderFullDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             rowColumns: [
                 {title: "Bid Date", key: "bids[0].date_delivery", format: formatDate},
                 {title: "Bid Time", key: "bids[0].time_delivery", format: formatTime},
-                {title: "Address", key: "order_concrete.address"}, {title: "Post Code", key: "order_concrete.suburb"},
+                {title: "Address", key: "order_concrete.address"}, {title: "Post Code", key: "order_concrete.post_code"},
+                {title:"Suburb",key:"order_concrete.suburb"},{title: "State", key: "order_concrete.state"},
                 {title: "Quantity", key: "order_concrete.quantity"}, {title: "Type", key: "order_concrete.type"},
                 {title: "MPA", key: "order_concrete.mpa"}, {title: "Slump", key: "order_concrete.slump"},
                 {title: "ACC", key: "order_concrete.acc"},
@@ -44,7 +46,7 @@ export default class ViewFullOrderDetails extends React.Component {
         return (
             <AppBackground>
                 <ScrollView>
-                    <AppHeader/>
+                    <AppHeader />
                     <SubHeader title="Active Order" iconType="ConcreteASAP" iconName="accepted-order"/>
                     <Content style={[appStyles.bgWhite, appStyles.bottomMarginDefault]}>
                         <View style={[appStyles.p_5]}>

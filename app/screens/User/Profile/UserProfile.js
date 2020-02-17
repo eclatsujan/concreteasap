@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ScrollView,Image} from 'react-native';
+import {ScrollView, Image} from 'react-native';
 import {Col, Row, View, Button, Text, Content} from 'native-base';
 
 import {connect} from "react-redux";
@@ -17,6 +17,8 @@ import {formValidation} from "../../../helpers/validation";
 
 import {actions} from "../../../store/modules";
 import {getNested} from "../../../helpers/app";
+import CustomButton from "../../../components/Button/CustomButton";
+import navigationHelper from "../../../helpers/navigationHelper";
 
 
 class UserProfile extends React.Component {
@@ -28,7 +30,7 @@ class UserProfile extends React.Component {
                 {key: "company", title: "Company"}, {key: "abn", title: "ABN"},
                 {key: "first_name", title: "First Name"}, {key: "last_name", title: "Last Name"},
                 {key: "phone_number", title: "Phone Number"}, {key: "email", title: "email"},
-                {key: "city", title: "City"},{key: "state", title: "State"}
+                {key: "city", title: "City"}, {key: "state", title: "State"}
             ],
             loading: false,
             showToastMsg: false
@@ -48,10 +50,10 @@ class UserProfile extends React.Component {
     displayUserRow(detail) {
         return !this.state.rowColumns ? null : this.state.rowColumns.map((column, index) => (
             <View key={index}
-                  style={[appStyles.py_10,appStyles.borderBottom, appStyles.borderGray44]}>
+                  style={[appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
                 <Row>
                     <Col>
-                        <Text style={[appStyles.upperCase, appStyles.colorGray44,appStyles.boldFont]}>
+                        <Text style={[appStyles.upperCase, appStyles.colorGray44, appStyles.boldFont]}>
                             {column["title"]}
                         </Text>
                     </Col>
@@ -70,7 +72,7 @@ class UserProfile extends React.Component {
     }
 
     displayProfileImage(image) {
-        return typeof image === undefined ? <View/>:
+        return typeof image === undefined ? <View/> :
             <View style={[appStyles.flexRow, appStyles.flexCenter]}>
                 <Image style={appStyles.defaultCircle} source={{uri: image}}/>
             </View>;
@@ -84,7 +86,7 @@ class UserProfile extends React.Component {
         let message = this.props.navigation.getParam("message");
         let message_type = this.props.navigation.getParam("message_type");
         return (
-            <AppBackground loading={app.loading} toastMsg={message} toastType={message_type}
+            <AppBackground disableBack loading={app.loading} toastMsg={message} toastType={message_type}
                            showToast={this.state.showToastMsg}>
                 <ScrollView>
                     <AppHeader/>
@@ -94,12 +96,14 @@ class UserProfile extends React.Component {
                             {this.displayProfileImage(user["detail"]["profile_image"])}
                             {this.displayUserRow(user["detail"])}
                         </View>
-                        <View style={[appStyles.my_10, appStyles.rowReverse, appStyles.flex1]}>
-                            <View style={[appStyles.w_50]}>
-                                <Button primary onPress={this.editProfile}
-                                        style={[appStyles.flexRow, appStyles.flexCenter]}>
-                                    <Text style={[appStyles.colorBlack]}>Edit Profile</Text>
-                                </Button>
+                        <View style={[appStyles.my_10,appStyles.flexRow,appStyles.justifyBetween]}>
+                            <View style={[appStyles.w_45]}>
+                                <CustomButton btnIcon="arrow-left" btnText={"Back"} onPress={()=>{
+                                    navigationHelper.goBack();
+                                }}/>
+                            </View>
+                            <View style={[appStyles.w_45]}>
+                                <CustomButton btnText={"Edit Profile"} onPress={this.editProfile}/>
                             </View>
                         </View>
                     </Content>

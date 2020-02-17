@@ -36,7 +36,7 @@ import PlaceOrderRequest from './screens/contractor/Order/PlaceOrderRequest';
 import OrderBidStatus from './screens/contractor/Bids/OrderBidStatus';
 import AcceptedOrders from './screens/contractor/Order/AcceptedOrders';
 import DayOfPour from './screens/contractor/Order/DayOfPour';
-import ViewFullOrderDetails from './screens/contractor/Order/ViewFullOrderDetails';
+import ViewFullOrderDetails from './screens/contractor/Order/AcceptedOrderFullDetail';
 import ModifyOrder from './screens/contractor/Order/ModifyOrder';
 import ModifySpecialRequest from './screens/contractor/Order/ModifySpecialRequest';
 //Rep files

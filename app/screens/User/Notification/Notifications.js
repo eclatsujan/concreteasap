@@ -16,10 +16,9 @@ import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from "../../../components/Headers/SubHeader";
 import EmptyTable from "../../../components/Tables/EmptyTable";
 import {notifications} from "../../../store/modules/notifications";
-import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
-import AppFooter from "../../../components/Footer/AppFooter";
 
 import Notification from '../../../components/User/Notification'
+import {NavigationActions} from "react-navigation";
 
 class Notifications extends React.Component {
     constructor(props) {
@@ -32,65 +31,70 @@ class Notifications extends React.Component {
         };
 
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            this.props.appLoading();
             this.props.getNotifications();
-            this.interval = setInterval(this.props.getNotifications, 4000);
         });
 
-        this.blurListener = this.props.navigation.addListener('didBlur', () => {
-            clearInterval(this.interval);
+        this.blurListener=this.props.navigation.addListener("willBlur",()=>{
+            this.props.stopGettingNotifications();
         });
 
         this.markAsRead = this.markAsRead.bind(this);
+        this.onRoute = this.onRoute.bind(this);
     }
 
     componentWillUnmount() {
         this.focusListener.remove();
-        this.blurListener.remove();
-    }
-
-    componentDidMount() {
-        this.props.appLoading();
-        this.props.getNotifications();
+        // this.blurListener.remove();
     }
 
     markAsRead(notification_id) {
-        this.props.markAsRead(notification_id);
+        this.props.removeNotification(notification_id);
     }
 
     onRoute(notification) {
-        if (!notification["route"] && !notification["params"]) return;
-        let params = notification["params"];
-        this.props.navigation.navigate(notification["route"], params);
+        // console.log(notification);
+        if (!notification?.get("route") && !notification?.get("params")) return;
+        let params = notification?.get("params").toJS();
+        // console.log(params);
+        let index=this.props.user.get('roles').findIndex((role)=>{
+            return role.name==="contractor";
+        });
+        // console.log(params);
+        params["backRoute"]=index===-1?"Rep Notifications":"Notifications";
+
+        this.props.navigation.dispatch(NavigationActions.navigate({
+            routeName:notification?.get("route"),
+            params
+        }));
+        this.props.appLoading();
     }
 
-    displayNotifications(notifications) {
-        return notifications.get("notifications").size === 0 ?
+    displayNotifications(notification) {
+        let notifications=notification?.get("data")?.get("entities")?.get("notifications");
+
+        return notification?.get("data")?.get("result")?.size === 0 ?
             <EmptyTable message={this.state.emptyMessage}/> :
-            notifications.get("notifications").map((data, index) => {
+            notification?.get("data")?.get("result")?.map((data, index) => {
                 return (
                     <Notification style={[appStyles.bgWhite, {opacity: this.state.fadeValue}]} key={index}
-                                  markAsRead={this.markAsRead} data={data} onRoute={this.onRoute}/>
+                                  markAsRead={this.markAsRead} data={notifications?.get(data)} onRoute={this.onRoute}/>
                 )
-            })
-
+            });
     }
 
     render() {
         let notifications = this.props.notifications;
         return (
-            <AppBackground>
+            <AppBackground loading={this.props.app?.get("loading")}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Notifications" iconType="ConcreteASAP" iconName="bell"/>
                     <Content contentContainerStyle={styles.content}>
                         <View>
-                            {this.props.app.get("loading") ? <SkeletonLoading/>
-                                : this.displayNotifications(notifications)}
+                            {this.displayNotifications(notifications)}
                         </View>
                     </Content>
                 </ScrollView>
-                <AppFooter/>
             </AppBackground>
         );
     }
@@ -102,10 +106,13 @@ const mapDispatchToProps = (dispatch) => {
             return dispatch(actions.app.loading(true));
         },
         getNotifications: () => {
-            return dispatch(actions.notifications.get())
+            return dispatch(actions.notifications.fetchNotifications())
         },
-        markAsRead: (notification_id) => {
-            return dispatch(actions.notifications.markAsRead(notification_id))
+        stopGettingNotifications: () =>{
+            return dispatch(actions.notifications.stopFetchingNotifications())
+        },
+        removeNotification: (notification_id) => {
+            return dispatch(actions.notifications.removeNotification(notification_id))
         }
     }
 };
@@ -113,7 +120,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         notifications: state.get("notifications"),
-        app: state.get("app")
+        app: state.get("app"),
+        user:state.get("user")
     };
 };
 

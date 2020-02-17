@@ -13,6 +13,7 @@ import {pending} from '../orders';
 
 import * as pendingActions from "./pending/actions";
 import {app} from "../app";
+import moment from "moment";
 
 export const pendingOrder=pendingActions;
 
@@ -57,8 +58,9 @@ export const createOrder = (order) => {
                     order: order
                 }
             });
-            navigationHelper.resetNavigation('ViewOrderHome',"Place Order Request",0,
+            navigationHelper.resetNavigation('ViewOrderHome',"I Need Concrete",0,
                 {message: res["message"]});
+            dispatch(appActions.loading(false));
         }).catch((err) => {
             console.log(err);
             Alert.alert("Server Error", "There is some issue in the server");
@@ -83,7 +85,6 @@ export const modifyOrder = (order,order_type="accepted_orders") => {
                 message: res.message,
                 order_type
             });
-
             dispatch(appActions.loading(false));
         }).catch((err) => {
             console.log(err);
@@ -95,17 +96,16 @@ export const modifyOrder = (order,order_type="accepted_orders") => {
 export const archiveOrder = (order_id) => {
     return (dispatch) => {
         setOrderLoading(true,"pending_orders");
+        dispatch({
+            type:types.ARCHIVE_ORDER,
+            payload:{
+                order_id
+            }
+        });
         orderService.archiveOrder(order_id).then((res)=>{
-            dispatch({
-                type:types.ARCHIVE_ORDER,
-                payload:{
-                    order_id
-                }
-            });
             dispatch(appActions.loading(false));
             setOrderLoading(false,"pending_orders");
         }).catch((err)=>{
-            console.log(err);
             dispatch(appActions.loading(false));
             Alert.alert("Failed to archive","There is some issue in Server");
         });
@@ -134,11 +134,18 @@ export const getContractorOrders = () => {
     }
 };
 
-export const acceptBid = (bid_id, payment_method) => {
+export const acceptBid = (bid_id, payment_method,order_date) => {
     return (dispatch) => {
         dispatch(appActions.loading(true));
+        // console.log();
         orderService.acceptBid(bid_id, payment_method).then((res) => {
-            navigationHelper.navigate('AcceptedOrders');
+            if(order_date===moment().format("YYYY-MM-DD")){
+                navigationHelper.resetNavigation('pourDayList',"Today's Orders");
+            }
+            else{
+                navigationHelper.resetNavigation('Accepted Order List','Accepted Order');
+            }
+
         }).catch((err) => {
             console.log(err);
             appActions.loading(false);
@@ -183,18 +190,21 @@ export const getContractorAcceptedOrder = (order) => {
 export const getContractorAllPour = () => {
     return (dispatch,getState) => {
         orderService.getAllDayOfPour().then((res)=>{
+            // console.log(res);
             dispatch({
                type:types.SET_POUR_ORDERS,
                payload:{
-                   current_page:res["current_page"],
-                   data:res["data"],
-                   last_page:res["last_page"],
-                   total:res["total"],
+                   data:res,
+                   // current_page:res["current_page"],
+                   // data:res["data"],
+                   // last_page:res["last_page"],
+                   // total:res["total"],
                    isLoading:false
                }
             });
             dispatch(appActions.loading(false));
         }).catch((err)=>{
+            console.log(err);
             dispatch(appActions.loading(false));
         });
     }
@@ -238,10 +248,9 @@ export const contractorCompleteOrder = (order_review,order_type="accepted_orders
             }
         });
         orderService.contractorCompleteOrder(order_review).then((res) => {
-            navigationHelper.navigate('ViewOrderBids');
-            dispatch(appActions.loading(false));
+            navigationHelper.resetNavigation('ViewOrderBids','Pending Orders');
+            // dispatch(appActions.loading(false));
         }).catch((err) => {
-            console.log(err);
             appActions.loading(false);
         });
     }
@@ -258,7 +267,7 @@ export const contractorCancelOrder = (order_id,order_type="accepted_orders") => 
                     order_type
                 }
             });
-            navigationHelper.navigate('AcceptedOrders');
+            navigationHelper.navigate('Accepted Order');
         }).catch((err) => {
             console.log(err);
             appActions.loading(false);
@@ -336,6 +345,7 @@ export const getRepPendingOrder = (order) => {
 export const getRepAcceptedOrders = () => {
     return async (dispatch) => {
         await orderService.getRepAcceptedOrders().then((res) => {
+            // console.log(res);
             dispatch({
                 type: types.ACCEPTED_ORDERS,
                 payload: {
@@ -366,7 +376,7 @@ export function updatePaymentType(bid_id, payment_type) {
     return async (dispatch) => {
         dispatch(appActions.loading());
         await orderService.updateBidPaymentMethod(bid_id, payment_type).then((res) => {
-            navigationHelper.goBack();
+            // navigationHelper.goBack();
         }).catch((err) => {
             console.log(err);
             dispatch(appActions.loading(false));
@@ -378,8 +388,9 @@ export function repReleaseOrder(bid_id) {
     return async (dispatch) => {
         dispatch(appActions.loading());
         await orderService.repReleaseOrder(bid_id).then((res) => {
-
+            console.log(res);
         }).catch((err) => {
+            console.log(err);
             dispatch(appActions.loading(false));
         });
     }
@@ -401,6 +412,7 @@ export function sendOrderMessage(order_id,quantity,order_type){
     return async (dispatch) => {
         dispatch(appActions.loading());
         await orderService.sendOrderMessage(order_id,quantity).then((res)=>{
+            console.log(res);
             dispatch({
                 type:types.ADD_MESSAGE,
                 payload:{
@@ -418,16 +430,18 @@ export function sendOrderMessage(order_id,quantity,order_type){
     }
 }
 
-export function sendOrderMessageStatus(order_id,status,order_type){
+export function sendOrderMessageStatus(message_id,status,order_type,order_id){
     return async (dispatch)=>{
-        dispatch(appActions.loading());
-        await orderService.sendOrderMessageStatus(order_id,status).then((res)=>{
+        console.log(message_id);
+        // dispatch(appActions.loading());
+        await orderService.sendOrderMessageStatus(message_id,status).then((res)=>{
             dispatch({
-                type:types.UPDATE_STATUS,
+                type:types.UPDATE_STATUS_MESSAGE,
                 payload:{
                     order_id,
-                    status:res["status"],
-                    order_type
+                    status:status,
+                    order_type,
+                    message_id
                 }
             });
             dispatch(appActions.loading(false));

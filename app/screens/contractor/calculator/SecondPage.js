@@ -59,11 +59,11 @@ export default class SecondPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    L(mm)
+                                    L(m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                                <Input placeholder="L(mm)" value={this.state.first} style={appStyles.baseFont}
+                                <Input placeholder="L(m3)" value={this.state.first} style={appStyles.baseFont}
                                        onChangeText={(first) => this.setState({first})} keyboardType='numeric'/>
                             </Item>
                         </View>
@@ -71,11 +71,11 @@ export default class SecondPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    W(mm)
+                                    W(m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                                <Input placeholder="W(mm)" value={this.state.second} style={appStyles.baseFont}
+                                <Input placeholder="W(m3)" value={this.state.second} style={appStyles.baseFont}
                                        onChangeText={(second) => this.setState({second})} keyboardType='numeric'/>
                             </Item>
                         </View>
@@ -83,11 +83,11 @@ export default class SecondPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    D(mm)
+                                    D(m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                                <Input placeholder="D(mm)" value={this.state.third} style={appStyles.baseFont}
+                                <Input placeholder="D(m3)" value={this.state.third} style={appStyles.baseFont}
                                        onChangeText={(third) => this.setState({third})} keyboardType='numeric'/>
                             </Item>
                         </View>

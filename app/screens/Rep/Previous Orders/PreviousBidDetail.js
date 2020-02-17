@@ -11,7 +11,7 @@ import TableRow from "../../../components/Tables/TableRow";
 import {boolToAffirmative} from "../../../helpers/app";
 import {formatDate, formatTime} from "../../../helpers/time";
 
-export default class PreviousBidDetail extends React.Component{
+class PreviousBidDetail extends React.Component{
 
     constructor(props){
         super(props);
@@ -20,10 +20,12 @@ export default class PreviousBidDetail extends React.Component{
             rowColumns: [
                 {title: "Order Delivery Date", key: "date_delivery", format: formatDate},
                 {title: "Order Delivery Time", key: "time_delivery", format: formatTime},
-                {title: "Price Per M2", key: "price"},
-                {title: "Required M2", key: "order.order_concrete.quantity"},
+                {title: "Price Per M3", key: "price"},
+                {title: "Required M3", key: "order.order_concrete.quantity"},
                 {title: "Address", key: "order.order_concrete.address"},
-                {title: "Post Code", key: "order.order_concrete.suburb"},
+                {title: "Post Code", key: "order.order_concrete.post_code"},
+                {title: "Suburb", key: "order.order_concrete.suburb"},
+                {title: "State", key: "order.order_concrete.state"},
                 {title: "Type", key: "order.order_concrete.type"}, {title: "MPA", key: "order.order_concrete.mpa"},
                 {title: "Agg", key: "order.order_concrete.agg"}, {title: "slump", key: "order.order_concrete.slump"},
                 {title: "ACC", key: "order.order_concrete.acc"},
@@ -35,15 +37,33 @@ export default class PreviousBidDetail extends React.Component{
                 {title: "Special Instructions", key: "order.order_concrete.special_instructions"},
                 {title: "Colours", key: "order.order_concrete.colours"},
             ]
-        }
+        };
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.props.getRepPreviousBids();
+            this.interval = setInterval(this.props.getRepPreviousBids, 10000);
+        });
+
+        this.blurListener = this.props.navigation.addListener('didBlur', () => {
+            clearInterval(this.interval);
+        });
     }
 
     componentDidMount() {
+        this.props.getRepPreviousBids();
         this.setState({isLoading:false});
     }
 
+    getPreviousOrder(bid_id){
+        console.log(bid_id);
+        return this.props.bid.get("previous_bids").get("data").find((bid)=>{
+            console.log(bid.get("id"));
+            return bid.get("id")===bid_id;
+        });
+    }
+
     render(){
-        let bid=this.props.navigation.getParam("bid");
+        let bid_id=this.props.navigation.getParam("bid_id");
+        let bid=this.getPreviousOrder(bid_id);
         return (
             <AppBackground>
                 <ScrollView>
@@ -56,6 +76,22 @@ export default class PreviousBidDetail extends React.Component{
             </AppBackground>
         );
     }
-
-
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getRepPreviousBids: () => {
+            return dispatch(actions.bid.getRepPreviousBids())
+        }
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+        app: state.get("app"),
+        bid: state.get("bid")
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PreviousBidDetail);

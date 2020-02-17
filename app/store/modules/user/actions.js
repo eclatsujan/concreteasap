@@ -66,8 +66,6 @@ export const editUserDetail = (user_detail,photo) => {
             navigationHelper.navigate("My Profile", {});
             // dispatch(appActions.loading(false));
         }).catch((err) => {
-            console.log(err);
-
             dispatch(appActions.loading(false));
         });
     }
@@ -136,7 +134,8 @@ export const register = (user, photo) => {
                 //Handle Server issue or no user roles
             }
         }).catch((err) => {
-            // console.log(err);
+            console.log("error");
+            console.log(err);
             dispatch(errorActions.setError(err.message, err.errors));
 
             dispatch(appActions.loading(false));

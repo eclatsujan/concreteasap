@@ -65,11 +65,11 @@ export default class FourthPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    W(m)
+                                    W(m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                                <Input placeholder="W(m)" value={this.state.first} style={appStyles.baseFont}
+                                <Input placeholder="W(m3)" value={this.state.first} style={appStyles.baseFont}
                                        onChangeText={(first) => this.setState({first})} keyboardType='numeric'/>
                             </Item>
                         </View>
@@ -77,11 +77,11 @@ export default class FourthPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    Riser H (mm)
+                                    Riser H (m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                                <Input placeholder="Riser H (mm)" value={this.state.second} style={appStyles.baseFont}
+                                <Input placeholder="Riser H (m3)" value={this.state.second} style={appStyles.baseFont}
                                        onChangeText={(second) => this.setState({second})} keyboardType='numeric'/>
                             </Item>
                         </View>
@@ -89,11 +89,11 @@ export default class FourthPage extends React.Component {
                             <View>
                                 <Text
                                     style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.ft_15, appStyles.my_5]}>
-                                    Step Depth(mm)
+                                    Step Depth(m3)
                                 </Text>
                             </View>
                             <Item style={[appStyles.bgWhite, appStyles.marginXDefault, appStyles.my_5]} regular>
-                                <Input placeholder="Step Depth(mm)" value={this.state.third} style={appStyles.baseFont}
+                                <Input placeholder="Step Depth(m3)" value={this.state.third} style={appStyles.baseFont}
                                        onChangeText={(third) => this.setState({third})} keyboardType='numeric'/>
                             </Item>
                         </View>

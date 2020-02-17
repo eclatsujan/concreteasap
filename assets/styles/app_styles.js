@@ -92,6 +92,9 @@ export const appStyles = StyleSheet.create({
     bgNotification: {
         backgroundColor: "#CFFFD3"
     },
+    bgGray:{
+        backgroundColor:'#6c757d'
+    },
     //Text Colours
     colorSuccess: {
         color: "#14E22A"
@@ -140,6 +143,7 @@ export const appStyles = StyleSheet.create({
     flexWrap: {
         flexWrap: "wrap"
     },
+
     rowReverse: {
         flexDirection: "row-reverse"
     },
@@ -166,6 +170,7 @@ export const appStyles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
+
     verticalCenter: {
         alignItems: "center",
     },
@@ -187,6 +192,9 @@ export const appStyles = StyleSheet.create({
     horizontalRight: {
         justifyContent: "flex-end"
     },
+    justifyBetween:{
+        justifyContent:"space-between"
+    },
     selfVerticalCenter: {},
     //Padding and Margins
     paddingYDefault: {
@@ -205,6 +213,10 @@ export const appStyles = StyleSheet.create({
     },
     ml_20: {
         marginLeft: 20
+    },
+
+    mr_10:{
+        marginRight:10
     },
     mt_5: {
         marginTop: 5
@@ -268,6 +280,9 @@ export const appStyles = StyleSheet.create({
     paddingX7: {
         paddingTop: 7,
         paddingBottom: 7
+    },
+    p_3:{
+        padding:3
     },
     p_5: {
         padding: 5
@@ -440,6 +455,9 @@ export const appStyles = StyleSheet.create({
     borderBottom: {
         borderBottomWidth: 1
     },
+    borderWhite:{
+        borderColor:"#fff"
+    },
     borderBlack: {
         borderColor: "#000000"
     },
@@ -581,6 +599,14 @@ export const appStyles = StyleSheet.create({
         borderColor: "#14E22A",
         borderWidth: 1,
         width: "100%"
+    },
+    customInput:{
+        backgroundColor: "#fff",
+        marginTop: 7,
+        marginBottom: 7,
+        borderRadius:4,
+        marginLeft:0,
+        marginRight:0,
     },
     loginInputBox: {
         fontSize: 14,

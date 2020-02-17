@@ -1,16 +1,14 @@
 import * as React from 'react';
-import {ScrollView, ActivityIndicator, Alert, InteractionManager} from 'react-native';
-import {Col, Row, View, Button, Text, Content, Icon, Footer, FooterTab} from 'native-base';
+import {ScrollView} from 'react-native';
+import {View, Button, Text, Content, Footer, FooterTab} from 'native-base';
 
 import {connect} from 'react-redux';
 import {actions} from '../../../store';
 
-import OneSignal from 'react-native-onesignal';
-
 //styles
 import {styles} from '../styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
-import {withNavigation, withNavigationFocus} from "react-navigation";
+import {withNavigationFocus} from "react-navigation";
 
 // Custom Component
 import AppBackground from '../../../components/AppBackground';
@@ -18,6 +16,8 @@ import AppHeader from '../../../components/Headers/AppHeader';
 import SubHeader from '../../../components/Headers/SubHeader';
 import OrderView from '../../../components/contractor/TableView/OrderView';
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
+import EmptyTable from "../../../components/Tables/EmptyTable";
+import AppFooter from "../../../components/Footer/AppFooter";
 
 
 class ViewOrderBids extends React.Component {
@@ -25,7 +25,8 @@ class ViewOrderBids extends React.Component {
         super(props);
         this.state = {
             tableHead: ['Order', 'Status', '', ''],
-            loading: true
+            loading: true,
+            errorMsg:"There is no pending orders found."
         };
 
         this._showOrderBids = this._showOrderBids.bind(this);
@@ -33,7 +34,25 @@ class ViewOrderBids extends React.Component {
         this._archiveOrder = this._archiveOrder.bind(this);
         this.getOrders = this.getOrders.bind(this);
 
+        this.focusListener = this.props.navigation.addListener('willFocus', () => {
+            this.props.getContractorPendingOrders();
+            this.interval = setInterval(() => {
+                this.props.getContractorPendingOrders();
+            }, 10000);
+        });
+
+        this.blurListener = this.props.navigation.addListener('willBlur', () => {
+            clearInterval(this.interval);
+        });
+
+    }
+
+    componentDidMount() {
         this.props.getContractorPendingOrders();
+    }
+
+    componentWillUnmount() {
+
     }
 
     async getOrders() {
@@ -45,8 +64,8 @@ class ViewOrderBids extends React.Component {
         this.props.navigation.navigate("ViewBids", {order_id});
     }
 
-    _showFullDetails(order_id) {
-        this.props.navigation.navigate("ViewOrderDetail", {order});
+    _showFullDetails(order_concrete) {
+        this.props.navigation.navigate("ViewOrderDetail", {order_concrete});
     }
 
     _archiveOrder(order) {
@@ -54,8 +73,14 @@ class ViewOrderBids extends React.Component {
     }
 
     displayTableData(orders) {
-        // console.log()
-        return orders.keySeq()?.map((order_id,index) => (
+        return orders?this.showTableData(orders):<EmptyTable message={this.state.errorMsg} />
+    }
+
+    showTableData(orders){
+
+        return orders?.keySeq()?.sort((a,b)=>{
+            return b-a;
+        })?.map((order_id,index) => (
             <OrderView order_id={order_id} buttonViewText={"View Bids"} key={index}
                        onBidHandler={this._showOrderBids} onArchiveHandler={this._archiveOrder}
                        onDetailHandler={this._showFullDetails}/>
@@ -63,27 +88,18 @@ class ViewOrderBids extends React.Component {
     }
 
     render() {
-        let orders=this.props.pending_order.get("data").get("orders");
+        let orders=this.props.pending_order?.get("data")?.get("orders");
         return (
-            <AppBackground>
+            <AppBackground loading={this.props.app.get("loading")}>
                 <ScrollView style={[appStyles.mb_10]}>
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="Order Requests"/>
                     <Content contentContainerStyle={styles.content}>
                         <View style={[appStyles.bgWhite]}>
-                            {this.props.app.get("loading") ? <SkeletonLoading/>
-                                : this.displayTableData(orders)}
+                            {this.displayTableData(orders)}
                         </View>
                     </Content>
                 </ScrollView>
-                <Footer>
-                    <FooterTab>
-                        <Button style={[appStyles.button, appStyles.buttonPrimary]}
-                                onPress={() => this.props.navigation.navigate("Home")}>
-                            <Text style={appStyles.buttonBlack}>Back to Home</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
             </AppBackground>
         );
     }
@@ -98,7 +114,6 @@ const mapDispatchToProps = (dispatch) => {
             return dispatch(actions.order.archiveOrder(order_id));
         },
         getContractorPendingOrders:()=>{
-            console.log("ok");
             return dispatch(actions.order.pendingOrder.fetchPendingOrders());
         }
     }
@@ -107,7 +122,6 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         app: state.get("app"),
-        // order: state.get("order"),
         pending_order:state.get("pending_order")
     };
 };

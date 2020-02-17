@@ -17,16 +17,18 @@ import {formatDate, formatTime} from "../../../helpers/time";
 import RadioGroup from 'react-native-radio-buttons-group';
 
 import {merge} from 'immutable';
+import CustomButton from "../../../components/Button/CustomButton";
+import navigationHelper from "../../../helpers/navigationHelper";
 
 class OrderBidStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            payment_method: "COD",
+            payment_method: "Card Payment",
             data: [
                 {
-                    label: 'COD',
-                    value: "COD",
+                    label: 'Card Payment',
+                    value: "Card Payment",
                 },
                 {
                     label: 'Account',
@@ -54,14 +56,13 @@ class OrderBidStatus extends React.Component {
         this.onPress=this.onPress.bind(this);
     }
 
-    submitBid() {
-        let bid_id = this.props.navigation.getParam("bid_id");
-        this.props.acceptBid(bid_id, this.state.payment_method);
+    submitBid(bid_id,date_delivery) {
+        // let bid_id = this.props.navigation.getParam("bid_id");
+        this.props.acceptBid(bid_id, this.state.payment_method,date_delivery);
     }
 
     onPress(data){
         let selected=data.find((obj)=>{
-            console.log(obj.selected);
             return obj.selected;
         });
         data?this.setState({payment_method:selected.value}):null;
@@ -70,20 +71,20 @@ class OrderBidStatus extends React.Component {
 
     render() {
 
-        let pending_data=this.props.pending_orders.get("data");
-        let pending_orders=pending_data.get("orders");
+        let pending_data=this.props.pending_orders?.get("data");
+        let pending_orders=pending_data?.get("orders");
         /* 2. Read the params from the navigation state */
-        let order = pending_orders.get(this.props.navigation.getParam("order_id").toString());
-        let bid=pending_data.get("bids").get(this.props.navigation.getParam("bid_id").toString());
-        let order_concrete=pending_data.get("order_concrete").get(order.get("order_concrete").toString());
+        let order = pending_orders?.get(this.props.navigation.getParam("order_id").toString());
+        let bid=pending_data?.get("bids")?.get(this.props.navigation.getParam("bid_id").toString());
+        let order_concrete=pending_data?.get("order_concrete")?.get(order?.get("order_concrete").toString());
 
-        let total=(parseFloat(order_concrete.get("quantity"))*parseFloat(bid.get("price"))).toString();
+        let total=(parseFloat(order_concrete?.get("quantity"))*parseFloat(bid?.get("price"))).toString();
 
-        let newOrder=order?.mergeIn(["bid"],bid).mergeIn(["concrete"],order_concrete)
+        let newOrder=order?.mergeIn(["bid"],bid)?.mergeIn(["concrete"],order_concrete)
                     .set("total",total);
-
+        // console.log(bid?.get("date_delivery"));
         return (
-            <AppBackground>
+            <AppBackground disableBack>
                 <AppHeader/>
                 <ScrollView>
                     <SubHeader iconType="ConcreteASAP" iconName="pending-order" title="Order Bid Status"/>
@@ -91,15 +92,26 @@ class OrderBidStatus extends React.Component {
                         <View style={[appStyles.bgWhite, appStyles.p_10]}>
                             <TableRow rowData={newOrder} rowColumns={this.state.rowColumns}/>
                             <Row>
-                                <Col><Text style={appStyles.baseSmallFontSize}>Select Payment Method</Text></Col>
+                                <Col style={[appStyles.py_10]}>
+                                    <Text style={appStyles.baseSmallFontSize}>Select Payment Method</Text>
+                                </Col>
                             </Row>
                             <Row>
                                 <RadioGroup radioButtons={this.state.data} onPress={this.onPress} flexDirection='row' />
                             </Row>
                         </View>
-                        <Button primary style={[appStyles.my_5, appStyles.horizontalCenter]} onPress={this.submitBid}>
-                            <Text style={appStyles.colorBlack}>Confirm</Text>
-                        </Button>
+                        <View style={[appStyles.justifyBetween,appStyles.flexWrap,appStyles.flexRow]}>
+                            <View style={appStyles.w_45}>
+                                <CustomButton btnIcon="arrow-left" btnText={"Back"} onPress={()=>{
+                                    navigationHelper.goBack();
+                                }}/>
+                            </View>
+                            <View style={appStyles.w_45}>
+                                <CustomButton btnText={"Confirm"} onPress={()=>{
+                                    this.submitBid(bid?.get("id"),bid?.get('date_delivery'));
+                                }} />
+                            </View>
+                        </View>
                     </Content>
                 </ScrollView>
             </AppBackground>
@@ -109,8 +121,8 @@ class OrderBidStatus extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        acceptBid: (bid_id, payment_method) => {
-            return dispatch(actions.order.acceptBid(bid_id, payment_method))
+        acceptBid: (bid_id, payment_method,date_delivery) => {
+            return dispatch(actions.order.acceptBid(bid_id, payment_method,date_delivery))
         }
     }
 };

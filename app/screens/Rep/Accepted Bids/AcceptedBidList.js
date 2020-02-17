@@ -25,17 +25,18 @@ class AcceptedBidList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rowHeaders: ['Order No', 'Suburb', 'Cubic m3'],
-            rowColumns: ["order.id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
+            rowHeaders: ['Job No', 'Suburb', 'Cubic m3'],
+            rowColumns: ["order.job_id", "order.order_concrete.suburb", "order.order_concrete.quantity"],
             loading: true,
             emptyMessage: "There are no Accepted Orders right now.",
             reRender: false
         };
 
         this.focusListener = this.props.navigation.addListener('willFocus', () => {
+            this.props.getRepAcceptedBids();
             this.interval = setInterval(() => {
                 this.props.getRepAcceptedBids();
-            }, 6000);
+            }, 10000);
         });
 
         this.blurListener = this.props.navigation.addListener('willBlur', (payload) => {
@@ -67,8 +68,12 @@ class AcceptedBidList extends React.Component {
     }
 
     showCustomRow(rowData) {
+        let status=rowData?.get("order")?.get("status");
+        if(status==="Paid"){
+            // console.log("ok");
+        }
         return (
-            <StatusRow row={rowData} status={getNested(rowData, "order.status")} onBtnClick={this._alertIndex}/>
+            <StatusRow row={rowData} status={status}  onBtnClick={this._alertIndex}/>
         );
     }
 
@@ -85,19 +90,18 @@ class AcceptedBidList extends React.Component {
     render() {
         let app = this.props.app;
         let accepted_bids = this.props.bid.get("accepted_bids");
+
         return (
-            <AppBackground>
+            <AppBackground loading={app.get("loading")}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader iconType="ConcreteASAP" iconName="accepted-order" title="Accepted Bids"/>
                     <Content>
                         <View style={[appStyles.bgWhite]}>
-                            {app.get("loading") ? <SkeletonLoading/>
-                                : this.displayRow(accepted_bids.get("data"))}
+                            {this.displayRow(accepted_bids.get("data"))}
                         </View>
                     </Content>
                 </ScrollView>
-                <AppFooter/>
             </AppBackground>
         );
     }

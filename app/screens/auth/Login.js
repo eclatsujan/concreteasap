@@ -28,10 +28,6 @@ class LoginScreen extends React.Component {
             isLoading: true,
             type: 'contractor'
         };
-        this.focusListener = this.props.navigation.addListener('didFocus', () => {
-            // The screen is focused
-            // Call any action
-        });
     }
 
     componentDidMount() {
@@ -54,8 +50,8 @@ class LoginScreen extends React.Component {
     render() {
         let app = this.props.app;
         let error = this.props.error;
-        return (<AppBackground loading={app.get("loading")} enableKeyBoard alignContent={"center"}>
-            <ScrollView>
+        return (<AppBackground loading={app.get("loading")} enableKeyBoard alignContent={"center"} disableBack>
+            <ScrollView keyboardShouldPersistTaps={"always"}>
                 <LoginHeader/>
                 <ErrorHeader error={error}/>
                 <View>

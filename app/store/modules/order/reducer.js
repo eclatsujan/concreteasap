@@ -103,10 +103,10 @@ export const reducer = (state, action) => {
             });
         case constants.ADD_MESSAGE:
             return state.updateIn([action.payload.order_type, "data"], (orders) => {
-                console.log(orders);
                 let index = orders.findIndex((order) => {
                     return order.get("id") === action.payload.order_id;
                 });
+
                 return orders.updateIn([index], (order) => {
                     return order?.set("message", Immutable.fromJS(action.payload.data));
                 });
@@ -119,6 +119,20 @@ export const reducer = (state, action) => {
                 return orders.updateIn([index,"status"], (status) => {
                     return action.payload.status
                 });
+            });
+        case constants.UPDATE_STATUS_MESSAGE:
+            let orders=state.get(action.payload.order_type).get("data");
+
+            let index=orders.findIndex((order) => {
+                return order.get("id") === action.payload.order_id;
+            });
+
+            let message_id=orders.get(index).get("message").findIndex((message)=>{
+                return message.get("id")===action.payload.message_id
+            });
+
+            return state.updateIn([action.payload.order_type,"data",index,"message",message_id,"status"],(status)=>{
+                return action.payload.status;
             });
         case constants.REMOVE_BID:
             //get pending orders from immutable js

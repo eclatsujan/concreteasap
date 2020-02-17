@@ -10,9 +10,13 @@ import {styles} from '../styles.js';
 import AppBackground from '../../../components/AppBackground';
 import AppHeader from '../../../components/Headers/AppHeader'
 import HomeButton from '../../../components/Button/HomeButton'
+import AppFooter from "../../../components/Footer/AppFooter";
+import {actions} from "../../../store/modules";
+import {withNavigation} from "react-navigation";
+import {connect} from "react-redux";
 
 
-export default class ViewAcceptedOrders extends React.Component {
+class AcceptedOrderDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,7 +40,27 @@ export default class ViewAcceptedOrders extends React.Component {
                     "status": "close"
                 }
             ],
-        }
+        };
+
+        this._alertIndex = this._alertIndex.bind(this);
+
+        this.backButton=this.backButton.bind(this);
+    }
+
+    componentDidMount() {
+        this.focusListener = this.props.navigation.addListener('didFocus', () => {
+            this.props.getAcceptedOrder();
+            this.interval = setInterval(this.props.getAcceptedOrder, 10000);
+        });
+
+        this.blurListener = this.props.navigation.addListener('didBlur', () => {
+            clearInterval(this.interval);
+        });
+    }
+
+    componentWillUnmount() {
+        this.focusListener.remove();
+        this.blurListener.remove();
     }
 
     _alertIndex(id) {
@@ -85,45 +109,36 @@ export default class ViewAcceptedOrders extends React.Component {
 
         return (
             <AppBackground>
-                <Header transparent>
-                    <Left>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
-                        >
-                            <Icon name='menu'/>
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Concrete ASAP</Title>
-                    </Body>
-                    <Right>
-                        <Button transparent>
-                            <Icon name='person'/>
-                        </Button>
-                    </Right>
-                </Header>
+                <AppHeader />
                 <Content contentContainerStyle={styles.content}>
                     <ScrollView>
                         <Text style={{textAlign: "center", fontSize: 20, fontWeight: 'bold',}}>View Accepted
                             Orders</Text>
                         {this.displayTableHeader()}
                         {this.displayTableData()}
-                        <View style={styles.registerButton}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
-                                <Text style={styles.buttonText}>Back To Home</Text>
-                            </TouchableOpacity>
-                        </View>
                     </ScrollView>
                 </Content>
-                <Footer>
-                    <FooterTab>
-                        <Button full>
-                            <Text>Footer</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
             </AppBackground>
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getAcceptedOrder: () => {
+            return dispatch(actions.order.getContractorAcceptedOrder())
+        },
+        appLoading: () => {
+            return dispatch(actions.app.loading());
+        }
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+        order: state.get("order"),
+        app: state.get("app")
+    };
+};
+
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(AcceptedOrderDetail));

@@ -19,6 +19,7 @@ import TableRow from "../../../components/Tables/TableRow";
 import {formatDate, formatTime} from "../../../helpers/time";
 
 import * as Immutable from 'immutable';
+import AppFooter from "../../../components/Footer/AppFooter";
 
 class ReviewOrder extends React.Component {
 
@@ -27,7 +28,8 @@ class ReviewOrder extends React.Component {
         this.state = {
             "rowColumns": [
                 {key: "address", title: "Address"},
-                {key: "postcode", title: "Post Code"}, {key: "quantity", title: "Quantity"}, {key: "type", title: "Type"},
+                {key: "post_code", title: "Post Code"}, {key: "suburb", title: "Suburb"},
+                {key: "state", title: "state"}, {key: "quantity", title: "Quantity"}, {key: "type", title: "Type"},
                 {key: "mpa", title: "MPA"}, {key: "agg", title: "AGG"}, {key: "slu", title: "Slump"},
                 {key: "acc", title: "ACC"}, {key: "placement_type", title: "Placement Type"},
                 {key: "message_required", title: "Message Required"},
@@ -56,34 +58,34 @@ class ReviewOrder extends React.Component {
             timeFormat = "YYYY-MM-DD";
         }
 
-        full_order=full_order.set("address", order.get("address"));
-        full_order=full_order.set("postcode",order.get("postcode"));
-        full_order=full_order.set("state",order.get("state"));
-        full_order=full_order.set("suburb", order.get("suburb"));
-        full_order=full_order.set("type", order.get("type"));
-        full_order=full_order.set("mpa", order.get("mpa"));
-        full_order=full_order.set("agg", order.get("agg"));
-        full_order=full_order.set("slump", order.get("slu"));
-        full_order=full_order.set("acc", order.get("acc"));
-        full_order=full_order.set("placement_type", order.get("placement_type"));
-        full_order=full_order.set("quantity", order.get("quantity"));
-        full_order=full_order.set("delivery_date", order.get("delivery_date"));
-        full_order=full_order.set("delivery_date1", order.get("delivery_date1"));
-        full_order=full_order.set("delivery_date2", order.get("delivery_date2"));
-        full_order=full_order.set("time_preference1", order.get("time1"));
-        full_order=full_order.set("time_preference2", order.get("time2"));
-        full_order=full_order.set("time_preference3", order.get("time3"));
-        full_order=full_order.set("time_deliveries", order.get("time_difference_deliveries"));
-        full_order=full_order.set("urgency", order.get("urgency"));
-        full_order=full_order.set("message_required", order.get("message_required"));
-        full_order=full_order.set("preference", order.get("site_call"));
-        full_order=full_order.set("colours", order.get("colours"));
-
+        full_order = full_order.set("address", order.get("address"));
+        full_order = full_order.set("post_code", order.get("post_code"));
+        full_order = full_order.set("state", order.get("state"));
+        full_order = full_order.set("suburb", order.get("suburb"));
+        full_order = full_order.set("type", order.get("type"));
+        full_order = full_order.set("mpa", order.get("mpa"));
+        full_order = full_order.set("agg", order.get("agg"));
+        full_order = full_order.set("slump", order.get("slu"));
+        full_order = full_order.set("acc", order.get("acc"));
+        full_order = full_order.set("placement_type", order.get("placement_type"));
+        full_order = full_order.set("quantity", order.get("quantity"));
+        full_order = full_order.set("delivery_date", order.get("delivery_date"));
+        full_order = full_order.set("delivery_date1", order.get("delivery_date1"));
+        full_order = full_order.set("delivery_date2", order.get("delivery_date2"));
+        full_order = full_order.set("time_preference1", order.get("time1"));
+        full_order = full_order.set("time_preference2", order.get("time2"));
+        full_order = full_order.set("time_preference3", order.get("time3"));
+        full_order = full_order.set("time_deliveries", order.get("time_difference_deliveries"));
+        full_order = full_order.set("urgency", order.get("urgency"));
+        full_order = full_order.set("message_required", order.get("message_required")==="No"?0:1);
+        full_order = full_order.set("preference", order.get("site_call"));
+        full_order = full_order.set("colours", order.get("colours"));
+        // console.log(order.get("message_required"));
         //Special Instructions
-        full_order=full_order.set("special_instructions", special?.get("special_instructions"));
-        full_order=full_order.set("delivery_instructions",special?.get("delivery_instructions"));
+        full_order = full_order.set("special_instructions", special?.get("special_instructions"));
+        full_order = full_order.set("delivery_instructions", special?.get("delivery_instructions"));
 
-        let order_type=this.props.navigation.getParam("order_type")?this.props.navigation.getParam("order_type"):"accepted_orders";
+        let order_type = this.props.navigation.getParam("order_type") ? this.props.navigation.getParam("order_type") : "accepted_orders";
 
         // if (order.get("message_required") !== "No") {
         //
@@ -94,7 +96,7 @@ class ReviewOrder extends React.Component {
 
         if (order_id) {
             this.props.navigation.navigate("ModifyReviewInstructions", {
-                full_order, order_id,order_type
+                full_order, order_id, order_type
             });
         } else {
             this.props.navigation.navigate("ReviewInstructions", {
@@ -122,7 +124,7 @@ class ReviewOrder extends React.Component {
         return (
             <AppBackground loading={this.props.app.get("loading")}>
                 <ScrollView>
-                    <AppHeader backMenu/>
+                    <AppHeader/>
                     <Content contentContainerStyle={[styles.content]}>
                         <SubHeader iconName="search" title="Review Order"/>
                         <View style={[appStyles.bgWhite, appStyles.p_15]}>

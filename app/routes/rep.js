@@ -18,7 +18,7 @@ import UserDetail from "../screens/User/Contact/UserDetail";
 import PreviousBidList from "../screens/Rep/Previous Orders/PreviousBidList";
 import PreviousBidDetail from "../screens/Rep/Previous Orders/PreviousBidDetail";
 
-import ViewOrderDetail from "../screens/contractor/AllOrders/ViewOrderDetail";
+import ViewOrderDetail from "../screens/contractor/Pending/ViewOrderDetail";
 
 export const repPendingBids= createStackNavigator({
     "Pending Bid List": PendingBidList,
@@ -48,6 +48,18 @@ export const repAcceptedBids = createStackNavigator({
     "Accepted Bid Detail": AcceptedBidDetail,
     "Rep User Contact Detail": UserDetail,
     "Rep View Message":BidMessageHome
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
+export const repDayofPourBids = createStackNavigator({
+    "Pour List": AcceptedBidList,
+    "Pour Bid Detail": AcceptedBidDetail,
+    "Pour User Contact Detail": UserDetail,
+    "Pour View Message":BidMessageHome
 }, {
     headerMode: 'none',
     navigationOptions: {

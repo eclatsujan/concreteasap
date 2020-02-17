@@ -5,6 +5,7 @@ import {Calendar} from "react-native-calendars";
 import {TouchableWithoutFeedback, View, Platform} from "react-native";
 import Modal from "react-native-modal";
 import {appStyles} from "../../../assets/styles/app_styles";
+import CustomButton from "../Button/CustomButton";
 
 export default class CalendarModal extends React.Component {
 
@@ -124,6 +125,11 @@ export default class CalendarModal extends React.Component {
 
                     markingType={'custom'}
                 />
+                <View style={[appStyles.mt_5]}>
+                    <CustomButton btnText={"Select Date"} onPress={()=>{
+                        this.props.onClose(this.state.markedDates);
+                    }}/>
+                </View>
             </Modal>
         );
     }

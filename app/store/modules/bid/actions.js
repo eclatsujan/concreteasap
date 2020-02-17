@@ -8,14 +8,15 @@ import * as order from '../order/actions'
 
 import navigationHelper from '../../../helpers/navigationHelper';
 import {PUSH_BIDS} from "./constants";
+import moment from "moment";
 
-export function placeMessagePrice(pricePer, order_id) {
+export function placeMessagePrice(pricePer, bid_id,message_id) {
     return (dispatch, getState) => {
-        bidService.placeMessagePrice(pricePer, order_id).then((res) => {
-            navigationHelper.goBack();
-
+        dispatch(addMessage(pricePer,bid_id,message_id));
+        bidService.placeMessagePrice(pricePer, message_id).then((res) => {
             dispatch(appActions.loading(false));
         }).catch((err) => {
+            dispatch(addMessage(0,bid_id,message_id));
             console.log(err);
             dispatch(appActions.loading(false));
         });
@@ -26,9 +27,10 @@ export function placeMessagePrice(pricePer, order_id) {
 export const getRepAcceptedBids = () => {
     return (dispatch, getState) => {
         bidService.getRepAcceptedBids().then((res) => {
-            dispatch(pushBids("accepted_bids", res["data"], res["current_page"], res["last_page"], res["total"]));
+            dispatch(pushBids("accepted_bids",res));
             dispatch(appActions.loading(false));
         }).catch((err) => {
+            console.log(err);
             dispatch(appActions.loading(false));
         });
     }
@@ -67,6 +69,14 @@ export const getRepBidOrders = () => {
 export const getRepPreviousBids = () => {
     return (dispatch, getState) => {
         bidService.getRepPreviousBids().then((res) => {
+            if(res["data"]?.length>0){
+                res["data"]=res["data"].map((bid)=>{
+                    let date=moment(bid["date_delivery"]);
+                    let order_id=typeof bid?.order ==="undefined"?"":bid?.order?.id;
+                    bid["custom_id"]=order_id+"-"+date.format("MM")+"-"+date.format("YY");
+                    return bid;
+                });
+            }
             dispatch(pushBids("previous_bids", res["data"], res["current_page"], res["last_page"], res["total"]));
             dispatch(appActions.loading(false));
         }).catch((err) => {
@@ -99,13 +109,14 @@ export const placeBid = (order_id) => {
     }
 };
 
-export const addMessage = (price) => {
+export const addMessage = (price,bid_id,message_id) => {
     return (dispatch) => {
         dispatch({
-            type: types.ADD_MESSAGE,
+            type: types.ADD_MESSAGE_PRICE,
             payload: {
                 price,
-
+                message_id,
+                bid_id
             }
         });
     }

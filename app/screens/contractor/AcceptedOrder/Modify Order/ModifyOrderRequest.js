@@ -16,6 +16,7 @@ import PlaceOrderForm from "../../../../components/contractor/PlaceOrderForm";
 
 import * as Immutable from 'immutable';
 import {order_concrete} from "../../../../store/schemas";
+import AppFooter from "../../../../components/Footer/AppFooter";
 
 class ModifyOrderRequest extends React.Component {
 
@@ -63,6 +64,8 @@ class ModifyOrderRequest extends React.Component {
                 let concrete = accepted_order.get("order_concrete");
                 order=order.set("id", order_id).set("address", concrete.get("address"))
                     .set("suburb",concrete.get("suburb"))
+                    .set("post_code",concrete.get("post_code"))
+                    .set("state",concrete.get("state"))
                     .set("type", concrete.get("type")).set("type", concrete.get("type"))
                     .set("mpa", concrete.get("mpa")).set("agg", concrete.get("mpa"))
                     .set("agg", concrete.get("agg")).set("slu", concrete.get("slump"))

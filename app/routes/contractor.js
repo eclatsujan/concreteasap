@@ -8,7 +8,7 @@ import ThirdPage from '../screens/contractor/calculator/ThirdPage';
 import FourthPage from '../screens/contractor/calculator/FourthPage';
 
 //Home Page
-import HomeScreen from '../screens/contractor/Home';
+import HomeScreen from '../screens/contractor/Concrete/Home';
 //Notifications
 import Notifications from '../screens/User/Notification/Notifications';
 
@@ -24,17 +24,17 @@ import ReviewInstructions from '../screens/contractor/Review Order/ReviewInstruc
 import ViewOrderHome from '../screens/contractor/PlaceOrder/ViewOrderHome';
 
 //View accepted orders
-import AcceptedOrders from '../screens/contractor/AcceptedOrder/AcceptedOrders';
+import AcceptedOrderList from '../screens/contractor/AcceptedOrder/AcceptedOrderList';
 import DayOfPour from '../screens/contractor/AcceptedOrder/DayOfPour';
 
 //All Orders
-import OrderBidStatus from '../screens/contractor/AllOrders/OrderBidStatus';
-import ViewOrderDetail from "../screens/contractor/AllOrders/ViewOrderDetail";
-import ViewOrderBids from '../screens/contractor/AllOrders/ViewOrderBids';
-import ViewBids from '../screens/contractor/AllOrders/ViewBids';
+import OrderBidStatus from '../screens/contractor/Pending/OrderBidStatus';
+import ViewOrderDetail from "../screens/contractor/Pending/ViewOrderDetail";
+import ViewOrderBids from '../screens/contractor/Pending/ViewOrderBids';
+import ViewBids from '../screens/contractor/Pending/ViewBids';
 
 //View Bids
-import ViewFullOrderDetails from '../screens/contractor/AcceptedOrder/ViewFullOrderDetails';
+import AcceptedOrderFullDetail from '../screens/contractor/AcceptedOrder/AcceptedOrderFullDetail';
 import ModifyOrderRequest from "../screens/contractor/AcceptedOrder/Modify Order/ModifyOrderRequest";
 import ModifyAdditionalRequest from "../screens/contractor/AcceptedOrder/Modify Order/ModifyAdditionalRequest";
 
@@ -53,7 +53,8 @@ import UserDetail from "../screens/User/Contact/UserDetail";
 import pourDayList from "../screens/contractor/Day of Pour/pourDayList";
 import pourDayDetail from "../screens/contractor/Day of Pour/pourDayDetail";
 
-import PreviousOrderList from "../screens/contractor/Previous Order/PreviousOrderList"
+import PreviousOrdersList from "../screens/contractor/Previous Order/PreviousOrdersList"
+import PreviousOrderDetail from "../screens/contractor/Previous Order/PreviousOrderDetail";
 
 
 export const calculator = createStackNavigator({
@@ -86,12 +87,12 @@ export const placeOrderStack = createStackNavigator({
 );
 
 export const placeOrderDrawerStack = createStackNavigator({
-    PlaceOrderLanding: PlaceOrderLanding,
+    // PlaceOrderLanding: PlaceOrderLanding,
     "Place Order Requests": placeOrderStack,
     ViewOrderHome: ViewOrderHome,
 }, {
     headerMode: 'none',
-    initialRouteName: 'PlaceOrderLanding',
+    initialRouteName: 'Place Order Requests',
     navigationOptions: {
         headerVisible: false,
     }
@@ -126,7 +127,7 @@ export const modifyOrder = createStackNavigator({
 });
 
 export const acceptedOrders = createStackNavigator({
-    AcceptedOrders: AcceptedOrders,
+    "Accepted Order List": AcceptedOrderList,
 }, {
     headerMode: 'none',
     navigationOptions: {
@@ -146,7 +147,7 @@ export const orderMessage=createStackNavigator({
 
 export const dayofPourStack = createStackNavigator({
         DayOfPour: DayOfPour,
-        ViewFullOrderDetails: ViewFullOrderDetails,
+        "Accepted Order Full Detail": AcceptedOrderFullDetail,
         modifyOrder,
         "Modify Order Calculator": calculator,
         "Confirm Review": ConfirmReview,
@@ -174,7 +175,8 @@ export const dayOfPour = createStackNavigator({
 });
 
 export const previousOrders= createStackNavigator({
-    PreviousOrderList,
+    "Previous Order List":PreviousOrdersList,
+    "Previous Order Detail":PreviousOrderDetail
 }, {
     headerMode: 'none',
     navigationOptions: {

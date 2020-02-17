@@ -1,4 +1,5 @@
 import moment from "moment";
+import {Linking} from 'react-native'
 
 export function formatDate(date){
     return moment(date).format("DD/MM/YYYY").toString();
@@ -14,4 +15,8 @@ export function formatTime(time){
 
 export function formatPrice(price){
     return "$ "+price;
+}
+
+export function phoneFormat(phone_number){
+
 }

@@ -28,7 +28,8 @@ const initialStates=new Immutable.Map({
   error:States.error,
   order:States.order,
   pending_order:States.pending_order,
-  notifications:States.notifications
+  notifications:States.notifications,
+  previous_orders:States.previous_orders
 });
 
 const obj={

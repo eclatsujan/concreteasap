@@ -1,6 +1,6 @@
 import React from "react";
-import {StatusBar, ScrollView} from "react-native";
-import {View, Text} from 'native-base'
+import {StatusBar, ScrollView,TouchableWithoutFeedback} from "react-native";
+import {View, Text,Icon} from 'native-base'
 import {DrawerNavigatorItems} from 'react-navigation-drawer';
 import {SafeAreaView} from 'react-navigation';
 
@@ -8,24 +8,34 @@ import {connect} from "react-redux";
 
 import {appStyles} from "../../assets/styles/app_styles";
 import {actions} from "../store/modules";
-
+import { DrawerActions } from 'react-navigation-drawer';
 
 class SideBar extends React.Component {
 
     constructor(props) {
         super(props);
         this.resetTopNavigation = this.resetTopNavigation.bind(this);
+        this.closeSubMenu=this.closeSubMenu.bind(this);
     }
 
     resetTopNavigation(route, focused) {
         this.props.appLoading();
+        // console.log(route.route.routes);
         if (typeof route.route.routes !== 'undefined') {
+            let routeName=route.route.routes[0].routeName;
+            let key=route.route.key;
+            routeName=routeName==="ViewOrderHome"?"PlaceOrderLanding":routeName;
             this.props.navigation.navigate({
-                routeName: route.route.routes[0].routeName
+                routeName: routeName
             });
         } else {
             this.props.navigation.navigate(route.route.routeName);
         }
+        this.closeSubMenu();
+    }
+
+    closeSubMenu(){
+        this.props.navigation.dispatch(DrawerActions.closeDrawer());
     }
 
     render() {
@@ -38,6 +48,12 @@ class SideBar extends React.Component {
                 <SafeAreaView
                     forceInset={{top: 'always', horizontal: 'never'}}
                 >
+                    <TouchableWithoutFeedback onPress={this.closeSubMenu}>
+                        <View style={[appStyles.mr_10,appStyles.flexRow,appStyles.justifyRight]}>
+                            <Icon type={"FontAwesome"} name={"close"} style={[appStyles.colorWhite]} />
+                        </View>
+                    </TouchableWithoutFeedback>
+
                     <DrawerNavigatorItems
                         {...{...this.props, onItemPress: this.resetTopNavigation}}
                         items={filteredItems}

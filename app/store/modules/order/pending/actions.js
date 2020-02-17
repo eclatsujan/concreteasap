@@ -16,3 +16,7 @@ export const requestPendingOrdersError= () => {
 export const fetchPendingOrders = () => {
     return { type: constants.FETCH_PENDING_ORDERS }
 };
+
+export const archiveOrder =  () => {
+
+};

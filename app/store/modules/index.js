@@ -6,9 +6,12 @@ import {order} from './order'
 import {bid} from './bid'
 import {error} from './error'
 import {notifications} from './notifications'
+import {previous_orders} from './previous_orders';
 
 // import * as pendingSaga from './orders/sagas';
 import * as pendingSaga from './order/pending/sagas';
+import * as notificationSaga from './notifications/sagas';
+import * as previousOrderSaga from './previous_orders/sagas'
 
 import {all, fork} from 'redux-saga/effects'
 import * as pending_order from "./order/pending";
@@ -26,7 +29,8 @@ export const States = {
     error: error.defaultState,
     order: order.defaultState,
     pending_order:order.pending_order.defaultState,
-    notifications: notifications.defaultState
+    notifications: notifications.defaultState,
+    previous_orders:previous_orders.defaultState
 };
 
 
@@ -43,7 +47,8 @@ export const reducers = {
     pending_order:order.pending_order.reducer,
     bid: bid.reducer,
     error: error.reducer,
-    notifications: notifications.reducer
+    notifications: notifications.reducer,
+    previous_orders:previous_orders.reducer
 };
 /**
  * Root actions.
@@ -56,6 +61,7 @@ export const actions = {
     rep: rep.actions,
     order: order.actions,
     pending_order:order.pending_order.actions,
+    previous_orders:previous_orders.actions,
     bid: bid.actions,
     error: error.actions,
     notifications: notifications.actions
@@ -63,7 +69,9 @@ export const actions = {
 
 export function* rootSaga() {
     yield all([
-        ...Object.values(pendingSaga)
+        ...Object.values(pendingSaga),
+        ...Object.values(notificationSaga),
+        ...Object.values(previousOrderSaga)
     ].map(fork));
 }
 

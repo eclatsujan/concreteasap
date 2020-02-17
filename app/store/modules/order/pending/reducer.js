@@ -23,6 +23,9 @@ export const pendingReducer = (state, action) => {
             return newState;
         case constants.REQUEST_PENDING_ORDERS_FAILED:
             return state.set("error",true).set("loading",false);
+        case constants.REQUEST_ARCHIVE_ORDER:
+            // newState=state.set("data",)
+            return state;
         default:
             return state;
     }

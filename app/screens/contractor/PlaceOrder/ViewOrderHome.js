@@ -11,8 +11,11 @@ import SubHeader from '../../../components/Headers/SubHeader'
 import {styles} from '../styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {resetNavigation} from "../../../helpers/navigationHelper";
+import {actions} from "../../../store/modules";
+import {withNavigation} from "react-navigation";
+import {connect} from "react-redux";
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -33,12 +36,11 @@ export default class HomeScreen extends React.Component {
                             <Text>{message}</Text>
                         </View>
                         <Button style={[appStyles.justifyItemsCenter, appStyles.defaultMargin]}
-                                onPress={() => resetNavigation("ViewOrderBids","Pending Order")}>
+                                onPress={() =>{
+                                    this.props.appLoading();
+                                    resetNavigation("ViewOrderBids","Pending Orders")
+                                }}>
                             <Text style={[appStyles.colorBlack]}>View Order Requests</Text>
-                        </Button>
-                        <Button style={[appStyles.button, appStyles.buttonPrimary, appStyles.justifyItemsCenter]}
-                                onPress={() => this.props.navigation.navigate("Home")}>
-                            <Text style={appStyles.colorBlack}>Back To Home</Text>
                         </Button>
                     </Content>
                 </ScrollView>
@@ -46,4 +48,13 @@ export default class HomeScreen extends React.Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        appLoading: () => {
+            return dispatch(actions.app.loading());
+        }
+    }
+};
+export default withNavigation(connect(null, mapDispatchToProps)(HomeScreen));
 
