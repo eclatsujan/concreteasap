@@ -3,16 +3,16 @@ import {ScrollView} from 'react-native';
 import {Content} from 'native-base';
 
 //Custom Components
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
 
 import {styles} from '../styles.js';
 import {appStyles} from '../../../../assets/styles/app_styles.js';
-import TableRow from "../../../components/Tables/TableRow";
+import TableRow from "../../../components/Basic/Tables/TableRow";
 import {tableFields} from '../../../config/tableField';
-import AppFooter from "../../../components/Footer/AppFooter";
-import {customFormatDate, formatDate, formatTime} from "../../../helpers/time";
+import AppFooter from "../../../components/App/Footer/AppFooter";
+import {customFormatDate, formatDate, formatPrice, formatTime} from "../../../helpers/time";
 import {boolToAffirmative} from "../../../helpers/app";
 
 
@@ -22,6 +22,14 @@ export default class PendingBidDetail extends React.Component {
         this.state = {
             orderDetail: {}, //data from navigation state
             rowColumns: [
+                {title:"Job No.",key:"order.job_id"},
+                {title: "Job Delivery Date", key: "date_delivery", format: formatDate},
+                {title: "Job Delivery Time", key: "time_delivery", format: formatTime},
+                {title:"Job Status",key:"order.status"},
+                {title: "Payment Method", key: "payment_type"},
+                {title: "Price Per M3", key: "price", format: formatPrice},
+                {title: "Required M3", key: "order.order_concrete.quantity"},
+                {title: "Total Amount", key: "total", format: formatPrice},
                 {
                     title: "Post Code",
                     key: "order.order_concrete.suburb"

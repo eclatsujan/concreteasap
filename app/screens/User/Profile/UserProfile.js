@@ -8,16 +8,16 @@ import {withNavigation} from "react-navigation";
 import {styles} from '../../contractor/styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
 
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
 
-import csTextBox from "../../../components/Forms/csTextBox";
+import csTextBox from "../../../components/Basic/Forms/csTextBox";
 import {formValidation} from "../../../helpers/validation";
 
 import {actions} from "../../../store/modules";
 import {getNested} from "../../../helpers/app";
-import CustomButton from "../../../components/Button/CustomButton";
+import CustomButton from "../../../components/Basic/Button/CustomButton";
 import navigationHelper from "../../../helpers/navigationHelper";
 
 

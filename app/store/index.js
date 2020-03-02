@@ -22,7 +22,7 @@ const initialStates=new Immutable.Map({
   app:States.app,
   alert:States.alert,
   user:States.user,
-  contractor:States.contractor,
+  // contractor:States.contractor,
   rep:States.rep,
   bid:States.bid,
   error:States.error,

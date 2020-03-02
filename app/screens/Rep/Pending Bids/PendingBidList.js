@@ -8,12 +8,12 @@ import {actions} from "../../../store";
 import {styles} from '../styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
 import AppHeader from "../../../components/Headers/AppHeader";
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import SubHeader from "../../../components/Headers/SubHeader";
-import CustomTable from "../../../components/Tables/CustomTable";
-import AppFooter from "../../../components/Footer/AppFooter";
-import EmptyTable from "../../../components/Tables/EmptyTable";
-import StatusRow from "../../../components/Tables/StatusRow";
+import CustomTable from "../../../components/Basic/Tables/CustomTable";
+import AppFooter from "../../../components/App/Footer/AppFooter";
+import EmptyTable from "../../../components/Basic/Tables/EmptyTable";
+import StatusRow from "../../../components/Basic/Tables/StatusRow";
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 
 //Custom Components
@@ -61,7 +61,15 @@ class PendingOrderRequest extends React.Component {
     }
 
     showCustomRow(row) {
-        return <StatusRow row={row} onBtnClick={this._showPendingOrder}/>;
+        let quantity=row?.get("order")?.get("order_concrete")?.get("quantity");
+
+        quantity=typeof quantity!==undefined?parseFloat(quantity):0;
+        let price=row?.get("price");
+        price=typeof price!==undefined?parseFloat(price):0;
+
+        let total=price*quantity;
+        return <StatusRow row={row} status={row?.get("status")} total={total} price={price}
+                          onBtnClick={this._showPendingOrder}/>;
     }
 
     showContent(bids) {

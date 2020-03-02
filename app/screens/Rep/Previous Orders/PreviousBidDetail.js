@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {connect} from "react-redux";
 import {actions} from "../../../store/modules";
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import {ScrollView} from "react-native";
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
 import {Content} from "native-base";
 import {appStyles} from "../../../../assets/styles/app_styles";
-import TableRow from "../../../components/Tables/TableRow";
+import TableRow from "../../../components/Basic/Tables/TableRow";
 import {boolToAffirmative} from "../../../helpers/app";
 import {formatDate, formatTime} from "../../../helpers/time";
 
@@ -18,8 +18,9 @@ class PreviousBidDetail extends React.Component{
         this.state={
             isLoading:true,
             rowColumns: [
-                {title: "Order Delivery Date", key: "date_delivery", format: formatDate},
-                {title: "Order Delivery Time", key: "time_delivery", format: formatTime},
+                {title:"Job No.",key:"order.job_id"},
+                {title: "Job Delivery Date", key: "date_delivery", format: formatDate},
+                {title: "Job Delivery Time", key: "time_delivery", format: formatTime},
                 {title: "Price Per M3", key: "price"},
                 {title: "Required M3", key: "order.order_concrete.quantity"},
                 {title: "Address", key: "order.order_concrete.address"},
@@ -54,9 +55,7 @@ class PreviousBidDetail extends React.Component{
     }
 
     getPreviousOrder(bid_id){
-        console.log(bid_id);
         return this.props.bid.get("previous_bids").get("data").find((bid)=>{
-            console.log(bid.get("id"));
             return bid.get("id")===bid_id;
         });
     }

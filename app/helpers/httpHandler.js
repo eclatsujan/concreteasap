@@ -9,13 +9,11 @@ export function handleResponse(response){// this function handles the responses 
             const data = text && JSON.parse(text);
             if (!response.ok) {
                 const error = (data && data.message) || response.statusText;
-                // console.log(error);
                 throw data;
             }
             return data;
         }
         else{
-            console.log(text);
             throw {"message":"Some issue occured in server"}
         }
     });

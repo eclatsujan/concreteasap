@@ -10,7 +10,7 @@ import {withNavigation} from 'react-navigation';
 import {actions, States} from '../../store';
 
 //Custom Component
-import AppBackground from '../../components/AppBackground';
+import AppBackground from '../../components/App/AppBackground';
 import LoginHeader from '../../components/Headers/LoginHeader';
 import ErrorHeader from '../../components/Headers/ErrorHeader';
 

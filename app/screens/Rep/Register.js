@@ -14,7 +14,7 @@ import LoginHeader from '../../components/Headers/LoginHeader';
 import ErrorHeader from '../../components/Headers/ErrorHeader';
 
 //App Component
-import AppBackground from '../../components/AppBackground';
+import AppBackground from '../../components/App/AppBackground';
 
 //React Helper
 import {helper} from '../../helpers'

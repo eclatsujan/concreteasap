@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 
 import {styles} from '../../contractor/styles.js';
 
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
 import {actions} from "../../../store/modules";

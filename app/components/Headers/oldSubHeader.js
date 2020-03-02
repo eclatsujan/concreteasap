@@ -9,7 +9,7 @@ import {Row, Col, Icon, Text} from 'native-base';
 import Svg, {Polygon} from 'react-native-svg';
 
 import {appStyles} from "../../../assets/styles/app_styles";
-import ConcreteIcon from "../Fonts/ConcreteIcon";
+import ConcreteIcon from "../Basic/Fonts/ConcreteIcon";
 
 
 export default class OldSubHeader extends React.Component {

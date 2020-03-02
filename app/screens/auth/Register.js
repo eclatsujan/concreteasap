@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {actions} from '../../store';
 
 //Custom Components/
-import AppBackground from '../../components/AppBackground';
+import AppBackground from '../../components/App/AppBackground';
 import SubHeader from '../../components/Headers/SubHeader';
 import LoginHeader from '../../components/Headers/LoginHeader';
 import ErrorHeader from '../../components/Headers/ErrorHeader';
@@ -24,7 +24,7 @@ import {helper} from '../../helpers'
 //Styles
 import {styles} from './styles';
 import {appStyles} from "../../../assets/styles/app_styles";
-import UploadButton from "../../components/Button/UploadButton";
+import UploadButton from "../../components/Basic/Button/UploadButton";
 
 class Register extends React.Component {
 
@@ -51,7 +51,7 @@ class Register extends React.Component {
         this.focusListener = this.props.navigation.addListener('didFocus', () => {
             // The screen is focused
             // Call any action
-            console.log(this.props.navigation.getParam("roles"));
+            // console.log(this.props.navigation.getParam("roles"));
             this.setState({"roles": this.props.navigation.getParam("roles")});
         });
     }
@@ -88,6 +88,7 @@ class Register extends React.Component {
             if (result.type !== "image") {
                 alert("Please Select the valid type of file");
             }
+            console.log(result);
             this.setState({'photo': result});
             this.setState({'logoText': "Logo been selected"});
         }
@@ -113,7 +114,7 @@ class Register extends React.Component {
     render() {
         let error = this.props.error;
         let errors = this.props.error.get("errors");
-        // console.log(errors);
+        console.log(errors);
         return (
             <AppBackground loading={this.props.app.get("loading")} enableKeyBoard>
                 <LoginHeader/>
@@ -136,10 +137,13 @@ class Register extends React.Component {
                                onChangeText={(text) => this.setState({abn: text})}/>
                     </FormItem>
                     {helper.error.showErrorMessage(errors.get("abn"))}
-                    <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>Logo</Text>
+                    <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>
+                        Logo(Optional, Max Size: 5MB)
+                    </Text>
                     <View style={[appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.my_5]}>
                         <UploadButton onUpload={this.uploadLogo} placeholder={this.state.logoText}/>
                     </View>
+                    {helper.error.showErrorMessage(errors.get("photo"))}
                     <Text style={[appStyles.colorPrimary, appStyles.boldFont, appStyles.upperCase]}>First
                         Name</Text>
                     <FormItem

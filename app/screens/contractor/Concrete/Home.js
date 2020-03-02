@@ -6,9 +6,9 @@ import {ScrollView} from 'react-native';
 import {Content} from 'native-base';
 
 //App Component
-import AppBackground from '../../../components/AppBackground';
+import AppBackground from '../../../components/App/AppBackground';
 import AppHeader from '../../../components/Headers/AppHeader'
-import HomeButton from '../../../components/Button/HomeButton'
+import HomeButton from '../../../components/Basic/Button/HomeButton'
 
 import {appStyles} from "../../../../assets/styles/app_styles";
 
@@ -56,7 +56,7 @@ class HomeScreen extends React.Component {
 
                         <HomeButton text="I Need Concrete" iconType="ConcreteASAP" iconName="place-order"
                                     onPress={() => {
-                                        resetNavigation("Place Order Requests",null);
+                                        resetNavigation("Place Order Requests","I Need Concrete");
                                         this.props.appLoading();
                                     }}/>
                         <HomeButton text={"Today's Orders"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
@@ -73,7 +73,7 @@ class HomeScreen extends React.Component {
                                     }}/>
                         <HomeButton text="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"
                                     onPress={() => {
-                                        this.props.navigation.navigate("Accepted Order");
+                                        this.props.navigation.navigate("Accepted Orders");
                                         // resetNavigation("Accepted Order", "Accepted Order List",1);
                                         this.props.appLoading();
                                     }}/>

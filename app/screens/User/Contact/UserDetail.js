@@ -3,7 +3,7 @@ import {ScrollView} from "react-native";
 import {Content} from 'native-base';
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import {UserContactDetail} from "../../../components/User/UserContactDetail";
 import {phoneFormat} from "../../../helpers/time";
 

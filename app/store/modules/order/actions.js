@@ -6,7 +6,7 @@ import * as appActions from '../app/actions';
 import navigationHelper from '../../../helpers/navigationHelper';
 import * as httpHandler from '../../../helpers/httpHandler';
 
-// import actions from "redux-form/lib/actions";
+// import actions from "redux-formValues/lib/actions";
 import {normalizedOrderData} from "../../schemas";
 
 import {pending} from '../orders';
@@ -247,9 +247,10 @@ export const contractorCompleteOrder = (order_review,order_type="accepted_orders
                 order_type
             }
         });
+        console.log(order_review);
         orderService.contractorCompleteOrder(order_review).then((res) => {
-            navigationHelper.resetNavigation('ViewOrderBids','Pending Orders');
-            // dispatch(appActions.loading(false));
+            navigationHelper.navigate("Home");
+            dispatch(appActions.loading(false));
         }).catch((err) => {
             appActions.loading(false);
         });

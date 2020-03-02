@@ -1,29 +1,32 @@
 import {evaluateChildDrawerTitle} from "../helpers/menu";
 import HomeScreen from "../screens/contractor/Concrete/Home";
 import {dayOfPour, placeOrderDrawerStack} from "./contractor";
-import PlaceOrderRequest from "../screens/contractor/PlaceOrder/PlaceOrderRequest";
-import ViewOrderBids from "../screens/contractor/Pending/ViewOrderBids";
-import AcceptedOrderList from "../screens/contractor/AcceptedOrder/AcceptedOrderList";
-import PreviousOrdersList from "../screens/contractor/Previous Order/PreviousOrdersList";
+import PlaceOrderRequest from "../screens/contractor/Concrete/PlaceOrder/PlaceOrderRequest";
+import ViewOrderBids from "../screens/contractor/Concrete/Pending/ViewOrderBids";
+import AcceptedOrderList from "../screens/contractor/Concrete/AcceptedOrder/AcceptedOrderList";
+import PreviousOrdersList from "../screens/contractor/Concrete/Previous Order/PreviousOrdersList";
 import Notifications from "../screens/User/Notification/Notifications";
 import ReoHome from "../screens/contractor/REO/ReoHome";
+import PlaceOrderScreen from "../screens/contractor/REO/PlaceOrder/PlaceOrderScreen";
 
 export default {
     "Concrete_Concrete Home":{
         screen:HomeScreen,
         // route:"Home",
         navigationOptions: evaluateChildDrawerTitle,
-        params:{
-            hey:"Ho"
-        }
     },
     "Concrete_I Need Concrete": {
         screen:PlaceOrderRequest,
-        route:"I Need Concrete",
-        key:"App",
+        params:{
+            reset:true,
+            key:"I Need Concrete",
+            route:"Place Order Requests"
+            // backRoute:"ConcreteHome",
+            // key:""
+        },
         navigationOptions: evaluateChildDrawerTitle,
     },
-    "Concrete_Today's Order": {
+    "Concrete_Today's Orders": {
         screen: dayOfPour,
         route:"Today's Orders",
         navigationOptions: evaluateChildDrawerTitle,
@@ -49,8 +52,13 @@ export default {
         screen:HomeScreen,
         navigationOptions:evaluateChildDrawerTitle,
     },
-    "Reo_I Need Reo":{
+    "Reo_Reo Home":{
         screen:ReoHome,
+        navigationOptions:evaluateChildDrawerTitle,
+
+    },
+    "Reo_I Need Reo":{
+        screen:PlaceOrderScreen,
         navigationOptions:evaluateChildDrawerTitle,
     },
     "Reo_Today's Orders":{
@@ -75,6 +83,6 @@ export default {
     },
     "Reo_FAQ":{
         screen:ReoHome,
-        navigationOptions:evaluateChildDrawerTitle,
+        navigationOptions:evaluateChildDrawerTitle
     }
 };

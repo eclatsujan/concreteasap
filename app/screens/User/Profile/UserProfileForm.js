@@ -2,14 +2,14 @@ import * as React from 'react';
 import {View, Button, Row, Col, Text, Picker} from 'native-base'
 import {Field, reduxForm} from "redux-form/lib/immutable";
 import {appStyles} from "../../../../assets/styles/app_styles";
-import csTextBox from "../../../components/Forms/csTextBox";
+import csTextBox from "../../../components/Basic/Forms/csTextBox";
 import {formValidation} from "../../../helpers/validation";
-import csPicker from "../../../components/Forms/csPicker";
+import csPicker from "../../../components/Basic/Forms/csPicker";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
-import csImageInput from "../../../components/Forms/csImageInput";
-import CustomButton from "../../../components/Button/CustomButton";
+import csImageInput from "../../../components/Basic/Forms/csImageInput";
+import CustomButton from "../../../components/Basic/Button/CustomButton";
 import navigationHelper from "../../../helpers/navigationHelper";
 
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Animated} from 'react-native';
 import {View, Row, Col, Text, Icon} from 'native-base';
-import ButtonIcon from "../../Button/ButtonIcon";
+import ButtonIcon from "../../Basic/Button/ButtonIcon";
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {actions} from "../../../store/modules";
 import {withNavigationFocus} from "react-navigation";
@@ -36,11 +36,11 @@ class OrderView extends React.Component {
 
     render() {
         let pending_data = this.props.pending_order?.get("data");
-        let order = pending_data?.get("orders")?.get(this.props.order_id);
-
+        let order = pending_data?.get("entities")?.get("orders")?.get(this.props.order_id.toString());
         let pending_order_bids = pending_data?.get("bids");
-        let order_concrete = pending_data?.get("order_concrete")?.get(order?.get("order_concrete").toString());
+        // console.log(pending_data?.get("entities")?.get("order_concrete"));
 
+        let order_concrete = pending_data?.get("entities")?.get("order_concrete")?.get(order?.get("order_concrete").toString());
         let order_id = order?.get("id");
         let jobId = order?.get("job_id");
         let status = order?.get("status");
@@ -57,7 +57,7 @@ class OrderView extends React.Component {
                     <View style={[appStyles.flexRow, appStyles.pb_5]}>
                         <View style={[appStyles.flexRow, {alignItems: "flex-end"}]}>
                             <Text style={[appStyles.baseSmallFontSize, appStyles.upperCase, appStyles.boldFont]}>
-                                Order ID:#
+                                Job No:#
                             </Text>
                             <Text
                                 style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>{jobId}</Text>
@@ -90,7 +90,7 @@ class OrderView extends React.Component {
                         </View>
                         <View style={appStyles.pr_5}>
                             <ButtonIcon small
-                                        btnText={"Archive"}
+                                        btnText={"Cancel"}
                                         iconName={"archive"}
                                         btnBgColor={"#707070"}
                                         onPress={() => {

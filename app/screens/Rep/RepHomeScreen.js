@@ -3,8 +3,8 @@ import {ScrollView, Alert} from 'react-native';
 import {Content} from "native-base";
 
 import AppHeader from "../../components/Headers/AppHeader";
-import AppBackground from "../../components/AppBackground";
-import HomeButton from "../../components/Button/HomeButton";
+import AppBackground from "../../components/App/AppBackground";
+import HomeButton from "../../components/Basic/Button/HomeButton";
 
 import {appStyles} from "../../../assets/styles/app_styles";
 import {resetNavigation} from "../../helpers/navigationHelper";

@@ -27,6 +27,7 @@ export const reducer = (state, action) => {
             return state.updateIn(["data","result"],(result)=>{
                 return result.filter((x)=>x!==order_id);
             });
+
         default:
             return state;
     }

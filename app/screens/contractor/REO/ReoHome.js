@@ -6,9 +6,9 @@ import {ScrollView} from 'react-native';
 import {Content} from 'native-base';
 
 //App Component
-import AppBackground from '../../../components/AppBackground';
+import AppBackground from '../../../components/App/AppBackground';
 import AppHeader from '../../../components/Headers/AppHeader'
-import HomeButton from '../../../components/Button/HomeButton'
+import HomeButton from '../../../components/Basic/Button/HomeButton'
 
 import {appStyles} from "../../../../assets/styles/app_styles";
 
@@ -17,8 +17,9 @@ import {withNavigation} from "react-navigation";
 import navigationHelper, {resetNavigation} from "../../../helpers/navigationHelper";
 import {actions} from "../../../store/modules";
 import connect from "react-redux/lib/connect/connect";
+import SubHeader from "../../../components/Headers/SubHeader";
 
-class HomeScreen extends React.Component {
+class ReoHome extends React.Component {
 
     constructor(props) {
         super(props);
@@ -31,40 +32,56 @@ class HomeScreen extends React.Component {
                 <ScrollView contentContainerStyle={[appStyles.flexGrow]} style={[appStyles.pb_45]}>
                     <AppHeader/>
                     <Content contentContainerStyle={[appStyles.horizontalCenter, appStyles.flex1]}>
-                        <HomeButton text="I Need REO" iconType="ConcreteASAP" iconName="place-order"
+                        <SubHeader bgColor={"#30C5E1"} iconType="ConcreteASAP" iconName="mesh" title="Reo Home"/>
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    text="I Need REO"
+                                    iconType="ConcreteASAP" iconName="place-order"
                                     onPress={() => {
-                                        // resetNavigation("PlaceOrderLanding");
-                                        // this.props.appLoading();
+                                        this.props.navigation.navigate("I Need Reo");
                                     }}/>
-                        <HomeButton text={"Today's Orders"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
-                                    iconName={"truck"}
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    text={"Today's Orders"} iconSize={25}
+                                    paddingBtn={true} iconType={"ConcreteASAP"}
+                                    iconName={"mesh"}
                                     onPress={() => {
                                         // this.props.navigation.navigate("pourDayList");
-                                        //
                                         // this.props.appLoading();
                                     }}/>
-                        <HomeButton text="Pending Orders" iconType="ConcreteASAP" iconName="pending-order"
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    text="Pending Orders" iconType="ConcreteASAP" iconName="pending-order"
                                     onPress={() => {
                                         // resetNavigation("ViewOrderBids", "Pending Orders");
                                         // this.props.appLoading();
                                     }}/>
-                        <HomeButton text="Accepted Orders" iconType="ConcreteASAP" iconName="accepted-order"
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    text="Accepted Orders"
+                                    iconType="ConcreteASAP" iconName="accepted-order"
                                     onPress={() => {
                                         // this.props.navigation.navigate("Accepted Order");
                                         // // resetNavigation("Accepted Order", "Accepted Order List",1);
                                         // this.props.appLoading();
                                     }}/>
-                        <HomeButton text="Previous Orders" iconType="ConcreteASAP" iconName="prev-order"
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    text="Previous Orders"
+                                    iconType="ConcreteASAP" iconName="prev-order"
                                     onPress={() => {
                                         // resetNavigation("Previous Order List", "Previous Orders");
                                         // this.props.appLoading();
                                     }}/>
-                        <HomeButton text="Notifications" iconType="ConcreteASAP" iconName="bell"
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    text="Notifications"
+                                    iconType="ConcreteASAP" iconName="bell"
                                     onPress={() => {
                                         // this.props.navigation.navigate("Notifications");
                                         // this.props.appLoading();
                                     }}/>
-                        <HomeButton onPress={() => this.props.navigation.navigate("FAQ")}
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    text="Back To Home" iconName="home"
+                                    onPress={() => {
+                                        this.props.navigation.navigate("Main Home")
+                                    }}/>
+                        <HomeButton iconColor={"#30C5E1"} textColor={"#30C5E1"} borderColor={"#30C5E1"}
+                                    onPress={() => this.props.navigation.navigate("FAQ")}
                                     text="faq" iconType="ConcreteASAP" iconName="question"/>
                     </Content>
                 </ScrollView>
@@ -82,4 +99,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default withNavigation(connect(null, mapDispatchToProps)(HomeScreen));
+export default withNavigation(connect(null, mapDispatchToProps)(ReoHome));

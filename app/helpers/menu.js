@@ -1,6 +1,5 @@
 export const evaluateOuterDrawerListItems = items => {
     const drawerItems = {};
-    console.log(items);
     items.forEach((item, index) => {
         let { key } = item;
         // Delimiter _

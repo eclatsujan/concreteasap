@@ -8,7 +8,7 @@ import {Icon, Button, Text, Form, Item as FormItem, Input, Content, Row, Col, Ri
 import {connect} from 'react-redux';
 
 //Component
-import AppBackground from '../../components/AppBackground';
+import AppBackground from '../../components/App/AppBackground';
 import ErrorHeader from '../../components/Headers/ErrorHeader';
 import LoginHeader from '../../components/Headers/LoginHeader';
 

@@ -95,6 +95,9 @@ export const appStyles = StyleSheet.create({
     bgGray:{
         backgroundColor:'#6c757d'
     },
+    bgBluelgt:{
+        backgroundColor:"#30C5E1"
+    },
     //Text Colours
     colorSuccess: {
         color: "#14E22A"
@@ -119,7 +122,6 @@ export const appStyles = StyleSheet.create({
     },
     colorDanger: {
         color: "#DB0000"
-
     },
     colorComplete: {
         color: "#2E7400"
@@ -508,7 +510,7 @@ export const appStyles = StyleSheet.create({
     },
     btnTxt: {
         color: "#000",
-        fontSize: 15,
+        fontSize: 13,
         fontFamily: "Hancock"
     },
     btnInverseColor: {
@@ -651,7 +653,7 @@ export const appStyles = StyleSheet.create({
         height: isXXHDPI ? 100 : 80,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        // alignItems: 'center',
     },
     leftContainer: {
         flex: 1,
@@ -662,7 +664,6 @@ export const appStyles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignItems: 'center',
     },
     rightIcon: {
         height: 10,

@@ -6,20 +6,20 @@ import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 
 import AppHeader from "../../../components/Headers/AppHeader";
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import SubHeader from "../../../components/Headers/SubHeader";
 
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {actions} from "../../../store/modules";
-import TableRow from "../../../components/Tables/TableRow";
+import TableRow from "../../../components/Basic/Tables/TableRow";
 
 import {boolToAffirmative} from "../../../helpers/app";
 import {formatDate, formatTime, formatPrice} from "../../../helpers/time";
-import CustomButton from "../../../components/Button/CustomButton";
-import AppFooter from "../../../components/Footer/AppFooter";
-import EmptyTable from "../../../components/Tables/EmptyTable";
+import CustomButton from "../../../components/Basic/Button/CustomButton";
+import AppFooter from "../../../components/App/Footer/AppFooter";
+import EmptyTable from "../../../components/Basic/Tables/EmptyTable";
 import {resetNavigation} from "../../../helpers/navigationHelper";
-import CancelModel from "../../../components/Modal/CancelModal";
+import CancelModel from "../../../components/Basic/Modal/CancelModal";
 
 
 class AcceptedBidDetail extends React.Component {
@@ -30,9 +30,10 @@ class AcceptedBidDetail extends React.Component {
             title:"Reschedule Order",
             cancelModalVisibility:false,
             rowColumns: [
-                {title: "Order Delivery Date", key: "date_delivery", format: formatDate},
-                {title: "Order Delivery Time", key: "time_delivery", format: formatTime},
-                {title:"Order Status",key:"order.status"},
+                {title:"Job No.",key:"order.job_id"},
+                {title: "Job Delivery Date", key: "date_delivery", format: formatDate},
+                {title: "Job Delivery Time", key: "time_delivery", format: formatTime},
+                {title:"Job Status",key:"order.status"},
                 {title: "Payment Method", key: "payment_type"},
                 {title: "Price Per M3", key: "price", format: formatPrice},
                 {title: "Required M3", key: "order.order_concrete.quantity"},
@@ -208,6 +209,7 @@ class AcceptedBidDetail extends React.Component {
                             <View>
                                 <EmptyTable message={this.state.emptyMessage}/>
                                 <CustomButton btnText={"View Previous Jobs"} onPress={()=>{
+                                    this.props.appLoading();
                                     resetNavigation("Previous Bid List", "Previous Bids");
                                 }} />
                             </View>
@@ -231,6 +233,9 @@ class AcceptedBidDetail extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        appLoading:()=>{
+            return dispatch(actions.app.loading(true));
+        },
         getRepAcceptedBids: () => {
             return dispatch(actions.bid.getRepAcceptedBids())
         },

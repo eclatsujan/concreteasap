@@ -4,7 +4,7 @@ import React from 'react';
 import {Icon, Button, Text, Form, Item as FormItem, Input, Content, Row, Col} from "native-base";
 
 //Custom Component
-import AppBackground from '../../components/AppBackground';
+import AppBackground from '../../components/App/AppBackground';
 import LoginHeader from '../../components/Headers/LoginHeader';
 import ErrorHeader from '../../components/Headers/ErrorHeader';
 

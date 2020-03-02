@@ -9,7 +9,7 @@ import {Row, Col, Icon, Text} from 'native-base';
 import Svg, {Polygon} from 'react-native-svg';
 
 import {appStyles} from "../../../assets/styles/app_styles";
-import ConcreteIcon from "../Fonts/ConcreteIcon";
+import ConcreteIcon from "../Basic/Fonts/ConcreteIcon";
 
 
 export default class SubHeader extends React.Component {
@@ -26,10 +26,11 @@ export default class SubHeader extends React.Component {
     render() {
         let iconType = this.props["iconType"] ? this.props["iconType"] : "FontAwesome5";
         let iconName = this.props["iconName"];
+        let bgColor=this.props["bgColor"]?{backgroundColor:this.props["bgColor"]}:appStyles.bgPrimary;
         return (
             <View>
                 <View
-                    style={[appStyles.flexRow,appStyles.flexWrap, appStyles.bgPrimary, appStyles.subHeader,
+                    style={[appStyles.flexRow,appStyles.flexWrap,bgColor, appStyles.subHeader,
                         appStyles.bottomMarginDefault,appStyles.mt_15]}>
                     <View style={[appStyles.verticalCenter]}>
                         {this.renderIcon(iconType, iconName)}

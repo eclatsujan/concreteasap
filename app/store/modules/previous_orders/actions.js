@@ -22,11 +22,10 @@ export const requestPreviousOrdersError= () => {
 };
 
 export function removePreviousOrder(order_id) {
-    console.log(order_id);
     return {type:constants.REMOVE_PREVIOUS_ORDER,payload:{order_id}};
 }
 
 export function removeOrder(order_id){
-    console.log(order_id);
     return {type:constants.REMOVE_ORDER,payload:{order_id}};
 }
+

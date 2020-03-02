@@ -2,7 +2,7 @@ import * as React from "react";
 import {Row, Text, View} from "native-base";
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {Animated} from "react-native";
-import ButtonIcon from "../../Button/ButtonIcon";
+import ButtonIcon from "../../Basic/Button/ButtonIcon";
 
 
 export default class CustomOrderView extends React.Component {
@@ -27,7 +27,7 @@ export default class CustomOrderView extends React.Component {
                     <View style={[appStyles.flexRow, appStyles.pb_5]}>
                         <View style={[appStyles.flexRow, {alignItems: "flex-end"}]}>
                             <Text style={[appStyles.baseSmallFontSize, appStyles.upperCase, appStyles.boldFont]}>
-                                Order ID:#
+                                Order No:#
                             </Text>
                             <Text
                                 style={[appStyles.arialFont, appStyles.baseSmallFontSize]}>{order?.get("job_id")}</Text>

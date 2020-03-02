@@ -1,17 +1,17 @@
 import * as React from 'react';
 import {connect} from "react-redux";
 import {actions} from "../../../store/modules";
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import {ScrollView} from "react-native";
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
 import {Content, View, Button, Text} from "native-base";
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
-import CustomTable from "../../../components/Tables/CustomTable";
-import EmptyTable from "../../../components/Tables/EmptyTable";
+import CustomTable from "../../../components/Basic/Tables/CustomTable";
+import EmptyTable from "../../../components/Basic/Tables/EmptyTable";
 import {getNested} from "../../../helpers/app";
-import StatusRow from "../../../components/Tables/StatusRow";
+import StatusRow from "../../../components/Basic/Tables/StatusRow";
 
 class PreviousBidList extends React.Component {
 
@@ -53,9 +53,17 @@ class PreviousBidList extends React.Component {
     }
 
     showCustomRow(rowData) {
-        // console.log(rowData);
+        let quantity=rowData?.get("order")?.get("order_concrete")?.get("quantity");
+
+        quantity=typeof quantity!==undefined?parseFloat(quantity):0;
+        let price=rowData?.get("price");
+        price=typeof price!==undefined?parseFloat(price):0;
+
+        let total=price*quantity;
+
         return (
-            <StatusRow status={rowData?.get("order")?.get("status")} onBtnClick={this.showDetails} row={rowData}/>
+            <StatusRow status={rowData?.get("status")} total={total} price={price}
+                       onBtnClick={this.showDetails} row={rowData}/>
         );
     }
 

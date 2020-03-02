@@ -4,7 +4,7 @@ import {Col, Icon, Row, Text, View} from "native-base";
 import {appStyles} from "../../../assets/styles/app_styles";
 import {Animated, TouchableOpacity} from "react-native";
 import moment from "moment";
-import ButtonIcon from "../Button/ButtonIcon";
+import ButtonIcon from "../Basic/Button/ButtonIcon";
 
 export default class Notification extends React.Component {
 
@@ -65,12 +65,12 @@ export default class Notification extends React.Component {
                         </View>
                     </Col>
                     <Col
-                        style={[appStyles.w_10, appStyles.verticalCenter, appStyles.flex1, appStyles.verticalSelfCenter]}>
+                        style={[appStyles.w_10]}>
                         <TouchableOpacity style={[appStyles.h_100, appStyles.horizontalCenter]}
                                           onPress={() => {
                                               this.markAsRead(data?.get("id"))
                                           }}>
-                            <View>
+                            <View style={[appStyles.flex1, appStyles.verticalSelfCenter,appStyles.justifyItemsCenter]}>
                                 <Icon type="FontAwesome5" name="times" style={{fontSize: 15}}/>
                             </View>
 

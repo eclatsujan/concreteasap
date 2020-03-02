@@ -6,9 +6,9 @@ import {ScrollView} from 'react-native';
 import {Content, View} from 'native-base';
 
 //App Component
-import AppBackground from '../../components/AppBackground';
+import AppBackground from '../../components/App/AppBackground';
 import AppHeader from '../../components/Headers/AppHeader'
-import HomeButton from '../../components/Button/HomeButton'
+import HomeButton from '../../components/Basic/Button/HomeButton'
 
 import {appStyles} from "../../../assets/styles/app_styles";
 
@@ -35,7 +35,7 @@ class MainHome extends React.Component {
                             <HomeButton onPress={() => this.props.navigation.navigate("Home")}
                                         text="Concrete" iconType="ConcreteASAP" iconName="truck" iconSize={25}/>
 
-                            <HomeButton onPress={() => alert("Coming Soon")}
+                            <HomeButton onPress={() => this.props.navigation.navigate("Reo")}
                                         text="Reo" textColor={"#30C5E1"} bgColor={"#4E4E4E"} borderColor={"#30C5E1"}
                                         iconType="ConcreteASAP" iconName="mesh" iconColor={"#30C5E1"}/>
 

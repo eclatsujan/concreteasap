@@ -4,15 +4,15 @@ import {Button, Text, Content, Footer, FooterTab, View, Row, Col, Item} from 'na
 import {styles} from '../styles.js';
 
 // Custom Component
-import AppBackground from '../../../components/AppBackground'
+import AppBackground from '../../../components/App/AppBackground'
 import AppHeader from '../../../components/Headers/AppHeader'
 import {appStyles} from "../../../../assets/styles/app_styles";
-import EmptyTable from "../../../components/Tables/EmptyTable";
+import EmptyTable from "../../../components/Basic/Tables/EmptyTable";
 import SubHeader from "../../../components/Headers/SubHeader";
 import {actions} from "../../../store/modules";
 import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
-import CustomTable from "../../../components/Tables/CustomTable";
+import CustomTable from "../../../components/Basic/Tables/CustomTable";
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 import MessagePriceView from "../../../components/Rep/Message/MessagePriceView";
 

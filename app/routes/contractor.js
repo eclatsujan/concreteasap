@@ -2,10 +2,10 @@ import {createStackNavigator} from "react-navigation-stack";
 import {createSwitchNavigator} from "react-navigation";
 
 //Calculator files
-import FirstPage from '../screens/contractor/calculator/FirstPage';
-import SecondPage from '../screens/contractor/calculator/SecondPage';
-import ThirdPage from '../screens/contractor/calculator/ThirdPage';
-import FourthPage from '../screens/contractor/calculator/FourthPage';
+import FirstPage from '../screens/contractor/Concrete/calculator/FirstPage';
+import SecondPage from '../screens/contractor/Concrete/calculator/SecondPage';
+import ThirdPage from '../screens/contractor/Concrete/calculator/ThirdPage';
+import FourthPage from '../screens/contractor/Concrete/calculator/FourthPage';
 
 //Home Page
 import HomeScreen from '../screens/contractor/Concrete/Home';
@@ -13,48 +13,55 @@ import HomeScreen from '../screens/contractor/Concrete/Home';
 import Notifications from '../screens/User/Notification/Notifications';
 
 //Place order in contractor
-import PlaceOrderLanding from '../screens/contractor/PlaceOrder/PlaceOrderLanding';
-import PlaceOrderRequest from '../screens/contractor/PlaceOrder/PlaceOrderRequest';
-import PlaceOrderAdditionalRequest from '../screens/contractor/PlaceOrder/PlaceOrderAdditionalRequest';
+import PlaceOrderLanding from '../screens/contractor/Concrete/PlaceOrder/PlaceOrderLanding';
+import PlaceOrderRequest from '../screens/contractor/Concrete/PlaceOrder/PlaceOrderRequest';
+import PlaceOrderAdditionalRequest from '../screens/contractor/Concrete/PlaceOrder/PlaceOrderAdditionalRequest';
 
 //Special requests
-import SpecialRequests from '../screens/contractor/PlaceOrder/SpecialRequests';
-import ReviewOrder from '../screens/contractor/Review Order/ReviewOrder';
-import ReviewInstructions from '../screens/contractor/Review Order/ReviewInstructions';
-import ViewOrderHome from '../screens/contractor/PlaceOrder/ViewOrderHome';
+import SpecialRequests from '../screens/contractor/Concrete/PlaceOrder/SpecialRequests';
+import ReviewOrder from '../screens/contractor/Concrete/Review Order/ReviewOrder';
+import ReviewInstructions from '../screens/contractor/Concrete/Review Order/ReviewInstructions';
+import ViewOrderHome from '../screens/contractor/Concrete/PlaceOrder/ViewOrderHome';
 
 //View accepted orders
-import AcceptedOrderList from '../screens/contractor/AcceptedOrder/AcceptedOrderList';
-import DayOfPour from '../screens/contractor/AcceptedOrder/DayOfPour';
+import AcceptedOrderList from '../screens/contractor/Concrete/AcceptedOrder/AcceptedOrderList';
+import DayOfPour from '../screens/contractor/Concrete/AcceptedOrder/DayOfPour';
 
 //All Orders
-import OrderBidStatus from '../screens/contractor/Pending/OrderBidStatus';
-import ViewOrderDetail from "../screens/contractor/Pending/ViewOrderDetail";
-import ViewOrderBids from '../screens/contractor/Pending/ViewOrderBids';
-import ViewBids from '../screens/contractor/Pending/ViewBids';
+import OrderBidStatus from '../screens/contractor/Concrete/Pending/OrderBidStatus';
+import ViewOrderDetail from "../screens/contractor/Concrete/Pending/ViewOrderDetail";
+import ViewOrderBids from '../screens/contractor/Concrete/Pending/ViewOrderBids';
+import ViewBids from '../screens/contractor/Concrete/Pending/ViewBids';
 
 //View Bids
-import AcceptedOrderFullDetail from '../screens/contractor/AcceptedOrder/AcceptedOrderFullDetail';
-import ModifyOrderRequest from "../screens/contractor/AcceptedOrder/Modify Order/ModifyOrderRequest";
-import ModifyAdditionalRequest from "../screens/contractor/AcceptedOrder/Modify Order/ModifyAdditionalRequest";
+import AcceptedOrderFullDetail from '../screens/contractor/Concrete/AcceptedOrder/AcceptedOrderFullDetail';
+import ModifyOrderRequest from "../screens/contractor/Concrete/AcceptedOrder/Modify Order/ModifyOrderRequest";
+import ModifyAdditionalRequest from "../screens/contractor/Concrete/AcceptedOrder/Modify Order/ModifyAdditionalRequest";
 
 //Order Message
-import OrderMessageList from '../screens/contractor/AcceptedOrder/Order Message/OrderMessageList'
-import OrderMessageDetail from "../screens/contractor/AcceptedOrder/Order Message/OrderMessageDetail";
+import OrderMessageList from '../screens/contractor/Concrete/AcceptedOrder/Order Message/OrderMessageList'
+import OrderMessageDetail from "../screens/contractor/Concrete/AcceptedOrder/Order Message/OrderMessageDetail";
 
 //Confirm Order
-import ConfirmReview from "../screens/contractor/AcceptedOrder/Confirm Order/ConfirmReview";
-import ConfirmComment from "../screens/contractor/AcceptedOrder/Confirm Order/ConfirmComment";
+import ConfirmReview from "../screens/contractor/Concrete/AcceptedOrder/Confirm Order/ConfirmReview";
+import ConfirmComment from "../screens/contractor/Concrete/AcceptedOrder/Confirm Order/ConfirmComment";
 
 //User Profile
 import UserDetail from "../screens/User/Contact/UserDetail";
 
 //Day Of Pour
-import pourDayList from "../screens/contractor/Day of Pour/pourDayList";
-import pourDayDetail from "../screens/contractor/Day of Pour/pourDayDetail";
+import pourDayList from "../screens/contractor/Concrete/Day of Pour/pourDayList";
+import pourDayDetail from "../screens/contractor/Concrete/Day of Pour/pourDayDetail";
 
-import PreviousOrdersList from "../screens/contractor/Previous Order/PreviousOrdersList"
-import PreviousOrderDetail from "../screens/contractor/Previous Order/PreviousOrderDetail";
+import PreviousOrdersList from "../screens/contractor/Concrete/Previous Order/PreviousOrdersList"
+import PreviousOrderDetail from "../screens/contractor/Concrete/Previous Order/PreviousOrderDetail";
+import {createDrawerNavigator} from "react-navigation-drawer";
+import PlaceOrderScreen from "../screens/contractor/REO/PlaceOrder/PlaceOrderScreen";
+import AccessoriesOrderScreen from "../screens/contractor/REO/PlaceOrder/AccessoriesOrderScreen";
+import ReoSpecialOrderScreen from "../screens/contractor/REO/PlaceOrder/ReoSpecialOrderScreen";
+import ReoAdditionalOrderScreen from "../screens/contractor/REO/PlaceOrder/ReoAdditionalOrderScreen";
+import ReoReviewScreen from "../screens/contractor/REO/ReviewOrder/ReoReviewScreen";
+import ReoReviewInstructions from "../screens/contractor/REO/ReviewOrder/ReoReviewInstructions";
 
 
 export const calculator = createStackNavigator({
@@ -178,6 +185,20 @@ export const previousOrders= createStackNavigator({
     "Previous Order List":PreviousOrdersList,
     "Previous Order Detail":PreviousOrderDetail
 }, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});
+
+export const placeReoOrderRequestScreen=createStackNavigator({
+    "Place Reo Order":PlaceOrderScreen,
+    "Accessories Order":AccessoriesOrderScreen,
+    "Reo Additional Order":ReoAdditionalOrderScreen,
+    "Reo Special Order":ReoSpecialOrderScreen,
+    "Reo Review Order":ReoReviewScreen,
+    "Reo Review Instructions":ReoReviewInstructions
+},{
     headerMode: 'none',
     navigationOptions: {
         headerVisible: false,

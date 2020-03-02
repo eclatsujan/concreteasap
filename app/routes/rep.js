@@ -18,7 +18,7 @@ import UserDetail from "../screens/User/Contact/UserDetail";
 import PreviousBidList from "../screens/Rep/Previous Orders/PreviousBidList";
 import PreviousBidDetail from "../screens/Rep/Previous Orders/PreviousBidDetail";
 
-import ViewOrderDetail from "../screens/contractor/Pending/ViewOrderDetail";
+import ViewOrderDetail from "../screens/contractor/Concrete/Pending/ViewOrderDetail";
 
 export const repPendingBids= createStackNavigator({
     "Pending Bid List": PendingBidList,

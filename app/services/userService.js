@@ -51,7 +51,8 @@ async function getUser(token) {
         headers: {'Content-Type': 'application/json', 'Accept': "application/json", 'Authorization': 'Bearer ' + token},
         // body: JSON.stringify(token)
     };
-
+    // console.log("ok");
+    // console.log("ok");
     return await fetch(AUTH_PREFIX_URI + 'me', requestOptions).then(handleResponse);
 }
 

@@ -7,16 +7,16 @@ import {connect} from "react-redux";
 import {actions} from '../../../store';
 
 //Custom Components
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
-import CustomTable from '../../../components/Tables/CustomTable'
+import CustomTable from '../../../components/Basic/Tables/CustomTable'
 
 import {styles} from '../styles.js';
 import {appStyles} from "../../../../assets/styles/app_styles";
-import AppFooter from "../../../components/Footer/AppFooter";
-import EmptyTable from "../../../components/Tables/EmptyTable";
-import StatusRow from "../../../components/Tables/StatusRow";
+import AppFooter from "../../../components/App/Footer/AppFooter";
+import EmptyTable from "../../../components/Basic/Tables/EmptyTable";
+import StatusRow from "../../../components/Basic/Tables/StatusRow";
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 
 
@@ -64,7 +64,7 @@ class BidOrderList extends React.Component {
     }
 
     showCustomRow(row) {
-        return <StatusRow row={row} onBtnClick={this._showDetails}/>;
+        return <StatusRow row={row} status={row?.get("status")} onBtnClick={this._showDetails}/>;
     }
 
     showContent(orders) {

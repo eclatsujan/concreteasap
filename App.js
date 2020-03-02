@@ -15,7 +15,7 @@ import {Provider} from 'react-redux';
 import {createStore} from './app/store'
 
 //Custom components
-import AppLoading from './app/components/AppLoading';
+import AppLoading from './app/components/App/AppLoading';
 
 import NavigationService from './app/helpers/navigationHelper';
 

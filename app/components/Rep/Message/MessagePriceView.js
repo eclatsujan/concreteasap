@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Col, Item, Row, Text, View, Button} from 'native-base';
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {TextInput} from "react-native";
-import CustomButton from "../../Button/CustomButton";
+import CustomButton from "../../Basic/Button/CustomButton";
 
 export default class MessagePriceView extends React.Component {
 

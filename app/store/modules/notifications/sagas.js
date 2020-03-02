@@ -27,7 +27,7 @@ function* fetchPendingNotifications(action) {
             yield put(actions.requestNotificationsError());
             yield put(appActions.loading(false));
         }
-        yield delay(10000);
+        yield delay(6000);
     }
 
 }
@@ -46,6 +46,7 @@ export function* fetchNotifications() {
 }
 
 function* notificationMarkAsRead(action){
+    // console.log("already notification loaded");
     const {notification_id}=action.payload;
     try{
         yield put(actions.removeNotificationSuccess(notification_id));

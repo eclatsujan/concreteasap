@@ -11,10 +11,10 @@ import {appStyles} from "../../../../assets/styles/app_styles";
 
 //Custom Components
 import {actions} from "../../../store/modules";
-import AppBackground from '../../../components/AppBackground';
+import AppBackground from '../../../components/App/AppBackground';
 import AppHeader from '../../../components/Headers/AppHeader'
 import SubHeader from "../../../components/Headers/SubHeader";
-import EmptyTable from "../../../components/Tables/EmptyTable";
+import EmptyTable from "../../../components/Basic/Tables/EmptyTable";
 import {notifications} from "../../../store/modules/notifications";
 
 import Notification from '../../../components/User/Notification'
@@ -40,6 +40,7 @@ class Notifications extends React.Component {
 
         this.markAsRead = this.markAsRead.bind(this);
         this.onRoute = this.onRoute.bind(this);
+        this.backButton=this.backButton.bind(this);
     }
 
     componentWillUnmount() {
@@ -55,18 +56,17 @@ class Notifications extends React.Component {
         // console.log(notification);
         if (!notification?.get("route") && !notification?.get("params")) return;
         let params = notification?.get("params").toJS();
-        // console.log(params);
         let index=this.props.user.get('roles').findIndex((role)=>{
             return role.name==="contractor";
         });
-        // console.log(params);
         params["backRoute"]=index===-1?"Rep Notifications":"Notifications";
 
+        this.props.appLoading();
         this.props.navigation.dispatch(NavigationActions.navigate({
             routeName:notification?.get("route"),
             params
         }));
-        this.props.appLoading();
+
     }
 
     displayNotifications(notification) {
@@ -82,10 +82,14 @@ class Notifications extends React.Component {
             });
     }
 
+    backButton(){
+        this.props.navigation.navigate("Home");
+    }
+
     render() {
         let notifications = this.props.notifications;
         return (
-            <AppBackground loading={this.props.app?.get("loading")}>
+            <AppBackground loading={this.props.app?.get("loading")} backBtnClick={this.backButton}>
                 <ScrollView>
                     <AppHeader/>
                     <SubHeader title="Notifications" iconType="ConcreteASAP" iconName="bell"/>

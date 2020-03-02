@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {TextInput, ScrollView, InteractionManager,} from 'react-native';
-import {View, Button, Text, Content, Row, Col, Item as FormItem, Picker} from 'native-base';
+import {View, Icon, Text, Content, Row, Col, Item as FormItem, Picker} from 'native-base';
 
 //Latest
 import {PaymentsStripe as Stripe} from 'expo-payments-stripe';
@@ -9,13 +9,13 @@ import {PaymentsStripe as Stripe} from 'expo-payments-stripe';
 import {paymentService} from '../../../services/paymentService'
 
 //Custom Components
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import AppHeader from "../../../components/Headers/AppHeader";
 import SubHeader from "../../../components/Headers/SubHeader";
-import CardPayment from '../../../components/CardPayment'
+import CardPayment from '../../../components/Rep/Payment/CardPayment'
 
 import {appStyles} from '../../../../assets/styles/app_styles';
-import TableRow from "../../../components/Tables/TableRow";
+import TableRow from "../../../components/Basic/Tables/TableRow";
 import BidPayment from "../../../components/Rep/Payment/BidPayment";
 import PaymentSuccess from "../../../components/Rep/Payment/PaymentSuccess";
 
@@ -24,8 +24,8 @@ import {actions} from "../../../store/modules";
 import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 import {boolToAffirmative} from "../../../helpers/app";
-import AppFooter from "../../../components/Footer/AppFooter";
-import CustomButton from "../../../components/Button/CustomButton";
+import AppFooter from "../../../components/App/Footer/AppFooter";
+import CustomButton from "../../../components/Basic/Button/CustomButton";
 
 class BidOrderDetail extends React.Component {
     constructor(props) {
@@ -118,11 +118,9 @@ class BidOrderDetail extends React.Component {
 
     componentDidMount() {
         let orderDetail = this.props.navigation.state.params.orderDetail;
-        InteractionManager.runAfterInteractions(() => {
-            // Do expensive Stuff such as loading
-            this.setState({
-                loading: false,
-            });
+        // Do expensive Stuff such as loading
+        this.setState({
+            loading: false,
         });
         this.setState({"orderDetail": orderDetail});
         // getting the data of meter from navigation and updating the state of the meter
@@ -312,6 +310,7 @@ class BidOrderDetail extends React.Component {
                                 <Col>
                                     <FormItem style={[appStyles.customInput, appStyles.p_10, appStyles.border2]}
                                               regular>
+                                        <Icon active name='home' />
                                         <TextInput keyboardType={'numeric'} placeholder="ENTER BID AMOUNT"
                                                    style={appStyles.baseFont}
                                                    value={this.state.pricePer} onChangeText={this.setPerPrice}/>

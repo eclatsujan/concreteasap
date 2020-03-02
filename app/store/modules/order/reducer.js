@@ -138,7 +138,8 @@ export const reducer = (state, action) => {
             //get pending orders from immutable js
             let pending_order = state.get("pending_orders").get("data");
             //find current order
-            let order_index = pending_order.findIndex((order) => order.id === action.payload.order_id);
+            let order_index =pending_order.findIndex((order) => order.get("id") === action.payload.order_id);
+            console.log(pending_order);
             //filter bid from pending orders
             let bids = pending_order[order_index]["bids"].filter((bid) => {
                 return bid["id"] !== action.payload.bid_id;

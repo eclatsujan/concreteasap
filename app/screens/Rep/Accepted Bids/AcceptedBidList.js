@@ -6,18 +6,18 @@ import {connect} from "react-redux";
 import {withNavigation} from "react-navigation";
 
 import AppHeader from "../../../components/Headers/AppHeader";
-import AppBackground from "../../../components/AppBackground";
+import AppBackground from "../../../components/App/AppBackground";
 import SubHeader from "../../../components/Headers/SubHeader";
-import CustomTable from '../../../components/Tables/CustomTable'
-import AppFooter from "../../../components/Footer/AppFooter";
+import CustomTable from '../../../components/Basic/Tables/CustomTable'
+import AppFooter from "../../../components/App/Footer/AppFooter";
 
 
 import {appStyles} from "../../../../assets/styles/app_styles";
 import {actions} from "../../../store/modules";
-import EmptyTable from "../../../components/Tables/EmptyTable";
+import EmptyTable from "../../../components/Basic/Tables/EmptyTable";
 import {SkeletonLoading} from "../../../components/App/SkeletonLoading";
 import {getNested} from "../../../helpers/app";
-import StatusRow from "../../../components/Tables/StatusRow";
+import StatusRow from "../../../components/Basic/Tables/StatusRow";
 
 
 class AcceptedBidList extends React.Component {
@@ -69,11 +69,16 @@ class AcceptedBidList extends React.Component {
 
     showCustomRow(rowData) {
         let status=rowData?.get("order")?.get("status");
-        if(status==="Paid"){
-            // console.log("ok");
-        }
+        let quantity=rowData?.get("order")?.get("order_concrete")?.get("quantity");
+
+        quantity=typeof quantity!==undefined?parseFloat(quantity):0;
+        let price=rowData?.get("price");
+        price=typeof price!==undefined?parseFloat(price):0;
+
+        let total=price*quantity;
+
         return (
-            <StatusRow row={rowData} status={status}  onBtnClick={this._alertIndex}/>
+            <StatusRow row={rowData} status={status} price={price} total={total} onBtnClick={this._alertIndex}/>
         );
     }
 

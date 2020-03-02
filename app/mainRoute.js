@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View,Text} from 'react-native';
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from 'react-navigation-drawer';
-import MainSidebar from './components/Sidebar/MainSidebar'
+import MainSidebar from './components/App/Sidebar/MainSidebar'
 import screenMapping from './routes/ContractorScreenMenu'
 //contractor
 import {
@@ -12,7 +12,8 @@ import {
     placeOrderDrawerStack,
     dayOfPour,
     dayofPourStack,
-    previousOrders
+    previousOrders,
+    placeReoOrderRequestScreen
 } from "./routes/contractor";
 
 import Notifications from "./screens/User/Notification/Notifications";
@@ -27,10 +28,12 @@ import AuthLoadingScreen from "./screens/auth/AuthLoadingScreen";
 import {AuthStack, UserProfileStack} from "./routes/general";
 import LogoutScreen from "./screens/auth/LogoutScreen";
 
-import SideBar from "./components/SideBar";
+import SideBar from "./components/App/Sidebar/SideBar";
 
 import MainHome from "./screens/contractor/MainHome";
-import {ConcreteDrawer} from "./components/ConcreteDrawer";
+// import {ConcreteDrawer} from "./components/ConcreteDrawer";
+import ReoHome from "./screens/contractor/REO/ReoHome";
+import {PlaceOrderScreen} from "./screens/contractor/REO/PlaceOrder/PlaceOrderScreen";
 
 const ContractorConcreteDrawer = createDrawerNavigator({
     //Contractor Drawer navigation section
@@ -45,10 +48,17 @@ const ContractorConcreteDrawer = createDrawerNavigator({
     "Calculator": calculator,
     dayofPourStack
 }, {
+    defaultNavigationOptions: {
+        drawerLockMode: 'locked-closed',
+    },
     contentComponent: props => <SideBar {...props} />
 });
 
+const ContractorReoDrawer=createSwitchNavigator({
+    "Reo Home":ReoHome,
+    "I Need Reo":placeReoOrderRequestScreen,
 
+});
 
 const Main=createDrawerNavigator({
     "Main Home":MainHome,
@@ -56,6 +66,7 @@ const Main=createDrawerNavigator({
     "User Profile": UserProfileStack,
     "Logout": LogoutScreen,
     ConcreteHome: ContractorConcreteDrawer,
+    Reo:ContractorReoDrawer
 },{
     contentComponent:props=><MainSidebar {...props} />
 });
@@ -70,7 +81,7 @@ const RepDrawer = createDrawerNavigator({
     "Previous Bids": repPreviousBids,
     "Rep Notifications": Notifications,
     "User Profile": UserProfileStack,
-    // "Logout": LogoutScreen,
+    "Logout": LogoutScreen,
     // RepOrder:RepOrderStatus
 }, {
     contentComponent: props => <SideBar {...props} />
@@ -91,6 +102,7 @@ const MainRoute = createAppContainer(
         },
         {
             initialRouteName: 'AuthLoading',
+            disableGestures: true
         }
     )
 );

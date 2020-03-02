@@ -12,8 +12,8 @@ import {appStyles} from '../../../assets/styles/app_styles'
 
 import {userService} from '../../services/userService';
 
-import AppLoading from '../../components/AppLoading';
-import AppBackground from '../../components/AppBackground';
+import AppLoading from '../../components/App/AppLoading';
+import AppBackground from '../../components/App/AppBackground';
 import {handleResponse} from "../../helpers/httpHandler";
 
 
@@ -70,6 +70,7 @@ class AuthLoadingScreen extends React.Component {
             let user_role = await SecureStore.getItemAsync("user_role");
 
             let user = await userService.getUser(user_token);
+
             this.props.updateUserState(user);
 
             const roles = ["rep", "contractor"];
