@@ -122,7 +122,6 @@ class AdditionalOrderForm extends React.Component {
 
     formatDate(initialDates) {
         let markedDates = {};
-        console.log(initialDates);
         if (this.props["defaultDates"]) {
             this.props["defaultDates"].forEach((date) => {
                 markedDates[date] = this.selected;

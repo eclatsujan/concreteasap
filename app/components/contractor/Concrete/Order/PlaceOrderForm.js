@@ -38,7 +38,6 @@ class PlaceOrderForm extends React.Component {
     }
 
     onMapPick(value) {
-        console.log(value);
         value["postcode"] ? this.props.change("post_code", value["postcode"]) : null;
         value["suburb"] ? this.props.change("suburb", value["suburb"]) : null;
         value["state"] ? this.props.change("state", value["state"]) : null;
@@ -57,7 +56,7 @@ class PlaceOrderForm extends React.Component {
 
     onOpenColourURL() {
         Linking
-            .openURL("https://www.concretecoloursystems.com.au")
+            .openURL("http://www.concretecoloursystems.com.au/full-depth-coloured-concrete-swatches/")
             .catch((err) => {
                 Alert.alert("URL Issue", err);
             });
@@ -183,7 +182,7 @@ class PlaceOrderForm extends React.Component {
                     </Text>
                     <Field name="colours" placeholder="Colours" component={csTextBox} type="text"/>
                     <View style={[appStyles.flexRow, {justifyContent: "flex-end"}]}>
-                        <View style={appStyles.w_50}>
+                        <View style={appStyles.w_65}>
                             <CustomButton btnText={"View Colour Code"} btnIcon={"eye"} onPress={() => {
                                 this.onOpenColourURL();
                             }}/>

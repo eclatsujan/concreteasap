@@ -189,7 +189,6 @@ export const changePasswordWithToken = (email, token, password, password_confirm
             navigationHelper.navigate('AuthLoading');
             dispatch(appActions.loading(false));
         }).catch((err) => {
-            console.log(err);
             dispatch(appActions.loading(false));
             // console.log(err.message);
             dispatch(errorActions.setError(err.message, err.errors));

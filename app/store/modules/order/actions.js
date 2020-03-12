@@ -3,6 +3,7 @@ import * as types from './constants'
 import {orderService} from '../../../services/orderService'
 
 import * as appActions from '../app/actions';
+import * as bidActions from '../bid/actions';
 import navigationHelper from '../../../helpers/navigationHelper';
 import * as httpHandler from '../../../helpers/httpHandler';
 
@@ -14,6 +15,26 @@ import {pending} from '../orders';
 import * as pendingActions from "./pending/actions";
 import {app} from "../app";
 import moment from "moment";
+
+export function markAsPaid(order_id) {
+    return (dispatch) => {
+        dispatch(appActions.loading(true));
+        orderService.markAsPaid(order_id).then((res)=>{
+            // console.log(res);
+            Alert.alert("Success",res);
+            dispatch(appActions.loading(false));
+        }).catch((err)=>{
+            if(err.hasOwnProperty("message")){
+                Alert.alert("Error",err.message);
+            }
+            else if(typeof err ==="string"){
+                Alert.alert("Error",err);
+            }
+            dispatch(appActions.loading(false));
+        })
+    }
+}
+
 
 export const pendingOrder=pendingActions;
 
@@ -377,11 +398,16 @@ export function updatePaymentType(bid_id, payment_type) {
     return async (dispatch) => {
         dispatch(appActions.loading());
         await orderService.updateBidPaymentMethod(bid_id, payment_type).then((res) => {
-            // navigationHelper.goBack();
+            if(res.hasOwnProperty("msg")){
+                Alert.alert("Order Paid", res.msg);
+            }
         }).catch((err) => {
-            console.log(err);
-            dispatch(appActions.loading(false));
+            if(err.hasOwnProperty("message")){
+                Alert.alert("Order Paid",err.message);
+            }
+
         });
+        dispatch(appActions.loading(false));
     }
 }
 
@@ -389,10 +415,31 @@ export function repReleaseOrder(bid_id) {
     return async (dispatch) => {
         dispatch(appActions.loading());
         await orderService.repReleaseOrder(bid_id).then((res) => {
-            console.log(res);
+            dispatch(bidActions.updateAcceptedStatus(bid_id,"Released"));
+            if(res.hasOwnProperty("msg")){
+                setTimeout(()=>{
+                    Alert.alert("Release Order", res.msg);
+                },1000);
+            }
         }).catch((err) => {
-            console.log(err);
-            dispatch(appActions.loading(false));
+            if(err.hasOwnProperty("message")){
+                setTimeout(()=>{
+                    Alert.alert("Release Order",err.message);
+                },1000);
+            }
+        });
+        dispatch(appActions.loading(false));
+    }
+}
+
+export function updateOrderStatus(bid_id,status){
+    return (dispatch)=>{
+        dispatch({
+            type:types.UPDATE_ORDER_STATUS,
+            payload:{
+                bid_id,
+                status
+            }
         });
     }
 }
@@ -433,7 +480,6 @@ export function sendOrderMessage(order_id,quantity,order_type){
 
 export function sendOrderMessageStatus(message_id,status,order_type,order_id){
     return async (dispatch)=>{
-        console.log(message_id);
         // dispatch(appActions.loading());
         await orderService.sendOrderMessageStatus(message_id,status).then((res)=>{
             dispatch({

@@ -1,4 +1,4 @@
-import {PREVIOUS_BIDS, SET_LOADSTATE, OPEN_BIDS, PUSH_BIDS, PLACE_BID, ADD_MESSAGE_PRICE} from './constants'
+import {PREVIOUS_BIDS, SET_LOADSTATE, OPEN_BIDS, PUSH_BIDS, PLACE_BID, ADD_MESSAGE_PRICE,UPDATE_ACCEPTED_STATUS} from './constants'
 
 import * as Immutable from 'immutable';
 
@@ -67,12 +67,18 @@ export const reducer = (state, action) => {
             let index = state.get("accepted_bids").get("data").findIndex((bid) => {
                 return bid.get("id") === action.payload.bid_id;
             });
-            console.log(state.get("accepted_bids")?.get("data")?.get(index));
             let message_index = state.getIn(["accepted_bids","data",index,"order","message"]).findIndex((message) => {
                 return message.get("id") === action.payload.message_id;
             });
             return state.updateIn(["accepted_bids","data",index,"order","message",message_index,"price"],(message)=>{
                 return action.payload.price;
+            });
+        case UPDATE_ACCEPTED_STATUS:
+            let accepted_index = state.get("accepted_bids").get("data").findIndex((bid) => {
+                return bid.get("id") === action.payload.bid_id;
+            });
+            return state.updateIn(["accepted_bids","data",accepted_index,"order","status"],(status)=>{
+                return action.payload.status;
             });
         case PLACE_BID:
             let order_id = action.payload.order_id;

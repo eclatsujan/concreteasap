@@ -73,7 +73,6 @@ export function* rejectBid(action){
 
 function* processAcceptBid(action){
     const {bid_id,payment_method,date_delivery}=action.payload;
-    console.log(payment_method);
     try{
         yield put(appActions.loading());
         const data=yield call(()=>{

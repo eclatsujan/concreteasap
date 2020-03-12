@@ -55,10 +55,9 @@ export default {
     "Reo_Reo Home":{
         screen:ReoHome,
         navigationOptions:evaluateChildDrawerTitle,
-
     },
     "Reo_I Need Reo":{
-        screen:PlaceOrderScreen,
+        screen:ReoHome,
         navigationOptions:evaluateChildDrawerTitle,
     },
     "Reo_Today's Orders":{

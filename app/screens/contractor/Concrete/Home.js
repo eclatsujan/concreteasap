@@ -56,14 +56,13 @@ class HomeScreen extends React.Component {
 
                         <HomeButton text="I Need Concrete" iconType="ConcreteASAP" iconName="place-order"
                                     onPress={() => {
-                                        resetNavigation("Place Order Requests","I Need Concrete");
+                                        resetNavigation("Place Order Requests", "I Need Concrete");
                                         this.props.appLoading();
                                     }}/>
                         <HomeButton text={"Today's Orders"} iconSize={20} paddingBtn={true} iconType={"ConcreteASAP"}
                                     iconName={"truck"}
                                     onPress={() => {
                                         this.props.navigation.navigate("pourDayList");
-
                                         this.props.appLoading();
                                     }}/>
                         <HomeButton text="Pending Orders" iconType="ConcreteASAP" iconName="pending-order"

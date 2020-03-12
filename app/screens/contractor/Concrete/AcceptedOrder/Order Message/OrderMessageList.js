@@ -144,21 +144,21 @@ class OrderMessageList extends React.Component {
                         <View>
                             <Row>
                                 <Col>
-                                    {messages?.size > 0 ? this.showMessages(messages, order_id, order_type) :
-                                        <EmptyTable message={this.state.emptyMessage}/>}
-                                    <CustomButton onPress={() => {
-                                        this.onComplete(order, order_id, order_type)
-                                    }} btnText={"Complete Order"}/>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
                                     <CustomButton onPress={() => {
                                         this.props.navigation.navigate("Order Message Detail", {
                                             order_id,
                                             order_type
                                         })
                                     }} btnText={btnText}/>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    {messages?.size > 0 ? this.showMessages(messages, order_id, order_type) :
+                                        <EmptyTable message={this.state.emptyMessage}/>}
+                                    <CustomButton onPress={() => {
+                                        this.onComplete(order, order_id, order_type)
+                                    }} btnText={"Complete Order"}/>
                                 </Col>
                             </Row>
                         </View>

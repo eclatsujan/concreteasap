@@ -210,13 +210,18 @@ export const appStyles = StyleSheet.create({
     m_10: {
         margin: 10
     },
+    ml_5:{
+        marginLeft:5
+    },
     ml_10: {
         marginLeft: 10
     },
     ml_20: {
         marginLeft: 20
     },
-
+    mr_5:{
+        marginRight:5
+    },
     mr_10:{
         marginRight:10
     },

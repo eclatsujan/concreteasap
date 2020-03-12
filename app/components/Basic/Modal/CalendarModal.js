@@ -21,7 +21,7 @@ export default class CalendarModal extends React.Component {
         this.selected = {
             selected: true,
             marked: true,
-            // selectedColor: '#14E22A',
+            // selectedColor: '#000',
             customStyles: {
                 container: {
                     backgroundColor: '#14E22A'
@@ -55,7 +55,6 @@ export default class CalendarModal extends React.Component {
             customDates.push(day);
         }
         let dateRecord=new Immutable.Map({});
-        // console.log(dateRecord.has("abc"));
         customDates.forEach((val,index)=>{
             let dateKey=val["dateString"];
             // console.log(dateRecord.has(dateKey))
@@ -63,7 +62,7 @@ export default class CalendarModal extends React.Component {
                 dateRecord=dateRecord.set(dateKey,fromJS(this.selected))
             }
             else{
-                let dot={key:index, color: 'red', selectedDotColor: 'blue'};
+                let dot={key:index, color: 'red', selectedDotColor: '#fff'};
                 dateRecord=dateRecord.updateIn([dateKey,"dots"],(dots)=>{
                     return dots.push(dot);
                 });
@@ -112,8 +111,12 @@ export default class CalendarModal extends React.Component {
                                         tintColor: "#000"
                                     }
                                 })
-                            },
-                        }
+                            }
+                        },
+                        textSectionTitleColor:"#000",
+                        textDayHeaderFontWeight:"bold",
+                        selectedDayBackgroundColor:"#14E22A",
+                        textLinkColor:"#fff"
                     }}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
                     minDate={moment().toDate()}
@@ -143,7 +146,7 @@ export default class CalendarModal extends React.Component {
                     // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
                     firstDay={1}
                     // Hide day names. Default = false
-                    hideDayNames={true}
+                    hideDayNames={false}
                     // Show week numbers to the left. Default = false
                     showWeekNumbers={true}
                     //marked Dates

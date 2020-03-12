@@ -16,7 +16,7 @@ export default class CancelModel extends React.Component {
                 transparent={true}
                 visible={this.props?.["modalVisibility"]}>
                 <View
-                    style={[appStyles.flex1, appStyles.verticalCenter, appStyles.horizontalCenter, appStyles.modalBg]}>
+                    style={[appStyles.modalBg, appStyles.verticalCenter, appStyles.horizontalCenter, appStyles.flex1]}>
                     <View
                         style={[appStyles.modalView, appStyles.bgWhite, appStyles.borderRadiusDefault, appStyles.p_20]}>
                         <View>

@@ -1,7 +1,13 @@
+const APP_DEBUG=false;
 
-export const CONTRACTOR_PREFIX_URI="https://appconcrete.com/api/contractor/";
-export const REP_PREFIX_URI="https://appconcrete.com/api/rep/";
-export const AUTH_PREFIX_URI="https://appconcrete.com/api/auth/";
-export const USER_PREFIX_URI="https://appconcrete.com/api/user/";
+let MAIN_URL="https://appconcrete.com/api/";
+if(APP_DEBUG){
+    MAIN_URL="https://staging.appconcrete.com/api/";
+}
 
-export const COMMON_PREFIX_URI="https://appconcrete.com/api/";
+export const CONTRACTOR_PREFIX_URI=MAIN_URL+"contractor/";
+export const REP_PREFIX_URI=MAIN_URL+"rep/";
+export const AUTH_PREFIX_URI=MAIN_URL+"auth/";
+export const USER_PREFIX_URI=MAIN_URL+"user/";
+
+export const COMMON_PREFIX_URI=MAIN_URL;

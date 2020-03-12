@@ -44,10 +44,12 @@ class AuthLoadingScreen extends React.Component {
 
     async getDeviceIds() {
         return await new Promise(resolve => {
-            OneSignal.addEventListener('ids', resolve);
+            OneSignal.addEventListener('ids',(res)=>{
+                console.log(res);
+                resolve(res);
+            });
         });
     }
-
     getBadgeCount(device_id) {
         // console.log(device_id);
         return fetch("https://onesignal.com/api/v1/players/" + device_id)
@@ -80,50 +82,22 @@ class AuthLoadingScreen extends React.Component {
             }
             let device = await this.getDeviceIds();
 
-            if(user.device_id===""){
-                await userService.saveUserDeviceId(device.userId);
-            }
+            // console.log(user);userz
+            console.log(user?.external_id);
+            OneSignal.setExternalUserId(user?.external_id);
+            await userService.saveUserDeviceId(device.userId);
+
 
             let route = user_role === "contractor" ? "MainContractorScreen" : "Rep";
+
             this.props.navigation.navigate(route);
+
         } catch (e) {
-            // console.log(e);
+            console.log(e);
             this.props.navigation.navigate("Auth");
         }
 
         this.props.apploading();
-        // if(user_token!==null){
-        //     try{
-        //         console.log(user_token);
-        //         if(user.device_id===""){
-        //             let device=await this.getDeviceIds();
-        //             if(device){
-        //               userService.saveUserDeviceId(device.userId).catch((err)=>{
-        //                   // console.log(err);
-        //               });
-        //             }
-        //         }
-        //
-        //         if(user_role==="contractor"){
-        //             this.props.navigation.navigate('App');
-        //         }
-        //         else if(user_role==="rep"){
-        //             this.props.navigation.navigate('Rep');
-        //         }
-        //         else{
-        //             this.props.navigation.navigate('Auth');
-        //         }
-        //     }
-        //     catch(e){
-        //         alert(e);
-        //     }
-        //
-        // }
-        // else{
-        //     this.props.navigation.navigate('Auth');
-        //     this.props.apploading();
-        // }
-
     };
 
     // Render any loading content that you like here

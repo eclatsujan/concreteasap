@@ -30,7 +30,7 @@ class AppBackground extends React.Component {
     componentDidMount() {
         // console.log(OneSignal.);
         OneSignal.addEventListener("received",(e)=>{
-            console.log(e);
+            // console.log(e);
         });
         OneSignal.addEventListener("opened",(e)=>{
             if(e.action.type===1){

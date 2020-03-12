@@ -91,7 +91,6 @@ export default class csMapBoxPicker extends React.Component {
     }
 
     onLocationSelect(value) {
-        console.log(value);
         const {input: {onChange}} = this.props;
         // console.log(this.state.locations);
         this.setState({location: value["location_name"]});

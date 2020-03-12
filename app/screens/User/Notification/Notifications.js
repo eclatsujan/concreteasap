@@ -53,6 +53,8 @@ class Notifications extends React.Component {
     }
 
     onRoute(notification) {
+
+        this.props.appLoading();
         // console.log(notification);
         if (!notification?.get("route") && !notification?.get("params")) return;
         let params = notification?.get("params").toJS();
@@ -61,7 +63,6 @@ class Notifications extends React.Component {
         });
         params["backRoute"]=index===-1?"Rep Notifications":"Notifications";
 
-        this.props.appLoading();
         this.props.navigation.dispatch(NavigationActions.navigate({
             routeName:notification?.get("route"),
             params

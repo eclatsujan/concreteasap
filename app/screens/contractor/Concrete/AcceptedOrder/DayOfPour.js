@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BackHandler, ScrollView} from 'react-native';
+import {BackHandler, ScrollView, Alert} from 'react-native';
 import {Col, Row, Button, Text, Content, View, Icon} from 'native-base';
 import {NavigationActions, withNavigation, withNavigationFocus} from "react-navigation";
 import {connect} from "react-redux";
@@ -121,11 +121,16 @@ class DayOfPour extends React.Component {
     }
 
     onRouteMessageList(order_id, order, order_type) {
-        return this.props.navigation.navigate("Order Message List", {
-            order_id,
-            order,
-            order_type
-        })
+        if (order?.get("status") === "Released") {
+            return this.props.navigation.navigate("Order Message List", {
+                order_id,
+                order,
+                order_type
+            })
+        } else {
+            Alert.alert("Release Order", "Order has not been released by Rep.");
+        }
+
     }
 
 
@@ -133,12 +138,11 @@ class DayOfPour extends React.Component {
         let order_id = this.props.navigation.getParam("order_id");
         let order_type = typeof this.props.navigation.getParam("order_type") !== "undefined" ? this.props.navigation.getParam("order_type") : "accepted_orders";
         let order = this.getPourOrder(order_id, order_type);
-        let date_delivery=order?.get("bids")?.get(0)?.get("date_delivery");
-        if(date_delivery===moment().format("YYYY-MM-DD")){
-            resetNavigation("pourDayList","Today's Orders");
-        }
-        else{
-            resetNavigation("Accepted Order List","Accepted Orders");
+        let date_delivery = order?.get("bids")?.get(0)?.get("date_delivery");
+        if (date_delivery === moment().format("YYYY-MM-DD")) {
+            resetNavigation("pourDayList", "Today's Orders");
+        } else {
+            resetNavigation("Accepted Order List", "Accepted Orders");
         }
         // let backRoute = this.props.navigation.getParam("backRoute");
         //
@@ -174,10 +178,12 @@ class DayOfPour extends React.Component {
                     {this.displayRow("On Site/On Call", concrete_order?.get("preference"))}
                     {this.displayRow("Address", concrete_order?.get("address"), true)}
                 </View>
-                {order_type === "accepted_orders" ?
-                    <CustomButton btnText="Modify Order"
-                                  onPress={() => this.onRouteModifyOrder(order_id, order_type, total, quantity, price)}/>
+
+                {(order?.get("status") !== "Released" &&order?.get("status") !== "Paid") ?
+                    <CustomButton btnText="Invoice Paid/Order on Account"
+                                  onPress={() => this.props.markPaid(order_id)}/>
                     : null}
+
                 {order_type !== "accepted_orders" ?
                     <CustomButton btnText="Balance of Order/Message"
                                   onPress={() => this.onRouteMessageList(order_id, order, order_type)}/>
@@ -199,9 +205,13 @@ class DayOfPour extends React.Component {
         return (
             <View>
                 <EmptyTable message={this.state.emptyMsg}/>
-                <CustomButton btnText={"My Orders"} onPress={() => resetNavigation("ViewOrderBids","Pending Orders")}/>
+                <CustomButton btnText={"My Orders"} onPress={() => resetNavigation("ViewOrderBids", "Pending Orders")}/>
             </View>
         );
+    }
+
+    showAlert() {
+
     }
 
     render() {
@@ -232,6 +242,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         cancelOrder: (order_id, order_type) => {
             return dispatch(actions.order.contractorCancelOrder(order_id, order_type))
+        },
+        markPaid(order_id) {
+            return dispatch(actions.order.markAsPaid(order_id))
         }
     }
 };

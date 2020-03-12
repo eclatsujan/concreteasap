@@ -35,6 +35,8 @@ import MainHome from "./screens/contractor/MainHome";
 import ReoHome from "./screens/contractor/REO/ReoHome";
 import {PlaceOrderScreen} from "./screens/contractor/REO/PlaceOrder/PlaceOrderScreen";
 
+import {ReoRepHomeScreen} from './screens/Reo Rep/ReoRepHomeScreen'
+
 const ContractorConcreteDrawer = createDrawerNavigator({
     //Contractor Drawer navigation section
     Home: HomeScreen,
@@ -86,6 +88,12 @@ const RepDrawer = createDrawerNavigator({
 }, {
     contentComponent: props => <SideBar {...props} />
 });
+
+// const ReoRepDrawer = createDrawerNavigator({
+//    "Reo Home":ReoRepHomeScreen,
+// },{
+//     contentComponent: props => <SideBar {...props} />
+// });
 
 
 

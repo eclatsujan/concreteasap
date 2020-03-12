@@ -61,34 +61,28 @@ class PreviousOrderDetail extends React.Component{
                     key: "placement_type"
                 },
                 {
-                    title: "Delivery Preference 1",
                     key: "delivery_date",
-                    format:formatDate
+                    title: "Preference 1",
+                    format: formatDate,
+                    secondValue: "time_preference1",
+                    secondValueFormat: formatTime,
+                    seperator:", "
                 },
                 {
-                    title: "Delivery Preference 2",
                     key: "delivery_date1",
-                    format:formatDate
+                    secondValue: "time_preference2",
+                    title: "Preference 2",
+                    format: formatDate,
+                    secondValueFormat: formatTime,
+                    seperator:", "
                 },
                 {
-                    title: "Delivery Preference 3",
                     key: "delivery_date2",
-                    format:formatDate
-                },
-                {
-                    title: "Time Preference 1",
-                    key: "time_preference1",
-                    format:formatTime
-                },
-                {
-                    title: "Time Preference 2",
-                    key: "time_preference2",
-                    format:formatTime
-                },
-                {
-                    title: "Time Preference 3",
-                    key: "time_preference3",
-                    format:formatTime
+                    secondValue: "time_preference3",
+                    title: "Preference 3",
+                    format: formatDate,
+                    secondValueFormat: formatTime,
+                    seperator:", "
                 },
                 {
                     title: "Time Urgency",

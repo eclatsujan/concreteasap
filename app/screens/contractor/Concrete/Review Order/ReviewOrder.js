@@ -33,12 +33,30 @@ class ReviewOrder extends React.Component {
                 {key: "mpa", title: "MPA"}, {key: "agg", title: "AGG"}, {key: "slu", title: "Slump"},
                 {key: "acc", title: "ACC"}, {key: "placement_type", title: "Placement Type"},
                 {key: "message_required", title: "Message Required"},
-                {key: "delivery_date", title: "Date Preference 1", format: formatDate},
-                {key: "delivery_date1", title: "Date Preference 2", format: formatDate},
-                {key: "delivery_date2", title: "Date Preference 3", format: formatDate},
-                {key: "time1", title: "Time Preference 1", format: formatTime},
-                {key: "time2", title: "Time Preference 2", format: formatTime},
-                {key: "time3", title: "Time Preference 3", format: formatTime},
+                {
+                    key: "delivery_date",
+                    title: "Preference 1",
+                    format: formatDate,
+                    secondValue: "time1",
+                    secondValueFormat: formatTime,
+                    seperator:", "
+                },
+                {
+                    key: "delivery_date1",
+                    secondValue: "time2",
+                    title: "Preference 2",
+                    format: formatDate,
+                    secondValueFormat: formatTime,
+                    seperator:", "
+                },
+                {
+                    key: "delivery_date2",
+                    secondValue: "time3",
+                    title: "Preference 3",
+                    format: formatDate,
+                    secondValueFormat: formatTime,
+                    seperator:", "
+                },
                 {key: "time_difference_deliveries", title: "Time Between  Deliveries"},
                 {key: "urgency", title: "Time Urgency"}, {key: "site_call", title: "On Site/On Call"},
             ]
@@ -77,7 +95,7 @@ class ReviewOrder extends React.Component {
         full_order = full_order.set("time_preference3", order.get("time3"));
         full_order = full_order.set("time_deliveries", order.get("time_difference_deliveries"));
         full_order = full_order.set("urgency", order.get("urgency"));
-        full_order = full_order.set("message_required", order.get("message_required")==="No"?0:1);
+        full_order = full_order.set("message_required", order.get("message_required") === "No" ? 0 : 1);
         full_order = full_order.set("preference", order.get("site_call"));
         full_order = full_order.set("colours", order.get("colours"));
         // console.log(order.get("message_required"));

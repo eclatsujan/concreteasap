@@ -31,16 +31,23 @@ export default class TableRow extends React.Component {
             <View style={[appStyles.flex1]}>
                 {this.props["rowColumns"].map((column, index) => {
                     let columnValue=getNestedImmutable(row,column["key"]);
+                    columnValue=this.formatValue(columnValue,column["format"]);
+                    if(column.hasOwnProperty("secondValue")){
+                        let secondValue=getNestedImmutable(row,column["secondValue"]);
+                        // console.log(row);
+                        secondValue=this.formatValue(secondValue,column["secondValueFormat"]);
+                        columnValue=columnValue+column["seperator"]+secondValue;
+                    }
                     return (
-                        columnValue?<Row key={index} style={[appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
-                            <Col style={appStyles.w_65}>
+                        columnValue?<Row key={index} style={[appStyles.verticalCenter,appStyles.py_10, appStyles.borderBottom, appStyles.borderGray44]}>
+                            <Col style={appStyles.w_60}>
                                 <Text style={[appStyles.upperCase,appStyles.baseSmallFontSize,appStyles.boldFont]}>
                                     {column["title"]}
                                 </Text>
                             </Col>
-                            <Col style={appStyles.w_35}>
+                            <Col style={appStyles.w_40}>
                                 <Text style={[appStyles.arialFont,appStyles.baseSmallFontSize]}>
-                                    {this.formatValue(columnValue,column["format"])}
+                                    {columnValue}
                                 </Text>
                             </Col>
                         </Row>

@@ -1,13 +1,9 @@
 import {Alert} from 'react-native';
 import * as types from './constants'
 import {bidService} from '../../../services/bidService'
-import {orderService} from "../../../services/orderService";
 
 import * as appActions from '../app/actions'
-import * as order from '../order/actions'
-
 import navigationHelper from '../../../helpers/navigationHelper';
-import {PUSH_BIDS} from "./constants";
 import moment from "moment";
 
 export function placeMessagePrice(pricePer, bid_id,message_id) {
@@ -17,7 +13,6 @@ export function placeMessagePrice(pricePer, bid_id,message_id) {
             dispatch(appActions.loading(false));
         }).catch((err) => {
             dispatch(addMessage(0,bid_id,message_id));
-            console.log(err);
             dispatch(appActions.loading(false));
         });
     };
@@ -30,7 +25,6 @@ export const getRepAcceptedBids = () => {
             dispatch(pushBids("accepted_bids",res));
             dispatch(appActions.loading(false));
         }).catch((err) => {
-            console.log(err);
             dispatch(appActions.loading(false));
         });
     }
@@ -119,6 +113,16 @@ export const addMessage = (price,bid_id,message_id) => {
                 bid_id
             }
         });
+    }
+};
+
+export const updateAcceptedStatus=(bid_id,status)=>{
+    return {
+        type:types.UPDATE_ACCEPTED_STATUS,
+        payload:{
+            bid_id,
+            status
+        }
     }
 };
 

@@ -11,8 +11,8 @@ import SubHeader from '../../../../components/Headers/SubHeader'
 
 //StyleSheet
 import {appStyles} from "../../../../../assets/styles/app_styles";
-import reoSpecialForm from "../../../../components/contractor/Concrete/Order/SpecialOrderForm";
 import AppFooter from "../../../../components/App/Footer/AppFooter";
+import SpecialOrderForm from "../../../../components/contractor/Concrete/Order/SpecialOrderForm";
 
 class SpecialRequests extends React.Component {
 
@@ -54,7 +54,7 @@ class SpecialRequests extends React.Component {
                     <AppHeader/>
                     <SubHeader iconName="clipboard" title="Special Requests"/>
                     <Content>
-                        <reoSpecialForm onSubmit={this.handleSubmit} initialValues={order} />
+                        <SpecialOrderForm onSubmit={this.handleSubmit} initialValues={order} />
                     </Content>
                 </ScrollView>
             </AppBackground>
